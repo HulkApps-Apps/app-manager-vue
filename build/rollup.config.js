@@ -24,7 +24,6 @@ const argv = minimist(process.argv.slice(2));
 
 const projectRoot = path.resolve(__dirname, '..');
 
-console.log(this)
 const baseConfig = {
   input: 'src/entry.js',
   plugins: {
