@@ -7,6 +7,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import babel from '@rollup/plugin-babel';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 import { terser } from 'rollup-plugin-terser';
 import minimist from 'minimist';
 
@@ -104,7 +105,8 @@ if (!argv.format || argv.format === 'es') {
             },
           ],
         ],
-      })
+      }),
+      nodePolyfills()
     ],
   };
   buildFormats.push(esConfig);
@@ -134,6 +136,7 @@ if (!argv.format || argv.format === 'cjs') {
       }),
       ...baseConfig.plugins.postVue,
       babel(baseConfig.plugins.babel),
+      nodePolyfills()
     ],
   };
   buildFormats.push(umdConfig);
@@ -162,6 +165,7 @@ if (!argv.format || argv.format === 'iife') {
           ecma: 5,
         },
       }),
+      nodePolyfills()
     ],
   };
   buildFormats.push(unpkgConfig);
