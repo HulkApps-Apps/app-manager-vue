@@ -1,5 +1,5 @@
 <template>
-  <PLayoutSection v-if="mappedStaticContentHeaders.length">
+  <PLayoutSection v-if="mappedStaticContentHeaders && mappedStaticContentHeaders.length">
     <PBanner
         v-for="(header, key) in mappedStaticContentHeaders" :key="key"
         :id="`static-content-header-${key}`"
@@ -35,26 +35,23 @@ export default {
     }
   },
   computed: {
-    mappedStaticContentHeaders: function() {
-      const computed = [];
-      const banner_type  = this.type === 'header' ? 'headers' : 'footers'
-
-      for(var key in this.staticContent[banner_type]) {
-        if(!this.dismissedBanners.includes(parseInt(key))) {
-          computed.push(this.staticContent[banner_type][key]);
-        }
-      }
-      return computed;
+    mappedStaticContentHeaders() {
+      return this.staticContent[this.banner_type];
+    },
+    banner_type() {
+      return this.type === 'header' ? 'headers' : 'footers'
     }
   },
   methods: {
     dismissBanner(key) {
-      this.dismissedBanners.push(key);
+      this.staticContent[this.banner_type].splice(key, 1);
     }
   },
   async mounted() {
 
-    const {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/marketing-banners`);
+    const { data } = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/marketing-banners`).catch(error => {
+      console.error(error)
+    });
 
     this.staticContent = data.banners
   }
