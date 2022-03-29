@@ -25,7 +25,6 @@ Vue.use(AppManager);
 ```vue
 <Banners type="header" />
 <Banners type="footer" />
-
 ```
 
 ## License
