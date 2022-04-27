@@ -9,7 +9,8 @@ import PolarisVue from '@hulkapps/polaris-vue';
 Vue.use(PolarisVue);
 
 import AppManagerVue from '@/entry.esm';
-Vue.use(AppManagerVue);
+// Vue.use(AppManagerVue);
+Vue.use(AppManagerVue, {baseUrl: 'https://subscription-plus.localhost'});
 
 Vue.config.productionTip = false;
 
