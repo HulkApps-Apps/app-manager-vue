@@ -74,14 +74,19 @@
                                 >
                                     <PDataTableCol>{{ (feature.name) }}</PDataTableCol>
                                     <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-${rIndex}`" :style="activePlanStyle(plan)">
-                                        <template v-if="feature.value_type === 'boolean'">
-                                            <PIcon v-if="plan.features[feature.uuid]" color="success"
-                                                   source="TickMinor"/>
-                                            <PIcon v-else color="subdued" source="MinusMinor"/>
+                                        <template v-if="plan.features">
+                                            <template v-if="feature.value_type === 'boolean'">
+                                                <PIcon v-if="plan.features[feature.uuid]" color="success"
+                                                       source="TickMinor"/>
+                                                <PIcon v-else color="subdued" source="MinusMinor"/>
+                                            </template>
+                                            <template v-else>
+                                                <span v-if="plan.features[feature.uuid]">{{ format(plan.features[feature.uuid]) }}</span>
+                                                <PIcon v-else color="subdued" source="MinusMinor"/>
+                                            </template>
                                         </template>
                                         <template v-else>
-                                            <span v-if="plan.features[feature.uuid]">{{ format(plan.features[feature.uuid]) }}</span>
-                                            <PIcon v-else color="subdued" source="MinusMinor"/>
+                                            <PIcon color="subdued" source="MinusMinor"/>
                                         </template>
                                     </PDataTableCol>
                                 </PDataTableRow>
