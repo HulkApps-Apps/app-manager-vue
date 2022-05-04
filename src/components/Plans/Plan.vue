@@ -1,9 +1,9 @@
 <template>
 
     <PPage
-           class="custom-title"
+           class="app-manager-plan-page custom-title"
            title="Choose plan"
-           :subtitle = "('App plans are based on your existing shopify plan')"
+           :subtitle = "subtitleContent"
     >
 
         <PStack slot="primaryAction">
@@ -112,8 +112,8 @@
                                                  :pressed="true">
                                             {{ ('Not applicable') }}
                                         </PButton>
-                                        <PTextContainer v-if="shop.plan && plan.shopify_plans.includes(shop.shopify_plan) && !isCurrentPlan(plan)" class="footer-note-container">
-                                            <PTextStyle class="text-break" v-if="!plan.shopify_plans.includes(shop.shopify_plan) && !(isCurrentPlan(plan)) && !isSamePlanInOtherInterval(plan)">Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan</PTextStyle>
+                                        <PTextContainer v-if="plan.store_base_plan && shop.plan && plan.shopify_plans.includes(shop.shopify_plan) && !isCurrentPlan(plan)" class="footer-note-container">
+                                            <PTextStyle class="text-break" v-if="plan.store_base_plan && !plan.shopify_plans.includes(shop.shopify_plan) && !(isCurrentPlan(plan)) && !isSamePlanInOtherInterval(plan)">Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan</PTextStyle>
                                         </PTextContainer>
                                     </PDataTableCol>
                                 </PDataTableRow>
@@ -121,11 +121,6 @@
                         </PDataTable>
                     </template>
                 </template>
-                <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
-                    <PStackItem fill>
-                        <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
-                    </PStackItem>
-                </PStack>
             </PLayoutSection>
         </PLayout>
         <!--====================================================================-->
@@ -145,6 +140,7 @@
                 features: [],
                 shopify_plan: '',
                 onboard: false,
+                subtitleContent: '',
                 checkList: [
                     "60 days free trial",
                 ],
@@ -186,7 +182,6 @@
         computed: {
             shop() {
                 return {
-                    // "name": "demo-anil.myshopify.com",
                     "name": this.shop_domain,
                     "shopify_plan": this.shopify_plan,
                     "has_plan": !!this.plan,
@@ -286,171 +281,174 @@
                 console.error(error)
             });
             this.plans = plansData.data.plans;
+            if (this.plans && this.plans[0].store_base_plan) {
+                this.subtitleContent = 'App plans are based on your existing shopify plan';
+            }
             this.shopify_plan = plansData.data.shopify_plan;
             this.plan = plansData.data.plan;
         }
     }
 </script>
 
-<style>
+<style scoped lang="scss">
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
-    .plan-table  td:last-child>*[data-v-7d902277] {
+    .app-manager-plan-page .plan-table  td:last-child>*[data-v-7d902277] {
         float:none;
     }
-    .active {
+    .app-manager-plan-page .active {
         background: #f0f8f5;
     }
-    .plan-table  td:last-child>*[data-v-0d1b0d63] {
+    .app-manager-plan-page .plan-table  td:last-child>*[data-v-0d1b0d63] {
         float:none;
     }
-    .plan-table td {
+    .app-manager-plan-page .plan-table td {
         border: 0.01px solid #ececee !important;
         border-collapse: collapse !important;
     }
-    .plan-table .Polaris-DataTable__ScrollContainer{
+    .app-manager-plan-page .plan-table .Polaris-DataTable__ScrollContainer{
         border-radius:12px;
         overflow: visible;
     }
-    .plan-table table {
+    .app-manager-plan-page .plan-table table {
         border-collapse: collapse !important;
     }
-    .custom-plan table {
+    .app-manager-plan-page .custom-plan table {
         border-collapse: collapse !important;
     }
-    .custom-plan table thead .first-column {
+    .app-manager-plan-page .custom-plan table thead .first-column {
         border-radius: 12px 0 0 0;
         border-top: 0px !important;
         border-left: 0px !important;
     }
-    .custom-plan table thead .plan-heading.last-column {
+    .app-manager-plan-page .custom-plan table thead .plan-heading.last-column {
         text-align: left !important;
         border-radius: 0 12px 0 0;
         border-top: 0px !important;
     }
-    .custom-plan table thead .plan-heading {
+    .app-manager-plan-page .custom-plan table thead .plan-heading {
         background-color: rgb(255, 255, 255);
         box-shadow: rgb(23 24 24 / 5%) 1px 0px 8px, rgb(0 0 0 / 15%) 0px 0px 2px;
     }
-    .custom-plan table tbody tr:first-child {
+    .app-manager-plan-page .custom-plan table tbody tr:first-child {
         background-color: #fff;
         box-shadow: 0 0 5px rgb(23 24 24 / 5%), 0 1px 2px rgb(0 0 0 / 15%);
         border-radius: 12px 0 0 0;
         overflow: hidden;
     }
-    .custom-plan table tbody tr:not(:first-child :last-child ) {
+    .app-manager-plan-page .custom-plan table tbody tr:not(:first-child :last-child ) {
         background-color: #fff;
         overflow: hidden;
     }
-    .custom-plan table tbody tr:not(:first-child :last-child) {
+    .app-manager-plan-page .custom-plan table tbody tr:not(:first-child :last-child) {
         background-color: #fff;
         box-shadow: 0 0 5px rgb(23 24 24 / 5%), 0 1px 2px rgb(0 0 0 / 15%);
         overflow: hidden;
     }
-    .custom-plan table tbody tr:not( :nth-last-child(2) ) {
+    .app-manager-plan-page .custom-plan table tbody tr:not( :nth-last-child(2) ) {
         background-color: #fff;
         overflow: hidden;
     }
-    .custom-plan table tbody tr:not( :nth-last-child(2) ) {
+    .app-manager-plan-page .custom-plan table tbody tr:not( :nth-last-child(2) ) {
         border-bottom: 0;
     }
-    .custom-plan table tbody tr:last-child {
+    .app-manager-plan-page .custom-plan table tbody tr:last-child {
         border-bottom: 0;
         background-color: transparent;
     }
-    .custom-plan table tbody tr:not(:last-child) {
+    .app-manager-plan-page .custom-plan table tbody tr:not(:last-child) {
         pointer-events: none;
     }
-    .custom-plan table thead tr td{
+    .app-manager-plan-page .custom-plan table thead tr td{
         pointer-events: none;
     }
-    .custom-plan table tbody tr:first-child td:first-child {
+    .app-manager-plan-page .custom-plan table tbody tr:first-child td:first-child {
         overflow: hidden;
         border-radius: 12px 0 0 0;
     }
-    .custom-plan table tbody tr:nth-last-child(2) {
+    .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) {
         overflow: hidden;
         border-bottom-right-radius: 12px;
         border-bottom-left-radius: 12px;
     }
-    .custom-plan table tbody tr:nth-last-child(2) td:first-child {
+    .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:first-child {
         overflow: hidden;
         border-radius: 0 0 0 12px;
     }
-    .custom-plan table tbody tr:nth-last-child(2) td:last-child {
+    .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:last-child {
         overflow: hidden;
         border-radius: 0 0 12px;
     }
-    .custom-plan table tbody tr td:first-child {
+    .app-manager-plan-page .custom-plan table tbody tr td:first-child {
         border-left: 0px !important;
         padding-left: 20px;
     }
-    .custom-plan table tbody tr td:last-child {
+    .app-manager-plan-page .custom-plan table tbody tr td:last-child {
         border-right: 0px !important;
         text-align: center !important;
     }
-    .custom-plan table thead tr td:last-child {
+    .app-manager-plan-page .custom-plan table thead tr td:last-child {
         border-right: 0px !important;
         text-align: center !important;
     }
-    .custom-plan table tbody td:not(:first-child) {
+    .app-manager-plan-page .custom-plan table tbody td:not(:first-child) {
         text-align: center !important;
     }
-    .custom-plan table tbody tr:last-child td:last-child {
+    .app-manager-plan-page .custom-plan table tbody tr:last-child td:last-child {
         background: transparent;
         border-radius: 0 0 12px 0;
     }
-    .custom-plan table tbody tr:last-child td {
+    .app-manager-plan-page .custom-plan table tbody tr:last-child td {
         border: 0 !important;
         background: transparent;
     }
-    .custom-plan table tbody tr:last-child td:hover {
+    .app-manager-plan-page .custom-plan table tbody tr:last-child td:hover {
         border: 0 !important;
         background: transparent;
     }
-    .custom-plan tbody tr:last-child td.Polaris-DataTable__Cell--verticalAlignTop{
+    .app-manager-plan-page .custom-plan tbody tr:last-child td.Polaris-DataTable__Cell--verticalAlignTop{
         background: transparent !important;
     }
-    .custom-plan table tbody tr:last-child {
+    .app-manager-plan-page .custom-plan table tbody tr:last-child {
         background: transparent;
         opacity:1.0;
     }
-    .custom-plan table tbody tr:last-child  td:first-child{
+    .app-manager-plan-page .custom-plan table tbody tr:last-child  td:first-child{
         visibility: hidden;
     }
-    .plan-heading {
+    .app-manager-plan-page .plan-heading {
         padding-top: 30px;
     }
-    .custom-plan .Polaris-Layout__Section{
+    .app-manager-plan-page .custom-plan .Polaris-Layout__Section{
         max-width: calc(100% - 2rem) !important;
     }
-    .later-link {
+    .app-manager-plan-page .later-link {
         text-align: center;
         clear: both;
         padding-top: 15px;
     }
-    .plan-badge ul {
+    .app-manager-plan-page .plan-badge ul {
         text-align: center;
         padding-top: 2rem;
         border-top: 0.1rem solid #e1e3e5;
     }
-    .plan-badge ul li {
+    .app-manager-plan-page .plan-badge ul li {
         list-style: none;
         display: inline-block;
         padding-right: 25px;
     }
-    .plan-badge ul li img {
+    .app-manager-plan-page .plan-badge ul li img {
         max-width: 133px;
     }
-    .btn-group .Polaris-ButtonGroup__Item{
+    .app-manager-plan-page .btn-group .Polaris-ButtonGroup__Item{
         margin-left: 0px !important;
         z-index: unset !important;
     }
-    .custom-title .Polaris-HorizontalDivider{
+    .app-manager-plan-page.custom-title .Polaris-HorizontalDivider{
         background-color: #e2e3e4;
     }
-    .annual_heading{
+    .app-manager-plan-page .annual_heading{
         margin-top: 2px !important;
         color: #E2C138;
         border: 2px dotted #E2C138;
@@ -459,7 +457,7 @@
         font-weight: normal !important;
         font-family: 'Satisfy', cursive;
     }
-    .Polaris-Page__Content hr{
+    .app-manager-plan-page .Polaris-Page__Content hr{
         border: 1px solid #e2e3e4;
     }
 </style>

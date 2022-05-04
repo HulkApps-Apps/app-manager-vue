@@ -18,7 +18,7 @@ export default Vue.extend({
     <Banners type="header" />
     -------------------------------
     <Banners type="footer" />
-    <Plan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />
+<!--    <Plan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />-->
 
   </div>
 </template>
