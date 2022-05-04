@@ -93,11 +93,18 @@
                                 <PDataTableRow v-if="plans.length" class="row-alignment"  >
                                     <PDataTableCol></PDataTableCol>
                                     <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-plan`" style="max-width: 0">
-                                        <PButton v-if="plan.shopify_plans.includes(shop.shopify_plan)" :disabled="isCurrentPlan(plan)"
+                                        <PButton v-if="!plan.store_base_plan" :disabled="isCurrentPlan(plan)"
                                                  full-width
-                                                 :href="plan ? getPlanUrl(plan):'javascript:void'"
+                                                 @click="plan ? getPlanUrl(plan):'javascript:void'"
                                                  :pressed="isCurrentPlan(plan)"
-                                                 :primary="!isCurrentPlan(plan)">
+                                                 :primary="!isCurrentPlan(plan)" >
+                                            {{ (isCurrentPlan(plan)) ? ('Current Plan') : 'Choose Plan' }}
+                                        </PButton>
+                                        <PButton v-else-if="plan.shopify_plans.includes(shop.shopify_plan)" :disabled="isCurrentPlan(plan)"
+                                                 full-width
+                                                 @click="plan ? getPlanUrl(plan):'javascript:void'"
+                                                 :pressed="isCurrentPlan(plan)"
+                                                 :primary="!isCurrentPlan(plan)" >
                                             {{ (isCurrentPlan(plan)) ? ('Current Plan') : 'Choose Plan' }}
                                         </PButton>
                                         <PButton v-else :disabled="true"
@@ -130,10 +137,13 @@
     import axios from "axios";
 
     export default {
+        props: ['shop_domain'],
         data() {
             return {
+                plan: {},
                 plans: [],
                 features: [],
+                shopify_plan: '',
                 onboard: false,
                 checkList: [
                     "60 days free trial",
@@ -176,11 +186,11 @@
         computed: {
             shop() {
                 return {
-                    "name": "",
-                    "shopify_plan": "",
-                    "plan_id": null,
-                    "has_plan": false,
-                    "plan": null,
+                    // "name": "demo-anil.myshopify.com",
+                    "name": this.shop_domain,
+                    "shopify_plan": this.shopify_plan,
+                    "has_plan": !!this.plan,
+                    "plan": this.plan,
                 };
             },
             headings() {
@@ -215,7 +225,7 @@
         methods: {
 
             activePlanStyle(plan) {
-                return [plan.shopify_plans.includes(this.shop.shopify_plan) ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
+                return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
             },
             isCurrentPlan(plan) {
                 return this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
@@ -235,9 +245,15 @@
                     return feature.value
                 }
             },
-            getPlanUrl(plan) {
+            async getPlanUrl(plan) {
                 let shopName = this.shop.name;
-                return `/billing/${plan.id}?shop=${shopName}`
+                const response = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan/process/${plan.id}?shop=${shopName}`).catch(error => {
+                    console.error(error)
+                });
+                let redirectUrl = response.data.redirect_url;
+                if (redirectUrl) {
+                    window.location.replace(redirectUrl);
+                }
             },
             async activePlan() {
                 const response = await this.activeAccount()
@@ -266,10 +282,12 @@
             });
             this.features = featuresData.data.features;
 
-            const plansData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`).catch(error => {
+            const plansData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
                 console.error(error)
             });
             this.plans = plansData.data.plans;
+            this.shopify_plan = plansData.data.shopify_plan;
+            this.plan = plansData.data.plan;
         }
     }
 </script>
