@@ -1,5 +1,4 @@
 <template>
-
     <PPage
            class="app-manager-plan-page custom-title"
            title="Choose plan"
@@ -121,6 +120,11 @@
                         </PDataTable>
                     </template>
                 </template>
+                <PStack class="choose-plan-btn" alignment="center" distribution="center" vertical>
+                    <PStackItem fill>
+                        <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
+                    </PStackItem>
+                </PStack>
             </PLayoutSection>
         </PLayout>
         <!--====================================================================-->
@@ -139,6 +143,7 @@
                 plans: [],
                 features: [],
                 shopify_plan: '',
+                default_plan_id: null,
                 onboard: false,
                 subtitleContent: '',
                 checkList: [
@@ -186,6 +191,7 @@
                     "shopify_plan": this.shopify_plan,
                     "has_plan": !!this.plan,
                     "plan": this.plan,
+                    "default_plan_id": this.default_plan_id,
                 };
             },
             headings() {
@@ -251,12 +257,20 @@
                 }
             },
             async activePlan() {
-                const response = await this.activeAccount()
+                const response = await this.activeWithoutPlan()
                 if (response.data.status === true) {
                     await this.NextStep()
                     await this.bootstrap();
                     this.$router.push('/onboard/install-theme')
                 }
+            },
+            async activeWithoutPlan() {
+                return await axios.post(`${this.app_manager_config.baseUrl}/api/app-manager/active-without-plan`, {
+                    shop_domain: this.shop.name,
+                    plan_id: this.shop.default_plan_id
+                }).catch(error => {
+                    console.error(error)
+                });
             },
             async selectPlan(value){
                 this.selectedPlan= value;
@@ -276,21 +290,24 @@
                 console.error(error)
             });
             this.features = featuresData.data.features;
+            this.features = this.features.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
 
             const plansData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
                 console.error(error)
             });
             this.plans = plansData.data.plans;
+            this.plans = this.plans.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
             if (this.plans && this.plans[0].store_base_plan) {
                 this.subtitleContent = 'App plans are based on your existing shopify plan';
             }
             this.shopify_plan = plansData.data.shopify_plan;
             this.plan = plansData.data.plan;
+            this.default_plan_id = plansData.data.default_plan_id;
         }
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
