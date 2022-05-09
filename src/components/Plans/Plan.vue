@@ -120,7 +120,7 @@
                         </PDataTable>
                     </template>
                 </template>
-                <PStack class="choose-plan-btn" alignment="center" distribution="center" vertical>
+                <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
                     <PStackItem fill>
                         <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
                     </PStackItem>
@@ -144,7 +144,7 @@
                 features: [],
                 shopify_plan: '',
                 default_plan_id: null,
-                onboard: false,
+                onboard: true,
                 subtitleContent: '',
                 checkList: [
                     "60 days free trial",
@@ -258,10 +258,19 @@
             },
             async activePlan() {
                 const response = await this.activeWithoutPlan()
+                console.log(response.data.status)
                 if (response.data.status === true) {
-                    await this.NextStep()
-                    await this.bootstrap();
-                    this.$router.push('/onboard/install-theme')
+
+                    /*document.addEventListener("continue-without-plan", function(e) {
+                        console.log(e) // Prints "Example of an event"
+                    });*/
+
+                    if (this.onboard) {
+                        // Create the event
+                        const event = new Event("continue-without-plan");
+                        document.dispatchEvent(event);
+                        this.onboard = false;
+                    }
                 }
             },
             async activeWithoutPlan() {
