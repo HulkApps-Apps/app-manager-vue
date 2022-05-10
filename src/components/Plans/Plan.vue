@@ -303,6 +303,7 @@
             this.shopify_plan = plansData.data.shopify_plan;
             this.plan = plansData.data.plan;
             this.default_plan_id = plansData.data.default_plan_id;
+            this.onboard = !this.plan
         }
     }
 </script>
