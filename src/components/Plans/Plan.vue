@@ -258,19 +258,10 @@
             },
             async activePlan() {
                 const response = await this.activeWithoutPlan()
-                console.log(response.data.status)
-                if (response.data.status === true) {
-
-                    /*document.addEventListener("continue-without-plan", function(e) {
-                        console.log(e) // Prints "Example of an event"
-                    });*/
-
-                    if (this.onboard) {
-                        // Create the event
-                        const event = new Event("continue-without-plan");
-                        document.dispatchEvent(event);
-                        this.onboard = false;
-                    }
+                if (response.data.status === true && this.onboard) {
+                    // Create the event
+                    this.$emit('continue-without-plan')
+                    this.onboard = false;
                 }
             },
             async activeWithoutPlan() {
