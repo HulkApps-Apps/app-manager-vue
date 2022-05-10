@@ -126,6 +126,7 @@
                     </PStackItem>
                 </PStack>
             </PLayoutSection>
+            <PlanFooter />
         </PLayout>
         <!--====================================================================-->
     </PPage>
@@ -134,8 +135,10 @@
 <script>
 
     import axios from "axios";
+    import PlanFooter from "./PlanFooter";
 
     export default {
+        components: {PlanFooter},
         props: ['shop_domain'],
         data() {
             return {

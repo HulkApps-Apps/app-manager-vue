@@ -21,7 +21,7 @@ export default {
     type: {
       type: String,
       validator(value) {
-        return ['header', 'footer'].includes(value)
+        return ['header', 'footer', 'plans'].includes(value)
       },
       default() {
         return 'header'
@@ -39,7 +39,7 @@ export default {
       return this.staticContent[this.banner_type];
     },
     banner_type() {
-      return this.type === 'header' ? 'headers' : 'footers'
+      return this.type ?? 'headers'
     }
   },
   methods: {
