@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import Banners from './Marketing/Banners'
-import Plan from './Plans/Plan'
+import AppManagerPlan from './Plans/AppManagerPlan'
+import PlanBanners from './Plans/PlanBanners'
 
-export { Banners, Plan };
+export { Banners, AppManagerPlan, PlanBanners };
