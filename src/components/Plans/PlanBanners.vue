@@ -9,9 +9,9 @@
                     :status="staticContent.status"
                     @dismiss="() => dismissBanner(key)"
             >
-                <span v-html="staticContent.content"></span>
+                <div v-html="staticContent.content"></div>
             </PBanner>
-            <span v-else v-html="staticContent.content"></span>
+            <div v-else v-html="staticContent.content"></div>
         </div>
     </PLayoutSection>
 </template>
