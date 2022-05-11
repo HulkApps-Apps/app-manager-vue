@@ -120,12 +120,13 @@
                         </PDataTable>
                     </template>
                 </template>
-                <PStack class="choose-plan-btn" alignment="center" distribution="center" vertical>
+                <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
                     <PStackItem fill>
                         <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
                     </PStackItem>
                 </PStack>
             </PLayoutSection>
+            <PlanFooter />
         </PLayout>
         <!--====================================================================-->
     </PPage>
@@ -134,8 +135,10 @@
 <script>
 
     import axios from "axios";
+    import PlanFooter from "./PlanBanners";
 
     export default {
+        components: {PlanFooter},
         props: ['shop_domain'],
         data() {
             return {
@@ -144,7 +147,7 @@
                 features: [],
                 shopify_plan: '',
                 default_plan_id: null,
-                onboard: false,
+                onboard: true,
                 subtitleContent: '',
                 checkList: [
                     "60 days free trial",
@@ -258,10 +261,10 @@
             },
             async activePlan() {
                 const response = await this.activeWithoutPlan()
-                if (response.data.status === true) {
-                    await this.NextStep()
-                    await this.bootstrap();
-                    this.$router.push('/onboard/install-theme')
+                if (response.data.status === true && this.onboard) {
+                    // Create the event
+                    this.$emit('continue-without-plan')
+                    this.onboard = false;
                 }
             },
             async activeWithoutPlan() {
@@ -303,6 +306,7 @@
             this.shopify_plan = plansData.data.shopify_plan;
             this.plan = plansData.data.plan;
             this.default_plan_id = plansData.data.default_plan_id;
+            this.onboard = !this.plan
         }
     }
 </script>
