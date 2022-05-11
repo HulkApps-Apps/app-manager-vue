@@ -2,15 +2,15 @@
 import Vue from 'vue';
 // Uncomment import and local "components" registration if library is not registered globally.
 import { Banners } from '@/entry.esm';
-import { Plan } from '@/entry.esm';
-import { PlanFooter } from '@/entry.esm';
+import { AppManagerPlan } from '@/entry.esm';
+import { PlanBanners } from '@/entry.esm';
 
 export default Vue.extend({
   name: 'ServeDev',
   components: {
-    PlanFooter,
+    PlanBanners,
     Banners,
-    Plan
+    AppManagerPlan
   }
 });
 </script>
@@ -20,7 +20,7 @@ export default Vue.extend({
     <Banners type="header" />
     -------------------------------
     <Banners type="footer" />
-<!--    <Plan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />-->
+<!--    <AppManagerPlan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />-->
 
   </div>
 </template>

@@ -126,7 +126,7 @@
                     </PStackItem>
                 </PStack>
             </PLayoutSection>
-            <PlanFooter />
+            <PlanBanners />
         </PLayout>
         <!--====================================================================-->
     </PPage>
@@ -135,10 +135,11 @@
 <script>
 
     import axios from "axios";
-    import PlanFooter from "./PlanBanners";
+    import PlanBanners from "./PlanBanners";
 
     export default {
-        components: {PlanFooter},
+        name: "AppManagerPlan",
+        components: {PlanBanners},
         props: ['shop_domain'],
         data() {
             return {
