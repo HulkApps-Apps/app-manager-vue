@@ -135,7 +135,7 @@
 <script>
 
     import axios from "axios";
-    import PlanFooter from "./PlanFooter";
+    import PlanFooter from "./PlanBanners";
 
     export default {
         components: {PlanFooter},

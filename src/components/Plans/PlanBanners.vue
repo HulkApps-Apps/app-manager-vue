@@ -21,7 +21,7 @@
     import axios from 'axios'
 
     export default {
-        name: "PlanFooter",
+        name: "PlanBanners",
         data() {
             return {
                 staticContent: {}
