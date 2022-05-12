@@ -19,8 +19,10 @@
 <script>
 
     import axios from 'axios'
-
+    import {PLayoutSection} from "../polaris-vue/src/components/PLayout/components/PLayoutSection";
+    import {PBanner} from "../polaris-vue/src/components/PBanner";
     export default {
+        components: { PBanner, PLayoutSection },
         name: "PlanBanners",
         data() {
             return {

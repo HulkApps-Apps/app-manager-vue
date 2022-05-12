@@ -12,10 +12,13 @@
 </template>
 
 <script>
+  import {PLayoutSection} from "../polaris-vue/src/components/PLayout/components/PLayoutSection";
+  import {PBanner} from "../polaris-vue/src/components/PBanner";
 
   import axios from 'axios'
 
   export default {
+    components: {PLayoutSection, PBanner},
     name: "Banners",
     props: {
       type: {

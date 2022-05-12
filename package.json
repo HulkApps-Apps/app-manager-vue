@@ -20,7 +20,8 @@
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "^0.26.1",
+    "change-case": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

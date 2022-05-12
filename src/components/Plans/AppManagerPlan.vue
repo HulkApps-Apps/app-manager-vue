@@ -136,10 +136,24 @@
 
     import axios from "axios";
     import PlanBanners from "./PlanBanners";
+    import PPage from "../polaris-vue/src/components/PPage/PPage";
+    import PStack from "../polaris-vue/src/components/PStack/PStack";
+    import PStackItem from "../polaris-vue/src/components/PStack/components/PStackItem/PStackItem";
+    import {PButton} from "../polaris-vue/src/components/PButton";
+    import {PButtonGroup} from "../polaris-vue/src/components/PButtonGroup";
+    import {PHeading} from "../polaris-vue/src/components/PHeading";
+    import {PLayout} from "../polaris-vue/src/components/PLayout";
+    import {PLayoutSection} from "../polaris-vue/src/components/PLayout/components/PLayoutSection";
+    import {PTextContainer} from "../polaris-vue/src/components/PTextContainer";
+    import {PDataTable} from "../polaris-vue/src/components/PDataTable";
+    import {PDataTableCol} from "../polaris-vue/src/components/PDataTable/components/PDataTableCol";
+    import {PDataTableRow} from "../polaris-vue/src/components/PDataTable/components/PDataTableRow";
+    import {PIcon} from "../polaris-vue/src/components/PIcon";
+    import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
 
     export default {
         name: "AppManagerPlan",
-        components: {PlanBanners},
+        components: { PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle },
         props: ['shop_domain'],
         data() {
             return {
@@ -316,7 +330,8 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
-    .app-manager-plan-page .plan-table  td:last-child>*[data-v-7d902277] {
+    .app-manager-plan-page .plan-table  td:last-child>*[data-v-7d902277],
+    .app-manager-plan-page .plan-table  td:last-child>*[data-v-5a078dbb] {
         float:none;
     }
     .app-manager-plan-page .active {
