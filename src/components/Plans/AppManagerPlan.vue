@@ -8,24 +8,13 @@
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
-                    <PButton :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
+                    <PButton v-if="monthlyPlan.length" :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{('Monthly')}}</p>
                     </PButton>
-                    <PButton :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
 
-                        <PStack slot="default">
-                            <PStackItem>
-                                <PTextContainer spacing="tight" style="margin-top:0">
-                                    <PHeading>{{('Annually')}}</PHeading>
-                                    <p style="margin-top: -3px; color: #E2C138;font-family: inherit "><b style="font-size: 12px;">{{('save')}} 20%</b></p>
-                                </PTextContainer>
-                            </PStackItem>
-                            <PStackItem >
-                                <PHeading class="annual_heading"  variation="subdued">{{('get_2_month_free')}}</PHeading>
-                            </PStackItem>
-                        </PStack>
+                    <PButton v-if="yearlyPlan.length" :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
+                        <YearlyPlanPromotion />
                     </PButton>
-
                 </PButtonGroup>
             </PStackItem>
         </PStack>
@@ -136,6 +125,7 @@
 
     import axios from "axios";
     import PlanBanners from "./PlanBanners";
+    import YearlyPlanPromotion from "./YearlyPlanPromotion";
     import PPage from "../polaris-vue/src/components/PPage/PPage";
     import PStack from "../polaris-vue/src/components/PStack/PStack";
     import PStackItem from "../polaris-vue/src/components/PStack/components/PStackItem/PStackItem";
@@ -153,7 +143,7 @@
 
     export default {
         name: "AppManagerPlan",
-        components: { PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle },
+        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle },
         props: ['shop_domain'],
         data() {
             return {
@@ -485,7 +475,7 @@
     .app-manager-plan-page.custom-title .Polaris-HorizontalDivider{
         background-color: #e2e3e4;
     }
-    .app-manager-plan-page .annual_heading{
+    /*.app-manager-plan-page .annual_heading{
         margin-top: 2px !important;
         color: #E2C138;
         border: 2px dotted #E2C138;
@@ -493,7 +483,7 @@
         font-size: 16px !important;
         font-weight: normal !important;
         font-family: 'Satisfy', cursive;
-    }
+    }*/
     .app-manager-plan-page .Polaris-Page__Content hr{
         border: 1px solid #e2e3e4;
     }
