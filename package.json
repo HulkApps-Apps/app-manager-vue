@@ -14,6 +14,7 @@
   "scripts": {
     "serve": "vue-cli-service serve dev/serve.js",
     "prebuild": "rimraf ./dist",
+    "build:scss": "sass src/components/polaris-vue/src/scss/main.scss | node ./build/banner.js > dist/hulkapps-app-manager.css && cleancss --inline local -o dist/hulkapps-app-manager.min.css dist/hulkapps-app-manager.css",
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
