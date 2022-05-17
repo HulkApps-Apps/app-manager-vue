@@ -1,6 +1,6 @@
 .Polaris-VerticalTabs__Wrapper {
   display: flex;
-  border-top: 0.1rem solid $p-divider;
+  border-top: 1px solid $p-divider;
   border-radius: 0 0 $p-border-radius-wide $p-border-radius-wide;
   overflow: hidden;
   @media screen and (max-width: 990px) {
@@ -13,8 +13,8 @@
   flex-direction: column;
   margin: -1px 0 0 -1px;
   padding: 0;
-  border-right: 0.1rem solid $p-divider;
-  border-left: 0.1rem solid $p-divider;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
   list-style: none;
   background-color: $p-surface-subdued;
   -ms-overflow-style: none;
@@ -33,8 +33,8 @@
   flex-direction: column;
   margin: -1px 0 0 -1px;
   padding: 0;
-  border-right: 0.1rem solid $p-divider;
-  border-left: 0.1rem solid $p-divider;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
   list-style: none;
   background-color: $p-surface-subdued;
   -ms-overflow-style: none;
@@ -54,14 +54,14 @@
   flex-direction: column;
   margin: 0 0 -1px;
   padding: 0;
-  border-top: 0.1rem solid $p-divider;
-  border-bottom: 0.1rem solid $p-divider;
+  border-top: 1px solid $p-divider;
+  border-bottom: 1px solid $p-divider;
 
   @media screen and (max-width: 990px) {
     flex: 1 1;
     margin: 0;
     border: 0;
-    border-left: 0.1rem solid $p-divider;
+    border-left: 1px solid $p-divider;
     flex-direction: row;
   }
 }
@@ -72,7 +72,7 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 0.3rem;
+  width: 3px;
   background: $p-action-primary;
   opacity: 0;
 
@@ -80,7 +80,7 @@
     right: 0;
     bottom: auto;
     width: auto;
-    height: 0.3rem;
+    height: 3px;
   }
 }
 
@@ -90,14 +90,14 @@
   flex-direction: column;
   margin: 0 0 -1px;
   padding: 0;
-  border-top: 0.1rem solid $p-divider;
-  border-bottom: 0.1rem solid $p-divider;
+  border-top: 1px solid $p-divider;
+  border-bottom: 1px solid $p-divider;
 
   @media screen and (max-width: 990px) {
     flex: 1 1;
     margin: 0;
     border: 0;
-    border-left: 0.1rem solid $p-divider;
+    border-left: 1px solid $p-divider;
     flex-direction: row;
   }
 }
@@ -108,7 +108,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  width: 0.3rem;
+  width: 3px;
   background: $p-action-primary;
   opacity: 0;
 
@@ -116,7 +116,7 @@
     left: 0;
     bottom: auto;
     width: auto;
-    height: 0.3rem;
+    height: 3px;
   }
 }
 
@@ -134,7 +134,7 @@
   }
 
   @media screen and (max-width: 990px) {
-    margin-top: 0.8rem;
+    margin-top: 8px;
   }
 }
 
@@ -149,9 +149,9 @@
   font-size: inherit;
   line-height: inherit;
   color: inherit;
-  font-size: 1.5rem;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 2rem;
+  line-height: 20px;
   text-transform: none;
   letter-spacing: normal;
   color: $p-text-subdued;
@@ -160,36 +160,36 @@
   flex: 0 0 100%;
   align-items: center;
   text-align: left;
-  width: 22rem;
+  width: 220px;
   margin: 0 -1px;
-  padding: 2.4rem;
+  padding: 24px;
   outline: none;
   text-decoration: none;
   cursor: pointer;
-  border-right: 0.1rem solid $p-divider;
-  border-left: 0.1rem solid $p-divider;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
 
   @media (min-width: 40em) {
-    font-size: 1.4rem;
+    font-size: 14px;
   }
 
   @media screen and (max-width: 990px) {
-    font-size: 1.3rem;
+    font-size: 13px;
     font-weight: 400;
-    line-height: 2rem;
+    line-height: 20px;
     display: block;
     text-align: center;
     margin: 0;
     border: 0;
-    border-bottom: 0.1rem solid $p-divider;
-    padding: 1.6rem;
+    border-bottom: 1px solid $p-divider;
+    padding: 16px;
     width: 100%;
-    min-width: 5.5rem;
+    min-width: 55px;
   }
 
   @media screen and (max-width: 990px) and (min-width: 40em) {
-    font-size: 1.2rem;
-    line-height: 1.6rem;
+    font-size: 12px;
+    line-height: 16px;
   }
 }
 
@@ -204,9 +204,9 @@
   font-size: inherit;
   line-height: inherit;
   color: inherit;
-  font-size: 1.5rem;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 2rem;
+  line-height: 20px;
   text-transform: none;
   letter-spacing: normal;
   color: $p-text-subdued;
@@ -217,36 +217,36 @@
   flex: 0 0 100%;
   align-items: center;
   text-align: left;
-  width: 22rem;
+  width: 220px;
   margin: 0 -1px;
-  padding: 2.4rem;
+  padding: 24px;
   outline: none;
   text-decoration: none;
   cursor: pointer;
-  border-right: 0.1rem solid $p-divider;
-  border-left: 0.1rem solid $p-divider;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
 
   @media (min-width: 40em) {
-    font-size: 1.4rem;
+    font-size: 14px;
   }
 
   @media screen and (max-width: 990px) {
-    font-size: 1.3rem;
+    font-size: 13px;
     font-weight: 400;
-    line-height: 2rem;
+    line-height: 20px;
     display: block;
     text-align: center;
     margin: 0;
     border: 0;
-    border-bottom: 0.1rem solid $p-divider;
-    padding: 1.6rem;
+    border-bottom: 1px solid $p-divider;
+    padding: 16px;
     width: 100%;
-    min-width: 5.5rem;
+    min-width: 55px;
   }
 
   @media screen and (max-width: 990px) and (min-width: 40em) {
-    font-size: 1.2rem;
-    line-height: 1.6rem;
+    font-size: 12px;
+    line-height: 16px;
   }
 }
 
@@ -289,7 +289,7 @@
 }
 
 .Polaris-VerticalTabs__TabElement--icon {
-  margin-right: 1.6rem;
+  margin-right: 16px;
 
   @media screen and (max-width: 990px) {
     display: block;
@@ -316,11 +316,11 @@
 .Polaris-VerticalTabs__Panel {
   display: block;
   width: 100%;
-  padding: 2.4rem 3.2rem;
+  padding: 24px 32px;
   background: $p-surface;
 
   @media screen and (max-width: 990px) {
-    padding: 2.4rem 1.6rem;
+    padding: 24px 16px;
   }
 }
 

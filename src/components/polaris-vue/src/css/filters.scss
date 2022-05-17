@@ -26,7 +26,7 @@
 
     .Polaris-Filters-ConnectedFilterControl__CenterContainer {
         flex: 1 1 auto;
-        min-width: 10rem;
+        min-width: 100px;
     }
 }
 
@@ -40,7 +40,7 @@
 }
 .Polaris-Filters-ConnectedFilterControl {
     .Polaris-Filters-ConnectedFilterControl__CenterContainer + .Polaris-Filters-ConnectedFilterControl__RightContainer {
-        margin-left: .8rem;
+        margin-left: 8px;
     }
 }
 .Polaris-Filters-ConnectedFilterControl__RightContainer {
@@ -117,9 +117,9 @@
 .Polaris-Filters__FiltersContainerHeader {
     top: 0;
     width: 100%;
-    padding: 1.6rem 2rem;
+    padding: 16px 20px;
     border-bottom: $filters-containerheader-border;
-    height: 5.6rem;
+    height: 56px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -128,12 +128,12 @@
 
 .Polaris-Filters__FiltersDesktopContainerContent {
     width: 100%;
-    height: calc(100% - 12.6rem);
+    height: calc(100% - 126px);
 }
 
 .Polaris-Filters__FiltersMobileContainerContent {
     width: 100%;
-    height: calc(100% - 5.6rem);
+    height: calc(100% - 56px);
 }
 
 .Polaris-Filters__FiltersContainerFooter {
@@ -141,8 +141,8 @@
     bottom: 0;
     border-top: $filters-containerheader-border;
     width: 100%;
-    padding: 1.4rem 1.6rem;
-    height: 7rem;
+    padding: 14px 16px;
+    height: 70px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -151,8 +151,8 @@
 
 .Polaris-Filters__FiltersMobileContainerFooter {
     width: 100%;
-    padding: 1.4rem 1.6rem;
-    height: 7rem;
+    padding: 14px 16px;
+    height: 70px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -161,7 +161,7 @@
 
 .Polaris-Filters__EmptyFooterState {
     border-top: $filters-containerheader-border;
-    padding-top: 1.4rem;
+    padding-top: 14px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -173,15 +173,15 @@
 
 .Polaris-Filters__FilterTrigger {
     width: 100%;
-    padding: 1.4rem 2rem;
+    padding: 14px 20px;
     border: none;
     background: none;
     color: $filters-trigger-color;
-    border-radius: 0.4rem;
+    border-radius: 4px;
     &:hover {
         cursor: pointer;
         background-color: $filters-trigger-hover-bgcolor;
-        outline: 0.1rem solid transparent;
+        outline: 1px solid transparent;
     }
 
     &:focus {
@@ -189,7 +189,7 @@
         box-shadow: $filters-trigger-focus-box-shadow;
         &:not(:active)::after{
             box-shadow: $filters-trigger-focus-after-box-shadow;
-            outline: 0.1rem solid transparent;
+            outline: 1px solid transparent;
         }
     }
 }
@@ -200,7 +200,7 @@
 }
 
 .Polaris-Filters__AppliedFilterBadgeContainer {
-    padding-top: .4rem;
+    padding-top: 4px;
     display: flex;
 }
 
@@ -212,9 +212,9 @@
     &:after {
         content: "";
         position: relative;
-        left: 1.6rem;
-        width: calc(100% - 3.2rem);
-        height: .1rem;
+        left: 16px;
+        width: calc(100% - 32px);
+        height: 1px;
         background-color: $filters-open-after-bgcolor;
         display: block;
         bottom: 0;
@@ -223,9 +223,9 @@
     &:before {
         content: "";
         position: relative;
-        left: 1.6rem;
-        width: calc(100% - 3.2rem);
-        height: .1rem;
+        left: 16px;
+        width: calc(100% - 32px);
+        height: 1px;
         background-color: $filters-open-before-bgcolor;
         display: block;
         top: 0;
@@ -243,9 +243,9 @@
         content: "";
         bottom: 0;
         position: relative;
-        left: 1.6rem;
-        width: calc(100% - 3.2rem);
-        height: .1rem;
+        left: 16px;
+        width: calc(100% - 32px);
+        height: 1px;
         background-color: $filters-open-first-after-bgcolor;
         display: block;
     }
@@ -266,9 +266,9 @@
         content: "";
         top: 0;
         position: relative;
-        left: 1.6rem;
-        width: calc(100% - 3.2rem);
-        height: .1rem;
+        left: 16px;
+        width: calc(100% - 32px);
+        height: 1px;
         background-color: $filters-open-last-before-bgcolor;
         display: block;
     }
@@ -285,7 +285,7 @@
 }
 
 .Polaris-Filters__FilterNodeContainer {
-    padding: .8rem 2rem 2rem;
+    padding: 8px 20px 20px;
 }
 
 .Polaris-Filters__SearchIcon {
@@ -309,12 +309,12 @@
 
 .Polaris-Filters__TagsContainer {
     display: flex;
-    padding-top: .8rem;
+    padding-top: 8px;
     flex-wrap: wrap;
 
     >* {
-        margin-right: .8rem;
-        margin-bottom: .8rem;
+        margin-right: 8px;
+        margin-bottom: 8px;
     }
 }
 

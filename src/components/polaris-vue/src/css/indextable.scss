@@ -35,7 +35,7 @@
   justify-content: center;
   align-items: center;
   background: rgba(255, 255, 255, 1);
-  padding: 0.8rem 1.6rem;
+  padding: 8px 16px;
   box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15);
 }
 
@@ -44,13 +44,13 @@
   flex-wrap: nowrap;
   width: 100%;
   background: rgba(235, 249, 252, 1);
-  padding: 0.8rem;
-  padding-bottom: 0.4rem;
-  border-radius: 0.4rem;
+  padding: 8px;
+  padding-bottom: 4px;
+  border-radius: 4px;
 }
 
 .Polaris-IndexTable__LoadingPanelText {
-  margin-left: 1.2rem;
+  margin-left: 12px;
   color: rgba(32, 34, 35, 1);
 }
 
@@ -69,34 +69,34 @@
     .TableHeading-second,
     .TableCell:first-child {
       visibility: visible;
-      filter: drop-shadow(1rem 0 0 rgba(225, 227, 229, 1));
+      filter: drop-shadow(10px 0 0 rgba(225, 227, 229, 1));
     }
   }
 }
 
 .Polaris-IndexTable__Table--scrolling .Polaris-IndexTable__TableCell--first, .Polaris-IndexTable__Table--scrolling .Polaris-IndexTable__TableHeading--first {
-  box-shadow: 0.1rem -0.1rem 0 0 rgba(225, 227, 229, 1);
+  box-shadow: 1px -1px 0 0 rgba(225, 227, 229, 1);
 
   &.Table-unselectable {
     // stylelint-disable-next-line selector-max-class, selector-max-specificity
     .TableHeading-second,
     .TableCell:first-child {
       visibility: visible;
-      filter: drop-shadow(1rem 0 0 rgba(225, 227, 229, 1));
+      filter: drop-shadow(10px 0 0 rgba(225, 227, 229, 1));
     }
   }
 }
 
 @media (min-width: 28.625em) {
   .Polaris-IndexTable__Table--scrolling .Polaris-IndexTable__TableCell--first, .Polaris-IndexTable__Table--scrolling .Polaris-IndexTable__TableHeading--first {
-    box-shadow: 0 -0.1rem 0 0 rgba(225, 227, 229, 1);
+    box-shadow: 0 -1px 0 0 rgba(225, 227, 229, 1);
 
     &.Table-unselectable {
       // stylelint-disable-next-line selector-max-class, selector-max-specificity
       .TableHeading-second,
       .TableCell:first-child {
         visibility: visible;
-        filter: drop-shadow(1rem 0 0 rgba(225, 227, 229, 1));
+        filter: drop-shadow(10px 0 0 rgba(225, 227, 229, 1));
       }
     }
   }
@@ -104,14 +104,14 @@
 
 @media (min-width: 28.625em) {
   .Polaris-IndexTable__Table--scrolling .Polaris-IndexTable__TableCell--first + .Polaris-IndexTable__TableCell, .Polaris-IndexTable__Table--scrolling .Polaris-IndexTable__TableHeading--second {
-    box-shadow: 0.1rem -0.1rem 0 0 rgba(225, 227, 229, 1);
+    box-shadow: 1px -1px 0 0 rgba(225, 227, 229, 1);
 
     &.Table-unselectable {
       // stylelint-disable-next-line selector-max-class, selector-max-specificity
       .TableHeading-second,
       .TableCell:first-child {
         visibility: visible;
-        filter: drop-shadow(1rem 0 0 rgba(225, 227, 229, 1));
+        filter: drop-shadow(10px 0 0 rgba(225, 227, 229, 1));
       }
     }
   }
@@ -120,7 +120,7 @@
 .Polaris-IndexTable__TableRow {
   background-color: rgba(255, 255, 255, 1);
   cursor: pointer;
-  filter: drop-shadow(0 -.1rem 0 rgba(225, 227, 229, 1));
+  filter: drop-shadow(0 -1px 0 rgba(225, 227, 229, 1));
 
   &.TableRow-unclickable {
     cursor: auto;
@@ -148,7 +148,7 @@
 }
 
 .Polaris-IndexTable__TableHeading {
-  padding: 1.6rem;
+  padding: 16px;
   text-align: left;
   font-weight: 500;
   white-space: nowrap;
@@ -159,8 +159,8 @@
   position: -webkit-sticky;
   position: sticky;
   left: 0;
-  padding-left: 1.4rem;
-  padding-right: 1.8rem;
+  padding-left: 14px;
+  padding-right: 18px;
 }
 
 .Polaris-IndexTable__ColumnHeaderCheckboxWrapper {
@@ -168,8 +168,8 @@
 }
 
 .Polaris-IndexTable__StickyColumnHeaderCheckbox {
-  margin-left: -0.2rem;
-  padding-right: 0.2rem;
+  margin-left: -2px;
+  padding-right: 2px;
 }
 
 .Polaris-IndexTable__TableHeading--second {
@@ -190,16 +190,16 @@
     right: 0;
     z-index: auto;
     background-color: rgba(255, 255, 255, 1);
-    filter: drop-shadow(-0.1rem 0 0 rgba(225, 227, 229, 1));
+    filter: drop-shadow(-1px 0 0 rgba(225, 227, 229, 1));
   }
 }
 
 .Polaris-IndexTable__TableCell {
   z-index: 1;
   text-align: left;
-  padding: 0.8rem 1.6rem;
+  padding: 8px 16px;
   white-space: nowrap;
-  //box-shadow: 0 -0.1rem 0 0 rgba(225, 227, 229, 1);
+  //box-shadow: 0 -1px 0 0 rgba(225, 227, 229, 1);
 }
 
 .Polaris-IndexTable__TableCell--flush {
@@ -248,8 +248,8 @@
 }
 
 .Polaris-IndexTable__StickyTableHeader:not(.Polaris-IndexTable__StickyTableHeader--isSticky) {
-  top: -100rem;
-  left: -100rem;
+  top: -1000px;
+  left: -1000px;
 }
 
 .Polaris-IndexTable__StickyTableColumnHeader {
@@ -277,7 +277,7 @@
 }
 
 .Polaris-IndexTable--stickyTableHeadingSecondScrolling {
-  padding: 0 0.06rem 0 1.6rem;
+  padding: 0 0.6px 0 16px;
   display: none;
 }
 
@@ -312,7 +312,7 @@
   top: 0;
   left: 0;
   right: 0;
-  padding: 0.8rem;
+  padding: 8px;
   background: rgba(255, 255, 255, 1);
 }
 
@@ -321,11 +321,11 @@
   position: sticky;
   z-index: 35;
   bottom: 0;
-  padding: 0.2rem;
-  border-top: 0.1rem solid rgba(225, 227, 229, 1);
+  padding: 2px;
+  border-top: 1px solid rgba(225, 227, 229, 1);
   background-color: rgba(255, 255, 255, 1);
-  border-bottom-right-radius: 0.4rem;
-  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 .Polaris-IndexTable--scrollBarContainerCondensed {
@@ -341,20 +341,20 @@
 }
 
 .Polaris-IndexTable__ScrollBar::-webkit-scrollbar-track {
-  border-radius: 0.4rem;
+  border-radius: 4px;
   background-color: transparent;
 }
 
 .Polaris-IndexTable__ScrollBar::-webkit-scrollbar {
   -webkit-appearance: none;
   appearance: none;
-  height: 0.8rem;
-  width: 0.8rem;
+  height: 8px;
+  width: 8px;
   background-color: transparent;
 }
 
 .Polaris-IndexTable__ScrollBar::-webkit-scrollbar-thumb {
-  border-radius: 0.4rem;
+  border-radius: 4px;
   background-color: rgba(186, 191, 195, 1);
   -webkit-transition: background-color 100ms ease-out;
   transition: background-color 100ms ease-out;
@@ -370,20 +370,20 @@
 }
 
 .Polaris-IndexTable--selectMode {
-  transform: translateY(-5.2rem);
-  margin-bottom: -5.2rem;
+  transform: translateY(-52px);
+  margin-bottom: -52px;
 }
 
 .Polaris-IndexTable__EmptySearchResultWrapper {
-  padding: 1.6rem;
+  padding: 16px;
 }
 
 .Polaris-IndexTable--condensedRow {
-  width: calc(100% + 3.4rem);
-  transform: translateX(-3.4rem);
+  width: calc(100% + 34px);
+  transform: translateX(-34px);
   transition: transform cubic-bezier(0.64, 0, 0.35, 1) 200ms;
   display: flex;
-  border-top: 0.1rem solid rgba(225, 227, 229, 1);
+  border-top: 1px solid rgba(225, 227, 229, 1);
   filter: none;
   align-items: center;
 }
@@ -404,8 +404,8 @@
   display: flex;
   align-items: flex-start;
   width: 100%;
-  min-height: 5.6rem;
-  padding: 1rem 1.6rem;
+  min-height: 56px;
+  padding: 10px 16px;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15);
 }
@@ -415,7 +415,7 @@
 }
 
 .Polaris-IndexTable__StickyTableHeader--condensed {
-  padding: 1.6rem 1.6rem 0.8rem;
+  padding: 16px 16px 8px;
 }
 
 :root {
@@ -440,15 +440,15 @@
 }
 
 .Polaris-IndexTable-Checkbox--expanded {
-  width: 3.2rem;
-  height: 3.2rem;
-  padding-left: 1.6rem;
+  width: 32px;
+  height: 32px;
+  padding-left: 16px;
 }
 
 .Polaris-IndexTable-Checkbox--condensed {
-  min-width: 5rem;
-  min-height: 4.4rem;
-  margin-right: -1.6rem;
+  min-width: 50px;
+  min-height: 44px;
+  margin-right: -16px;
 }
 
 
@@ -464,8 +464,8 @@
 }
 
 .Polaris-IndexTable-FirstStickyHeaderElement {
-  margin-left: 2rem;
-  padding-right: 2rem;
+  margin-left: 20px;
+  padding-right: 20px;
 }
 
 @mixin breakpoint-after($breakpoint, $inclusive: true) {
@@ -475,7 +475,7 @@
 }
 
 .Polaris-IndexTable-StickyTableHeading-second-scrolling {
-  padding: 0 0.6rem 0 spacing();
+  padding: 0 6px 0 spacing();
   display: none;
 
   @include breakpoint-after(458px) {
@@ -497,8 +497,8 @@
 .Polaris-IndexTable-TableHeading-first {
   position: sticky;
   left: 0;
-  padding-left: 14rem;
-  padding-right: 18rem;
+  padding-left: 140px;
+  padding-right: 180px;
 }
 
 .Polaris-IndexTable-TableHeading-second {
@@ -555,7 +555,7 @@
     right: 0;
     background-color: rgba(255, 255, 255, 1);
     z-index: 31;
-    filter: drop-shadow(-0.1rem 0 0 rgba(225, 227, 229, 1));
+    filter: drop-shadow(-1px 0 0 rgba(225, 227, 229, 1));
   }
 }
 
@@ -570,7 +570,7 @@
 
 .Polaris-IndexTable__Table-sticky-scrolling, .Polaris-IndexTable__TableCell--last-child, .Polaris-IndexTable__TableHeading--last {
   @media screen and (min-width: 457px) {
-    filter: drop-shadow(-0.1rem 0 0 rgba(225, 227, 229, 1));
+    filter: drop-shadow(-1px 0 0 rgba(225, 227, 229, 1));
   }
 }
 

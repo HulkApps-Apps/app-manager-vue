@@ -1,14 +1,14 @@
 .Polaris-Stack {
-  margin-top: -1.6rem;
-  margin-left: -1.6rem;
+  margin-top: -16px;
+  margin-left: -16px;
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
 }
 
 .Polaris-Stack > .Polaris-Stack__Item:not(:empty) {
-  margin-top: 1.6rem;
-  margin-left: 1.6rem;
+  margin-top: 16px;
+  margin-left: 16px;
   max-width: 100%;
 }
 
@@ -28,35 +28,35 @@
 }
 
 .Polaris-Stack--spacingExtraTight {
-  margin-top: -0.4rem;
-  margin-left: -0.4rem;
+  margin-top: -4px;
+  margin-left: -4px;
 }
 
 .Polaris-Stack--spacingExtraTight > .Polaris-Stack__Item:not(:empty) {
-  margin-top: 0.4rem;
-  margin-left: 0.4rem;
+  margin-top: 4px;
+  margin-left: 4px;
   max-width: 100%;
 }
 
 .Polaris-Stack--spacingTight {
-  margin-top: -0.8rem;
-  margin-left: -0.8rem;
+  margin-top: -8px;
+  margin-left: -8px;
 }
 
 .Polaris-Stack--spacingTight > .Polaris-Stack__Item:not(:empty) {
-  margin-top: 0.8rem;
-  margin-left: 0.8rem;
+  margin-top: 8px;
+  margin-left: 8px;
   max-width: 100%;
 }
 
 .Polaris-Stack--spacingBaseTight {
-  margin-top: -1.2rem;
-  margin-left: -1.2rem;
+  margin-top: -12px;
+  margin-left: -12px;
 }
 
 .Polaris-Stack--spacingBaseTight > .Polaris-Stack__Item:not(:empty) {
-  margin-top: 1.2rem;
-  margin-left: 1.2rem;
+  margin-top: 12px;
+  margin-left: 12px;
   max-width: 100%;
 }
 

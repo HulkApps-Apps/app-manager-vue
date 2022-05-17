@@ -1,9 +1,9 @@
 :root {
-  --preview-frame_height-frame-header: 5.6rem;
+  --preview-frame_height-frame-header: 56px;
   --preview-frame_color-frame-surface-bg: rgba(255, 255, 255, 1);
-  --preview-frame_width-sidebar-desktop: 30rem;
-  --preview-frame_sidebar-action-offset: 0.4rem;
-  --preview-frame_nav-header-section-divider-offset: 1.6rem;
+  --preview-frame_width-sidebar-desktop: 300px;
+  --preview-frame_sidebar-action-offset: 4px;
+  --preview-frame_nav-header-section-divider-offset: 16px;
   --preview-frame_static-panel-section-padding: 0;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .Polaris-PreviewFrame__slimHeader {
-  --preview-frame_height-frame-header: 4.4rem;
+  --preview-frame_height-frame-header: 44px;
 }
 
 .Polaris-PreviewFrame, .Polaris-GenericPreviewFrame {
@@ -52,8 +52,8 @@
 .Polaris-PreviewFrame__SkipToAction {
   z-index: 80;
   position: fixed;
-  top: 1rem;
-  left: 0.8rem;
+  top: 10px;
+  left: 8px;
   opacity: 0;
   pointer-events: none;
 }
@@ -63,10 +63,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 3.6rem;
-  min-width: 3.6rem;
+  min-height: 36px;
+  min-width: 36px;
   margin: 0;
-  padding: 0.7rem 1.6rem;
+  padding: 7px 16px;
   background: $p-surface;
   box-shadow: $p-button-drop-shadow;
   border-radius: $p-border-radius-base;
@@ -95,7 +95,7 @@
 }
 
 .Polaris-PreviewFrame__TopBar--slim {
-  --preview-frame_height-frame-header: 4.4rem;
+  --preview-frame_height-frame-header: 44px;
 }
 
 .Polaris-PreviewFrame__LayoutGroup {
@@ -112,12 +112,12 @@
 }
 
 .Polaris-PreviewFrame__LayoutGroup--paddedBoth {
-  padding-right: 1.6rem;
-  padding-left: 1.6rem;
+  padding-right: 16px;
+  padding-left: 16px;
 }
 
 .Polaris-PreviewFrame__LayoutGroup--paddedRight {
-  padding-right: 1.6rem;
+  padding-right: 16px;
 }
 
 .Polaris-PreviewFrame__LayoutGroup--grow {
@@ -129,18 +129,18 @@
 }
 
 .Polaris-PreviewFrame__spacingBase > * + * {
-  margin-left: 1.6rem;
+  margin-left: 16px;
 }
 
 .Polaris-PreviewFrame__spacingTight > * + * {
-  margin-left: 0.8rem;
+  margin-left: 8px;
 }
 
 .Polaris-PreviewFrame__HeaderBlank {
   position: absolute;
   right: 0;
   left: 0;
-  bottom: -0.2rem;
+  bottom: -2px;
   z-index: 10;
 }
 
@@ -155,7 +155,7 @@
 
 .Polaris-PreviewFrame__Sidebar:not(.Polaris-PreviewFrame__Sidebar--secondary-second) {
   @media (min-width: 41.6875em) {
-    border-right: 0.1rem solid $p-divider;
+    border-right: 1px solid $p-divider;
   }
 }
 
@@ -196,14 +196,14 @@
 }
 
 .Polaris-PreviewFrame__Layout {
-  --preview-frame_sidebar-action-offset: 0.4rem;
+  --preview-frame_sidebar-action-offset: 4px;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
 }
 
 .Polaris-PreviewFrame__layoutSpacingBase, .Polaris-PreviewFrame__layoutSpacingDefault, .Polaris-PreviewFrame__sectionSpacingBase {
-  --preview-frame_static-panel-layout-spacing: 1.6rem;
+  --preview-frame_static-panel-layout-spacing: 16px;
 }
 
 .Polaris-PreviewFrame__spaceAfter {
@@ -225,7 +225,7 @@
 }
 
 .Polaris-PreviewFrame__NavHeader {
-  border-bottom: 0.1rem solid $p-divider;
+  border-bottom: 1px solid $p-divider;
 }
 
 .Polaris-PreviewFrame__RightHeader {
@@ -235,17 +235,17 @@
 }
 
 .Polaris-PreviewFrame__RightHeader--sticky {
-  --preview-frame_static-panel-header-padding-y: 1.6rem;
+  --preview-frame_static-panel-header-padding-y: 16px;
 }
 
 .Polaris-PreviewFrame__RightHeader--sticky, .Polaris-PreviewFrame__RightHeader--hasBack,
 .Polaris-PreviewFrame__RightHeader--sticky, .Polaris-PreviewFrame__RightHeader--close {
-  --preview-frame_static-panel-header-padding-y: 0.8rem;
+  --preview-frame_static-panel-header-padding-y: 8px;
 }
 
 .Polaris-PreviewFrame__RightHeader--BackActionWrapper {
-  margin-left: -0.8rem;
-  margin-right: 0.4rem;
+  margin-left: -8px;
+  margin-right: 4px;
 }
 
 .Polaris-PreviewFrame__RightTitleWrapper {
@@ -260,11 +260,11 @@
 
 .Polaris-PreviewFrame__Section {
   --preview-frame_nav-header-section-divider-offset: 0;
-  padding: 1.2rem;
+  padding: 12px;
 }
 
 .Polaris-PreviewFrame__Section:first-child {
-  padding-top: 1.6rem;
+  padding-top: 16px;
 }
 
 .Polaris-PreviewFrame__Section--sticky {
@@ -273,7 +273,7 @@
 }
 
 .Polaris-PreviewFrame__Section--sticky:first-child {
-  border-bottom: 0.1rem solid $p-divider;
+  border-bottom: 1px solid $p-divider;
 }
 
 .Polaris-PreviewFrame__Section--header.Polaris-PreviewFrame__Section--sticky {
@@ -281,11 +281,11 @@
 }
 
 .Polaris-PreviewFrame__alignToNav {
-  padding-left: 2.8rem;
+  padding-left: 28px;
 }
 
 .Polaris-PreviewFrame__alignToNav, .Polaris-PreviewFrame__alignToNav + .Polaris-PreviewFrame__Section {
-  --preview-frame_nav-header-section-divider-offset: 1.6rem;
+  --preview-frame_nav-header-section-divider-offset: 16px;
 }
 
 .Polaris-PreviewFrame__Section--header {
@@ -300,11 +300,11 @@
 }
 
 .Polaris-PreviewFrame__paddingBase {
-  --preview-frame_static-panel-section-padding: 1.6rem;
+  --preview-frame_static-panel-section-padding: 16px;
 }
 
 .Polaris-PreviewFrame__layoutSpacingExtraTight, .Polaris-PreviewFrame__sectionSpacingExtraTight {
-  --preview-frame_static-panel-layout-spacing: 0.4rem;
+  --preview-frame_static-panel-layout-spacing: 4px;
 }
 
 .Polaris-PreviewFrame__ChildrenWrapper--header {
@@ -317,7 +317,7 @@
 }
 
 .Polaris-PreviewFrame__sticky:last-child {
-  border-top: 0.1rem solid $p-divider;
+  border-top: 1px solid $p-divider;
 }
 
 .Polaris-PreviewFrame__layoutSpacingNone,
@@ -348,7 +348,7 @@
 .Polaris-PreviewFrame__Sidebar--secondary-second {
   @media (min-width: 14.6875em) {
     grid-area: secondary-sidebar;
-    border-left: 0.1rem solid $p-divider;
+    border-left: 1px solid $p-divider;
   }
 }
 
@@ -361,7 +361,7 @@
   display: flex;
 
   @media (min-width: 41.6875em) {
-    padding: 1.6rem;
+    padding: 16px;
   }
 }
 
@@ -410,7 +410,7 @@
 }
 
 .Polaris-PreviewFrame__modeMobile {
-  max-width: 37.5rem;
+  max-width: 375px;
 }
 
 .Polaris-PreviewFrame__modeFullscreen {

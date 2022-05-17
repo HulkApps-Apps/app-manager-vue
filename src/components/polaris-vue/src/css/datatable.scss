@@ -8,7 +8,7 @@
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		padding: 1.6rem .8rem;
+		padding: 16px 8px;
 		@media (min-width:48em) {
 			justify-content: flex-end;
 		}
@@ -19,12 +19,12 @@
 	display: none;
 }
 .Polaris-DataTable__Pip {
-	height: 0.6rem;
-  	width: 0.6rem;
+	height: 6px;
+  	width: 6px;
 	background: $datatable-pip-bgcolor;
 	border-radius: $datatable-pip-border-radius;
 	&:not(:last-of-type) {
-		margin-right: .4rem;
+		margin-right: 4px;
 	}
 }
 .Polaris-DataTable__Pip--visible {
@@ -40,7 +40,7 @@
 }
 
 .Polaris-DataTable__Cell {
-	padding: 1.6rem;
+	padding: 16px;
 	border-bottom: $datatable-cell-border;
 	white-space: nowrap;
 	text-align: left;
@@ -69,7 +69,7 @@
 	white-space: nowrap;
 	overflow-x: hidden;
 	text-overflow: ellipsis;
-	max-width: 14.5rem;
+	max-width: 145px;
 }
 .Polaris-DataTable__Cell--header {
 	font-weight: $datatable-cell-header-font-weight;
@@ -112,7 +112,7 @@
 	justify-content: flex-end;
 	align-items: baseline;
 	transition: color .2s cubic-bezier(.64,0,.35,1);
-	padding: 1.6rem;
+	padding: 16px;
 	cursor: pointer;
 	&:focus {
 		outline: none;
@@ -149,12 +149,12 @@
 	border-bottom: $datatable-cell-total-border;
 }
 .Polaris-DataTable--cellTotalFooter, .Polaris-DataTable__Footer {
-	border-top: .1rem solid rgba(225, 227, 229, 1);
-	border-bottom-left-radius: 0.4rem;
-	border-bottom-right-radius: 0.4rem;
+	border-top: 1px solid rgba(225, 227, 229, 1);
+	border-bottom-left-radius: 04px;
+	border-bottom-right-radius: 04px;
 }
 .Polaris-DataTable__Footer {
-	padding: 1.6rem;
+	padding: 16px;
 	background: $datatable-cell-footer-bgcolor;
 	color: $datatable-cell-footer-color;
 	text-align: center;

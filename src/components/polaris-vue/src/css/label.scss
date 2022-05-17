@@ -14,9 +14,9 @@
 }
 
 .Polaris-Label__Text {
-  font-size: 1.5rem;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 2rem;
+  line-height: 20px;
   text-transform: initial;
   letter-spacing: initial;
   display: block;
@@ -27,12 +27,12 @@
 
 @media (min-width: 40em) {
   .Polaris-Label__Text {
-    font-size: 1.4rem;
+    font-size: 14px;
   }
 }
 
 .Polaris-Label__RequiredIndicator::after {
   content: '*';
   color: $p-critical;
-  margin-left: 0.4rem;
+  margin-left: 4px;
 }
