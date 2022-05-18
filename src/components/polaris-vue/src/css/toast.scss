@@ -48,8 +48,8 @@
   font-weight: $frame-toast-font-weight;
   line-height: $frame-toast-line-height;
   display: inline-flex;
-  max-width: 50rem;
-  padding: .8rem 1.6rem;
+  max-width: 500px;
+  padding: 8px 16px;
   border-radius: $frame-toast-border-radius;
   background: $frame-toast-bgcolor;
   box-shadow: $frame-toast-box-shadow;
@@ -58,12 +58,12 @@
   @media (min-width:40em) {
     font-size: $frame-toast-media-font-size;
     line-height: $frame-toast-media-line-height;
-    padding: 1.6rem;
+    padding: 16px;
   }
 }
 .Polaris-Frame-Toast__Action {
-  margin-left: 3.2rem;
-  margin-right: 1.6rem;
+  margin-left: 32px;
+  margin-right: 16px;
 }
 .Polaris-Frame-Toast--error {
   background: $frame-toast-error-bgcolor;
@@ -77,8 +77,8 @@
   align-self: center;
   flex-direction: column;
   justify-content: flex-start;
-  margin: -.8rem -1.6rem -.8rem 0;
-  padding: 0 1.6rem;
+  margin: -8px -16px -8px 0;
+  padding: 0 16px;
   border: $frame-toast-closebtn-border;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -96,36 +96,36 @@
   animation-duration: 150ms;
   &.Polaris-Frame-Toast--Position-top {
     .Polaris-Frame-Toast {
-      margin-top: 2rem;
+      margin-top: 20px;
     }
   }
   &.Polaris-Frame-Toast--Position-bottom {
     .Polaris-Frame-Toast {
-      margin-bottom: 2rem;
+      margin-bottom: 20px;
     }
   }
   &.Polaris-Frame-Toast--Position-top-right {
     .Polaris-Frame-Toast {
-      margin-top: 2rem;
-      margin-right: 2rem;
+      margin-top: 20px;
+      margin-right: 20px;
     }
   }
   &.Polaris-Frame-Toast--Position-bottom-right {
     .Polaris-Frame-Toast {
-      margin-bottom: 2rem;
-      margin-right: 2rem;
+      margin-bottom: 20px;
+      margin-right: 20px;
     }
   }
   &.Polaris-Frame-Toast--Position-top-left {
     .Polaris-Frame-Toast {
-      margin-top: 2rem;
-      margin-left: 2rem;
+      margin-top: 20px;
+      margin-left: 20px;
     }
   }
   &.Polaris-Frame-Toast--Position-bottom-left {
     .Polaris-Frame-Toast {
-      margin-bottom: 2rem;
-      margin-left: 2rem;
+      margin-bottom: 20px;
+      margin-left: 20px;
     }
   }
   &.Polaris-Frame-Toast--Position-top,

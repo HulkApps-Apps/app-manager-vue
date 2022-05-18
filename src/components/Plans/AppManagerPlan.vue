@@ -409,14 +409,18 @@
     }
     .app-manager-plan-page .custom-plan table tbody tr td:first-child {
         border-left: 0px !important;
+        border-top: 0px !important;
+        border-bottom: 0px !important;
         padding-left: 20px;
     }
     .app-manager-plan-page .custom-plan table tbody tr td:last-child {
         border-right: 0px !important;
+        border-bottom: 0px !important;
         text-align: center !important;
     }
     .app-manager-plan-page .custom-plan table thead tr td:last-child {
         border-right: 0px !important;
+        border-bottom: 0px !important;
         text-align: center !important;
     }
     .app-manager-plan-page .custom-plan table tbody td:not(:first-child) {

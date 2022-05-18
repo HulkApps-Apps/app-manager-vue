@@ -110,10 +110,10 @@
 
 /* New CSS*/
 .Polaris-Tooltip-TooltipOverlay {
-  //margin: 0.4rem 1.6rem 1.6rem;
+  //margin: 4px 1.6rem 1.6rem;
   opacity: 1;
   box-shadow: 0 1px 5px rgba(23, 24, 24, 0.05);
-  border-radius: 0.4rem;
+  border-radius: 4px;
   pointer-events: none;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -123,7 +123,7 @@
 
 @media screen and (-ms-high-contrast: active) {
   .Polaris-Tooltip-TooltipOverlay {
-    border: 0.2rem solid windowText;
+    border: 2px solid windowText;
   }
 }
 
@@ -132,7 +132,7 @@
 }
 
 .Polaris-Tooltip-Popover {
-  margin-bottom: 0.8rem;
+  margin-bottom: 8px;
 }
 
 .Polaris-Tooltip-TooltipOverlay__Content {
@@ -140,8 +140,8 @@
   border-radius: 3px;
   background-color: rgba(255, 255, 255, 1);
   color: rgba(32, 34, 35, 1);
-  max-width: 20rem;
-  padding: 0.4rem 0.8rem;
+  max-width: 200px;
+  padding: 4px 8px;
   word-break: break-word;
   font-weight: normal;
 }

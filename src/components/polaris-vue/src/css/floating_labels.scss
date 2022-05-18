@@ -8,7 +8,7 @@
     position: absolute;
     top: 0;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 10px;
     z-index: 11;
     overflow: hidden;
     white-space: nowrap;
@@ -25,11 +25,11 @@
   }
 
   .Polaris-Floating--label__prefix {
-    border-radius: 0 0.4rem 0.4rem 0;
+    border-radius: 0 4px 4px 0;
   }
 
   .Polaris-Floating--label__suffix {
-    border-radius: 0.4rem 0 0 0.4rem;
+    border-radius: 4px 0 0 4px;
   }
 
   .Polaris-FloatingLabels__Input {
@@ -43,7 +43,7 @@
     -webkit-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
     color: $textfield-color;
-    font-size: 1.4rem;
+    font-size: 14px;
     font-weight: $textfield-font-weight;
     z-index: 11;
 
@@ -53,8 +53,8 @@
 
     &:focus ~ .Polaris-TextField__Backdrop {
       &:after {
-        box-shadow: 0 0 0 .2rem $theme-shadow-color;
-        outline: .1rem solid transparent;
+        box-shadow: 0 0 0 2px $theme-shadow-color;
+        outline: 1px solid transparent;
       }
     }
   }
@@ -66,12 +66,12 @@
   }
 
   .Polaris-FloatingLabels__Input--prefix {
-    border-radius: 0 0.4rem 0.4rem 0;
+    border-radius: 0 4px 4px 0;
     border-left: none;
   }
 
   .Polaris-FloatingLabels__Input--suffix {
-    border-radius: 0.4rem 0 0 0.4rem;
+    border-radius: 4px 0 0 4px;
     border-right: none;
   }
 
@@ -80,7 +80,7 @@
   }
 
   .Polaris-FloatingLabels__Input--number {
-    border-radius: 0.4rem 0 0 0.4rem;
+    border-radius: 4px 0 0 4px;
     border-right: none;
   }
 
@@ -146,7 +146,7 @@
   position: absolute;
   z-index: 51;
   margin: 11px 0 10px;
-  padding: 0 1rem;
+  padding: 0 10px;
   line-height: 24px;
   -webkit-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
@@ -157,7 +157,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  padding: 0 .8rem 0 1.2rem;
+  padding: 0 8px 0 12px;
 }
 
 .Polaris-Select-Floating-Label .multiselect .multiselect__tags {
@@ -200,19 +200,19 @@
   -webkit-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
   color: $textfield-color;
-  font-size: 1.4rem;
+  font-size: 14px;
   font-weight: $textfield-font-weight;
   z-index: 11;
   background-color: #ffffff;
-  border: 0.1rem solid #c9cccf;
-  box-shadow: 0 0 0 -0.2rem #2C6ECB;
+  border: 1px solid #c9cccf;
+  box-shadow: 0 0 0 -02px #2C6ECB;
   white-space: nowrap;
   appearance: none;
 }
 
 .Polaris-FloatingLabels__Input--select::after {
-  box-shadow: 0 0 0 0.2rem #458fff;
-  outline: 0.1rem solid transparent;
+  box-shadow: 0 0 0 02px #458fff;
+  outline: 1px solid transparent;
 }
 
 .Polaris-Select--Active .Polaris-FloatingLabels__Input--select {

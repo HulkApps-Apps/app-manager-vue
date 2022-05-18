@@ -3,23 +3,23 @@
   --p-component-badge-pip-color: rgba(92, 95, 98, 1);
   display: inline-flex;
   align-items: center;
-  padding: 0.2rem 0.8rem;
+  padding: 2px 8px;
   background-color: $p-surface-neutral;
-  border-radius: 2rem;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
+  border-radius: 20px;
+  font-size: 13px;
+  line-height: 16px;
   color: $p-text;
   font-weight: $p-badge-font-weight;
 }
 
 @media print {
   .Polaris-Badge {
-    border: solid 0.01rem $p-border;
+    border: solid 0.1px $p-border;
   }
 }
 
 .Polaris-Badge--sizeSmall {
-  font-size: 1.2rem;
+  font-size: 12px;
 }
 
 .Polaris-Badge--statusSuccess {
@@ -61,11 +61,11 @@
 
 .Polaris-Badge__Pip {
   color: var(--p-component-badge-pip-color);
-  height: 0.8rem;
-  width: 0.8rem;
-  margin-right: 0.4rem;
-  margin-left: -0.2rem;
-  border: 0.2rem solid currentColor;
+  height: 8px;
+  width: 8px;
+  margin-right: 4px;
+  margin-left: -2px;
+  border: 2px solid currentColor;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -81,7 +81,7 @@
 @media print {
   .Polaris-Badge--progressPartiallyComplete .Polaris-Badge__Pip {
     background: none;
-    box-shadow: 0 -10.2rem 0 -10rem currentColor inset;
+    box-shadow: 0 -12px 0 -100px currentColor inset;
   }
 }
 
@@ -92,7 +92,7 @@
 @media print {
   .Polaris-Badge--progressComplete .Polaris-Badge__Pip {
     background: none;
-    box-shadow: 0 0 0 10rem currentColor inset;
+    box-shadow: 0 0 0 100px currentColor inset;
   }
 }
 

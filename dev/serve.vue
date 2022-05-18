@@ -28,17 +28,10 @@ export default Vue.extend({
     <h1>Test</h1>
     <div id="app" class="app-manager">
       <div class="app-manager-body">
-        <PBadge status="success">badge</PBadge>
-        <PPage>
-          <PCard sectioned>
-            <PDisplayText size="large">Test</PDisplayText>
-          </PCard>
-        </PPage>
+        <Banners type="header" />
+        <Banners type="footer" />
+        <AppManagerPlan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />
       </div>
-      <!--    <Banners type="header" />-->
-      <!--    <Banners type="footer" />-->
-      <!--    <AppManagerPlan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />-->
-
     </div>
   </div>
 </template>

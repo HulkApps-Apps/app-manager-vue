@@ -35,20 +35,20 @@ $theme-interactive-focused: #1f5199;
 
 $body-font-color: $theme-topbar-color;
 $body-font-weight: 400 ;
-$body-font-size: 1.5rem;
-$body-line-height: 2rem;
+$body-font-size: 15px;
+$body-line-height: 20px;
 $font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
 $body-bg-color: #f6f6f7;
-$body-media-fontsize: 1.4rem;
+$body-media-fontsize: 14px;
 
 /* button variable */
 
-$btn-border-radius: 0.4rem;
+$btn-border-radius: 4px;
 
-$btn-content-fontsize: 1.5rem;
+$btn-content-fontsize: 15px;
 $btn-content-fontweight: 500;
-$btn-content-lineheight: 1.6rem;
-$btn-content-media-fontsize: 1.4rem;
+$btn-content-lineheight: 16px;
+$btn-content-media-fontsize: 14px;
 
 $btn-default-border: 1px solid $theme-btn-default-border-color;
 $btn-default-top-border: $theme-btn-default-top-border-color;
@@ -288,26 +288,26 @@ $btn-plain-icononly-disabled-svg-icon-color: rgba(186, 190, 195, 1);
 
 /* Scrollable */
 
-$scroll-top-shadow: inset 0 2rem 2rem -2rem rgba(0, 0, 0, 0.15);
+$scroll-top-shadow: inset 0 20px 20px -20px rgba(0, 0, 0, 0.15);
 
-$scroll-bottom-shadow: inset 0 -2rem 2rem -2rem rgba(0, 0, 0, 0.15);
+$scroll-bottom-shadow: inset 0 -20px 20px -20px rgba(0, 0, 0, 0.15);
 
-$scroll-top-bottom-shadow: inset 0 2rem 2rem -2rem rgba(0, 0, 0, 0.15), inset 0 -2rem 2rem -2rem rgba(0, 0, 0, 0.15);
+$scroll-top-bottom-shadow: inset 0 20px 20px -20px rgba(0, 0, 0, 0.15), inset 0 -20px 20px -20px rgba(0, 0, 0, 0.15);
 
 /* Badge */
 
 $badge-bgcolor: $theme-bgcolor;
 $badge-border: 0;
-$badge-border-radius: 2rem;
-$badge-font-size: 1.3rem;
+$badge-border-radius: 20px;
+$badge-font-size: 13px;
 $badge-color: $theme-topbar-color;
-$badge-line-height: 1.6rem;
+$badge-line-height: 16px;
 $badge-font-weight: 400;
 
 $badge-pip-color: rgba(92, 95, 98, 1);
 
-$badge-small-font-size: 1.2rem;
-$badge-small-line-height: 1.8rem;
+$badge-small-font-size: 12px;
+$badge-small-line-height: 18px;
 
 $badge-status-success-bgcolor: #aee9d1;
 $badge-status-success-color: $theme-topbar-color;
@@ -339,7 +339,7 @@ $badge-status-new-color: $theme-topbar-color;
 $badge-status-new-font-weight: 500;
 $badge-status-new-border: none;
 
-$badge-pip-border: .2rem solid ;
+$badge-pip-border: 2px solid ;
 $badge-pip-border-radius: 50%;
 
 $badge-progress-incomplete-pip-bgcolor: transparent;
@@ -358,7 +358,7 @@ $textstyle-variationcode-bgcolor: rgba(250, 251, 251, 1);
 
 $textstyle-variationcode-border-radius: 3px;
 
-$textstyle-variationcode-font-size: 1.15em;
+$textstyle-variationcode-font-size: 11.5px;
 
 $textstyle-variationcode-box-shadow: inset 0 0 0 1px rgba(201, 204, 207, 1);
 
@@ -370,16 +370,16 @@ $textstyle-variationsubdued-color: rgba(109, 113, 117, 1);
 
 /* ActionList */
 
-$actionlist-section-border : .1rem solid rgba(225, 227, 229, 1);
-$actionlist-section-border-radius : 0.4rem;
+$actionlist-section-border : 1px solid rgba(225, 227, 229, 1);
+$actionlist-section-border-radius : 4px;
 
 $actionlist-section-border-0 :  none;
 
-$actionlist-title-font-size: 1.3rem;
+$actionlist-title-font-size: 13px;
 $actionlist-title-font-weight: 600;
-$actionlist-title-line-height: 1.6rem;
+$actionlist-title-line-height: 16px;
 
-$actionlist-title-media-font-size: 1.2rem;
+$actionlist-title-media-font-size: 12px;
 
 $actionlist-item-bgcolor: none;
 $actionlist-item-border: none;
@@ -390,7 +390,7 @@ $actionlist-item-border-top: 1px solid rgba(255, 255, 255, 1);
 
 $actionlist-item-visited-color: inherit;
 
-$actionlist-item-after-box-shadow: 0 0 0 -0.1rem $theme-secondary-color;
+$actionlist-item-after-box-shadow: 0 0 0 -01px $theme-secondary-color;
 
 $actionlist-item-active-svg-fill: $theme-primary-color;
 $actionlist-item-active-before-bgcolor: $theme-primary-color;
@@ -398,7 +398,7 @@ $actionlist-item-active-bgcolor: $theme-default-btn-active-color;
 	
 $actionlist-item-hover-bgcolor: $theme-btn-default-hover-bgcolor;
 
-$actionlist-item-focus-after-box-shadow: 0 0 0 0.2rem $theme-secondary-color;
+$actionlist-item-focus-after-box-shadow: 0 0 0 02px $theme-secondary-color;
 
 $actionlist-item-destructive-color: $theme-destructive-color;
 $actionlist-item-destructive-svg-color: #d72c0d;
@@ -414,38 +414,38 @@ $actionlist-image-radius: 3px;
 $actionlist-image-svg-fill: $theme-svg-fill-color;
 
 $popover-box-shadow:  -1px 0px 20px rgba(23, 24, 24, 0.05), 0px 1px 5px rgba(0, 0, 0, 0.15);
-$popover-border-radius : 0.8rem;
+$popover-border-radius : 8px;
 $popover-wrapper-bgcolor : $theme-common-color;
-$popover-border : 0.1rem solid $theme-border-color;
+$popover-border : 01px solid $theme-border-color;
 
-$heading-font-size: 1.7rem;
+$heading-font-size: 17px;
 $heading-font-weight: 600;
-$heading-line-height: 2.4rem;
-$heading-media-font-size: 1.6rem;
+$heading-line-height: 24px;
+$heading-media-font-size: 16px;
 
-$sub-heading-font-size: 1.3rem;
+$sub-heading-font-size: 13px;
 $sub-heading-font-weight: 600;
-$sub-heading-line-height: 1.6rem;
-$sub-heading-media-font-size: 1.2rem;
+$sub-heading-line-height: 16px;
+$sub-heading-media-font-size: 12px;
 
 /*$card*/
 
 $card-bgcolor: $theme-default-button-color;
 $card-box-shadow:  0px 0px 5px rgba(23, 24, 24, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.15);
 $card-border-radius: 8px;
-$card-border: 0.1rem solid $theme-border-color;
+$card-border: 01px solid $theme-border-color;
 
 $card-subdued-bgcolor: $theme-default-btn-disable-color;
 
 /* MenuAction */
 
 $actionmenu-menuaction-bgcolor: transparent;
-$actionmenu-menuaction-font-size: 1.5rem;
+$actionmenu-menuaction-font-size: 15px;
 $actionmenu-menuaction-border: none;
 $actionmenu-menuaction-font-weight: 400;
 $actionmenu-menuaction-color: #454f5b;
 $actionmenu-menuaction-border-radius: 4px;
-$actionmenu-menuaction-media-font-size: 1.4rem;
+$actionmenu-menuaction-media-font-size: 14px;
 
 $actionmenu-menuaction-focus-after-bgcolor: rgba(33, 43, 54, .1);
 
@@ -485,7 +485,7 @@ $optionlist-checkbox-active-backdrop-box-shadow: 0 0 0 1px $theme-secondary-colo
 $optionlist-checkbox-active-backdrop-after-bgcolor: $theme-common-color;
 
 $optionlist-checkbox-backdrop-bgcolor: $theme-default-button-color;
-$optionlist-checkbox-backdrop-border: 0.2rem solid $btn-default-disable-color;
+$optionlist-checkbox-backdrop-border: 02px solid $btn-default-disable-color;
 $optionlist-checkbox-backdrop-border-radius: 4px;
 
 $optionlist-checkbox-backdrop-after-bgcolor: $theme-secondary-color;
@@ -502,9 +502,9 @@ $optionlist-option-visited-color: inherit;
 $optionlist-option-hover-bgimage: linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3));
 
 $optionlist-option-focused-bgimage: linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3));
-$optionlist-option-focused-box-shadow: inset .2rem 0 0 #44cc92;
+$optionlist-option-focused-box-shadow: inset 2px 0 0 #44cc92;
 
-$optionlist-option-focused-hover-box-shadow: inset .2rem 0 0 #44cc92;
+$optionlist-option-focused-hover-box-shadow: inset 2px 0 0 #44cc92;
 $optionlist-option-focused-hover-bgimage: linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3)),linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3));
 
 $optionlist-option-disabled-bgimage: linear-gradient(#f9fafb,#f9fafb);
@@ -514,64 +514,64 @@ $optionlist-option-disabled-media-svg-color: $theme-common-color;
 $optionlist-option-select-bgimage: linear-gradient(rgba(179,188,245,.15),rgba(179,188,245,.15));
 
 $optionlist-option-select-focused-bgimage: linear-gradient(rgba(179,188,245,.15),rgba(179,188,245,.15)),linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3));
-$optionlist-option-select-focused-box-shadow: inset .2rem 0 0 $theme-primary-color;
+$optionlist-option-select-focused-box-shadow: inset 2px 0 0 $theme-primary-color;
 
 $optionlist-option-select-focused-hover-bgimage: linear-gradient(rgba(179,188,245,.15),rgba(179,188,245,.15)),linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3)),linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3));
-$optionlist-option-select-focused-hover-box-shadow: inset .2rem 0 0 #44cc92;
+$optionlist-option-select-focused-hover-box-shadow: inset 2px 0 0 #44cc92;
 
 $optionlist-option-active-bgimage: linear-gradient(rgba(179,188,245,.1),rgba(179,188,245,.1));
 $optionlist-option-media-svg-fill: #454f5b; 
 $optionlist-option-media-svg-color: $theme-common-color;
 
-$optionlist-title-font-size: 1.3rem;
+$optionlist-title-font-size: 13px;
 $optionlist-title-font-weight:600; 
-$optionlist-title-line-height:1.6rem;
-$optionlist-title-media-font-size: 1.2rem;
+$optionlist-title-line-height:16px;
+$optionlist-title-media-font-size: 12px;
 $optionlist-title-color: $theme-common-gray-color;
 
 /* label */
 
-$label-text-font-size: 1.5rem;
+$label-text-font-size: 15px;
 $label-text-font-weight: 400;
-$label-text-line-height: 2rem;
+$label-text-line-height: 20px;
 $label-text-color: $theme-topbar-color;
-$label-text-media-font-size: 1.4rem; 
+$label-text-media-font-size: 14px;
 
 $inline-error-color: #bf0711;
 $inline-error-fill: #fbeae5;
 
 $labelled-helptext-color: $theme-common-gray-color;
-$labelled-helptext-font-size: 1.5rem;
-$labelled-helptext-line-height: 2rem;
+$labelled-helptext-font-size: 15px;
+$labelled-helptext-line-height: 20px;
 $labelled-helptext-font-weight: 400;
 
-$labelled-helptext-media-font-size: 1.4rem;
+$labelled-helptext-media-font-size: 14px;
 
 /* textfield */
 
-$textfield-font-size: 1.6rem;
+$textfield-font-size: 16px;
 $textfield-font-weight: 400;
-$textfield-line-height: 2.4rem;
+$textfield-line-height: 24px;
 $textfield-color: $theme-topbar-color;
 
-$textfield-media-font-size: 1.4rem;
+$textfield-media-font-size: 14px;
 
 $textfield-svg-fill: $theme-svg-fill-color;
 
 $textfield-hasvalue-color: $theme-topbar-color;
 
-$textfield-focus-border: .1rem solid transparent;
+$textfield-focus-border: 1px solid transparent;
 
-$textfield-input-font-size: 1.6rem;
+$textfield-input-font-size: 16px;
 $textfield-input-font-weight: 400;
-$textfield-input-line-height: 2.4rem;
+$textfield-input-line-height: 24px;
 $textfield-input-bgcolor: none;
-$textfield-input-border: .1rem solid transparent;
+$textfield-input-border: 1px solid transparent;
 
-$textfield-input-media-font-size: 1.4rem;
+$textfield-input-media-font-size: 14px;
 
 $textfield-input-disabled-bgcolor: none;
-$textfield-input-disabled-border: .1rem solid transparent;
+$textfield-input-disabled-border: 1px solid transparent;
 $textfield-input-disabled-color: currentColor;
 
 $textfield-input-invalid-box-shadow: none;
@@ -613,11 +613,11 @@ $textfield-clear-hover-enabled-svg-fill: $theme-svg-fill-color;
 
 $textfield-spinner-color: $theme-svg-fill-color;
 
-$textfield-dummyinput-font-size: 1.6rem;
+$textfield-dummyinput-font-size: 16px;
 $textfield-dummyinput-font-weight: 400;
-$textfield-dummyinput-line-height: 2.4rem;
-$textfield-dummyinput-border: .1rem solid transparent;
-$textfield-dummyinput-media-font-size: 1.4rem;
+$textfield-dummyinput-line-height: 24px;
+$textfield-dummyinput-border: 1px solid transparent;
+$textfield-dummyinput-media-font-size: 14px;
 
 $textfield-segment-bgcolor: $theme-bgcolor;
 
@@ -634,8 +634,8 @@ $banner-within-container-box-shadow: none;
 $banner-within-container-bgcolor: $body-bg-color;
 
 $banner-within-container-focus-box-shadow: var(--p-banner-border, inset 0 3px 0 0 var(--p-border-on-surface,$theme-label-color), inset 0 0 0 3px var(--p-border-on-surface,$theme-label-color), 0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
-$banner-within-container-focus-after-border: .2rem solid var(--p-interactive-focus);
-$banner-within-container-focus-after-border-radius: calc(var(--p-border-radius-wide) + .3rem);
+$banner-within-container-focus-after-border: 2px solid var(--p-interactive-focus);
+$banner-within-container-focus-after-border-radius: calc(var(--p-border-radius-wide) + 3px);
 
 $banner-within-container-succes-border-radius: var(--p-border-radius-wide,inherit);
 
@@ -643,8 +643,8 @@ $banner-within-container-succes-box-shadow: var(--p-banner-border,none);
 $banner-within-container-succes-bgcolor: #eff7ed;
 
 $banner-within-container-succes-focus-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-success-border,#50b83c),inset 0 0 0 3px var(--p-success-border,#50b83c),0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
-$banner-within-container-succes-focus-border: .2rem solid var(--p-interactive-focus);
-$banner-within-container-succes-focus-border-radius: calc(var(--p-border-radius-wide) + .3rem);
+$banner-within-container-succes-focus-border: 2px solid var(--p-interactive-focus);
+$banner-within-container-succes-focus-border-radius: calc(var(--p-border-radius-wide) + 3px);
 
 $banner-within-container-statusinfo-border-radius: var(--p-border-radius-wide,inherit);
 $banner-within-container-statusinfo-box-shadow: var(--p-banner-border,none);
@@ -652,8 +652,8 @@ $banner-within-container-statusinfo-bgcolor: #eef9f9;
 
 $banner-within-container-statusinfo-focus-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-highlight-border,$theme-primary-hover-color),inset 0 0 0 3px var(--p-highlight-border,$theme-primary-hover-color),0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
 
-$banner-within-container-statusinfo-focus-after-border: .2rem solid var(--p-interactive-focus);
-$banner-within-container-statusinfo-focus-after-border-radius: calc(var(--p-border-radius-wide) + .3rem);
+$banner-within-container-statusinfo-focus-after-border: 2px solid var(--p-interactive-focus);
+$banner-within-container-statusinfo-focus-after-border-radius: calc(var(--p-border-radius-wide) + 3px);
 
 $banner-within-container-statuswarning-border-radius: inherit;
 $banner-within-container-statuswarning-box-shadow: none;
@@ -661,8 +661,8 @@ $banner-within-container-statuswarning-bgcolor: #fdf7e3;
 
 $banner-within-container-statuswarning-focus-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-warning-border,#eec200),inset 0 0 0 3px var(--p-warning-border,#eec200),0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
 
-$banner-within-container-statuswarning-focus-after-border: .2rem solid var(--p-interactive-focus);
-$banner-within-container-statuswarning-focus-after-border-radius: calc(var(--p-border-radius-wide) + .3rem);
+$banner-within-container-statuswarning-focus-after-border: 2px solid var(--p-interactive-focus);
+$banner-within-container-statuswarning-focus-after-border-radius: calc(var(--p-border-radius-wide) + 3px);
 
 $banner-within-container-statuscritical-border-radius: inherit;
 $banner-within-container-statuscritical-box-shadow: none;
@@ -670,8 +670,8 @@ $banner-within-container-statuscritical-bgcolor: #fdf3f0;
 
 $banner-within-container-statuscritical-focus-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-critical-diviver,#de3618),inset 0 0 0 3px var(--p-critical-diviver,#de3618),0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
 
-$banner-within-container-statuscritical-focus-after-border: .2rem solid var(--p-interactive-focus);
-$banner-within-container-statuscritical-focus-after-border-radius: calc(var(--p-border-radius-wide) + .3rem);
+$banner-within-container-statuscritical-focus-after-border: 2px solid var(--p-interactive-focus);
+$banner-within-container-statuscritical-focus-after-border-radius: calc(var(--p-border-radius-wide) + 3px);
 
 $banner-withinpage-border-radius: 8px;
 $banner-withinpage-box-shadow: rgb(186, 191, 195) 0px 1px 0px 0px inset, rgb(186, 191, 195) 0px 0px 0px 1px inset;
@@ -685,23 +685,23 @@ $banner-withinpage-statusinfo-bgcolor: #eef9f9;
 
 $banner-withinpage-statusinfo-focus-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-highlight-border,$theme-primary-hover-color),inset 0 0 0 3px var(--p-highlight-border,$theme-primary-hover-color),0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
 
-$banner-withinpage-statusinfo-focus-after-border: .2rem solid var(--p-interactive-focus);
-$banner-withinpage-statusinfo-focus-after-border-radius: calc(var(--p-border-radius-wide) + .3rem);
+$banner-withinpage-statusinfo-focus-after-border: 2px solid var(--p-interactive-focus);
+$banner-withinpage-statusinfo-focus-after-border-radius: calc(var(--p-border-radius-wide) + 3px);
 
 $banner-withinpage-statuswarning-box-shadow: rgb(225, 184, 120) 0px 1px 0px 0px inset, rgb(225, 184, 120) 0px 0px 0px 1px inset;
 $banner-withinpage-statuswarning-bgcolor: #fff5ea;
 
 $banner-withinpage-statuswarning-focus-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-warning-border,#eec200),inset 0 0 0 3px var(--p-warning-border,#eec200),0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
 
-$banner-withinpage-statuswarning-focus-after-border: .2rem solid var(--p-interactive-focus);
-$banner-withinpage-statuswarning-focus-after-border-radius: calc(var(--p-border-radius-wide) + .3rem);
+$banner-withinpage-statuswarning-focus-after-border: 2px solid var(--p-interactive-focus);
+$banner-withinpage-statuswarning-focus-after-border-radius: calc(var(--p-border-radius-wide) + 3px);
 
 $banner-withinpage-statuscritical-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-critical-diviver,#de3618),inset 0 0 0 0 transparent,0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
 $banner-withinpage-statuscritical-bgcolor: #fdf3f0;
 
 $banner-withinpage-statuscritical-focus-box-shadow: var(--p-banner-border,inset 0 3px 0 0 var(--p-critical-diviver,#de3618),inset 0 0 0 3px var(--p-critical-diviver,#de3618),0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15));
-$banner-withinpage-statuscritical-focus-after-border-radius: calc(var(--p-border-radius-wide) + .3rem);
-$banner-withinpage-statuscritical-focus-after-border: .2rem solid var(--p-interactive-focus);
+$banner-withinpage-statuscritical-focus-after-border-radius: calc(var(--p-border-radius-wide) + 3px);
+$banner-withinpage-statuscritical-focus-after-border: 2px solid var(--p-interactive-focus);
 
 $banner-secondaryaction-font-size: inherit;
 $banner-secondaryaction-color: $theme-action-menu-svg;
@@ -711,11 +711,11 @@ $banner-secondaryaction-focus-banner-text-border-radius: 3px;
 
 /* Breadcrumbs */
 
-$breadcrumbs-font-size: 1.5rem;
+$breadcrumbs-font-size: 15px;
 $breadcrumbs-font-weight: 400;
-$breadcrumbs-line-height: 2rem;
+$breadcrumbs-line-height: 20px;
 $breadcrumbs-color: $theme-common-gray-color;
-$breadcrumbs-media-font-size: 1.4rem;
+$breadcrumbs-media-font-size: 14px;
 $breadcrumbs-border: 1px solid $theme-btn-default-border-color;
 
 $breadcrumbs-active-bgcolor: $theme-default-btn-active-color;
@@ -728,40 +728,40 @@ $breadcrumbs-hover-color: $theme-topbar-color;
 $breadcrumbs-hover-icon-svg-fill: $theme-topbar-color;
 
 $breadcrumbs-focus-content-bgcolor: transparent;
-$breadcrumbs-focus-after-box-shadow: 0 0 0 .2rem $theme-secondary-color;
+$breadcrumbs-focus-after-box-shadow: 0 0 0 2px $theme-secondary-color;
 
-$breadcrumbs-content-border-radius: 0.8rem;
+$breadcrumbs-content-border-radius: 8px;
 $breadcrumbs-icon-svg: $theme-svg-fill-color;
 
 /* Caption */
 
-$caption-font-size: 1.3rem;
+$caption-font-size: 13px;
 $caption-font-weight: 400;
-$caption-line-height: 2rem;
+$caption-line-height: 20px;
 
-$caption-media-font-size: 1.2rem;
-$caption-media-line-height: 1.6rem;
+$caption-media-font-size: 12px;
+$caption-media-line-height: 16px;
 
 /* Choicelist */
 
 $choice-labelhidden-label-border: 0 !important;
 $choice-disabled-label-color: $btn-default-disable-color;
 
-$choice-label-font-size: 1.5rem;
+$choice-label-font-size: 15px;
 $choice-label-font-weight: 400;
-$choice-label-font-line-height: 2rem;
-$choice-label-media-font-size: 1.4rem;
+$choice-label-font-line-height: 20px;
+$choice-label-media-font-size: 14px;
 
-$choice-helptext-font-size: 1.5rem;
+$choice-helptext-font-size: 15px;
 $choice-helptext-font-weight: 400;
-$choice-helptext-line-height: 2rem;
+$choice-helptext-line-height: 20px;
 $choice-helptext-color: $theme-common-gray-color;
-$choice-helptext-media-font-size: 1.4rem;
+$choice-helptext-media-font-size: 14px;
 
-$choicelist-title-font-size: 1.5rem;
+$choicelist-title-font-size: 15px;
 $choicelist-title-font-weight: 400;
-$choicelist-title-line-height: 2rem;
-$choicelist-title-media-font-size: 1.4rem;
+$choicelist-title-line-height: 20px;
+$choicelist-title-media-font-size: 14px;
 
 /* Checkbox */
 
@@ -805,8 +805,8 @@ $checkbox-input-indeterminate-backdrop-border-color: $theme-secondary-color;
 $checkbox-input-indeterminate-backdrop-bgcolor: $theme-secondary-color;
 
 $checkbox-backdrop-bgcolor: $theme-default-button-color;
-$checkbox-backdrop-border: 0.2rem solid $btn-default-disable-color;
-$checkbox-backdrop-border-radius: 0.4rem;
+$checkbox-backdrop-border: 02px solid $btn-default-disable-color;
+$checkbox-backdrop-border-radius: 4px;
 
 $checkbox-backdrop-after-bgcolor: $theme-secondary-color;
 $checkbox-backdrop-after-border-radius: 4px;
@@ -832,7 +832,7 @@ $radio-input-disabled-backdrop-after-bgcolor: #f9fafb;
 $radio-input-disabled-icon: $theme-disable-backdrop-color;
 
 $radio-backdrop-bgcolor: $theme-disable-backdrop-color;
-$radio-backdrop-border: .1rem solid transparent;
+$radio-backdrop-border: 1px solid transparent;
 $radio-backdrop-box-shadow: 0 0 0 1px transparent,0 1px 0 0 rgba(22,29,37,.05);
 $radio-backdrop-border-radius: 50%;
 
@@ -860,7 +860,7 @@ $colorpicker-dragger-border-radius: 50%;
 $colorpicker-alphapicker-bgimage: linear-gradient(45deg,$theme-resource-list-border 25%,transparent 0),linear-gradient(-45deg,$theme-resource-list-border 25%,transparent 0),linear-gradient(45deg,transparent 75%,$theme-resource-list-border 0),linear-gradient(-45deg,transparent 75%,$theme-resource-list-border 0);
 $colorpicker-alphapicker-border-radius: 8rem;
 
-$colorpicker-huepicker-bgimage: linear-gradient(180deg,red 1.8rem,#ff0,#0f0,#0ff,#00f,#f0f,red 14.2rem);
+$colorpicker-huepicker-bgimage: linear-gradient(180deg,red 18px,#ff0,#0f0,#0ff,#00f,#f0f,red 142px);
 $colorpicker-huepicker-box-shadow: inset 0 0 2px 0 rgba(0,0,0,.5);
 $colorpicker-huepicker-border-radius: 8rem;
 
@@ -869,11 +869,11 @@ $colorpicker-color-layer-box-shadow: inset 0 0 2px 0 rgba(0,0,0,.5);*/
 /* DataTable */
 
 $datatable-pip-bgcolor: $theme-common-gray-color;
-$datatable-pip-border-radius: 0.4rem;
+$datatable-pip-border-radius: 4px;
 
 $datatable-pip-visible: $theme-topbar-color;
 
-$datatable-cell-border: .1rem solid $body-bg-color;
+$datatable-cell-border: 1px solid $body-bg-color;
 
 $datatable-row-hover-cell-bgcolor: #f9fafb;
 
@@ -882,7 +882,7 @@ $datatable-cell-first-color: $theme-action-menu-svg;
 
 $datatable-cell-header-font-weight: 400;
 $datatable-cell-header-font-color: $theme-action-menu-svg;
-$datatable-cell-header-border: .1rem solid rgba(140, 145, 150, 1);
+$datatable-cell-header-border: 1px solid rgba(140, 145, 150, 1);
 
 $datatable-border-none: none;
 
@@ -898,7 +898,7 @@ $datatable-heading-hover-svg-fill: $theme-primary-color;
 
 $datatable-cell-total-font-weight: 600;
 $datatable-cell-total-bgcolor: var(--p-surface-foreground-subdued,#f9fafb);
-$datatable-cell-total-border: .1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
+$datatable-cell-total-border: 1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
 
 $datatable-cell-footer-bgcolor: rgba(250, 251, 251, 1);
 $datatable-cell-footer-color: rgba(109, 113, 117, 1);
@@ -907,10 +907,10 @@ $datatable-cell-footer-color: rgba(109, 113, 117, 1);
 
 $datepicker-month-current-font-weight: 700;
 
-$datepicker-day-border: .1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
+$datepicker-day-border: 1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
 $datepicker-day-border-radius: 0;
 $datepicker-day-bgcolor: transparent;
-$datepicker-day-font-size: 1.2rem;
+$datepicker-day-font-size: 12px;
 
 $datepicker-day-hover-bgcolor: $theme-resource-list-border;
 $datepicker-day-focus-box-shadow:  inset 0 0 0 2px $theme-secondary-color;
@@ -918,12 +918,12 @@ $datepicker-day-focus-box-shadow:  inset 0 0 0 2px $theme-secondary-color;
 $datepicker-day-today-font-weight: 700;
 
 $datepicker-day-inrange-bgcolor: $theme-secondary-color;
-$datepicker-day-inrange-border: .1rem solid $theme-secondary-color;
+$datepicker-day-inrange-border: 1px solid $theme-secondary-color;
 
 $datepicker-day-inrange-hover-bgcolor: $theme-secondary-hover-color;
 
 $datepicker-day-selected-bgcolor: $theme-secondary-color;
-$datepicker-day-selected-border: .1rem solid $theme-secondary-color;
+$datepicker-day-selected-border: 1px solid $theme-secondary-color;
 $datepicker-day-selected-color: $theme-common-color;
 $datepicker-day-selected-hover-bgcolor: $theme-secondary-color;
 $datepicker-day-selected-focus-box-shadow:  inset 0 0 0 2px $theme-secondary-color;
@@ -933,10 +933,10 @@ $datepicker-day-disabled-color: $theme-disable-backdrop-color;
 $datepicker-day-disabled-hover-bgcolor: #f9fafb;
 $datepicker-day-disabled-focus-box-shadow: none;
 
-$datepicker-day-emptyday-border: .1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
+$datepicker-day-emptyday-border: 1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
 
 $datepicker-day-weekday-bgcolor:  transparent;
-$datepicker-day-weekday-font-size:  1.2rem;
+$datepicker-day-weekday-font-size:  12px;
 $datepicker-day-weekday-color: $theme-label-color;
 
 $datepicker-day-weekday-current-font-weight: 700;
@@ -946,40 +946,40 @@ $datepicker-day-weekday-current-color: #000;
  
 $descriptionlist-term-font-weight: 600;
 
-$descriptionlist-term-description-border: .1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
+$descriptionlist-term-description-border: 1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
 
 
 /* DisplayText */
 
-$small-font-size: 1.6rem;
+$small-font-size: 16px;
 $small-font-weight: 400;
-$small-line-height: 2.4rem;
-$small-media-font-size: 2rem;
-$small-media-line-height: 2.8rem;
+$small-line-height: 24px;
+$small-media-font-size: 20px;
+$small-media-line-height: 28px;
 
 
-$medium-font-size: 2.1rem;
+$medium-font-size: 21px;
 $medium-font-weight: 400;
-$medium-line-height: 2.8rem;
-$medium-media-font-size: 2.6rem;
-$medium-media-line-height: 3.2rem;
+$medium-line-height: 28px;
+$medium-media-font-size: 26px;
+$medium-media-line-height: 32px;
 
-$large-font-size: 2.4rem;
+$large-font-size: 24px;
 $large-font-weight: 600;
-$large-line-height: 2.8rem;
-$large-media-font-size: 2.8rem;
-$large-media-line-height: 3.2rem;
+$large-line-height: 28px;
+$large-media-font-size: 28px;
+$large-media-line-height: 32px;
 
-$extralarge-font-size: 2.7rem;
+$extralarge-font-size: 27px;
 $extralarge-font-weight: 600;
-$extralarge-line-height: 3.6rem;
-$extralarge-media-font-size: 4.2rem;
-$extralarge-media-line-height: 4.4rem;
+$extralarge-line-height: 36px;
+$extralarge-media-font-size: 42px;
+$extralarge-media-line-height: 44px;
 
 /* DropZone */
 
 /*$dropzone-fileupload-btn-bgcolor: linear-gradient(180deg,$theme-common-color,#f9fafb);
-$dropzone-fileupload-btn-border: .1rem solid var(--p-border-on-surface,$theme-disable-backdrop-color);
+$dropzone-fileupload-btn-border: 1px solid var(--p-border-on-surface,$theme-disable-backdrop-color);
 $dropzone-fileupload-btn-box-shadow: 0 1px 0 0 rgba(22,29,37,.05); 
 $dropzone-fileupload-btn-border-radius: 3px;
 $dropzone-fileupload-btn-color: $theme-action-menu-svg;
@@ -1023,14 +1023,14 @@ $dropzone-hasoutline-isdisabled-hover-bgcolor: #f4f5fa;
 $dropzone-hasoutline-isdisabled-hover-after-border-color: $theme-primary-color;
 
 $dropzone-focused-isdisabled-bgcolor: #f4f5fa;
-$dropzone-focused-isdisabled-after-border: .2rem dashed $theme-primary-color;
+$dropzone-focused-isdisabled-after-border: 2px dashed $theme-primary-color;
 
 $dropzone-isdragging-isdisabled-bgcolor: #f4f5fa;
 $dropzone-isdragging-isdisabled-after-border-color: $theme-primary-color;
 
 $dropzone-isdisabled-after-border-color: $theme-resource-list-border;
 
-$dropzone-overlay-border: .2rem dashed $theme-primary-color;
+$dropzone-overlay-border: 2px dashed $theme-primary-color;
 
 $dropzone-overlay-border-radius: 3px;
 
@@ -1043,16 +1043,16 @@ $dropzone-haserror-overlay-border-color: #de3618;*/
 
 /* EmptyState */
 
-$emptystate-withincontent-font-size: 1.5rem;
+$emptystate-withincontent-font-size: 15px;
 $emptystate-withincontent-font-weight: 400;	
-$emptystate-withincontent-line-height: 2rem; 
-$emptystate-withincontent-media-font-size: 1.4rem;
+$emptystate-withincontent-line-height: 20px; 
+$emptystate-withincontent-media-font-size: 14px;
 
-$emptystate-content-font-size: 1.5rem;
+$emptystate-content-font-size: 15px;
 $emptystate-content-font-weight: 400;	
-$emptystate-content-line-height: 2rem; 
+$emptystate-content-line-height: 20px; 
 $emptystate-content-color: $theme-common-gray-color;
-$emptystate-content-media-font-size: 1.4rem;
+$emptystate-content-media-font-size: 14px;
 
 $emptystate-footercontent-media-color: $theme-common-gray-color;
 
@@ -1080,7 +1080,7 @@ $exceptionlist-bullet-bgcolor: $btn-default-disable-color;
 /* tag */
 
 $tag-bgcolor: $theme-bgcolor;
-$tag-border-radius: 0.4rem;
+$tag-border-radius: 4px;
 $tag-color: $theme-topbar-color;
 
 $tag-disabled-bgcolor: $theme-default-btn-active-color;
@@ -1104,20 +1104,20 @@ $tag-btn-disabled-svg-fill: #babec3;
 
 $sheet-bgcolor: $theme-default-button-color;
 $sheet-box-shadow: 0px 26px 80px rgba(0, 0, 0, 0.2), 0px 0px 1px rgba(0, 0, 0, 0.2);
-$sheet-border: .1rem solid $theme-btn-default-top-border-color;
+$sheet-border: 1px solid $theme-btn-default-top-border-color;
 
 /* Filters */
 
-$filters-containerheader-border: .1rem solid $theme-border-color;
+$filters-containerheader-border: 1px solid $theme-border-color;
 
 $filters-trigger-color: $theme-topbar-color;
 
 $filters-trigger-hover-bgcolor: $theme-btn-default-hover-bgcolor;
 
 $filters-trigger-focus-box-shadow: none;
-$filters-trigger-focus-after-box-shadow: 0 0 0 0.2rem $theme-secondary-color;
+$filters-trigger-focus-after-box-shadow: 0 0 0 02px $theme-secondary-color;
 
-$filters-trigger-title-font-size: 1.5rem;
+$filters-trigger-title-font-size: 15px;
 $filters-trigger-title-font-weight: 600;
 
 $filters-open-after-bgcolor: $theme-default-btn-disable-color;
@@ -1128,12 +1128,12 @@ $filters-open-last-before-bgcolor: $theme-default-btn-disable-color;
 
 /* FooterHelp */
 
-$footerhelp-content-border: 0.1rem solid $theme-btn-default-top-border-color;
+$footerhelp-content-border: 01px solid $theme-btn-default-top-border-color;
 
-$footerhelp-text-font-size: 1.6rem;
+$footerhelp-text-font-size: 16px;
 $footerhelp-text-font-weight: 400;
-$footerhelp-text-line-height: 2.4rem;
-$footerhelp-text-media-font-size: 1.4rem;
+$footerhelp-text-line-height: 24px;
+$footerhelp-text-media-font-size: 14px;
 
 /* FormLayout */
 
@@ -1141,15 +1141,15 @@ $formlayout-helptext-color: $theme-common-gray-color;
  
 /* Frame-Toast */
 
-$frame-toast-font-size: 1.6rem;
+$frame-toast-font-size: 16px;
 $frame-toast-font-weight: 400;
-$frame-toast-line-height: 2.4rem;
-$frame-toast-border-radius: 0.8rem;
+$frame-toast-line-height: 24px;
+$frame-toast-border-radius: 8px;
 $frame-toast-bgcolor: rgba(32, 33, 35, 1);
 $frame-toast-box-shadow: none;
 $frame-toast-color: rgba(227, 229, 231, 1);
-$frame-toast-media-font-size: 2rem;
-$frame-toast-media-line-height: 2.8rem;
+$frame-toast-media-font-size: 20px;
+$frame-toast-media-line-height: 28px;
 
 $frame-toast-error-bgcolor: rgba(191,7,17,.88);
 $frame-toast-error-color: $theme-common-color;
@@ -1167,11 +1167,11 @@ $frame-contextualsavebar-box-shadow: 0 2px 4px rgba(0,0,0,.1);
 $frame-contextualsavebar-logocontainer-border: 1px solid #ebeef0;
 $frame-contextualsavebar-logocontainer-bgcolor: #fafbfc;
 
-$frame-contextualsavebar-message-font-size: 1.7rem;
+$frame-contextualsavebar-message-font-size: 17px;
 $frame-contextualsavebar-message-font-weight: 600;
-$frame-contextualsavebar-message-line-height: 2.4rem;
+$frame-contextualsavebar-message-line-height: 24px;
 $frame-contextualsavebar-message-color: $theme-label-color;
-$frame-contextualsavebar-message-media-font-size: 1.6rem;
+$frame-contextualsavebar-message-media-font-size: 16px;
 
 $frame-bgcolor: $body-bg-color;
 
@@ -1181,7 +1181,7 @@ $frame-navigationdismiss-focus-bgcolor: hsla(0,0%,100%,.16);
 $frame-navigationdismiss-focus-border-radius: 3px;
 
 $frame-skipanchor-bgcolor: linear-gradient(180deg,$theme-common-color,#f9fafb);
-$frame-skipanchor-border: .1rem solid var(--p-border-on-surface,$theme-disable-backdrop-color);
+$frame-skipanchor-border: 1px solid var(--p-border-on-surface,$theme-disable-backdrop-color);
 $frame-skipanchor-box-shadow: 0 1px 0 0 rgba(22,29,37,.05);
 $frame-skipanchor-border-radius: 3px;
 
@@ -1205,7 +1205,7 @@ $modal-dialog-modal-bgcolor: $theme-default-button-color;
 $modal-dialog-modal-box-shadow: 0px 26px 80px rgba(0, 0, 0, 0.2), 0px 0px 1px rgba(0, 0, 0, 0.2);
 $modal-dialog-modal-border-radius: 6px;
 
-$modal-footer-border: .1rem solid $theme-border-color;
+$modal-footer-border: 1px solid $theme-border-color;
 
 $modal-closebtn-font-size: inherit;
 $modal-closebtn-line-height: inherit;
@@ -1216,7 +1216,7 @@ $modal-closebtn-focus-bgcolor: rgba(33,43,54,.1);
 
 $modal-closebtn-active-bgcolor: rgba(33,43,54,.1);
 
-$modal-header-border: .1rem solid $theme-border-color;
+$modal-header-border: 1px solid $theme-border-color;
 $modal-section-subdued-bgcolor: $body-bg-color;
 
 $modal-iframe-border: none; 
@@ -1229,15 +1229,15 @@ $indicator-bgcolor: $theme-primary-hover-color;
 
 $keyboardkey-bgcolor: $theme-default-button-color;
 $keyboardkey-box-shadow: 0 0 0 1px $theme-btn-default-top-border-color,0 2px 0 0 $theme-default-button-color,0 2px 0 1px $theme-btn-default-top-border-color;
-$keyboardkey-border-radius: 0.4rem;
-$keyboardkey-font-size: 1.2rem;
+$keyboardkey-border-radius: 4px;
+$keyboardkey-font-size: 12px;
 $keyboardkey-font-weight: 500;
-$keyboardkey-line-height: 2.4rem;
+$keyboardkey-line-height: 24px;
 $keyboardkey-color: $theme-common-gray-color;
 
 /* Layout */
 
-$layout-border: 0.1rem solid $theme-border-color;
+$layout-border: 01px solid $theme-border-color;
 $layout-annotationdescription-color: $theme-common-gray-color;
 
 /* Link */
@@ -1256,15 +1256,15 @@ $link-border-active-before-bgcolor: none;
 /* Navigation */
 
 $navigation-bgcolor: $theme-btn-default-hover-bgcolor;
-$navigation-border: 0.1rem solid $theme-border-color;
-$navigation-item-font-size: 1.6rem;
+$navigation-border: 01px solid $theme-border-color;
+$navigation-item-font-size: 16px;
 $navigation-item-font-weight: 600;
-$navigation-item-line-height: 3.6rem;
+$navigation-item-line-height: 36px;
 $navigation-item-border-radius: 3px;
 $navigation-item-color: $theme-topbar-color;
-$navigation-item-media-font-size: 1.6rem;
+$navigation-item-media-font-size: 16px;
 $navigation-item-media-font-weight: 600;
-$navigation-item-media-line-height: 3.2rem;
+$navigation-item-media-line-height: 32px;
 
 $navigation-item-focus-icon-svg-fill: $theme-primary-color;
 $navigation-item-focus-icon-svg-color: $theme-common-color;
@@ -1274,7 +1274,7 @@ $navigation-item-hover-color: $theme-topbar-color;
 $navigation-item-hover-icon-svg-color: transparent;
 $navigation-item-hover-icon-svg-fill: $theme-svg-fill-color;
 
-$navigation-item-after-box-shadow: 0 0 0 -0.1rem $theme-primary-color;
+$navigation-item-after-box-shadow: 0 0 0 -01px $theme-primary-color;
 $navigation-item-after-border-radius: 3px;
 
 $navigation-item-active-color: $theme-topbar-color;
@@ -1322,12 +1322,12 @@ $navigation-subnavigationactive-focus-icon-svg-fill: $theme-primary-color;
 $navigation-subnavigationactive-hover-icon-svg-color: transparent;
 $navigation-subnavigationactive-hover-icon-svg-fill: $theme-primary-color;
 
-$secondarynavigation-item-font-size: 1.5rem;
+$secondarynavigation-item-font-size: 15px;
 $secondarynavigation-item-font-weight: 500;
-$secondarynavigation-item-line-height: 4rem;
+$secondarynavigation-item-line-height: 40px;
 $secondarynavigation-item-color: $theme-common-gray-color;
-$secondarynavigation-item-media-font-size: 1.4rem;
-$secondarynavigation-item-media-line-height: 2.8rem;
+$secondarynavigation-item-media-font-size: 14px;
+$secondarynavigation-item-media-line-height: 28px;
 
 $secondarynavigation-item-hover-color: $theme-common-gray-color;
 $secondarynavigation-item-focus-color: $theme-topbar-color;
@@ -1366,12 +1366,12 @@ $navigation-secondaryaction-active-svg-fill: $theme-primary-color;
 $navigation-secondaryaction-active-svg-color: $theme-common-color;
 $navigation-secondaryaction-active-after-border: none;
 
-$navigation-section-withseparator-border: var(--p-border-subdued,.1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border));
-$navigation-sectionheading-font-size: 1.3rem;
+$navigation-section-withseparator-border: var(--p-border-subdued,1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border));
+$navigation-sectionheading-font-size: 13px;
 $navigation-sectionheading-font-weight: 600;
-$navigation-sectionheading-line-height: 1.6rem;
+$navigation-sectionheading-line-height: 16px;
 $navigation-sectionheading-color: $theme-label-color;
-$navigation-sectionheading-media-font-size: 1.3rem;
+$navigation-sectionheading-media-font-size: 13px;
 
 $navigation-sectionheading-action-border-radius: 3px;
 $navigation-sectionheading-action-focus-bgimage: linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3));
@@ -1425,7 +1425,7 @@ $navigation-p-background-hovered: rgba(241, 242, 243, 1);
 /* Tooltip */
 
 $tooltip-box-shadow: -1px 0px 20px rgba(23, 24, 24, 0.05), 0px 1px 5px rgba(0, 0, 0, 0.15);
-$tooltip-border-radius: 0.4rem;
+$tooltip-border-radius: 4px;
 
 $tooltip-light-wrapper-bgcolor: $theme-default-button-color;
 $tooltip-light-wrapper-color: $theme-topbar-color;
@@ -1484,7 +1484,7 @@ $pagination-btn-disabled-svg-fill: $theme-resource-list-disabled-color;
 
 /* Polaris-Page or Header */
 
-$page-border:  0.1rem solid $theme-border-color;
+$page-border:  01px solid $theme-border-color;
 
 /* ProgressBar */
 
@@ -1493,13 +1493,13 @@ $progressbar-border-radius: 4px;
 
 $progressbar-indicator-bgcolor: $theme-primary-color;
 
-$progressbar-sizesmall: .8rem;
-$progressbar-sizemedium: 1.6rem;
-$progressbar-sizelarge: 3.2rem;
+$progressbar-sizesmall: 8px;
+$progressbar-sizemedium: 16px;
+$progressbar-sizelarge: 32px;
 
 /* RangeSlider */
 
-$range-dualthumb-track-border-radius: 1.6rem;
+$range-dualthumb-track-border-radius: 16px;
 $range-dualthumb-track-bgimage: linear-gradient(90deg,var(--gradient-colors));
 $range-dualthumb-error-track-bgimage: linear-gradient(90deg,var(--gradient-colors));
 
@@ -1510,18 +1510,18 @@ $range-dualthumb-disabled-track-bgimage: none;
 $range-dualthumb-disabled-track-bgcolor: $theme-disable-backdrop-color;
 
 $range-dualthumb-error-thumbs-focus-border-color: #de3618;
-$range-dualthumb-error-thumbs-focus-box-shadow:  0 0 0 .1rem #de3618;
+$range-dualthumb-error-thumbs-focus-box-shadow:  0 0 0 1px #de3618;
 
 $range-dualthumb-error-thumbs-hover-border-color: #de3618;
-$range-dualthumb-error-thumbs-hover-box-shadow: 0 0 0 .1rem #de3618;
+$range-dualthumb-error-thumbs-hover-box-shadow: 0 0 0 1px #de3618;
 
-$range-dualthumb-thumbs-border: 0.1rem solid $theme-primary-color;
+$range-dualthumb-thumbs-border: 01px solid $theme-primary-color;
 $range-dualthumb-thumbs-border-radius: 50%;
-/*$range-dualthumb-thumbs-box-shadow: 0 0 0 .1rem rgba(0,0,0,.2),0 1px 0 0 rgba(22,29,37,.05);*/
+/*$range-dualthumb-thumbs-box-shadow: 0 0 0 1px rgba(0,0,0,.2),0 1px 0 0 rgba(22,29,37,.05);*/
 $range-dualthumb-thumbs-bgcolor: linear-gradient($theme-primary-color, $theme-primary-color);
 
 $range-dualthumb-thumbs-hover-bgcolor: linear-gradient(#f9fafb,$body-bg-color);
-$range-dualthumb-thumbs-hover-box-shadow: 0 0 0 .1rem rgba(0,0,0,.4),0 1px 0 0 rgba(22,29,37,.05);
+$range-dualthumb-thumbs-hover-box-shadow: 0 0 0 1px rgba(0,0,0,.4),0 1px 0 0 rgba(22,29,37,.05);
 
 $range-dualthumb-thumbs-disabled-border-color: #D2D5D8;
 $range-dualthumb-thumbs-disabled-bgcolor: #D2D5D8;
@@ -1530,11 +1530,11 @@ $range-dualthumb-outputbubble-bgcolor: $theme-default-button-color;
 $range-dualthumb-outputbubble-border-radius: 3px;
 $range-dualthumb-outputbubble-border-radius: -1px 0px 20px rgba(23, 24, 24, 0.05), 0px 1px 5px rgba(0, 0, 0, 0.15);
 
-$range-dualthumb-outputtext-font-size: 1.3rem;
+$range-dualthumb-outputtext-font-size: 13px;
 $range-dualthumb-outputtext-font-weight: 600;
-$range-dualthumb-outputtext-line-height: 1.6rem;
+$range-dualthumb-outputtext-line-height: 16px;
 $range-dualthumb-outputtext-color: $theme-topbar-color;
-$range-dualthumb-outputtext-media-font-size: 1.2rem;
+$range-dualthumb-outputtext-media-font-size: 12px;
 
 $range-singlethumb-disabled-input-track-bgimage: none;
 $range-singlethumb-disabled-input-thumb-border-color: $theme-disable-backdrop-color;
@@ -1542,7 +1542,7 @@ $range-singlethumb-disabled-input-thumb-border-color: $theme-disable-backdrop-co
 $range-singlethumb-input-track-border: none;
 $range-singlethumb-input-track-bgimage: linear-gradient(90deg,var(--gradient-colors));
 $range-singlethumb-input-track-bgcolor: var(--progress-upper,$theme-disable-backdrop-color);
-$range-singlethumb-input-track-border-radius: .4rem;
+$range-singlethumb-input-track-border-radius: 4px;
 
 $range-singlethumb-input-thumb-border-radius: 50%;
 $range-singlethumb-input-thumb-border: 1px solid transparent;
@@ -1555,22 +1555,22 @@ $range-singlethumb-input-thumb-hover-box-shadow: 0 0 0 0 $theme-primary-color;
 $range-singlethumb-error-input-track-bgcolor: #D2D5D8;
 
 $range-singlethumb-error-input-thumb-border-color: #D2D5D8;
-$range-singlethumb-error-input-thumb-box-shadow: 0 0 0 .1rem #D2D5D8;
+$range-singlethumb-error-input-thumb-box-shadow: 0 0 0 1px #D2D5D8;
 
 $range-singlethumb-input-focus-track-bgcolor: #D2D5D8;
 $range-singlethumb-input-focus-thumb-bgcolor: #D2D5D8;
 $range-singlethumb-input-focus-thumb-border-color: $theme-primary-color;
-$range-singlethumb-input-focus-thumb-box-shadow: 0 0 0 0.2rem $theme-primary-color;
+$range-singlethumb-input-focus-thumb-box-shadow: 0 0 0 2px $theme-primary-color;
 
 $range-singlethumb-outputbubble-box-shadow: -1px 0px 20px rgba(23, 24, 24, 0.05), 0px 1px 5px rgba(0, 0, 0, 0.15);
 $range-singlethumb-outputbubble-bgcolor: $theme-default-button-color;
 $range-singlethumb-outputbubble-border-radius: 3px;
 
-$range-singlethumb-outputtext-font-size: 1.3rem;
+$range-singlethumb-outputtext-font-size: 13px;
 $range-singlethumb-outputtext-font-weight: 600;
-$range-singlethumb-outputtext-line-height: 1.6rem;
+$range-singlethumb-outputtext-line-height: 16px;
 $range-singlethumb-outputtext-color: $theme-topbar-color;
-$range-singlethumb-outputtext-media-font-size: 1.2rem;
+$range-singlethumb-outputtext-media-font-size: 12px;
 
 /* ResourceItem */
 
@@ -1584,19 +1584,19 @@ $resourceitem-selected-hover-bgcolor: #EDF4FE;
 
 $resourceitem-selected-active-bgcolor: #E5EFFD;
 
-$resourceitem-selected-focused-box-shadow: inset .2rem 0 0 $theme-primary-color;
+$resourceitem-selected-focused-box-shadow: inset 2px 0 0 $theme-primary-color;
 $resourceitem-selected-focused-bgcolor: linear-gradient(rgba(179, 188, 245, .15), rgba(179, 188, 245, .15)), linear-gradient(rgba(223, 227, 232, .3), rgba(223, 227, 232, .3));
 
-$resourceitem-selected-focused-hover-box-shadow: inset .2rem 0 0 $theme-primary-color;
+$resourceitem-selected-focused-hover-box-shadow: inset 2px 0 0 $theme-primary-color;
 $resourceitem-selected-focused-hover-bgcolor: linear-gradient(rgba(179, 188, 245, .15), rgba(179, 188, 245, .15)), linear-gradient(rgba(223, 227, 232, .3), rgba(223, 227, 232, .3)), linear-gradient(rgba(223, 227, 232, .3), rgba(223, 227, 232, .3));
 
-$resourceitem-focused-box-shadow: inset .2rem 0 0 $theme-primary-color;
+$resourceitem-focused-box-shadow: inset 2px 0 0 $theme-primary-color;
 $resourceitem-focused-bgcolor: linear-gradient(rgba(223, 227, 232, .3), rgba(223, 227, 232, .3));
 
-$resourceitem-focused-hover-box-shadow: inset .2rem 0 0 $theme-primary-color;
+$resourceitem-focused-hover-box-shadow: inset 2px 0 0 $theme-primary-color;
 $resourceitem-focused-hover-bgcolor: linear-gradient(rgba(223, 227, 232, .3), rgba(223, 227, 232, .3)), linear-gradient(rgba(223, 227, 232, .3), rgba(223, 227, 232, .3));
 
-$resourceitem-focused-active-box-shadow: inset .2rem 0 0 $theme-primary-color;
+$resourceitem-focused-active-box-shadow: inset 2px 0 0 $theme-primary-color;
 $resourceitem-focused-active-bgcolor: linear-gradient(rgba(223, 227, 232, .3), rgba(223, 227, 232, .3)), linear-gradient(rgba(179, 188, 245, .1), rgba(179, 188, 245, .1));
 
 $resourceitem-focusedinner-box-shadow: none;
@@ -1615,32 +1615,32 @@ $select-error-backdrop-border-color: $theme-destructive-color;
 $select-error-backdrop-hover-bgcolor: $theme-destructive-color;
 
 $select-error-input-focus-backdrop-bgcolor: $theme-secondary-color;
-$select-error-input-focus-backdrop-box-shadow: 0 0 0 0.2rem $theme-secondary-color;
+$select-error-input-focus-backdrop-box-shadow: 0 0 0 2px $theme-secondary-color;
 
 $select-placeholder-error-input-color: #9c9798;
 $select-placeholder-error-input-text-shadow: 0 0 0 $theme-action-menu-svg;
 
-$select-content-font-size: 1.6rem;
+$select-content-font-size: 16px;
 $select-content-font-weight: 400;
-$select-content-line-height: 2.4rem;
-$select-content-media-font-size: 1.4rem;
+$select-content-line-height: 24px;
+$select-content-media-font-size: 14px;
 
 $select-inlinelabel-color: $theme-label-color;
 
 $select-icon-svg-fill: $theme-label-color;
 
 $select-backdrop-bgcolor: $theme-default-button-color;
-$select-backdrop-border: 0.1rem solid $theme-btn-default-top-border-color;
-$select-backdrop-box-shadow: 0 0 0 -0.2rem $theme-secondary-color !important;
-$select-backdrop-border-radius: 0.4rem;
+$select-backdrop-border: 01px solid $theme-btn-default-top-border-color;
+$select-backdrop-box-shadow: 0 0 0 -2px $theme-secondary-color !important;
+$select-backdrop-border-radius: 4px;
 
-$select-backdrop-after-box-shadow: 0 0 0 -0.2rem $theme-secondary-color;
-$select-backdrop-after-border-radius: calc(0.4rem + 0.1rem);
+$select-backdrop-after-box-shadow: 0 0 0 -2px $theme-secondary-color;
+$select-backdrop-after-border-radius: calc(4px + 01px);
 
-$select-input-font-size: 1.6rem;
+$select-input-font-size: 16px;
 $select-input-font-weight: 400;
-$select-input-line-height: 2.4rem;
-$select-input-media-font-size: 1.4rem;
+$select-input-line-height: 24px;
+$select-input-media-font-size: 14px;
 
 $select-input-focus-backdrop-bgcolor: $theme-secondary-color;
 $select-input-focus-backdrop-box-shadow: 0 0 0 1px $theme-secondary-color,0 0 0 0 transparent;
@@ -1648,18 +1648,18 @@ $select-input-focus-backdrop-after-bgcolor: $theme-common-color;
 
 /* ResourceList CheckableButton */
 
-$resourcelist-checkablebutton-font-size: 1.5rem;
+$resourcelist-checkablebutton-font-size: 15px;
 $resourcelist-checkablebutton-font-weight: 400;
-$resourcelist-checkablebutton-line-height: 1.6rem;
+$resourcelist-checkablebutton-line-height: 16px;
 $resourcelist-checkablebutton-border: 1px solid $theme-btn-default-border-color;
 $resourcelist-checkablebutton-border-radius: 3px;
 $resourcelist-checkablebutton-box-shadow: var(--p-override-none,0 1px 0 0 rgba(22,29,37,.05));
-$resourcelist-checkablebutton-media-font-size: 1.4rem;
+$resourcelist-checkablebutton-media-font-size: 14px;
 
-$resourcelist-checkablebutton-measuring-font-size: 1.5rem;
+$resourcelist-checkablebutton-measuring-font-size: 15px;
 $resourcelist-checkablebutton-measuring-font-weight: 700;
 
-$resourcelist-checkablebutton-plain-border: .1rem solid transparent;
+$resourcelist-checkablebutton-plain-border: 1px solid transparent;
 $resourcelist-checkablebutton-plain-border-radius: 3px;	
 $resourcelist-checkablebutton-plain-box-shadow: none;
 $resourcelist-checkablebutton-plain-bgcolor: transparent;
@@ -1671,19 +1671,19 @@ $resourcelist-checkablebutton-selectmode-font-weight: 600;
 $resourcelist-checkablebutton-selected-color: $theme-secondary-color;
 $resourcelist-checkablebutton-selected-border-color: $theme-disable-backdrop-color;
 
-$resourcelist-bulkactions-group-font-size: 1.6rem;
+$resourcelist-bulkactions-group-font-size: 16px;
 $resourcelist-bulkactions-group-font-weight: 400;
-$resourcelist-bulkactions-group-line-height: 2.4rem;
-$resourcelist-bulkactions-group-media-font-size: 1.4rem;
+$resourcelist-bulkactions-group-line-height: 24px;
+$resourcelist-bulkactions-group-media-font-size: 14px;
 
 $resourcelist-bulkactions-disabled-bgcolor: linear-gradient(180deg,$body-bg-color,$body-bg-color);
 $resourcelist-bulkactions-disabled-color: $theme-resource-list-disabled-color;
 $resourcelist-bulkactions-disabled-svg-fill: $theme-resource-list-disabled-color;
 
-$resourcelist-filterswrapper-border: .1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
+$resourcelist-filterswrapper-border: 1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
 $resourcelist-headerouterwrapper-bgcolor: $theme-common-color;
 
-$resourcelist-headerouterwrapper-border: .1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
+$resourcelist-headerouterwrapper-border: 1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
 
 $resourcelist-headerwrapper-overlay-bgcolor: hsla(0,0%,100%,.5);
 
@@ -1691,7 +1691,7 @@ $resourcelist-headerwrapper-bgcolor: $theme-common-color;
 
 $resourcelist-headerwrapper-issticky-box-shadow: 0 0 0 1px rgba(63,63,68,.05),0 1px 3px 0 rgba(63,63,68,.15);
 
-$resourcelist-itemwrapper-border: .1rem solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
+$resourcelist-itemwrapper-border: 1px solid var(--p-border-subdued-on-surface,$theme-resource-list-border);
 
 $resourcelist-loadingoverlay-bgcolor: hsla(0,0%,100%,.5);
 
@@ -1703,19 +1703,19 @@ $skeletonbodytext-after-border-radius: 3px;
 
 /* Tabs */
 
-$tabs-border: 0.1rem solid $theme-border-color;
+$tabs-border: 01px solid $theme-border-color;
 
-$tabs-font-size: 1.5rem;
+$tabs-font-size: 15px;
 $tabs-font-weight: 400;
-$tabs-line-height: 2rem;
+$tabs-line-height: 20px;
 $tabs-color: $theme-topbar-color;
-$tabs-media-font-size: 1.4rem;
+$tabs-media-font-size: 14px;
 
 $tabs-visited-color: inherit;
 
 $tabs-hover-active-title-bgcolor: transparent;
 $tabs-hover-active-title-after-bgcolor: #A2BCB0;
-$tabs-hover-focus-title-after-box-shadow: 0 0 0 0.2rem $theme-secondary-color;
+$tabs-hover-focus-title-after-box-shadow: 0 0 0 2px $theme-secondary-color;
 
 $tabs-hover-title-font-weight: 400;
 $tabs-hover-title-color: $theme-topbar-color;
@@ -1724,20 +1724,20 @@ $tabs-hover-title-bgcolor: $theme-common-gray-color;
 $tabs-selected-font-weight: 400;
 $tabs-selected-color: $theme-topbar-color;
 
-$tabs-selected-title-border-radius: 0.4rem;
+$tabs-selected-title-border-radius: 4px;
 $tabs-selected-title-color: $theme-common-gray-color;
 
 $tabs-item-font-size: inherit;
 $tabs-item-line-height: inherit;
 $tabs-item-background: none;
 $tabs-item-border: none;
-$tabs-item-after-box-shadow: 0 0 0 -0.1rem $theme-primary-hover-color;
+$tabs-item-after-box-shadow: 0 0 0 -01px $theme-primary-hover-color;
 
-$tabs-item-border-radius: 0.4rem;
+$tabs-item-border-radius: 4px;
 
 $tabs-item-visited-color: inherit;
 
-/*$tabs-item-focus-box-shadow: inset .2rem 0 0 $theme-primary-color;
+/*$tabs-item-focus-box-shadow: inset 2px 0 0 $theme-primary-color;
 $tabs-item-focus-bgimage: linear-gradient(rgba(223,227,232,.3),rgba(223,227,232,.3));*/
 
 $tabs-item-active-bgcolor: #A2BCB0;
@@ -1749,22 +1749,22 @@ $tabs-disclosureactivator-svg-fill: $theme-label-color;
 
 $tabs-disclosureactivator-hover-title-svg-fill: $theme-svg-fill-color;
 
-$tabs-disclosureactivator-after-box-shadow: 0 0 0 -0.1rem $theme-primary-color;
+$tabs-disclosureactivator-after-box-shadow: 0 0 0 -01px $theme-primary-color;
 
 $tabs-disclosureactivator-hover-title-before-bgcolor: #999EA4;
-$tabs-disclosureactivator-focus-title-after-box-shadow: 0 0 0 0.2rem $theme-primary-color;
+$tabs-disclosureactivator-focus-title-after-box-shadow: 0 0 0 2px $theme-primary-color;
 
 /* Thumbnail */
 
 $thumbnail-bgcolor: $theme-default-button-color;
-$thumbnail-border-radius: 0.4rem;
-$thumbnail-border: 0.1rem solid $theme-border-color;
+$thumbnail-border-radius: 4px;
+$thumbnail-border: 01px solid $theme-border-color;
 $thumbnail-color: $theme-label-color;
 
 /* TopBar-Search */
 
 $topbar-searchfield-border: 1px solid transparent;
-$topbar-searchfield-border-radius: 0.8rem;		
+$topbar-searchfield-border-radius: 8px;		
 $topbar-searchfield-focused-input-border: none;
 $topbar-searchfield-focused-input-color: $theme-topbar-color;
 $topbar-searchfield-svg-fill: $theme-svg-fill-color;
@@ -1781,13 +1781,13 @@ $topbar-searchfield-input-focus-color: $theme-topbar-color;
 $topbar-searchfield-input-focus-backdrop-bgcolor: $theme-default-btn-active-color;
 $topbar-searchfield-input-focus-icon-svg-fill: $theme-svg-fill-color;
 
-$topbar-searchfield-input-font-size: 1.6rem;
+$topbar-searchfield-input-font-size: 16px;
 $topbar-searchfield-input-font-weight: 400;
-$topbar-searchfield-input-line-height: 2.4rem;
+$topbar-searchfield-input-line-height: 24px;
 $topbar-searchfield-input-border: none;
 $topbar-searchfield-input-bgcolor: transparent;
 $topbar-searchfield-input-color: $theme-topbar-color;
-$topbar-searchfield-input-media-font-size: 1.4rem;
+$topbar-searchfield-input-media-font-size: 14px;
 
 $topbar-searchfield-clear-svg-fill: $theme-svg-fill-color;
 $topbar-searchfield-clear-focus-svg-fill: $theme-searchfield-focus-svg;
@@ -1802,8 +1802,8 @@ $topbar-searchfield-p-ease: cubic-bezier(0.4, 0.22, 0.28, 1);
 
 $messageindicator-border-radius: 100%;
 $messageindicator-bgcolor: $theme-primary-hover-color;
-$messageindicator-border: solid 0.2rem $theme-btn-default-hover-bgcolor;
-$messageindicator-section-border: 0.1rem solid $theme-border-color;
+$messageindicator-border: solid 2px $theme-btn-default-hover-bgcolor;
+$messageindicator-section-border: 01px solid $theme-border-color;
 
 /* Menu__Activator */
 
@@ -1817,19 +1817,19 @@ $topbar-menu-activator-hover-bgcolor: $theme-btn-default-hover-bgcolor;
 
 $topbar-menu-activator-active-bgcolor: $theme-default-btn-active-color;
 
-$topbar-menu-section-border: 0.1rem solid $theme-border-color;
+$topbar-menu-section-border: 01px solid $theme-border-color;
 
-$topbar-usermenu-font-size: 1.5rem;
+$topbar-usermenu-font-size: 15px;
 $topbar-usermenu-font-weight: 500;
-$topbar-usermenu-line-height: 1.6rem;
-$topbar-usermenu-media-font-size: 1.4rem;
+$topbar-usermenu-line-height: 16px;
+$topbar-usermenu-media-font-size: 14px;
 $topbar-usermenu-color: $theme-topbar-color;
 
-$topbar-usermenu-detail-font-size: 1.3rem;
+$topbar-usermenu-detail-font-size: 13px;
 $topbar-usermenu-detail-font-weight: 400;
-$topbar-usermenu-detail-line-height: 2rem;
-$topbar-usermenu-detail-media-font-size: 1.2rem;
-$topbar-usermenu-detail-media-line-height: 1.6rem;
+$topbar-usermenu-detail-line-height: 20px;
+$topbar-usermenu-detail-media-font-size: 12px;
+$topbar-usermenu-detail-media-line-height: 16px;
 
 $topbar-navigationicon-hover-bgcolor: hsla(0, 0%, 100%, .08);
 $topbar-navigationicon-focused-bgcolor: hsla(0, 0%, 100%, .16);
@@ -1840,7 +1840,7 @@ $topbar-navigationicon-focused-active-bgcolor: rgba(0, 0, 0, .28);
 
 $avatar-bgcolor: $theme-bgcolor;
 $avatar-color: $btn-default-disable-color;
-$avatar-color-radius: 3rem;
+$avatar-color-radius: 30px;
 
 /* Icon */
 $icon-svg-color-success: rgba(0, 127, 95, 1);
@@ -1864,7 +1864,7 @@ $global-ribbon-height: 0px;
 /* Common Variables */
 $p-action-critical: rgba(216, 44, 13, 1);
 $p-divider: rgba(225, 227, 229, 1);
-$p-border-radius-wide: 0.8rem;
+$p-border-radius-wide: 8px;
 $p-surface-subdued: rgba(250, 251, 251, 1);
 $p-surface: rgba(255, 255, 255, 1);
 $p-text-subdued: rgba(109, 113, 117, 1);
@@ -1875,7 +1875,7 @@ $p-text-success: rgba(0, 128, 96, 1);
 $p-border-hovered: rgba(153, 158, 164, 1);
 $p-surface-primary-selected-pressed: rgba(162, 188, 176, 1);
 $p-focused: rgba(69, 143, 255, 1);
-$p-border-radius-base: 0.4rem;
+$p-border-radius-base: 4px;
 $p-ease: cubic-bezier(0.4, 0.22, 0.28, 1);
 $p-surface-hovered: rgba(246, 246, 247, 1);
 $p-surface-primary-selected-pressed: rgba(162, 188, 176, 1);
@@ -1886,17 +1886,17 @@ $p-border-subdued: rgba(201, 204, 207, 1);
 $p-border-shadow-subdued: rgba(186, 191, 196, 1);
 $p-duration-1-5-0: 150ms;
 $p-duration-1-0-0: 100ms;
-$p-choice-margin: 0.1rem;
+$p-choice-margin: 01px;
 $p-interactive: rgba(44, 110, 203, 1);
 $p-border-disabled: rgba(210, 213, 216, 1);
 $p-action-secondary-disabled: rgba(255, 255, 255, 1);
-$p-control-border-width: 0.2rem;
+$p-control-border-width: 2px;
 $p-border: rgba(140, 145, 150, 1);
 $p-icon-on-interactive: rgba(255, 255, 255, 1);
 $p-surface-selected: rgba(242, 247, 254, 1);
 $p-surface-disabled: rgba(250, 251, 251, 1);
 $p-text-disabled: rgba(140, 145, 150, 1);
-$p-choice-size: 2rem;
+$p-choice-size: 20px;
 $p-icon-disabled: rgba(186, 190, 195, 1);
 $p-critical: rgba(216, 44, 13, 1);
 $p-action-secondary-hovered: rgba(246, 246, 247, 1);
@@ -1949,8 +1949,8 @@ $p-surface-critical: rgba(254, 211, 209, 1);
 $p-popover-shadow: -1px 0px 20px rgba(23, 24, 24, 0.05), 0px 1px 5px rgba(0, 0, 0, 0.15);
 
 // Range Slider
-$p-range-slider-thumb-size-base: 1.6rem;
-$p-range-slider-thumb-size-active: 2.4rem;
+$p-range-slider-thumb-size-base: 16px;
+$p-range-slider-thumb-size-active: 24px;
 $p-range-slider-thumb-scale: 1.5;
 
 // Badge

@@ -4,20 +4,20 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    margin-top: -2rem;
-    margin-left: -2rem;
+    margin-top: -20px;
+    margin-left: -20px;
 }
 
 .Polaris-Layout__Section {
-    flex: 2 2 48rem;
+    flex: 2 2 480px;
     min-width: 51%;
-    max-width: calc(100% - 2rem);
-    margin-top: 2rem;
-    margin-left: 2rem;
+    max-width: calc(100% - 20px);
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .Polaris-Layout__Section--secondary {
-    flex: 1 1 24rem;
+    flex: 1 1 240px;
     min-width: 0;
 }
 
@@ -26,33 +26,33 @@
 }
 
 .Polaris-Layout__Section--oneHalf {
-    flex: 1 1 45rem;
+    flex: 1 1 450px;
     min-width: 0;
 }
 
 .Polaris-Layout__Section--oneThird {
-    flex: 1 1 24rem;
+    flex: 1 1 240px;
     min-width: 0;
 }
 
 .Polaris-Layout__AnnotatedSection {
     min-width: 0;
     flex: 1 1 100%;
-    max-width: calc(100% - 2rem);
-    margin-top: 2rem;
-    margin-left: 2rem;
+    max-width: calc(100% - 20px);
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 @media (max-width:48.0625em) and (min-width:30.625em),(min-width:45.625em) {
     [data-has-navigation] .Polaris-Layout__AnnotatedSection+.Polaris-Layout__AnnotatedSection,[data-has-navigation] .Polaris-Layout__Section+.Polaris-Layout__AnnotatedSection {
-        padding-top: 2rem;
+        padding-top: 20px;
         border-top: $layout-border;
     }
 }
 
 @media (min-width:30.625em) {
     .Polaris-Layout__AnnotatedSection+.Polaris-Layout__AnnotatedSection,.Polaris-Layout__Section+.Polaris-Layout__AnnotatedSection {
-        padding-top: 2rem;
+        padding-top: 20px;
         border-top: $layout-border;
     }
 }
@@ -60,41 +60,41 @@
 .Polaris-Layout__AnnotationWrapper {
     display: flex;
     flex-wrap: wrap;
-    margin-top: -2rem;
-    margin-left: -2rem;
+    margin-top: -20px;
+    margin-left: -20px;
 }
 
 .Polaris-Layout__AnnotationContent {
-    flex: 2 2 48rem;
+    flex: 2 2 480px;
     min-width: 0;
-    max-width: calc(100% - 2rem);
-    margin-top: 2rem;
-    margin-left: 2rem;
+    max-width: calc(100% - 20px);
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .Polaris-Layout__Annotation {
-    flex: 1 1 24rem;
-    padding: 1.6rem 2rem 0;
+    flex: 1 1 240px;
+    padding: 16px 20px 0;
     min-width: 0;
-    max-width: calc(100% - 2rem);
-    margin-top: 2rem;
-    margin-left: 2rem;
+    max-width: calc(100% - 20px);
+    margin-top: 20px;
+    margin-left: 20px;
     @media (min-width:30.625em) {
-        padding: 1.6rem 0 0;
+        padding: 16px 0 0;
     }
     @media (min-width:50em) {
-        padding: 2rem 2rem 2rem 0;
+        padding: 20px 20px 20px 0;
     }
 }
 
 @media (max-width:48.0625em) and (min-width:30.625em),(min-width:45.625em) {
     [data-has-navigation] .Polaris-Layout__Annotation {
-        padding: 1.6rem 0 0;
+        padding: 16px 0 0;
     }
 }
 @media (max-width:48.0625em) and (min-width:50em),(min-width:65em) {
     [data-has-navigation] .Polaris-Layout__Annotation {
-        padding: 2rem 2rem 2rem 0;
+        padding: 20px 20px 20px 0;
     }
 }
 

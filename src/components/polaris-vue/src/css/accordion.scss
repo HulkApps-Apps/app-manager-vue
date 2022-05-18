@@ -13,13 +13,13 @@
 }
 
 .Polaris-Accordion-Item:first-of-type {
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 2.5px;
+  border-top-right-radius: 2.5px;
 }
 
 .Polaris-Accordion-Item:last-of-type, .Polaris-Accordion-Title.collapsed {
-  border-bottom-right-radius: calc(.25rem - 1px);
-  border-bottom-left-radius: calc(.25rem - 1px);
+  border-bottom-right-radius: calc(2.5px - 1px);
+  border-bottom-left-radius: calc(2.5px - 1px);
 }
 
 .Polaris-Accordion-Title {
@@ -66,8 +66,8 @@
 }
 
 .Polaris-Accordion-Title:first-of-type .Polaris-Accordion-Title {
-  border-top-left-radius: calc(0.25rem - 1px);
-  border-top-right-radius: calc(0.25rem - 1px);
+  border-top-left-radius: calc(2.5px - 1px);
+  border-top-right-radius: calc(2.5px - 1px);
 }
 
 [type="button"]:not(:disabled),
@@ -89,7 +89,7 @@
 }
 
 .Polaris-Accordion-Body {
-  padding: 1rem 1.25rem;
+  padding: 10px 12.5px;
   color: var(--content-color);
   background-color: var(--content-background-color);
 }
