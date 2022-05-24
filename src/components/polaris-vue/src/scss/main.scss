@@ -1,8 +1,11 @@
 
-//colors and theme
-@import '../css/functions';
-@import '../css/colors';
-@import '../css/theme';
 
-//Polaris-Vue components css
-@import '../css/polaris.scss';
+.app-manager {
+  //colors and theme
+  @import '../css/functions';
+  @import '../css/colors';
+  @import '../css/theme';
+
+  //Polaris-Vue components css
+  @import '../css/polaris.scss';
+}

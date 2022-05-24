@@ -35,7 +35,7 @@
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === monthlyPlan.length}" :style="activePlanStyle(plan)">
                                             <b style="font-size: 16px">{{(plan.name)}}</b>
                                             <p style="display: flex;margin-top: 10px">
-                                                <PHeading style="font-size: 25px;font-weight: 700;">${{plan.price.toFixed(2)}}</PHeading>
+                                                <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
                                                 <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
                                             </p>
                                         </PDataTableCol>
@@ -49,7 +49,7 @@
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === yearlyPlan.length}" :style="activePlanStyle(plan)">
                                             <b style="font-size: 16px">{{(plan.name)}}</b>
                                             <p style="display: flex;margin-top: 10px">
-                                                <PHeading style="font-size: 25px; font-weight: 700;">${{plan.price.toFixed(2)}}</PHeading>
+                                                <PHeading style="font-size: 25px; font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
                                                 <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
                                             </p>
                                         </PDataTableCol>
@@ -401,6 +401,7 @@
     }
     .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:first-child {
         overflow: hidden;
+        border-bottom: 0px !important;
         border-radius: 0 0 0 12px;
     }
     .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:last-child {
@@ -410,7 +411,6 @@
     .app-manager-plan-page .custom-plan table tbody tr td:first-child {
         border-left: 0px !important;
         border-top: 0px !important;
-        border-bottom: 0px !important;
         padding-left: 20px;
     }
     .app-manager-plan-page .custom-plan table tbody tr td:last-child {
