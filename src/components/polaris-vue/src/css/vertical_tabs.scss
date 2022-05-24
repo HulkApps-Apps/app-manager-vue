@@ -1,0 +1,329 @@
+.Polaris-VerticalTabs__Wrapper {
+  display: flex;
+  border-top: 1px solid $p-divider;
+  border-radius: 0 0 $p-border-radius-wide $p-border-radius-wide;
+  overflow: hidden;
+  @media screen and (max-width: 990px) {
+    display: block;
+  }
+}
+
+.Polaris-VerticalTabs {
+  display: flex;
+  flex-direction: column;
+  margin: -1px 0 0 -1px;
+  padding: 0;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
+  list-style: none;
+  background-color: $p-surface-subdued;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  @media screen and (max-width: 990px) {
+    flex-direction: row;
+    margin: 0 0 0 -1px;
+    border: 0;
+    overflow-x: auto;
+  }
+}
+
+.Polaris-VerticalTabs__Right {
+  display: flex;
+  flex-direction: column;
+  margin: -1px 0 0 -1px;
+  padding: 0;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
+  list-style: none;
+  background-color: $p-surface-subdued;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  order: 2;
+  @media screen and (max-width: 990px) {
+    flex-direction: row;
+    margin: 0 0 0 -1px;
+    border: 0;
+    overflow-x: auto;
+  }
+}
+
+.Polaris-VerticalTabs__Tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 -1px;
+  padding: 0;
+  border-top: 1px solid $p-divider;
+  border-bottom: 1px solid $p-divider;
+
+  @media screen and (max-width: 990px) {
+    flex: 1 1;
+    margin: 0;
+    border: 0;
+    border-left: 1px solid $p-divider;
+    flex-direction: row;
+  }
+}
+
+.Polaris-VerticalTabs__Tab:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: $p-action-primary;
+  opacity: 0;
+
+  @media screen and (max-width: 990px) {
+    right: 0;
+    bottom: auto;
+    width: auto;
+    height: 3px;
+  }
+}
+
+.Polaris-VerticalTabs__Tab--Right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 -1px;
+  padding: 0;
+  border-top: 1px solid $p-divider;
+  border-bottom: 1px solid $p-divider;
+
+  @media screen and (max-width: 990px) {
+    flex: 1 1;
+    margin: 0;
+    border: 0;
+    border-left: 1px solid $p-divider;
+    flex-direction: row;
+  }
+}
+
+.Polaris-VerticalTabs__Tab--Right:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3px;
+  background: $p-action-primary;
+  opacity: 0;
+
+  @media screen and (max-width: 990px) {
+    left: 0;
+    bottom: auto;
+    width: auto;
+    height: 3px;
+  }
+}
+
+.Polaris-VerticalTabs__Tab--selected:after {
+  opacity: 1;
+}
+
+.Polaris-VerticalTabs__Title {
+  display: none;
+  margin: 0;
+
+  @media (min-width: 34.375em) {
+    font-weight: 600;
+    display: block;
+  }
+
+  @media screen and (max-width: 990px) {
+    margin-top: 8px;
+  }
+}
+
+.Polaris-VerticalTabs__TabElement {
+  --focus-state-box-shadow-color: rgba(0,128,96,0.8);
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: $p-text-subdued;
+  position: relative;
+  display: flex;
+  flex: 0 0 100%;
+  align-items: center;
+  text-align: left;
+  width: 220px;
+  margin: 0 -1px;
+  padding: 24px;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
+
+  @media (min-width: 40em) {
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 990px) {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    display: block;
+    text-align: center;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid $p-divider;
+    padding: 16px;
+    width: 100%;
+    min-width: 55px;
+  }
+
+  @media screen and (max-width: 990px) and (min-width: 40em) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.Polaris-VerticalTabs__TabElement--Right {
+  --focus-state-box-shadow-color: rgba(0,128,96,0.8);
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: $p-text-subdued;
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  flex: 0 0 100%;
+  align-items: center;
+  text-align: left;
+  width: 220px;
+  margin: 0 -1px;
+  padding: 24px;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  border-right: 1px solid $p-divider;
+  border-left: 1px solid $p-divider;
+
+  @media (min-width: 40em) {
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 990px) {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    display: block;
+    text-align: center;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid $p-divider;
+    padding: 16px;
+    width: 100%;
+    min-width: 55px;
+  }
+
+  @media screen and (max-width: 990px) and (min-width: 40em) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.Polaris-VerticalTabs__TabElement--selected {
+  font-weight: 400;
+  color: $p-text;
+  background: $p-surface;
+  color: $p-text-success;
+  border-right-color: transparent;
+
+  @media screen and (max-width: 990px) {
+    border-bottom-color: transparent;
+  }
+}
+
+.Polaris-VerticalTabs__TabElement--Right--selected {
+  font-weight: 400;
+  color: $p-text;
+  background: $p-surface;
+  color: $p-text-success;
+  border-left-color: transparent;
+
+  @media screen and (max-width: 990px) {
+    border-bottom-color: transparent;
+  }
+}
+
+.Polaris-VerticalTabs__TabElement:active {
+  box-shadow: inset 0 0 2px 0 rgba(0,128,96,0.8),0 0 2px 0 rgba(0,128,96,0.8);
+  outline: none;
+}
+
+.Polaris-VerticalTabs__TabElement:hover {
+  text-decoration: none;
+}
+
+.Polaris-VerticalTabs__TabElement:active, .Polaris-VerticalTabs__TabElement:hover {
+  font-weight: 400;
+  color: $p-text;
+}
+
+.Polaris-VerticalTabs__TabElement--icon {
+  margin-right: 16px;
+
+  @media screen and (max-width: 990px) {
+    display: block;
+    margin-right: 0;
+  }
+}
+
+.Polaris-VerticalTabs__Navigation {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  > ul {
+    border-bottom: none;
+  }
+
+  .Polaris-VerticalTabs__Title {
+    &:before{
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+    }
+  }
+}
+
+.Polaris-VerticalTabs__Panel {
+  display: block;
+  width: 100%;
+  padding: 24px 32px;
+  background: $p-surface;
+
+  @media screen and (max-width: 990px) {
+    padding: 24px 16px;
+  }
+}
+
+.Polaris-VerticalTabs__Panel--hidden {
+  display: none;
+}

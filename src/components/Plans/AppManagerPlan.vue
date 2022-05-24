@@ -8,24 +8,13 @@
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
-                    <PButton :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
+                    <PButton v-if="monthlyPlan.length" :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{('Monthly')}}</p>
                     </PButton>
-                    <PButton :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
 
-                        <PStack slot="default">
-                            <PStackItem>
-                                <PTextContainer spacing="tight" style="margin-top:0">
-                                    <PHeading>{{('Annually')}}</PHeading>
-                                    <p style="margin-top: -3px; color: #E2C138;font-family: inherit "><b style="font-size: 12px;">{{('save')}} 20%</b></p>
-                                </PTextContainer>
-                            </PStackItem>
-                            <PStackItem >
-                                <PHeading class="annual_heading"  variation="subdued">{{('get_2_month_free')}}</PHeading>
-                            </PStackItem>
-                        </PStack>
+                    <PButton v-if="yearlyPlan.length" :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
+                        <YearlyPlanPromotion />
                     </PButton>
-
                 </PButtonGroup>
             </PStackItem>
         </PStack>
@@ -46,7 +35,7 @@
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === monthlyPlan.length}" :style="activePlanStyle(plan)">
                                             <b style="font-size: 16px">{{(plan.name)}}</b>
                                             <p style="display: flex;margin-top: 10px">
-                                                <PHeading style="font-size: 25px;font-weight: 700;">${{plan.price.toFixed(2)}}</PHeading>
+                                                <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
                                                 <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
                                             </p>
                                         </PDataTableCol>
@@ -60,7 +49,7 @@
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === yearlyPlan.length}" :style="activePlanStyle(plan)">
                                             <b style="font-size: 16px">{{(plan.name)}}</b>
                                             <p style="display: flex;margin-top: 10px">
-                                                <PHeading style="font-size: 25px; font-weight: 700;">${{plan.price.toFixed(2)}}</PHeading>
+                                                <PHeading style="font-size: 25px; font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
                                                 <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
                                             </p>
                                         </PDataTableCol>
@@ -136,10 +125,25 @@
 
     import axios from "axios";
     import PlanBanners from "./PlanBanners";
+    import YearlyPlanPromotion from "./YearlyPlanPromotion";
+    import PPage from "../polaris-vue/src/components/PPage/PPage";
+    import PStack from "../polaris-vue/src/components/PStack/PStack";
+    import PStackItem from "../polaris-vue/src/components/PStack/components/PStackItem/PStackItem";
+    import {PButton} from "../polaris-vue/src/components/PButton";
+    import {PButtonGroup} from "../polaris-vue/src/components/PButtonGroup";
+    import {PHeading} from "../polaris-vue/src/components/PHeading";
+    import {PLayout} from "../polaris-vue/src/components/PLayout";
+    import {PLayoutSection} from "../polaris-vue/src/components/PLayout/components/PLayoutSection";
+    import {PTextContainer} from "../polaris-vue/src/components/PTextContainer";
+    import {PDataTable} from "../polaris-vue/src/components/PDataTable";
+    import {PDataTableCol} from "../polaris-vue/src/components/PDataTable/components/PDataTableCol";
+    import {PDataTableRow} from "../polaris-vue/src/components/PDataTable/components/PDataTableRow";
+    import {PIcon} from "../polaris-vue/src/components/PIcon";
+    import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
 
     export default {
         name: "AppManagerPlan",
-        components: {PlanBanners},
+        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle },
         props: ['shop_domain'],
         data() {
             return {
@@ -316,7 +320,8 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
-    .app-manager-plan-page .plan-table  td:last-child>*[data-v-7d902277] {
+    .app-manager-plan-page .plan-table  td:last-child>*[data-v-7d902277],
+    .app-manager-plan-page .plan-table  td:last-child>*[data-v-5a078dbb] {
         float:none;
     }
     .app-manager-plan-page .active {
@@ -396,6 +401,7 @@
     }
     .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:first-child {
         overflow: hidden;
+        border-bottom: 0px !important;
         border-radius: 0 0 0 12px;
     }
     .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:last-child {
@@ -404,14 +410,17 @@
     }
     .app-manager-plan-page .custom-plan table tbody tr td:first-child {
         border-left: 0px !important;
+        border-top: 0px !important;
         padding-left: 20px;
     }
     .app-manager-plan-page .custom-plan table tbody tr td:last-child {
         border-right: 0px !important;
+        border-bottom: 0px !important;
         text-align: center !important;
     }
     .app-manager-plan-page .custom-plan table thead tr td:last-child {
         border-right: 0px !important;
+        border-bottom: 0px !important;
         text-align: center !important;
     }
     .app-manager-plan-page .custom-plan table tbody td:not(:first-child) {
@@ -470,7 +479,7 @@
     .app-manager-plan-page.custom-title .Polaris-HorizontalDivider{
         background-color: #e2e3e4;
     }
-    .app-manager-plan-page .annual_heading{
+    /*.app-manager-plan-page .annual_heading{
         margin-top: 2px !important;
         color: #E2C138;
         border: 2px dotted #E2C138;
@@ -478,7 +487,7 @@
         font-size: 16px !important;
         font-weight: normal !important;
         font-family: 'Satisfy', cursive;
-    }
+    }*/
     .app-manager-plan-page .Polaris-Page__Content hr{
         border: 1px solid #e2e3e4;
     }
