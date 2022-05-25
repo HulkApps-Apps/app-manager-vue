@@ -1,6 +1,6 @@
 {
   "name": "@hulkapps/app-manager-vue",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Vue SDK to render app manager contents",
   "main": "dist/app-manager-vue.ssr.js",
   "browser": "dist/app-manager-vue.esm.js",
@@ -14,18 +14,19 @@
   "scripts": {
     "serve": "vue-cli-service serve dev/serve.js",
     "prebuild": "rimraf ./dist",
-    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:scss": "sass src/components/polaris-vue/src/scss/main.scss | node ./build/banner.js > dist/hulkapps-app-manager.css && cleancss --inline local -o dist/hulkapps-app-manager.min.css dist/hulkapps-app-manager.css",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js && npm run build:scss",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "^0.26.1",
+    "change-case": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
-    "@hulkapps/polaris-vue": "^3.0.9",
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^14.0.0",
@@ -43,7 +44,8 @@
     "rollup-plugin-vue": "^5.1.9",
     "sass-loader": "^10.0.5",
     "vue": "^2.6.14",
-    "vue-template-compiler": "^2.6.14"
+    "vue-template-compiler": "^2.6.14",
+    "vue-quill-editor": "^3.0.6"
   },
   "peerDependencies": {
     "vue": "^2.6.14"

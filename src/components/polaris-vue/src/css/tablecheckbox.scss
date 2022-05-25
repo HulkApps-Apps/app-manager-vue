@@ -1,0 +1,22 @@
+.Polaris-IndexTable-Checkbox__TableCellContentContainer {
+  display: flex;
+  align-items: center;
+}
+
+.Polaris-IndexTable-Checkbox__Wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Polaris-IndexTable-Checkbox--expanded {
+  width: 32px;
+  height: 32px;
+  padding-left: 16px;
+}
+
+.Polaris-IndexTable-Checkbox--condensed {
+  min-width: 50px;
+  min-height: 44px;
+  margin-right: -16px;
+}
