@@ -382,7 +382,8 @@
     }
     .app-manager-plan-page .custom-plan table tbody tr:last-child {
         border-bottom: 0;
-        background-color: transparent;
+        background-color: transparent !important;
+        box-shadow: none !important;
     }
     .app-manager-plan-page .custom-plan table tbody tr:not(:last-child) {
         pointer-events: none;
