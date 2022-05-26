@@ -81,19 +81,16 @@
                                 <PDataTableRow v-if="plans.length" class="row-alignment"  >
                                     <PDataTableCol></PDataTableCol>
                                     <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-plan`" style="max-width: 0">
-                                        <PButton v-if="!plan.store_base_plan" :disabled="isCurrentPlan(plan)"
+                                        <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
                                                  full-width
-                                                 @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                 :pressed="isCurrentPlan(plan)"
-                                                 :primary="!isCurrentPlan(plan)" >
-                                            {{ (isCurrentPlan(plan)) ? ('Current Plan') : 'Choose Plan' }}
+                                                 :pressed="isCurrentPlan(plan)">
+                                            {{ ('Current Plan') }}
                                         </PButton>
-                                        <PButton v-else-if="plan.shopify_plans.includes(shop.shopify_plan)" :disabled="isCurrentPlan(plan)"
+                                        <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                  full-width
                                                  @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                 :pressed="isCurrentPlan(plan)"
-                                                 :primary="!isCurrentPlan(plan)" >
-                                            {{ (isCurrentPlan(plan)) ? ('Current Plan') : 'Choose Plan' }}
+                                                 :primary="true" >
+                                            {{ ('Choose Plan') }}
                                         </PButton>
                                         <PButton v-else :disabled="true"
                                                  full-width
@@ -261,7 +258,7 @@
                 });
                 let redirectUrl = response.data.redirect_url;
                 if (redirectUrl) {
-                    window.location.replace(redirectUrl);
+                    window.top.location.href = redirectUrl;
                 }
             },
             async activePlan() {
@@ -382,7 +379,8 @@
     }
     .app-manager-plan-page .custom-plan table tbody tr:last-child {
         border-bottom: 0;
-        background-color: transparent;
+        background-color: transparent !important;
+        box-shadow: none !important;
     }
     .app-manager-plan-page .custom-plan table tbody tr:not(:last-child) {
         pointer-events: none;
