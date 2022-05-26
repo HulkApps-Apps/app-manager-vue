@@ -268,7 +268,7 @@
                 const response = await this.activeWithoutPlan()
                 if (response.data.status === true && this.onboard) {
                     // Create the event
-                    this.$emit('continue-without-plan')
+                    this.$emit('handlePlanSelect', {chose_later: true})
                     this.onboard = false;
                 }
             },
