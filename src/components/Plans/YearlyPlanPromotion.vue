@@ -4,6 +4,9 @@
             <div v-html="staticContent.content"></div>
         </div>
     </PLayoutSection>
+    <span v-else>
+        <p style="font-size: 17px; font-weight: 500" slot="default">{{('Annually')}}</p>
+    </span>
 </template>
 
 <script>

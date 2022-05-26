@@ -8,11 +8,11 @@
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
-                    <PButton v-if="monthlyPlan.length" :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
+                    <PButton v-if="monthlyPlan.length && yearlyPlan.length" :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{('Monthly')}}</p>
                     </PButton>
 
-                    <PButton v-if="yearlyPlan.length" :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
+                    <PButton v-if="yearlyPlan.length && monthlyPlan.length" :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
                     </PButton>
                 </PButtonGroup>
@@ -216,6 +216,9 @@
                         plans.push(this.plans[planKey]);
                     }
                 }
+                if (plans.length === 0) {
+                    this.selectedPlan = 'yearly';
+                }
                 return plans;
             },
             yearlyPlan() {
@@ -224,6 +227,9 @@
                     if(this.plans[planKey].interval === 'ANNUAL') {
                         plans.push(this.plans[planKey]);
                     }
+                }
+                if (plans.length === 0) {
+                    this.selectedPlan = 'monthly';
                 }
                 return plans;
             }
