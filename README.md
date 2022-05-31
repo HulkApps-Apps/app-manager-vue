@@ -25,7 +25,10 @@ Vue.use(AppManager);
 ```vue
 <Banners type="header" />
 <Banners type="footer" />
+<AppManagerPlan :shop_domain="shop_domain" />
 ```
+
+The Shop Domain is required for the AppManagerPlan component
 
 ## License
 
