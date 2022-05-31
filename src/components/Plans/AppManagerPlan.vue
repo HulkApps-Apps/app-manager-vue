@@ -327,7 +327,7 @@
             }
             this.shopify_plan = plansData.data.shopify_plan;
             this.plan = plansData.data.plan;
-            if (this.plan.interval === 'ANNUAL') {
+            if (this.plan?.interval === 'ANNUAL') {
                 this.selectedPlan = 'annually'
             }
             this.default_plan_id = plansData.data.default_plan_id;
