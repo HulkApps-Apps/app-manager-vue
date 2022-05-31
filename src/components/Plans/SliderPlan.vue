@@ -38,9 +38,9 @@
                             </ul>
                         </div>
                     </template>
-                    <carousel style="width: 70%" :per-page="3" :navigation-enabled="true">
-                        <template v-if="selectedPlan === 'monthly'">
-                            <slide class="class=Polaris-Layout__Section" v-for="(plan, key) in monthlyPlan" :style="activePlanStyle(plan)">
+                    <carousel style="width: 70%" :per-page="perPage" :navigation-enabled="true" :navigateTo="[this.currentSlide,true]" @navigation-click="handleNavigationClick($event)">
+                        <template>
+                            <slide :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :style="activePlanStyle(plan)">
                                 <div class="plan__price">
                                     <b style="font-size: 16px">{{(plan.name)}}</b>
                                     <div v-if="plan.discount && plan.discount > 0" >
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <ul>
+                                    <ul v-if="plan.features">
                                         <li v-for="(feature, key) in plan.features" :key="key" :style="activePlanStyle(plan)">
                                             <div>
                                                 <template v-if="feature.value_type === 'boolean'" style="display: flex">
@@ -131,6 +131,8 @@
         props: ['shop_domain'],
         data() {
             return {
+                perPage: 3,
+                currentSlide: 0,
                 plan: {},
                 plans: [],
                 features: [],
@@ -219,10 +221,22 @@
                     this.selectedPlan = 'monthly';
                 }
                 return plans;
-            }
+            },
         },
         methods: {
-
+            handleNavigationClick($event) {
+                if ($event === 'backward') {
+                    this.currentSlide--;
+                }
+                else {
+                    this.currentSlide++;
+                }
+                if (this.currentSlide === 0) {
+                    console.log('-----------------')
+                    let element = document.getElementsByClassName('slide-0');
+                    element.classList.add('first-slide')
+                }
+            },
             activePlanStyle(plan) {
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
             },
@@ -313,11 +327,29 @@
             }
             this.default_plan_id = plansData.data.default_plan_id;
             this.onboard = !this.plan
+        },
+        created() {
+            setTimeout(function() {
+                this.currentSlide = 0;
+                let element = document.querySelector('.slide-0');
+                element.classList.add('first-slide')
+                console.log(this.perPage)
+            },2000)
         }
     }
 </script>
 
 <style lang="scss">
+
+
+    .VueCarousel-inner .VueCarousel-slide:first-child li:not(:last-child) {
+        border-left: 1px solid #ccc;
+    }
+    .VueCarousel-inner .VueCarousel-slide:first-child .plan__price{
+        border-left: 1px solid #ccc;
+        box-shadow: rgb(23 24 24 / 5%) 1px 0px 8px, rgb(0 0 0 / 15%) 0px 0px 2px;
+        border-top-left-radius: 12px;
+    }
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
@@ -342,6 +374,9 @@
         box-shadow: rgba(23, 24, 24, 0.05) 1px 0px 8px, rgba(0, 0, 0, 0.15) 0px 0px 2px;
         background: #fff;
     }
+    .Polaris-ResourceList__ResourceListWrapper.features li, {
+        border-right: none;
+    }
     .plan__price{
         min-height:121px;
     }
@@ -354,9 +389,18 @@
     {
         border-bottom: 1px solid #ccc;
     }
-    .Polaris-ResourceList__ResourceListWrapper.features .plan__price
+    /*.Polaris-ResourceList__ResourceListWrapper.features .plan__price*/
+    /*{*/
+    /*    border-right: 1px solid #ccc;*/
+    /*}*/
+    .Polaris-ResourceList__ResourceListWrapper.features li:first-child
     {
-        border-right: 1px solid #ccc;
+        border-top-left-radius: 12px;
     }
+    .Polaris-ResourceList__ResourceListWrapper.features li:last-child
+    {
+        border-bottom-left-radius: 12px;
+    }
+
 
 </style>
