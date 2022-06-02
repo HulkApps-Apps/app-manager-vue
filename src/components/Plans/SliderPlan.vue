@@ -38,10 +38,10 @@
                             </ul>
                         </div>
                     </template>
-                    <carousel style="width: 70%" :per-page="perPage" :navigation-enabled="true" :navigateTo="[this.currentSlide,true]" @navigation-click="handleNavigationClick($event)">
+                    <carousel style="width: 70%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
                         <template>
-                            <slide :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :style="activePlanStyle(plan)">
-                                <div class="plan__price">
+                            <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" >
+                                <div class="plan__price" :style="activePlanStyle(plan)">
                                     <b style="font-size: 16px">{{(plan.name)}}</b>
                                     <div v-if="plan.discount && plan.discount > 0" >
                                         <p style="display: flex;margin-top: 10px">
@@ -62,7 +62,7 @@
                                 </div>
                                 <div>
                                     <ul v-if="plan.features">
-                                        <li v-for="(feature, key) in plan.features" :key="key" :style="activePlanStyle(plan)">
+                                        <li v-for="(feature, key) in plan.features" :key="key" :class="activePlanClass(plan)" :style="activePlanStyle(plan)">
                                             <div>
                                                 <template v-if="feature.value_type === 'boolean'" style="display: flex">
                                                     <PIcon v-if="parseInt(feature.value) === 1" color="success" source="TickMinor"/>
@@ -131,7 +131,7 @@
         props: ['shop_domain'],
         data() {
             return {
-                perPage: 3,
+                perPage: 4,
                 currentSlide: 0,
                 plan: {},
                 plans: [],
@@ -225,20 +225,35 @@
         },
         methods: {
             handleNavigationClick($event) {
-                if ($event === 'backward') {
-                    this.currentSlide--;
+                const activeSlideIds = [];
+                let activeSlides = document.getElementsByClassName('VueCarousel-slide-active')
+                for (let i=0, max=activeSlides.length; i < max; i++) {
+                    activeSlideIds.push(parseInt(activeSlides[i].id))
                 }
-                else {
-                    this.currentSlide++;
+                let last = activeSlideIds.pop();
+                let first = last - (this.perPage - 1)
+
+                let allSlides = document.getElementsByClassName('VueCarousel-slide');
+                for (let i=0, max=allSlides.length; i < max; i++) {
+                    let slide = document.getElementById(allSlides[i].id);
+                    slide.classList.remove('first-slide')
+                    slide.classList.remove('last-slide')
                 }
-                if (this.currentSlide === 0) {
-                    console.log('-----------------')
-                    let element = document.getElementsByClassName('slide-0');
-                    element.classList.add('first-slide')
-                }
+
+                let firstSlideClassName = '.slide-' + first
+                let element = document.querySelector(firstSlideClassName);
+                element.classList.add('first-slide')
+
+                let lastSlideClassName = '.slide-' + last
+                element = document.querySelector(lastSlideClassName);
+                element.classList.add('last-slide')
+
             },
             activePlanStyle(plan) {
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
+            },
+            activePlanClass(plan) {
+                return plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? 'active-plan' : '';
             },
             isCurrentPlan(plan) {
                 return this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
@@ -330,26 +345,16 @@
         },
         created() {
             setTimeout(function() {
-                this.currentSlide = 0;
                 let element = document.querySelector('.slide-0');
                 element.classList.add('first-slide')
-                console.log(this.perPage)
-            },2000)
+                element = document.querySelector('.slide-3');
+                element.classList.add('last-slide')
+            },1000)
         }
     }
 </script>
 
 <style lang="scss">
-
-
-    .VueCarousel-inner .VueCarousel-slide:first-child li:not(:last-child) {
-        border-left: 1px solid #ccc;
-    }
-    .VueCarousel-inner .VueCarousel-slide:first-child .plan__price{
-        border-left: 1px solid #ccc;
-        box-shadow: rgb(23 24 24 / 5%) 1px 0px 8px, rgb(0 0 0 / 15%) 0px 0px 2px;
-        border-top-left-radius: 12px;
-    }
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
@@ -369,11 +374,15 @@
     .Polaris-Layout__Section .VueCarousel-slide li:not(:last-child),
     .Polaris-Layout.custom-plan .VueCarousel .plan__price
     {
-        border-top: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        box-shadow: rgba(23, 24, 24, 0.05) 1px 0px 8px, rgba(0, 0, 0, 0.15) 0px 0px 2px;
+        border-top: 1px solid #dddddd;
+        border-right: 1px solid #dddddd;
         background: #fff;
     }
+    /*.Polaris-ResourceList__ResourceListWrapper.features li,*/
+    /*.Polaris-Layout__Section .VueCarousel-slide li:not(:last-child)*/
+    /*{*/
+    /*    box-shadow: rgba(23, 24, 24, 0.05) 1px 0px 8px, rgba(0, 0, 0, 0.15) 0px 0px 2px;*/
+    /*}*/
     .Polaris-ResourceList__ResourceListWrapper.features li, {
         border-right: none;
     }
@@ -382,17 +391,13 @@
     }
     .Polaris-ResourceList__ResourceListWrapper.features li
     {
-        border-left: 1px solid #ccc;
+        border-left: 1px solid #dddddd;
     }
     .Polaris-ResourceList__ResourceListWrapper.features li:last-child,
     .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2)
     {
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid #dddddd;
     }
-    /*.Polaris-ResourceList__ResourceListWrapper.features .plan__price*/
-    /*{*/
-    /*    border-right: 1px solid #ccc;*/
-    /*}*/
     .Polaris-ResourceList__ResourceListWrapper.features li:first-child
     {
         border-top-left-radius: 12px;
@@ -401,6 +406,39 @@
     {
         border-bottom-left-radius: 12px;
     }
+
+    .VueCarousel-inner .VueCarousel-slide.first-slide ul li:not(:last-child)
+    {
+        border-left: 1px solid #dddddd;
+    }
+    .VueCarousel-inner .VueCarousel-slide.first-slide .plan__price
+    {
+        border-left: 1px solid #dddddd;
+        box-shadow: none;
+        border-top-left-radius: 12px;
+        overflow: hidden;
+    }
+    .VueCarousel-inner .VueCarousel-slide.last-slide ul li:nth-last-child(2) {
+        border-bottom-right-radius: 12px;
+    }
+    .VueCarousel-inner .VueCarousel-slide.last-slide .plan__price{
+        border-right: 1px solid #dddddd;
+        box-shadow: none;
+        border-top-right-radius: 12px;
+        overflow: hidden;
+    }
+    .VueCarousel-inner .VueCarousel-slide.last-slide
+    {
+        border-top-right-radius: 12px;
+    }
+    .VueCarousel-inner .VueCarousel-slide.first-slide
+    {
+        border-top-left-radius: 12px;
+    }
+    .VueCarousel .VueCarousel-inner li{
+        text-align: center;
+    }
+
 
 
 </style>
