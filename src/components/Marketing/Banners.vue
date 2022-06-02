@@ -4,6 +4,7 @@
             v-for="(header, key) in mappedStaticContentHeaders" :key="key"
             :id="`static-content-header-${key}`"
             :status="header.status"
+            :title="header.title"
             @dismiss="() => dismissBanner(key)"
     >
       <span v-html="header.content"></span>

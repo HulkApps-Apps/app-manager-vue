@@ -228,9 +228,6 @@
                         plans.push(this.plans[planKey]);
                     }
                 }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'yearly';
-                }
                 return plans;
             },
             yearlyPlan() {
@@ -239,9 +236,6 @@
                     if(this.plans[planKey].interval === 'ANNUAL') {
                         plans.push(this.plans[planKey]);
                     }
-                }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'monthly';
                 }
                 return plans;
             }
@@ -271,7 +265,7 @@
             },
             calculateDiscountedPrice(plan) {
                 if (plan.discount_type === 'percentage') {
-                    return plan.price - (plan.price/plan.discount)
+                    return plan.price - (plan.price * plan.discount)/100
                 }
                 else if (plan.discount_type === 'amount') {
                     return plan.price - plan.discount
@@ -333,6 +327,9 @@
             }
             this.shopify_plan = plansData.data.shopify_plan;
             this.plan = plansData.data.plan;
+            if (this.plan?.interval === 'ANNUAL') {
+                this.selectedPlan = 'annually'
+            }
             this.default_plan_id = plansData.data.default_plan_id;
             this.onboard = !this.plan
         }

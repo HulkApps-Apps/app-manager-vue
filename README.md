@@ -25,6 +25,20 @@ Vue.use(AppManager);
 ```vue
 <Banners type="header" />
 <Banners type="footer" />
+<AppManagerPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" />
+```
+The AppManagerPlan component requires a Shop Domain
+
+A `handlePlanSelect` event is emitted when the user continues without selecting a plan.
+
+```javascript
+handlePlanSelectListener(payload) {
+
+  if (payload.chose_later && payload.chose_later === true) {
+    //handle chose_later
+  }
+
+}
 ```
 
 ## License
