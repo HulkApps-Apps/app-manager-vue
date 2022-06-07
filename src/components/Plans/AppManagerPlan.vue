@@ -60,10 +60,22 @@
                                     <template v-for="(plan,key) in yearlyPlan">
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === yearlyPlan.length}" :style="activePlanStyle(plan)">
                                             <b style="font-size: 16px">{{(plan.name)}}</b>
-                                            <p style="display: flex;margin-top: 10px">
-                                                <PHeading style="font-size: 25px; font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                                <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
-                                            </p>
+                                            <div v-if="plan.discount && plan.discount > 0" >
+                                                <p style="display: flex;margin-top: 10px">
+                                                    <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
+                                                </p>
+                                                <p style="display: flex;margin-top: 7px">
+                                                    <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                                    <b style="margin-top: 3px;font-size: 14px">/{{("year")}}</b>
+                                                </p>
+                                            </div>
+                                            <div v-else>
+                                                <p style="display: flex;margin-top: 10px">
+                                                    <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
+                                                </p>
+                                            </div>
                                         </PDataTableCol>
                                     </template>
                                 </PDataTableRow>
