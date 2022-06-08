@@ -60,36 +60,51 @@
                                     <template v-for="(plan,key) in yearlyPlan">
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === yearlyPlan.length}" :style="activePlanStyle(plan)">
                                             <b style="font-size: 16px">{{(plan.name)}}</b>
-                                            <p style="display: flex;margin-top: 10px">
-                                                <PHeading style="font-size: 25px; font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                                <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
-                                            </p>
+                                            <div v-if="plan.discount && plan.discount > 0" >
+                                                <p style="display: flex;margin-top: 10px">
+                                                    <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
+                                                </p>
+                                                <p style="display: flex;margin-top: 7px">
+                                                    <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                                    <b style="margin-top: 3px;font-size: 14px">/{{("year")}}</b>
+                                                </p>
+                                            </div>
+                                            <div v-else>
+                                                <p style="display: flex;margin-top: 10px">
+                                                    <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
+                                                </p>
+                                            </div>
                                         </PDataTableCol>
                                     </template>
                                 </PDataTableRow>
                             </template>
                             <template slot="body">
-                                <PDataTableRow
-                                        v-for="(feature, rIndex) in features" :key="`row-${rIndex}`"
-                                >
-                                    <PDataTableCol>{{ (feature.name) }}</PDataTableCol>
-                                    <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-${rIndex}`" :style="activePlanStyle(plan)">
-                                        <template v-if="plan.features">
-                                            <template v-if="feature.value_type === 'boolean'">
-                                                <PIcon v-if="plan.features[feature.uuid]" color="success"
-                                                       source="TickMinor"/>
-                                                <PIcon v-else color="subdued" source="MinusMinor"/>
+                                <template v-for="(featureGroup, groupKey) in featuresByGroup">
+                                    <PDataTableRow v-if="groupKey !== 'null'" class="app-manager-group-row">
+                                        <PDataTableCol colspan="5" class="app-manager-group-cell">{{ (groupKey) }}</PDataTableCol>
+                                    </PDataTableRow>
+                                    <PDataTableRow v-for="(feature, rIndex) in featureGroup" :key="`row-${rIndex + groupKey}`">
+                                        <PDataTableCol>{{ (feature.name) }}</PDataTableCol>
+                                        <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-${rIndex}`" :style="activePlanStyle(plan)">
+                                            <template v-if="plan.features">
+                                                <template v-if="feature.value_type === 'boolean'">
+                                                    <PIcon v-if="plan.features[feature.uuid]" color="success"
+                                                           source="TickMinor"/>
+                                                    <PIcon v-else color="subdued" source="MinusMinor"/>
+                                                </template>
+                                                <template v-else>
+                                                    <span v-if="plan.features[feature.uuid]">{{ format(plan.features[feature.uuid]) }}</span>
+                                                    <PIcon v-else color="subdued" source="MinusMinor"/>
+                                                </template>
                                             </template>
                                             <template v-else>
-                                                <span v-if="plan.features[feature.uuid]">{{ format(plan.features[feature.uuid]) }}</span>
-                                                <PIcon v-else color="subdued" source="MinusMinor"/>
+                                                <PIcon color="subdued" source="MinusMinor"/>
                                             </template>
-                                        </template>
-                                        <template v-else>
-                                            <PIcon color="subdued" source="MinusMinor"/>
-                                        </template>
-                                    </PDataTableCol>
-                                </PDataTableRow>
+                                        </PDataTableCol>
+                                    </PDataTableRow>
+                                </template>
                                 <PDataTableRow v-if="plans.length" class="row-alignment"  >
                                     <PDataTableCol></PDataTableCol>
                                     <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-plan`" style="max-width: 0">
@@ -159,6 +174,7 @@
                 plan: {},
                 plans: [],
                 features: [],
+                featuresByGroup: [],
                 shopify_plan: '',
                 default_plan_id: null,
                 onboard: true,
@@ -313,6 +329,17 @@
                     'Polaris-DataTable__Cell--verticalAlignMiddle': true,
                     'Polaris-DataTable__Cell--firstColumn': Boolean(firstColumn),
                 };
+            },
+            groupBy(objectArray, property) {
+                return objectArray.reduce((acc, obj) => {
+                    const key = obj[property];
+                    if (!acc[key]) {
+                        acc[key] = [];
+                    }
+                    // Add object to list for given key's value
+                    acc[key].push(obj);
+                    return acc;
+                }, {});
             }
         },
         async mounted() {
@@ -322,7 +349,9 @@
             });
             this.features = featuresData.data.features;
             this.features = this.features.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
-
+            this.features = this.features.sort((featureA, featureB) => parseInt(featureA.group_order) - parseInt(featureB.group_order))
+            this.featuresByGroup = this.groupBy(this.features, 'group')
+            console.log(this.featuresByGroup)
             const plansData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
                 console.error(error)
             });
@@ -517,5 +546,10 @@
     }*/
     .app-manager-plan-page .Polaris-Page__Content hr{
         border: 1px solid #e2e3e4;
+    }
+
+    .app-manager-plan-page .app-manager-group-row {
+        background: transparent !important;
+        padding: 16px 16px 16px 20px !important;
     }
 </style>

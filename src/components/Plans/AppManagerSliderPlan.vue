@@ -28,17 +28,17 @@
                         <div class="Polaris-ResourceList__ResourceListWrapper features" style="width: 30%">
                             <div class="plan__price"></div>
                             <ul class="Polaris-ResourceList">
-                                <li class="Polaris-ResourceList__ItemWrapper pro_title" v-for="(features, key) in plans[0].features" :key="key">
+                                <li class="Polaris-ResourceList__ItemWrapper pro_title" v-for="(feature, key) in features" :key="key">
                                     <div class="Polaris-ResourceList-Item__Container">
                                         <div class="Polaris-ResourceList-Item__Content">
-                                            <h1 class="for-price-per-month"><span>{{ features.name }}</span></h1>
+                                            <h1 class="for-price-per-month"><span>{{ feature.name }}</span></h1>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </template>
-                    <carousel style="width: 70%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
+                    <carousel style="width: 70%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :paginationEnabled="false" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
                         <template>
                             <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" >
                                 <div class="plan__price" :style="activePlanStyle(plan)">
@@ -62,15 +62,20 @@
                                 </div>
                                 <div>
                                     <ul v-if="plan.features">
-                                        <li v-for="(feature, key) in plan.features" :key="key" :class="activePlanClass(plan)" :style="activePlanStyle(plan)">
+                                        <li v-for="(feature, key) in features" :key="key" :class="activePlanClass(plan)" :style="activePlanStyle(plan)">
                                             <div>
-                                                <template v-if="feature.value_type === 'boolean'" style="display: flex">
-                                                    <PIcon v-if="parseInt(feature.value) === 1" color="success" source="TickMinor"/>
-                                                    <PIcon v-else color="subdued" source="MinusMinor"/>
+                                                <template v-if="plan.features[feature.uuid]" style="display: flex">
+                                                    <template v-if="plan.features[feature.uuid].value_type === 'boolean'">
+                                                        <PIcon v-if="parseInt(plan.features[feature.uuid].value) === 1" color="success" source="TickMinor"/>
+                                                        <PIcon v-else color="subdued" source="MinusMinor"/>
+                                                    </template>
+                                                    <template v-else style="display: flex">
+                                                        <span v-if="plan.features[feature.uuid].value">{{ format(plan.features[feature.uuid]) }}</span>
+                                                        <PIcon v-else color="subdued" source="MinusMinor"/>
+                                                    </template>
                                                 </template>
-                                                <template v-else style="display: flex">
-                                                    <span v-if="parseInt(feature.value) !== 0">{{ format(feature) }}</span>
-                                                    <PIcon v-else color="subdued" source="MinusMinor"/>
+                                                <template v-else>
+                                                    <PIcon color="subdued" source="MinusMinor"/>
                                                 </template>
                                             </div>
                                         </li>
@@ -123,10 +128,10 @@
     import {PDataTableRow} from "../polaris-vue/src/components/PDataTable/components/PDataTableRow";
     import {PIcon} from "../polaris-vue/src/components/PIcon";
     import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
-    import { Carousel, Slide } from 'vue-carousel';
+    import {Carousel, Slide} from 'vue-carousel';
 
     export default {
-        name: "SliderPlan",
+        name: "AppManagerSliderPlan",
         components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle },
         props: ['shop_domain'],
         data() {
@@ -349,7 +354,8 @@
                 element.classList.add('first-slide')
                 element = document.querySelector('.slide-3');
                 element.classList.add('last-slide')
-            },1000)
+                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+            },500)
         }
     }
 </script>
@@ -358,87 +364,82 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
-    .app-manager-plan-page ul {
+    .app-manager .app-manager-plan-page ul
+    {
         list-style: none;
         margin: 0;
         padding: 0;
     }
-
-    .Polaris-ResourceList__ResourceListWrapper.features li,
-    .Polaris-Layout__Section .VueCarousel-slide li,
-    .plan__price
+    .app-manager .app-manager-plan-page .Polaris-ResourceList__ResourceListWrapper.features li,
+    .app-manager .app-manager-plan-page .Polaris-Layout__Section .VueCarousel-slide li,
+    .app-manager .app-manager-plan-page .plan__price
     {
         padding: 16px 16px 16px 20px;
     }
-    .Polaris-ResourceList__ResourceListWrapper.features li,
-    .Polaris-Layout__Section .VueCarousel-slide li:not(:last-child),
-    .Polaris-Layout.custom-plan .VueCarousel .plan__price
+    .app-manager .app-manager-plan-page .Polaris-ResourceList__ResourceListWrapper.features li,
+    .app-manager .app-manager-plan-page .Polaris-Layout__Section .VueCarousel-slide li:not(:last-child),
+    .app-manager .app-manager-plan-page .Polaris-Layout.custom-plan .VueCarousel .plan__price
     {
         border-top: 1px solid #dddddd;
         border-right: 1px solid #dddddd;
         background: #fff;
     }
-    /*.Polaris-ResourceList__ResourceListWrapper.features li,*/
-    /*.Polaris-Layout__Section .VueCarousel-slide li:not(:last-child)*/
-    /*{*/
-    /*    box-shadow: rgba(23, 24, 24, 0.05) 1px 0px 8px, rgba(0, 0, 0, 0.15) 0px 0px 2px;*/
-    /*}*/
-    .Polaris-ResourceList__ResourceListWrapper.features li, {
+    .app-manager .app-manager-plan-page .Polaris-ResourceList__ResourceListWrapper.features li{
         border-right: none;
-    }
-    .plan__price{
-        min-height:121px;
-    }
-    .Polaris-ResourceList__ResourceListWrapper.features li
-    {
         border-left: 1px solid #dddddd;
     }
-    .Polaris-ResourceList__ResourceListWrapper.features li:last-child,
-    .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2)
+    .app-manager .app-manager-plan-page .plan__price{
+        min-height:121px;
+    }
+    .app-manager .app-manager-plan-page .Polaris-ResourceList__ResourceListWrapper.features li:last-child,
+    .app-manager .app-manager-plan-page .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2)
     {
         border-bottom: 1px solid #dddddd;
     }
-    .Polaris-ResourceList__ResourceListWrapper.features li:first-child
+    .app-manager .app-manager-plan-page .Polaris-ResourceList__ResourceListWrapper.features li:first-child
     {
         border-top-left-radius: 12px;
     }
-    .Polaris-ResourceList__ResourceListWrapper.features li:last-child
+    .app-manager .app-manager-plan-page .Polaris-ResourceList__ResourceListWrapper.features li:last-child
     {
         border-bottom-left-radius: 12px;
     }
-
-    .VueCarousel-inner .VueCarousel-slide.first-slide ul li:not(:last-child)
+    .app-manager .app-manager-plan-page .VueCarousel-inner .VueCarousel-slide.first-slide ul li:not(:last-child)
     {
         border-left: 1px solid #dddddd;
     }
-    .VueCarousel-inner .VueCarousel-slide.first-slide .plan__price
+    .app-manager .app-manager-plan-page .VueCarousel-inner .VueCarousel-slide.first-slide .plan__price
     {
         border-left: 1px solid #dddddd;
         box-shadow: none;
         border-top-left-radius: 12px;
         overflow: hidden;
     }
-    .VueCarousel-inner .VueCarousel-slide.last-slide ul li:nth-last-child(2) {
+    .app-manager .app-manager-plan-page .VueCarousel-inner .VueCarousel-slide.last-slide ul li:nth-last-child(2)
+    {
         border-bottom-right-radius: 12px;
     }
-    .VueCarousel-inner .VueCarousel-slide.last-slide .plan__price{
+    .app-manager .app-manager-plan-page .VueCarousel-inner .VueCarousel-slide.last-slide .plan__price
+    {
         border-right: 1px solid #dddddd;
         box-shadow: none;
         border-top-right-radius: 12px;
         overflow: hidden;
     }
-    .VueCarousel-inner .VueCarousel-slide.last-slide
+    .app-manager .app-manager-plan-page .VueCarousel-inner .VueCarousel-slide.last-slide
     {
         border-top-right-radius: 12px;
     }
-    .VueCarousel-inner .VueCarousel-slide.first-slide
+    .app-manager .app-manager-plan-page .VueCarousel-inner .VueCarousel-slide.first-slide
     {
         border-top-left-radius: 12px;
     }
-    .VueCarousel .VueCarousel-inner li{
+    .app-manager .app-manager-plan-page .VueCarousel .VueCarousel-inner li
+    {
         text-align: center;
     }
-
-
+    .app-manager .app-manager-plan-page .VueCarousel-navigation-button {
+        color: #257f60;
+    }
 
 </style>

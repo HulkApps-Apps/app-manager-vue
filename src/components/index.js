@@ -3,6 +3,6 @@
 import Banners from './Marketing/Banners'
 import AppManagerPlan from './Plans/AppManagerPlan'
 import PlanBanners from './Plans/PlanBanners'
-import SliderPlan from "./Plans/SliderPlan";
+import AppManagerSliderPlan from "./Plans/AppManagerSliderPlan";
 
-export { Banners, AppManagerPlan, PlanBanners, SliderPlan };
+export { Banners, AppManagerPlan, PlanBanners, AppManagerSliderPlan };
