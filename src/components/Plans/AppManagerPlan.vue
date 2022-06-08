@@ -244,9 +244,6 @@
                         plans.push(this.plans[planKey]);
                     }
                 }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'annually';
-                }
                 return plans;
             },
             yearlyPlan() {
@@ -255,9 +252,6 @@
                     if(this.plans[planKey].interval === 'ANNUAL') {
                         plans.push(this.plans[planKey]);
                     }
-                }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'monthly';
                 }
                 return plans;
             }
@@ -287,7 +281,7 @@
             },
             calculateDiscountedPrice(plan) {
                 if (plan.discount_type === 'percentage') {
-                    return plan.price - (plan.price * plan.discount)/100;
+                    return plan.price - (plan.price * plan.discount)/100
                 }
                 else if (plan.discount_type === 'amount') {
                     return plan.price - plan.discount

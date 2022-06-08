@@ -21,6 +21,14 @@ export default Vue.extend({
     Banners,
     AppManagerPlan,
     AppManagerSliderPlan
+  },
+  methods: {
+    handlePlanSelect(payload) {
+
+      if (payload.chose_later && payload.chose_later === true) {
+        //handle chose_later
+      }
+    }
   }
 });
 </script>
@@ -32,7 +40,7 @@ export default Vue.extend({
       <div class="app-manager-body">
         <Banners type="header" />
         <Banners type="footer" />
-        <AppManagerPlan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />
+        <AppManagerPlan @handlePlanSelect="handlePlanSelect" v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />
         <AppManagerSliderPlan v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />
       </div>
     </div>
