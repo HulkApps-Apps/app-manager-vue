@@ -40,7 +40,7 @@
                     </template>
                     <carousel style="width: 70%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :paginationEnabled="false" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
                         <template>
-                            <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" >
+                            <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`slide-${key}`" >
                                 <div class="plan__price" :style="activePlanStyle(plan)">
                                     <b style="font-size: 16px">{{(plan.name)}}</b>
                                     <div v-if="plan.discount && plan.discount > 0" >
@@ -317,6 +317,13 @@
             },
             async selectPlan(value){
                 this.selectedPlan= value;
+                setTimeout(function() {
+                    let element = document.querySelector('.slide-0');
+                    element.classList.add('first-slide')
+                    element = document.querySelector('.slide-3');
+                    element.classList.add('last-slide')
+                    document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                },500)
             },
             headerClasses(firstColumn) {
                 return {
@@ -345,7 +352,7 @@
             }
             this.shopify_plan = plansData.data.shopify_plan;
             this.plan = plansData.data.plan;
-            if (this.plan.interval === 'ANNUAL') {
+            if (this.plan?.interval === 'ANNUAL') {
                 this.selectedPlan = 'annually'
             }
             this.default_plan_id = plansData.data.default_plan_id;
@@ -441,7 +448,8 @@
     {
         text-align: center;
     }
-    .app-manager .app-manager-plan-page .VueCarousel-navigation-button {
+    .app-manager .app-manager-plan-page .VueCarousel-navigation-button
+    {
         color: #257f60;
     }
 
