@@ -274,7 +274,10 @@
                         return (feature.value < 0 ? (`Unlimited`) : feature.value)
                     } else return feature.value
                 }
-                else if(['string', 'array'].includes(feature?.value_type)) {
+                else if(feature?.value_type === 'array') {
+                    return JSON.parse(feature.value).join(',')
+                }
+                else if(feature?.value_type === 'string') {
                     return feature.value
                 }
             },
