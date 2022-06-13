@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "change-case": "^4.1.2"
+    "change-case": "^4.1.2",
+    "vue-carousel": "^0.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
