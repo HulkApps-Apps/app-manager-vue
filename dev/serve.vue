@@ -3,7 +3,6 @@ import Vue from 'vue';
 // Uncomment import and local "components" registration if library is not registered globally.
 import { Banners } from '@/entry.esm';
 import { AppManagerPlan } from '@/entry.esm';
-import { PlanBanners } from '@/entry.esm';
 import { PBadge } from "../src/components/polaris-vue/src/components/PBadge";
 import PCard from "@/components/polaris-vue/src/components/PCard/PCard";
 import PPage from "@/components/polaris-vue/src/components/PPage/PPage";
@@ -16,7 +15,6 @@ export default Vue.extend({
     PPage,
     PCard,
     PBadge,
-    PlanBanners,
     Banners,
     AppManagerPlan
   },
@@ -38,7 +36,7 @@ export default Vue.extend({
       <div class="app-manager-body">
         <Banners type="header" />
         <Banners type="footer" />
-        <AppManagerPlan @handlePlanSelect="handlePlanSelect" v-bind:shop_domain="'demo-chirag-parmar.myshopify.com'" />
+        <AppManagerPlan @handlePlanSelect="handlePlanSelect" :shop_domain="'demo-chirag-parmar.myshopify.com'" />
       </div>
     </div>
   </div>

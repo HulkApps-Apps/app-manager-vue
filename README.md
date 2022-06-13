@@ -26,8 +26,34 @@ Vue.use(AppManager);
 <Banners type="header" />
 <Banners type="footer" />
 <AppManagerPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" />
+<AppManagerSliderPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" />
 ```
 The AppManagerPlan component requires a Shop Domain
+
+#### Non-Vue App usage
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@hulkapps/app-manager-vue@2.0.3/dist/app-manager-vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.9/runtime.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@hulkapps/app-manager-vue@2.0.3/dist/hulkapps-app-manager.css" rel="stylesheet">
+
+<div id="app" class="app-manager">
+    <Banners type="header"  />
+    <app-manager-plan shop_domain="<%= @store.shopify_domain %>" />
+</div>
+
+<script>
+    Vue.use(AppManagerVue, {baseUrl: '<%= ENV['volume_domain'] %>'})
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            domain: '<%= @store.shopify_domain %>'
+        }
+    })
+</script>
+```
 
 A `handlePlanSelect` event is emitted when the user continues without selecting a plan.
 
