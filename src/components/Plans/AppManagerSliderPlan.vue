@@ -106,6 +106,11 @@
             </PLayoutSection>
         </PLayout>
         <!--====================================================================-->
+        <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
+            <PStackItem fill>
+                <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
+            </PStackItem>
+        </PStack>
     </PPage>
 </template>
 
@@ -253,6 +258,7 @@
                 element = document.querySelector(lastSlideClassName);
                 element.classList.add('last-slide')
 
+                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
             },
             activePlanStyle(plan) {
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
@@ -317,13 +323,11 @@
             },
             async selectPlan(value){
                 this.selectedPlan= value;
-                setTimeout(function() {
-                    let element = document.querySelector('.slide-0');
-                    element.classList.add('first-slide')
-                    element = document.querySelector('.slide-3');
-                    element.classList.add('last-slide')
-                    document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
-                },500)
+                let element = document.querySelector('.slide-0');
+                element.classList.add('first-slide')
+                element = document.querySelector('.slide-3');
+                element.classList.add('last-slide')
+                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
             },
             headerClasses(firstColumn) {
                 return {
@@ -358,6 +362,7 @@
             this.default_plan_id = plansData.data.default_plan_id;
             this.onboard = !this.plan
         },
+
         created() {
             setTimeout(function() {
                 let element = document.querySelector('.slide-0');
@@ -365,8 +370,9 @@
                 element = document.querySelector('.slide-3');
                 element.classList.add('last-slide')
                 document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
-            },500)
-        }
+            },1100)
+        },
+
     }
 </script>
 
