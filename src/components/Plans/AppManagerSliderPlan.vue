@@ -46,17 +46,17 @@
                                     <div v-if="plan.discount && plan.discount > 0" >
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
+                                            <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
                                         </p>
                                         <p style="display: flex;margin-top: 7px">
                                             <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 3px;font-size: 14px">/{{("mo")}}</b>
+                                            <b style="margin-top: 3px;font-size: 14px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
                                         </p>
                                     </div>
                                     <div v-else>
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
+                                            <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
                                         </p>
                                     </div>
                                 </div>
@@ -106,6 +106,11 @@
             </PLayoutSection>
         </PLayout>
         <!--====================================================================-->
+        <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
+            <PStackItem fill>
+                <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
+            </PStackItem>
+        </PStack>
     </PPage>
 </template>
 
@@ -210,9 +215,6 @@
                         plans.push(this.plans[planKey]);
                     }
                 }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'annually';
-                }
                 return plans;
             },
             yearlyPlan() {
@@ -221,9 +223,6 @@
                     if(this.plans[planKey].interval === 'ANNUAL') {
                         plans.push(this.plans[planKey]);
                     }
-                }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'monthly';
                 }
                 return plans;
             },
@@ -253,6 +252,7 @@
                 element = document.querySelector(lastSlideClassName);
                 element.classList.add('last-slide')
 
+                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
             },
             activePlanStyle(plan) {
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
@@ -323,7 +323,7 @@
                     element = document.querySelector('.slide-3');
                     element.classList.add('last-slide')
                     document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
-                },500)
+                },400)
             },
             headerClasses(firstColumn) {
                 return {
@@ -358,6 +358,7 @@
             this.default_plan_id = plansData.data.default_plan_id;
             this.onboard = !this.plan
         },
+
         created() {
             setTimeout(function() {
                 let element = document.querySelector('.slide-0');
@@ -365,8 +366,9 @@
                 element = document.querySelector('.slide-3');
                 element.classList.add('last-slide')
                 document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
-            },500)
-        }
+            },1100)
+        },
+
     }
 </script>
 
