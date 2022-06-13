@@ -323,11 +323,13 @@
             },
             async selectPlan(value){
                 this.selectedPlan= value;
-                let element = document.querySelector('.slide-0');
-                element.classList.add('first-slide')
-                element = document.querySelector('.slide-3');
-                element.classList.add('last-slide')
-                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                setTimeout(function() {
+                    let element = document.querySelector('.slide-0');
+                    element.classList.add('first-slide')
+                    element = document.querySelector('.slide-3');
+                    element.classList.add('last-slide')
+                    document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                },400)
             },
             headerClasses(firstColumn) {
                 return {
