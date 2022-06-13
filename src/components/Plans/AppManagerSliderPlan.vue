@@ -46,17 +46,17 @@
                                     <div v-if="plan.discount && plan.discount > 0" >
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
+                                            <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
                                         </p>
                                         <p style="display: flex;margin-top: 7px">
                                             <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 3px;font-size: 14px">/{{("mo")}}</b>
+                                            <b style="margin-top: 3px;font-size: 14px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
                                         </p>
                                     </div>
                                     <div v-else>
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
+                                            <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
                                         </p>
                                     </div>
                                 </div>
@@ -215,9 +215,6 @@
                         plans.push(this.plans[planKey]);
                     }
                 }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'annually';
-                }
                 return plans;
             },
             yearlyPlan() {
@@ -226,9 +223,6 @@
                     if(this.plans[planKey].interval === 'ANNUAL') {
                         plans.push(this.plans[planKey]);
                     }
-                }
-                if (plans.length === 0) {
-                    this.selectedPlan = 'monthly';
                 }
                 return plans;
             },
