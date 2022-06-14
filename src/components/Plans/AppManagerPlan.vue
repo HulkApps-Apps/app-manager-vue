@@ -1,6 +1,6 @@
 <template>
-    <AppManagerGroupPlan v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
-    <AppManagerSliderPlan v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
+    <AppManagerGroupPlan @handlePlanSelect="handlePlanSelect" v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
+    <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
 </template>
 
 <script>
@@ -16,6 +16,14 @@
             group_plan: {
                 type : Boolean,
                 default : false
+            }
+        },
+        methods: {
+            handlePlanSelect(payload) {
+                if (payload.chose_later && payload.chose_later === true) {
+                    //handle chose_later
+                    this.$emit('handlePlanSelect', {chose_later: true})
+                }
             }
         }
     }
