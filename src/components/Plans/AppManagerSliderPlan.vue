@@ -283,7 +283,7 @@
             },
             calculateDiscountedPrice(plan) {
                 if (plan.discount_type === 'percentage') {
-                    return plan.price - (plan.price/plan.discount)
+                    return plan.price - (plan.price * plan.discount)/100
                 }
                 else if (plan.discount_type === 'amount') {
                     return plan.price - plan.discount
@@ -332,7 +332,7 @@
                     'Polaris-DataTable__Cell--verticalAlignMiddle': true,
                     'Polaris-DataTable__Cell--firstColumn': Boolean(firstColumn),
                 };
-            }
+            },
         },
         async mounted() {
 
@@ -360,13 +360,16 @@
         },
 
         created() {
-            setTimeout(function() {
+            let initializeSliderComponent = setInterval(() => {
                 let element = document.querySelector('.slide-0');
-                element.classList.add('first-slide')
-                element = document.querySelector('.slide-3');
-                element.classList.add('last-slide')
-                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
-            },1100)
+                if (element) {
+                    element.classList.add('first-slide')
+                    element = document.querySelector('.slide-3');
+                    element.classList.add('last-slide')
+                    document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                    clearInterval(initializeSliderComponent);
+                }
+            }, 100);
         },
 
     }

@@ -1,6 +1,6 @@
 <template>
-    <AppManagerGroupPlan v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
-    <AppManagerSliderPlan v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
+    <AppManagerGroupPlan v-on="$listeners" v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
+    <AppManagerSliderPlan v-on="$listeners" v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
 </template>
 
 <script>
