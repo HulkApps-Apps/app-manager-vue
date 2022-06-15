@@ -61,10 +61,10 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <ul v-if="plan.features">
+                                    <ul>
                                         <li v-for="(feature, key) in features" :key="key" :class="activePlanClass(plan)" :style="activePlanStyle(plan)">
                                             <div>
-                                                <template v-if="plan.features[feature.uuid]" style="display: flex">
+                                                <template v-if="plan.features && plan.features[feature.uuid]" style="display: flex">
                                                     <template v-if="plan.features[feature.uuid].value_type === 'boolean'">
                                                         <PIcon v-if="parseInt(plan.features[feature.uuid].value) === 1" color="success" source="TickMinor"/>
                                                         <PIcon v-else color="subdued" source="MinusMinor"/>
@@ -104,6 +104,7 @@
                     </carousel>
                 </template>
             </PLayoutSection>
+            <PlanBanners />
         </PLayout>
         <!--====================================================================-->
         <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
