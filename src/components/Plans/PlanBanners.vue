@@ -41,6 +41,15 @@
             });
 
             this.staticContent = data.banners
+            Object.keys(this.staticContent).map((key) => {
+                if (this.staticContent[key].length) {
+                    Object.keys(this.staticContent[key]).map((index) => {
+                        if (this.staticContent[key][index].length) {
+                            this.staticContent[key][index] = this.staticContent[key][index][Math.floor(Math.random()*this.staticContent[key][index].length)]
+                        }
+                    });
+                }
+            });
         }
     }
 </script>
