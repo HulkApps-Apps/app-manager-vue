@@ -279,7 +279,7 @@
                     return JSON.parse(feature.value).join(' ')
                 }
                 else if(feature?.value_type === 'string') {
-                    return feature.value
+                    return feature.value.replace('"', '').replace('"', '')
                 }
             },
             calculateDiscountedPrice(plan) {
