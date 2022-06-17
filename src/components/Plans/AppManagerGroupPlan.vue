@@ -86,8 +86,8 @@
                                         <PDataTableCol :colspan="selectedPlan === 'monthly' ? monthlyPlan.length + 1 : yearlyPlan.length + 1" class="app-manager-group-cell">{{ (groupKey) }}</PDataTableCol>
                                     </PDataTableRow>
                                     <PDataTableRow v-for="(feature, rIndex) in featureGroup" :key="`row-${rIndex + groupKey}`">
-                                        <PDataTableCol>{{ (feature.name) }}</PDataTableCol>
-                                        <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-${rIndex}`" :style="activePlanStyle(plan)">
+                                        <PDataTableCol :class="`feature__type__${feature.value_type} feature__class`">{{ (feature.name) }}</PDataTableCol>
+                                        <PDataTableCol :class="`feature__type__${feature.value_type}`" v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-${rIndex}`" :style="activePlanStyle(plan)">
                                             <template v-if="plan.features">
                                                 <template v-if="feature.value_type === 'boolean'">
                                                     <PIcon v-if="plan.features[feature.uuid]" color="success"
@@ -276,7 +276,7 @@
                     } else return feature.value
                 }
                 else if(feature?.value_type === 'array') {
-                    return JSON.parse(feature.value).join(',')
+                    return JSON.parse(feature.value).join(' ')
                 }
                 else if(feature?.value_type === 'string') {
                     return feature.value
@@ -371,167 +371,167 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
-    .app-manager-plan-page .plan-table  td:last-child>*[data-v-7d902277],
-    .app-manager-plan-page .plan-table  td:last-child>*[data-v-5a078dbb] {
+    .app-manager .app-manager-plan-page .plan-table  td:last-child>*[data-v-7d902277],
+    .app-manager .app-manager-plan-page .plan-table  td:last-child>*[data-v-5a078dbb] {
         float:none;
     }
-    .app-manager-plan-page .active {
+    .app-manager .app-manager-plan-page .active {
         background: #f0f8f5;
     }
-    .app-manager-plan-page .plan-table  td:last-child>*[data-v-0d1b0d63] {
+    .app-manager .app-manager-plan-page .plan-table  td:last-child>*[data-v-0d1b0d63] {
         float:none;
     }
-    .app-manager-plan-page .plan-table td {
+    .app-manager .app-manager-plan-page .plan-table td {
         border: 0.01px solid #ececee !important;
         border-collapse: collapse !important;
     }
-    .app-manager-plan-page .plan-table .Polaris-DataTable__ScrollContainer{
+    .app-manager .app-manager-plan-page .plan-table .Polaris-DataTable__ScrollContainer{
         border-radius:12px;
         overflow: visible;
     }
-    .app-manager-plan-page .plan-table table {
+    .app-manager .app-manager-plan-page .plan-table table {
         border-collapse: collapse !important;
     }
-    .app-manager-plan-page .custom-plan table {
+    .app-manager .app-manager-plan-page .custom-plan table {
         border-collapse: collapse !important;
     }
-    .app-manager-plan-page .custom-plan table thead .first-column {
+    .app-manager .app-manager-plan-page .custom-plan table thead .first-column {
         border-radius: 12px 0 0 0;
         border-top: 0px !important;
         border-left: 0px !important;
     }
-    .app-manager-plan-page .custom-plan table thead .plan-heading.last-column {
+    .app-manager .app-manager-plan-page .custom-plan table thead .plan-heading.last-column {
         text-align: left !important;
         border-radius: 0 12px 0 0;
         border-top: 0px !important;
     }
-    .app-manager-plan-page .custom-plan table thead .plan-heading {
+    .app-manager .app-manager-plan-page .custom-plan table thead .plan-heading {
         background-color: rgb(255, 255, 255);
         box-shadow: rgb(23 24 24 / 5%) 1px 0px 8px, rgb(0 0 0 / 15%) 0px 0px 2px;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:first-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:first-child {
         background-color: #fff;
         box-shadow: 0 0 5px rgb(23 24 24 / 5%), 0 1px 2px rgb(0 0 0 / 15%);
         border-radius: 12px 0 0 0;
         overflow: hidden;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:not(:first-child :last-child ) {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:not(:first-child :last-child ) {
         background-color: #fff;
         overflow: hidden;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:not(:first-child :last-child) {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:not(:first-child :last-child) {
         background-color: #fff;
         box-shadow: 0 0 5px rgb(23 24 24 / 5%), 0 1px 2px rgb(0 0 0 / 15%);
         overflow: hidden;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:not( :nth-last-child(2) ) {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:not( :nth-last-child(2) ) {
         background-color: #fff;
         overflow: hidden;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:not( :nth-last-child(2) ) {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:not( :nth-last-child(2) ) {
         border-bottom: 0;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:last-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child {
         border-bottom: 0;
         background-color: transparent !important;
         box-shadow: none !important;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:not(:last-child) {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:not(:last-child) {
         pointer-events: none;
     }
-    .app-manager-plan-page .custom-plan table thead tr td{
+    .app-manager .app-manager-plan-page .custom-plan table thead tr td{
         pointer-events: none;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:first-child td:first-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:first-child td:first-child {
         overflow: hidden;
         border-radius: 12px 0 0 0;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) {
         overflow: hidden;
         border-bottom-right-radius: 12px;
         border-bottom-left-radius: 12px;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:first-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:first-child {
         overflow: hidden;
         border-bottom: 0px !important;
         border-radius: 0 0 0 12px;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:last-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:last-child {
         overflow: hidden;
         border-radius: 0 0 12px;
     }
-    .app-manager-plan-page .custom-plan table tbody tr td:first-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr td:first-child {
         border-left: 0px !important;
         border-top: 0px !important;
         padding-left: 20px;
     }
-    .app-manager-plan-page .custom-plan table tbody tr td:last-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr td:last-child {
         border-right: 0px !important;
         border-bottom: 0px !important;
         text-align: center !important;
     }
-    .app-manager-plan-page .custom-plan table thead tr td:last-child {
+    .app-manager .app-manager-plan-page .custom-plan table thead tr td:last-child {
         border-right: 0px !important;
         border-bottom: 0px !important;
         text-align: center !important;
     }
-    .app-manager-plan-page .custom-plan table tbody td:not(:first-child) {
+    .app-manager .app-manager-plan-page .custom-plan table tbody td:not(:first-child) {
         text-align: center !important;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:last-child td:last-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td:last-child {
         background: transparent;
         border-radius: 0 0 12px 0;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:last-child td {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td {
         border: 0 !important;
         background: transparent;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:last-child td:hover {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td:hover {
         border: 0 !important;
         background: transparent;
     }
-    .app-manager-plan-page .custom-plan tbody tr:last-child td.Polaris-DataTable__Cell--verticalAlignTop{
+    .app-manager .app-manager-plan-page .custom-plan tbody tr:last-child td.Polaris-DataTable__Cell--verticalAlignTop{
         background: transparent !important;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:last-child {
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child {
         background: transparent;
         opacity:1.0;
     }
-    .app-manager-plan-page .custom-plan table tbody tr:last-child  td:first-child{
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child  td:first-child{
         visibility: hidden;
     }
-    .app-manager-plan-page .plan-heading {
+    .app-manager .app-manager-plan-page .plan-heading {
         padding-top: 30px;
     }
-    .app-manager-plan-page .custom-plan .Polaris-Layout__Section{
+    .app-manager .app-manager-plan-page .custom-plan .Polaris-Layout__Section{
         max-width: calc(100% - 2rem) !important;
     }
-    .app-manager-plan-page .later-link {
+    .app-manager .app-manager-plan-page .later-link {
         text-align: center;
         clear: both;
         padding-top: 15px;
     }
-    .app-manager-plan-page .plan-badge ul {
+    .app-manager .app-manager-plan-page .plan-badge ul {
         text-align: center;
         padding-top: 2rem;
         border-top: 0.1rem solid #e1e3e5;
     }
-    .app-manager-plan-page .plan-badge ul li {
+    .app-manager .app-manager-plan-page .plan-badge ul li {
         list-style: none;
         display: inline-block;
         padding-right: 25px;
     }
-    .app-manager-plan-page .plan-badge ul li img {
+    .app-manager .app-manager-plan-page .plan-badge ul li img {
         max-width: 133px;
     }
-    .app-manager-plan-page .btn-group .Polaris-ButtonGroup__Item{
+    .app-manager .app-manager-plan-page .btn-group .Polaris-ButtonGroup__Item{
         margin-left: 0px !important;
         z-index: unset !important;
     }
-    .app-manager-plan-page.custom-title .Polaris-HorizontalDivider{
+    .app-manager .app-manager-plan-page.custom-title .Polaris-HorizontalDivider{
         background-color: #e2e3e4;
     }
-    /*.app-manager-plan-page .annual_heading{
+    /*.app-manager .app-manager-plan-page .annual_heading{
         margin-top: 2px !important;
         color: #E2C138;
         border: 2px dotted #E2C138;
@@ -540,12 +540,18 @@
         font-weight: normal !important;
         font-family: 'Satisfy', cursive;
     }*/
-    .app-manager-plan-page .Polaris-Page__Content hr{
+    .app-manager .app-manager-plan-page .Polaris-Page__Content hr{
         border: 1px solid #e2e3e4;
     }
 
-    .app-manager-plan-page .app-manager-group-row {
+    .app-manager .app-manager-plan-page .app-manager-group-row {
         background: transparent !important;
         padding: 16px 16px 16px 20px !important;
+    }
+
+    .app-manager .app-manager-plan-page .feature__type__array {
+        vertical-align: middle !important;
+        word-spacing: 999px;
+        white-space: pre-line !important;
     }
 </style>
