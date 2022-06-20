@@ -1,10 +1,10 @@
 <template>
-    <PSkeletonPage title="Skeleton Page"
+    <PSkeletonPage title="Plans"
                    :fullWidth="false"
                    primaryAction
                    :secondaryActions="2"
                    :breadcrumbs="false"
-                   v-if="!plans.length">
+                   v-if="planLoading">
         <PLayout>
             <PLayoutSection oneThird="">
                 <PCard sectioned="">
@@ -40,6 +40,12 @@
             </PLayoutSection>
         </PLayout>
     </PSkeletonPage>
+    <PEmptyState
+            heading="No Plans"
+            image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+            v-else-if="!this.planLoading && this.plans.length === 0"
+    >
+    </PEmptyState>
     <PPage
             class="app-manager-plan-page-slider custom-title"
             title="Choose plan"
@@ -153,7 +159,6 @@
                     </carousel>
                 </template>
             </PLayoutSection>
-            <PlanBanners />
         </PLayout>
         <!--====================================================================-->
         <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
@@ -161,6 +166,7 @@
                 <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
             </PStackItem>
         </PStack>
+        <PlanBanners />
     </PPage>
 </template>
 
@@ -188,17 +194,19 @@
     import {PSkeletonPage} from "../polaris-vue/src/components/PSkeletonPage"
     import {PSkeletonDisplayText} from "../polaris-vue/src/components/PSkeletonDisplayText"
     import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
+    import {PEmptyState} from "../polaris-vue/src/components/PEmptyState"
     import {Carousel, Slide} from 'vue-carousel';
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState },
         props: ['shop_domain'],
         data() {
             return {
                 slideLength : 0,
                 perPage: 0,
                 currentSlide: 0,
+                planLoading: false,
                 plan: {},
                 plans: [],
                 features: [],
@@ -308,7 +316,9 @@
                 element = document.querySelector(lastSlideClassName);
                 element.classList.add('last-slide')
 
-                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                if (document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev')) {
+                    document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                }
             },
             activePlanStyle(plan) {
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
@@ -425,6 +435,38 @@
 
                 });
             },
+            async fetchFeatures() {
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
+                    console.error(error)
+                });
+                if (data.features.length) {
+                    this.features = data.features;
+                    this.features = this.features?.filter((item) => item.hidden_feature !== true)
+                    this.features = this.features?.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
+                }
+            },
+            async fetchPlans() {
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
+                    console.error(error)
+                });
+                if (data.plans.length) {
+                    this.plans = data.plans;
+                    this.plans = this.plans?.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
+
+                    if (this.plans[0].store_base_plan) {
+                        this.subtitleContent = 'App plans are based on your existing shopify plan';
+                    }
+
+                    this.plan = data.plan;
+                    if (this.plan?.interval === 'ANNUAL') {
+                        this.selectedPlan = 'annually'
+
+                    }
+                    this.shopify_plan = data.shopify_plan;
+                    this.default_plan_id = data.default_plan_id;
+                    this.onboard = !this.plan
+                }
+            },
             headerClasses(firstColumn) {
                 return {
                     'Polaris-DataTable__Cell': true,
@@ -436,28 +478,10 @@
         },
         async mounted() {
 
-            const featuresData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
-                console.error(error)
-            });
-            this.features = featuresData.data.features;
-            this.features = this.features.filter((item) => item.hidden_feature !== true)
-            this.features = this.features.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
-
-            const plansData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
-                console.error(error)
-            });
-            this.plans = plansData.data.plans;
-            this.plans = this.plans.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
-            if (this.plans && this.plans[0].store_base_plan) {
-                this.subtitleContent = 'App plans are based on your existing shopify plan';
-            }
-            this.shopify_plan = plansData.data.shopify_plan;
-            this.plan = plansData.data.plan;
-            if (this.plan?.interval === 'ANNUAL') {
-                this.selectedPlan = 'annually'
-            }
-            this.default_plan_id = plansData.data.default_plan_id;
-            this.onboard = !this.plan
+            this.planLoading = true;
+            await this.fetchFeatures();
+            await this.fetchPlans();
+            this.planLoading = false;
 
             this.$nextTick(() => {
 
@@ -467,6 +491,7 @@
                     let elements = document.querySelectorAll('.plan__price');
                     let maxHeight = 0;
                     elements.forEach((item) => {
+                        item.style.minHeight = 'unset';
                         if (maxHeight < item.offsetHeight) {
                             maxHeight = item.offsetHeight
                         }
@@ -555,9 +580,9 @@
         border-right: none;
         border-left: 1px solid #dddddd;
     }
-    .app-manager .app-manager-plan-page-slider .plan__price{
+    /*.app-manager .app-manager-plan-page-slider .plan__price{
         min-height:121px;
-    }
+    }*/
     .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li:last-child,
     .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2)
     {
