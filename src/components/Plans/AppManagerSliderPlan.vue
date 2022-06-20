@@ -1,8 +1,50 @@
 <template>
+    <PSkeletonPage title="Skeleton Page"
+                   :fullWidth="false"
+                   primaryAction
+                   :secondaryActions="2"
+                   :breadcrumbs="false"
+                   v-if="!plans.length">
+        <PLayout>
+            <PLayoutSection oneThird="">
+                <PCard sectioned="">
+                    <PTextContainer>
+                        <PSkeletonDisplayText size="small" />
+                        <PSkeletonBodyText />
+                    </PTextContainer>
+                </PCard>
+            </PLayoutSection>
+            <PLayoutSection oneThird="">
+                <PCard sectioned="">
+                    <PTextContainer>
+                        <PSkeletonDisplayText size="small" />
+                        <PSkeletonBodyText />
+                    </PTextContainer>
+                </PCard>
+            </PLayoutSection>
+            <PLayoutSection oneThird="">
+                <PCard sectioned="">
+                    <PTextContainer>
+                        <PSkeletonDisplayText size="small" />
+                        <PSkeletonBodyText />
+                    </PTextContainer>
+                </PCard>
+            </PLayoutSection>
+        </PLayout>
+        <PLayout style="margin-top: 20px">
+            <PLayoutSection>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+            </PLayoutSection>
+        </PLayout>
+    </PSkeletonPage>
     <PPage
             class="app-manager-plan-page-slider custom-title"
             title="Choose plan"
             :subtitle = "subtitleContent"
+            v-else
     >
 
         <PStack slot="primaryAction">
@@ -28,7 +70,7 @@
                         <div class="Polaris-ResourceList__ResourceListWrapper features" style="width: 30%">
                             <div class="plan__price"></div>
                             <ul class="Polaris-ResourceList">
-                                <li class="Polaris-ResourceList__ItemWrapper pro_title" :class="`feature__type__${feature.value_type} feature__class`" v-for="(feature, key) in features" :key="key">
+                                <li class="Polaris-ResourceList__ItemWrapper pro_title" :class="`${feature.value_type}__type__${feature.slug} feature__type__${feature.value_type} feature__class`" v-for="(feature, key) in features" :key="key">
                                     <div class="Polaris-ResourceList-Item__Container">
                                         <div class="Polaris-ResourceList-Item__Content">
                                             <h1 class="for-price-per-month"><span>{{ feature.name }}</span></h1>
@@ -42,8 +84,14 @@
                         <template>
                             <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`slide-${key}`" >
                                 <div class="plan__price" :style="activePlanStyle(plan)">
-                                    <b style="font-size: 16px">{{(plan.name)}}</b>
-                                    <div v-if="plan.discount && plan.discount > 0" >
+                                    <div v-if="plan.price === 0">
+                                        <b v-if="plan.name !== 'Free'" style="font-size: 16px">{{(plan.name)}}</b>
+                                        <p style="display: flex;margin-top: 10px">
+                                            <PHeading style="font-size: 25px;font-weight: 700;">Free</PHeading>
+                                        </p>
+                                    </div>
+                                    <div v-else-if="plan.discount && plan.discount > 0" >
+                                        <b style="font-size: 16px">{{(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
                                             <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
@@ -54,15 +102,16 @@
                                         </p>
                                     </div>
                                     <div v-else>
+                                        <b style="font-size: 16px">{{(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
+                                               <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
                                         </p>
                                     </div>
                                 </div>
                                 <div>
                                     <ul>
-                                        <li v-for="(feature, key) in features" :class="`feature__type__${feature.value_type}`" :key="key" :style="activePlanStyle(plan)">
+                                        <li v-for="(feature, key) in features" :class="`${feature.value_type}__type__${feature.slug} feature__list feature__type__${feature.value_type}`" :key="key" :style="activePlanStyle(plan)">
                                             <div>
                                                 <template v-if="plan.features && plan.features[feature.uuid]" style="display: flex">
                                                     <template v-if="plan.features[feature.uuid].value_type === 'boolean'">
@@ -134,15 +183,21 @@
     import {PDataTableRow} from "../polaris-vue/src/components/PDataTable/components/PDataTableRow";
     import {PIcon} from "../polaris-vue/src/components/PIcon";
     import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
+    import {PCard} from "../polaris-vue/src/components/PCard"
+    import {PCardSection} from "../polaris-vue/src/components/PCard/components/PCardSection"
+    import {PSkeletonPage} from "../polaris-vue/src/components/PSkeletonPage"
+    import {PSkeletonDisplayText} from "../polaris-vue/src/components/PSkeletonDisplayText"
+    import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
     import {Carousel, Slide} from 'vue-carousel';
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage },
         props: ['shop_domain'],
         data() {
             return {
-                perPage: 4,
+                slideLength : 0,
+                perPage: 0,
                 currentSlide: 0,
                 plan: {},
                 plans: [],
@@ -320,26 +375,53 @@
                 this.selectedPlan = value;
                 this.$nextTick(() => {
 
-                    let maxHeight = 0
-                    let elements = document.querySelectorAll('.feature__type__array');
-                    elements.forEach((item) => {
-                        item.style.minHeight = 'unset';
-                        console.log(item.offsetHeight)
-                        if (maxHeight < item.offsetHeight) {
-                            maxHeight = item.offsetHeight
-                        }
-                    });
-                    elements.forEach((item) => {
-                        item.style.minHeight = maxHeight + 'px';
-                    });
+                    this.slideLength = this.selectedPlan === 'monthly' ? this.monthlyPlan.length : this.yearlyPlan.length;
+                    this.perPage = this.slideLength >= 4 ? 4 : this.slideLength;
 
-                    let element = document.querySelector('.slide-0');
-                    if (element) {
-                        element.classList.add('first-slide')
-                        element = document.querySelector('.slide-3');
-                        element.classList.add('last-slide')
-                        document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                    // calculate and reset height of rows
+                    this.features.forEach((feature) => {
+                        let className = feature.value_type + '__type__' + feature.slug;
+                        let elements = document.querySelectorAll('.' + className);
+                        let maxHeight = 0;
+                        elements.forEach((item) => {
+                            item.style.minHeight = 'unset';
+                            if (maxHeight < item.offsetHeight) {
+                                maxHeight = item.offsetHeight
+                            }
+                        });
+                        elements.forEach((item) => {
+                            item.style.minHeight = maxHeight + 'px';
+                        });
+                    })
+
+                    // remove first-slide and last-slide classes
+                    let allSlides = document.getElementsByClassName('VueCarousel-slide');
+                    for (let i=0, max=allSlides.length; i < max; i++) {
+                        let slide = document.getElementById(allSlides[i].id);
+                        slide.classList.remove('first-slide')
+                        slide.classList.remove('last-slide')
                     }
+
+                    // add first-slide and last-slide classes
+                    let pagesCount = this.slideLength;
+                    setTimeout(() => {
+                        let element = document.querySelector('.slide-0');
+                        if (element) {
+                            element.classList.add('first-slide')
+                            if (pagesCount < 4) {
+                                let lastSlideClass = '.slide-' + (pagesCount-1)
+                                element = document.querySelector(lastSlideClass);
+                                element.classList.add('last-slide')
+                            }
+                            else {
+                                element = document.querySelector('.slide-3');
+                                element.classList.add('last-slide')
+                            }
+                            if (document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev')) {
+                                document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                            }
+                        }
+                    }, 100)
 
                 });
             },
@@ -358,6 +440,7 @@
                 console.error(error)
             });
             this.features = featuresData.data.features;
+            this.features = this.features.filter((item) => item.hidden_feature !== true)
             this.features = this.features.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
 
             const plansData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
@@ -378,24 +461,66 @@
 
             this.$nextTick(() => {
 
-                let maxHeight = 0
-                let elements = document.querySelectorAll('.feature__type__array');
-                elements.forEach((item) => {
-                    if (maxHeight < item.offsetHeight) {
-                        maxHeight = item.offsetHeight
-                    }
-                });
-                elements.forEach((item) => {
-                    item.style.minHeight = maxHeight + 'px';
-                });
+                // calculate height of cell
+                setTimeout(() => {
 
-                let element = document.querySelector('.slide-0');
-                if (element) {
-                    element.classList.add('first-slide')
-                    element = document.querySelector('.slide-3');
-                    element.classList.add('last-slide')
-                    document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                    let elements = document.querySelectorAll('.plan__price');
+                    let maxHeight = 0;
+                    elements.forEach((item) => {
+                        if (maxHeight < item.offsetHeight) {
+                            maxHeight = item.offsetHeight
+                        }
+                    });
+                    elements.forEach((item) => {
+                        item.style.minHeight = maxHeight + 'px';
+                    });
+
+                    this.features.forEach((feature) => {
+                        let className = feature.value_type + '__type__' + feature.slug;
+                        elements = document.querySelectorAll('.' + className);
+                        maxHeight = 0;
+                        elements.forEach((item) => {
+                            if (maxHeight < item.offsetHeight) {
+                                maxHeight = item.offsetHeight
+                            }
+                        });
+                        elements.forEach((item) => {
+                            item.style.minHeight = maxHeight + 'px';
+                        });
+                    })
+                }, 100);
+
+                // remove fist-slide and last-slide classes from all slides
+                let allSlides = document.getElementsByClassName('VueCarousel-slide');
+                for (let i=0, max=allSlides.length; i < max; i++) {
+                    let slide = document.getElementById(allSlides[i].id);
+                    slide.classList.remove('first-slide')
+                    slide.classList.remove('last-slide')
                 }
+
+                // add first-slide and last-slide
+                this.slideLength = this.selectedPlan === 'monthly' ? this.monthlyPlan.length : this.yearlyPlan.length;
+                this.perPage = this.slideLength >= 4 ? 4 : this.slideLength;
+
+                let pagesCount = this.slideLength;
+                setTimeout(() => {
+                    let element = document.querySelector('.slide-0');
+                    if (element) {
+                        element.classList.add('first-slide')
+                        if (pagesCount < 4) {
+                            let lastSlideClass = '.slide-' + (pagesCount-1)
+                            element = document.querySelector(lastSlideClass);
+                            element.classList.add('last-slide')
+                        }
+                        else {
+                            element = document.querySelector('.slide-3');
+                            element.classList.add('last-slide')
+                        }
+                        if (document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev')) {
+                            document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
+                        }
+                    }
+                }, 100)
 
             });
         },
@@ -489,6 +614,7 @@
         margin-left: 0px !important;
         z-index: unset !important;
     }
+    .app-manager .app-manager-plan-page-slider .feature__list,
     .app-manager .app-manager-plan-page-slider .feature__type__array
     {
         display: flex;
