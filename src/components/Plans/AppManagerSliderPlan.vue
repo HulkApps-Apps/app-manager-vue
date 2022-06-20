@@ -327,7 +327,7 @@
                 return plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? 'active-plan' : '';
             },
             isCurrentPlan(plan) {
-                return this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
+                return !this.plan.choose_later && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
             },
             isSamePlanInOtherInterval(plan) {
                 return this.shop.plan && (plan.shopify_plans === this.shop.plan.shopify_plans)
@@ -384,6 +384,17 @@
             async selectPlan(value){
                 this.selectedPlan = value;
                 this.$nextTick(() => {
+
+                    let elements = document.querySelectorAll('.plan__price');
+                    let maxHeight = 0;
+                    elements.forEach((item) => {
+                        if (maxHeight < item.offsetHeight) {
+                            maxHeight = item.offsetHeight
+                        }
+                    });
+                    elements.forEach((item) => {
+                        item.style.minHeight = maxHeight + 'px';
+                    });
 
                     this.slideLength = this.selectedPlan === 'monthly' ? this.monthlyPlan.length : this.yearlyPlan.length;
                     this.perPage = this.slideLength >= 4 ? 4 : this.slideLength;
