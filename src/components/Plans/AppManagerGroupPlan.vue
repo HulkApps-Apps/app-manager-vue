@@ -315,7 +315,7 @@
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
             },
             isCurrentPlan(plan) {
-                return this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
+                return !this.plan.choose_later && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
             },
             isSamePlanInOtherInterval(plan) {
                 return this.shop.plan && (plan.shopify_plans === this.shop.plan.shopify_plans)
