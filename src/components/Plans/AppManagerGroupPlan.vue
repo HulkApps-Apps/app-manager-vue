@@ -1,10 +1,10 @@
 <template>
-    <PSkeletonPage title="Skeleton Page"
+    <PSkeletonPage title="Plans"
                    :fullWidth="false"
                    primaryAction
                    :secondaryActions="2"
                    :breadcrumbs="false"
-                   v-if="!plans.length">
+                   v-if="planLoading">
         <PLayout>
             <PLayoutSection oneThird="">
                 <PCard sectioned="">
@@ -40,13 +40,17 @@
             </PLayoutSection>
         </PLayout>
     </PSkeletonPage>
+    <PEmptyState
+            heading="No Plans"
+            image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+            v-else-if="!this.planLoading && this.plans.length === 0"
+     />
     <PPage
            class="app-manager-plan-page custom-title"
            title="Choose plan"
            :subtitle = "subtitleContent"
            v-else
     >
-
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
@@ -180,8 +184,8 @@
                         <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
                     </PStackItem>
                 </PStack>
+                <PlanBanners />
             </PLayoutSection>
-            <PlanBanners />
         </PLayout>
         <!--====================================================================-->
     </PPage>
@@ -211,10 +215,11 @@
     import {PSkeletonDisplayText} from "../polaris-vue/src/components/PSkeletonDisplayText"
     import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
     import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
+    import {PEmptyState} from "../polaris-vue/src/components/PEmptyState";
 
     export default {
         name: "AppManagerGroupPlan",
-        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText },
+        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText, PEmptyState },
         props: ['shop_domain'],
         data() {
             return {
@@ -225,6 +230,7 @@
                 shopify_plan: '',
                 default_plan_id: null,
                 onboard: true,
+                planLoading: false,
                 subtitleContent: '',
                 checkList: [
                     "60 days free trial",
@@ -337,6 +343,24 @@
                     return plan.price - plan.discount
                 }
             },
+            headerClasses(firstColumn) {
+                return {
+                    'Polaris-DataTable__Cell': true,
+                    'Polaris-DataTable__Cell--header': true,
+                    'Polaris-DataTable__Cell--verticalAlignMiddle': true,
+                    'Polaris-DataTable__Cell--firstColumn': Boolean(firstColumn),
+                };
+            },
+            groupBy(objectArray, property) {
+                return objectArray.reduce((acc, obj) => {
+                    const key = obj[property];
+                    if (!acc[key]) {
+                        acc[key] = [];
+                    }
+                    acc[key].push(obj);
+                    return acc;
+                }, {});
+            },
             async getPlanUrl(plan) {
                 let shopName = this.shop.name;
                 const response = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan/process/${plan.id}?shop=${shopName}`).catch(error => {
@@ -366,51 +390,46 @@
             async selectPlan(value){
                 this.selectedPlan= value;
             },
-            headerClasses(firstColumn) {
-                return {
-                    'Polaris-DataTable__Cell': true,
-                    'Polaris-DataTable__Cell--header': true,
-                    'Polaris-DataTable__Cell--verticalAlignMiddle': true,
-                    'Polaris-DataTable__Cell--firstColumn': Boolean(firstColumn),
-                };
+            async fetchFeatures() {
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
+                    console.error(error)
+                });
+                if (data.features.length) {
+                    this.features = data.features;
+                    this.features = this.features?.filter((item) => item.hidden_feature !== true)
+                    this.features = this.features?.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
+                    this.features = this.features?.sort((featureA, featureB) => parseInt(featureA.group_order) - parseInt(featureB.group_order))
+                    this.featuresByGroup = this.groupBy(this.features, 'group')
+                }
             },
-            groupBy(objectArray, property) {
-                return objectArray.reduce((acc, obj) => {
-                    const key = obj[property];
-                    if (!acc[key]) {
-                        acc[key] = [];
+            async fetchPlans() {
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
+                    console.error(error)
+                });
+                if (data.plans.length) {
+                    this.plans = data.plans;
+                    this.plans = this.plans?.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
+
+                    if (this.plans[0].store_base_plan) {
+                        this.subtitleContent = 'App plans are based on your existing shopify plan';
                     }
-                    // Add object to list for given key's value
-                    acc[key].push(obj);
-                    return acc;
-                }, {});
-            }
+
+                    this.plan = data.plan;
+                    if (this.plan?.interval === 'ANNUAL') {
+                        this.selectedPlan = 'annually'
+
+                    }
+                    this.shopify_plan = data.shopify_plan;
+                    this.default_plan_id = data.default_plan_id;
+                    this.onboard = !this.plan
+                }
+            },
         },
         async mounted() {
-
-            const featuresData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
-                console.error(error)
-            });
-            this.features = featuresData.data.features;
-            this.features = this.features.filter((item) => item.hidden_feature !== true)
-            this.features = this.features.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
-            this.features = this.features.sort((featureA, featureB) => parseInt(featureA.group_order) - parseInt(featureB.group_order))
-            this.featuresByGroup = this.groupBy(this.features, 'group')
-            const plansData = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
-                console.error(error)
-            });
-            this.plans = plansData.data.plans;
-            this.plans = this.plans.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
-            if (this.plans && this.plans[0].store_base_plan) {
-                this.subtitleContent = 'App plans are based on your existing shopify plan';
-            }
-            this.shopify_plan = plansData.data.shopify_plan;
-            this.plan = plansData.data.plan;
-            if (this.plan?.interval === 'ANNUAL') {
-                this.selectedPlan = 'annually'
-            }
-            this.default_plan_id = plansData.data.default_plan_id;
-            this.onboard = !this.plan
+            this.planLoading = true;
+            await this.fetchFeatures();
+            await this.fetchPlans();
+            this.planLoading = false;
         }
     }
 </script>
