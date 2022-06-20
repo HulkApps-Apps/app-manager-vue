@@ -1,8 +1,50 @@
 <template>
+    <PSkeletonPage title="Skeleton Page"
+                   :fullWidth="false"
+                   primaryAction
+                   :secondaryActions="2"
+                   :breadcrumbs="false"
+                   v-if="!plans.length">
+        <PLayout>
+            <PLayoutSection oneThird="">
+                <PCard sectioned="">
+                    <PTextContainer>
+                        <PSkeletonDisplayText size="small" />
+                        <PSkeletonBodyText />
+                    </PTextContainer>
+                </PCard>
+            </PLayoutSection>
+            <PLayoutSection oneThird="">
+                <PCard sectioned="">
+                    <PTextContainer>
+                        <PSkeletonDisplayText size="small" />
+                        <PSkeletonBodyText />
+                    </PTextContainer>
+                </PCard>
+            </PLayoutSection>
+            <PLayoutSection oneThird="">
+                <PCard sectioned="">
+                    <PTextContainer>
+                        <PSkeletonDisplayText size="small" />
+                        <PSkeletonBodyText />
+                    </PTextContainer>
+                </PCard>
+            </PLayoutSection>
+        </PLayout>
+        <PLayout style="margin-top: 20px">
+            <PLayoutSection>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+                <PCard sectioned=""><PSkeletonBodyText /></PCard>
+            </PLayoutSection>
+        </PLayout>
+    </PSkeletonPage>
     <PPage
            class="app-manager-plan-page custom-title"
            title="Choose plan"
            :subtitle = "subtitleContent"
+           v-else
     >
 
         <PStack slot="primaryAction">
@@ -163,11 +205,16 @@
     import {PDataTableCol} from "../polaris-vue/src/components/PDataTable/components/PDataTableCol";
     import {PDataTableRow} from "../polaris-vue/src/components/PDataTable/components/PDataTableRow";
     import {PIcon} from "../polaris-vue/src/components/PIcon";
+    import {PCard} from "../polaris-vue/src/components/PCard"
+    import {PCardSection} from "../polaris-vue/src/components/PCard/components/PCardSection"
+    import {PSkeletonPage} from "../polaris-vue/src/components/PSkeletonPage"
+    import {PSkeletonDisplayText} from "../polaris-vue/src/components/PSkeletonDisplayText"
+    import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
     import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
 
     export default {
         name: "AppManagerGroupPlan",
-        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle },
+        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText },
         props: ['shop_domain'],
         data() {
             return {
@@ -345,6 +392,7 @@
                 console.error(error)
             });
             this.features = featuresData.data.features;
+            this.features = this.features.filter((item) => item.hidden_feature !== true)
             this.features = this.features.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
             this.features = this.features.sort((featureA, featureB) => parseInt(featureA.group_order) - parseInt(featureB.group_order))
             this.featuresByGroup = this.groupBy(this.features, 'group')
@@ -553,5 +601,18 @@
         vertical-align: middle !important;
         word-spacing: 999px;
         white-space: pre-line !important;
+    }
+
+    .app-manager .app-manager-plan-page .Polaris-DataTable__Table {
+        table-layout: fixed !important;
+    }
+
+    .app-manager .app-manager-plan-page td {
+        vertical-align: middle !important;
+    }
+
+    .app-manager .app-manager-plan-page td.feature__class {
+        word-wrap:break-word !important;
+        white-space: normal !important;
     }
 </style>
