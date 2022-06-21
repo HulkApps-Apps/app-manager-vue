@@ -230,6 +230,7 @@
                 shopify_plan: '',
                 default_plan_id: null,
                 onboard: true,
+                choose_later: false,
                 planLoading: false,
                 subtitleContent: '',
                 checkList: [
@@ -315,7 +316,7 @@
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
             },
             isCurrentPlan(plan) {
-                return !this.plan.choose_later && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
+                return !this.choose_later && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
             },
             isSamePlanInOtherInterval(plan) {
                 return this.shop.plan && (plan.shopify_plans === this.shop.plan.shopify_plans)
@@ -422,6 +423,7 @@
                     this.shopify_plan = data.shopify_plan;
                     this.default_plan_id = data.default_plan_id;
                     this.onboard = !this.plan
+                    this.choose_later = data.choose_later
                 }
             },
         },
