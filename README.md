@@ -60,8 +60,8 @@ A `handlePlanSelect` event is emitted when the user continues without selecting 
 ```javascript
 handlePlanSelectListener(payload) {
 
-  if (payload.chose_later && payload.chose_later === true) {
-    //handle chose_later
+  if (payload.choose_later && payload.choose_later === true) {
+    //handle choose_later
   }
 
 }

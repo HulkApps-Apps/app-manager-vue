@@ -21,8 +21,8 @@ export default Vue.extend({
   methods: {
     handlePlanSelect(payload) {
 
-      if (payload.chose_later && payload.chose_later === true) {
-        //handle chose_later
+      if (payload.choose_later && payload.choose_later === true) {
+        //handle choose_later
       }
     }
   }
