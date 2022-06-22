@@ -179,7 +179,7 @@
                         </PDataTable>
                     </template>
                 </template>
-                <PStack v-if="onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
+                <PStack v-if="default_plan_id && onboard && !shop.has_plan" class="choose-plan-btn" alignment="center" distribution="center" vertical>
                     <PStackItem fill>
                         <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
                     </PStackItem>
