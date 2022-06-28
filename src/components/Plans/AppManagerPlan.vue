@@ -1,6 +1,6 @@
 <template>
-    <AppManagerGroupPlan v-on="$listeners" v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
-    <AppManagerSliderPlan v-on="$listeners" v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
+    <AppManagerGroupPlan @handlePlanSelect="handlePlanSelect" v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
+    <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
 </template>
 
 <script>
@@ -16,6 +16,11 @@
             group_plan: {
                 type : Boolean,
                 default : false
+            }
+        },
+        methods: {
+            handlePlanSelect(payload) {
+                this.$emit('handlePlanSelect', payload)
             }
         }
     }
