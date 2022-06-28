@@ -20,9 +20,7 @@
         },
         methods: {
             handlePlanSelect(payload) {
-                if (payload.choose_later && payload.choose_later === true) {
-                    this.$emit('handlePlanSelect', {choose_later: true})
-                }
+                this.$emit('handlePlanSelect', payload)
             }
         }
     }
