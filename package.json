@@ -1,6 +1,6 @@
 {
   "name": "@hulkapps/app-manager-vue",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Vue SDK to render app manager contents",
   "main": "dist/app-manager-vue.ssr.js",
   "browser": "dist/app-manager-vue.esm.js",
