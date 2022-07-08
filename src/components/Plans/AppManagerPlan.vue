@@ -1,6 +1,6 @@
 <template>
-    <AppManagerGroupPlan @handlePlanSelect="handlePlanSelect" v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
-    <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
+    <AppManagerGroupPlan @handle-plan-select="handlePlanSelect" v-if="group_plan" :shop_domain="shop_domain" ></AppManagerGroupPlan>
+    <AppManagerSliderPlan @handle-plan-select="handlePlanSelect" v-else :shop_domain="shop_domain" ></AppManagerSliderPlan>
 </template>
 
 <script>
