@@ -405,7 +405,7 @@
                 }
             },
             async fetchPlans() {
-                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain, 'active_plan_id': null } }).catch(error => {
                     console.error(error)
                 });
                 if (data.plans.length) {
