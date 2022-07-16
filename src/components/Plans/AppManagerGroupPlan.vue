@@ -368,9 +368,13 @@
                 const response = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan/process/${plan.id}?shop=${shopName}`).catch(error => {
                     console.error(error)
                 });
-                let redirectUrl = response.data.redirect_url;
-                if (redirectUrl) {
-                    window.top.location.href = redirectUrl;
+                if(response.data.plan_type === 'free_plan'){
+                    this.$emit('handlePlanSelect', {free_plan: true})
+                }else{
+                    let redirectUrl = response.data.redirect_url;
+                    if (redirectUrl) {
+                        window.top.location.href = redirectUrl;
+                    }
                 }
             },
             async activePlan() {
@@ -405,7 +409,7 @@
                 }
             },
             async fetchPlans() {
-                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain, 'active_plan_id': null } }).catch(error => {
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
                     console.error(error)
                 });
                 if (data.plans.length) {

@@ -63,7 +63,10 @@ handlePlanSelectListener(payload) {
   if (payload.choose_later && payload.choose_later === true) {
     //handle choose_later
   }
-
+    
+ if (payload.free_plan && payload.free_plan === true) {
+         //handle free_plan selection
+       }
 }
 ```
 
