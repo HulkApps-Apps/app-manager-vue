@@ -6,6 +6,7 @@
             :status="header.status"
             :title="header.title"
             @dismiss="() => dismissBanner(key)"
+            v-if="date_compare(header.published_on) && (header.expired_on == null || !date_compare(header.expired_on))"
     >
       <span v-html="header.content"></span>
     </PBanner>
@@ -44,11 +45,19 @@
       },
       banner_type() {
         return this.type === 'header' ? 'headers' : 'footers'
-      }
+      },
+
     },
     methods: {
       dismissBanner(key) {
         this.staticContent[this.banner_type].splice(key, 1);
+      },
+      date_compare(published_on){
+        var published_on_obj = published_on.split('/');
+        var now = new Date();
+        var compareDate = new Date(published_on_obj[2]+'/'+published_on_obj[0]+'/'+published_on_obj[1]);
+        var isShow = now.getTime() >= compareDate.getTime();
+        return isShow;
       }
     },
     async mounted() {
