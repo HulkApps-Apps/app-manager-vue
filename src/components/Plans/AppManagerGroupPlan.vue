@@ -456,10 +456,7 @@
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
                 }
-            },
-            isCurrentPlan(plan) {
-                return this.has_active_charge && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
-            },
+            }
         },
         async mounted() {
             this.planLoading = true;
