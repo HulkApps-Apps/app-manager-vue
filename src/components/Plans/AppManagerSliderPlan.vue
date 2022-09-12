@@ -96,14 +96,7 @@
                                             <PHeading style="font-size: 25px;font-weight: 700;">Free</PHeading>
                                         </p>
                                     </div>
-                                    <div v-else-if="isCurrentPlan(plan)" >
-                                        <b style="font-size: 16px">{{(plan.name)}}</b>
-                                        <p style="display: flex;margin-top: 7px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">${{currentPlanChargePrice}}</PHeading>
-                                            <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
-                                        </p>
-                                    </div>
-                                    <div v-else-if="plan.discount && plan.discount > 0" >
+                                    <div v-else-if="plan.discount && plan.discount > 0 && !isCurrentPlan(plan)" >
                                         <b style="font-size: 16px">{{(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
@@ -298,10 +291,7 @@
                     }
                 }
                 return plans;
-            },
-            currentPlanChargePrice(){
-                return parseFloat(this.plan.price).toFixed(2);
-            },
+            }
         },
         methods: {
             handleNavigationClick($event) {
