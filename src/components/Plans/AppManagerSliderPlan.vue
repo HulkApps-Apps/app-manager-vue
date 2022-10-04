@@ -48,7 +48,7 @@
     </PEmptyState>
     <PPage
             class="app-manager-plan-page-slider custom-title"
-            title="Choose plan"
+            title="Plans"
             :subtitle = "subtitleContent"
             v-else
     >
@@ -143,7 +143,9 @@
                                             <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                      full-width
                                                      @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                     :primary="true" >
+                                                     :primary="isPlanButtonColor(plan)"
+                                                     :class="planChooseButtonClass(plan)"
+                                            >
                                                 {{ ('Choose Plan') }}
                                             </PButton>
                                             <PButton v-else :disabled="true"
@@ -494,6 +496,22 @@
                     'Polaris-DataTable__Cell--firstColumn': Boolean(firstColumn),
                 };
             },
+            isPlanButtonColor(plan){
+                if(this.has_active_charge && this.shop.plan){
+                    if(plan.price > this.shop.plan.price){
+                        return true;
+                    }
+                }
+                return false;
+            },
+            planChooseButtonClass(plan){
+                if(this.has_active_charge && this.shop.plan){
+                    if(plan.price > this.shop.plan.price){
+                        return '';
+                    }
+                }
+                return 'custom-choose-button';
+            }
         },
         async mounted() {
 
@@ -669,6 +687,18 @@
     .app-manager .app-manager-plan-page-slider .feature__type__array.feature__class
     {
         justify-content: left;
+    }
+
+    .app-manager .app-manager-plan-page-slider .plan-heading b{
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        white-space: initial;
+    }
+
+    .app-manager .app-manager-plan-page-slider .custom-choose-button:hover{
+        background: #006e52;
+        border-color: transparent;
+        color: #fff;
     }
 
 </style>
