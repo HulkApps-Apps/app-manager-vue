@@ -47,7 +47,7 @@
      />
     <PPage
            class="app-manager-plan-page custom-title"
-           title="Choose plan"
+           title="Plans"
            :subtitle = "subtitleContent"
            v-else
     >
@@ -163,7 +163,7 @@
                                 </template>
                                 <PDataTableRow v-if="plans.length" class="row-alignment"  >
                                     <PDataTableCol></PDataTableCol>
-                                    <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-plan`" style="max-width: 0">
+                                    <PDataTableCol v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-plan`" style="max-width: 0" >
                                         <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
                                                  full-width
                                                  :pressed="isCurrentPlan(plan)">
@@ -172,7 +172,9 @@
                                         <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                  full-width
                                                  @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                 :primary="true" >
+                                                 :primary="isPlanButtonColor(plan)"
+                                                 :class="planChooseButtonClass(plan)"
+                                        >
                                             {{ ('Choose Plan') }}
                                         </PButton>
                                         <PButton v-else :disabled="true"
@@ -319,10 +321,9 @@
                     }
                 }
                 return plans;
-            }
+            },
         },
         methods: {
-
             activePlanStyle(plan) {
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
             },
@@ -441,6 +442,34 @@
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
                 }
+            },
+            /*cellColor(plan) {
+                let greenCell = { backgroundColor: 'rgb(240, 248, 245)',color: 'rgb(37, 127, 96)'};
+                let disableCell = { backgroundColor: '#fafbfb',color: 'rgb(37, 127, 96)'};
+                if(this.has_active_charge && this.shop.plan){
+                    if((plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id))){
+                       return disableCell;
+                    }else if(plan.price > this.shop.plan.price){
+                        return greenCell;
+                    }
+                }
+                return;
+            },*/
+            isPlanButtonColor(plan){
+                if(this.has_active_charge && this.shop.plan){
+                    if(plan.price > this.shop.plan.price){
+                        return true;
+                    }
+                }
+                return false;
+            },
+            planChooseButtonClass(plan){
+                if(this.has_active_charge && this.shop.plan){
+                    if(plan.price > this.shop.plan.price){
+                        return '';
+                    }
+                }
+                return 'custom-choose-button';
             }
         },
         async mounted() {
@@ -448,6 +477,7 @@
             await this.fetchFeatures();
             await this.fetchPlans();
             this.planLoading = false;
+            console.log(this.shop.plan.price);
         }
     }
 </script>
@@ -652,4 +682,21 @@
         word-wrap:break-word !important;
         white-space: normal !important;
     }
+    .app-manager .app-manager-plan-page .light-green-cell{
+        background-color: rgb(240, 248, 245);
+        color: rgb(37, 127, 96);
+    }
+
+    .app-manager .app-manager-plan-page .plan-heading b{
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        white-space: initial;
+    }
+
+    .app-manager .app-manager-plan-page .custom-choose-button:hover{
+        background: #006e52;
+        border-color: transparent;
+        color: #fff;
+    }
+
 </style>
