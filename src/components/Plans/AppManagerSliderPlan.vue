@@ -212,6 +212,7 @@
                 plan: {},
                 plans: [],
                 features: [],
+                featureValues:[],
                 shopify_plan: '',
                 default_plan_id: null,
                 onboard: true,
@@ -345,7 +346,12 @@
                     } else return feature.value
                 }
                 else if(feature?.value_type === 'array') {
-                    return JSON.parse(feature.value).join(' ')
+                  let values= JSON.parse(feature.value);
+                  let that = this;
+                  values = values.map(function(value){
+                    return that.featureValues[feature.feature_id][value];
+                  });
+                  return values.join(', ')
                 }
                 else if(feature?.value_type === 'string') {
                     return feature.value.replace('"', '').replace('"', '')
@@ -461,7 +467,13 @@
                 if (data.features.length) {
                     this.features = data.features;
                     this.features = this.features?.filter((item) => item.hidden_feature !== true)
-                    this.features = this.features?.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order))
+                    this.features = this.features?.sort((featureA, featureB) => parseInt(featureA.display_order) - parseInt(featureB.display_order));
+                    //Get feature array time values
+                    this.features.forEach((feature) => {
+                      if(feature.value_type == 'array'){
+                        this.featureValues[feature.uuid] = feature.values;
+                      }
+                    });
                 }
             },
             async fetchPlans() {
