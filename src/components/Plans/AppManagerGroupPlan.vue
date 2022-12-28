@@ -343,14 +343,11 @@
                     } else return feature.value
                 }
                 else if(feature?.value_type === 'array') {
-                  console.log(this.featureValues);
-                  console.log(feature);
                   let values= JSON.parse(feature.value);
                   let that = this;
                   values = values.map(function(value){
                     return that.featureValues[feature.feature_id][value];
                   });
-                  console.log(values);
                   return values.join(', ')
                 }
                 else if(feature?.value_type === 'string') {
