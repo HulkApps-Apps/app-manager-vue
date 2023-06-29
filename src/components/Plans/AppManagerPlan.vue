@@ -7,6 +7,8 @@
 <script>
 import AppManagerGroupPlan from "./AppManagerGroupPlan";
 import AppManagerSliderPlan from "./AppManagerSliderPlan";
+import Vue from "vue";
+import install from "@/entry.esm";
 
 export default {
   name: "AppManagerPlan",
@@ -18,6 +20,10 @@ export default {
     group_plan: {
       type: Boolean,
       default: false
+    },
+    base_url: {
+      type: String,
+      default: null
     }
   },
   methods: {
@@ -26,6 +32,14 @@ export default {
       this.$emit('handle-plan-select', payload)
 
     }
+  },
+  created() {
+    if(this.base_url != null){
+      let config = {
+        baseUrl: this.base_url
+      }
+      install(Vue,config)
+    };
   }
 }
 </script>
