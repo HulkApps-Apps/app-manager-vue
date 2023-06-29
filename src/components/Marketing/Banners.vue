@@ -18,6 +18,8 @@
   import {PBanner} from "../polaris-vue/src/components/PBanner";
 
   import axios from 'axios'
+  import install from "@/entry.esm";
+  import Vue from "vue";
 
   export default {
     components: {PLayoutSection, PBanner},
@@ -31,6 +33,10 @@
         default() {
           return 'header'
         }
+      },
+      base_url: {
+        type: String,
+        default: null
       }
     },
     data() {
@@ -76,8 +82,16 @@
           });
         }
       });
+    },
+    created() {
+      if (this.base_url != null) {
+        let config = {
+          baseUrl: this.base_url
+        }
+        install(Vue, config)
+      }
     }
-  }
+    }
 </script>
 
 <style scoped>
