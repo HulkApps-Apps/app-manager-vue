@@ -202,7 +202,7 @@
     export default {
         name: "AppManagerSliderPlan",
         components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState },
-        props: ['shop_domain'],
+        props: ['shop_domain','host'],
         data() {
             return {
                 slideLength : 0,
@@ -367,7 +367,12 @@
             },
             async getPlanUrl(plan) {
                 let shopName = this.shop.name;
-                const response = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan/process/${plan.id}?shop=${shopName}`).catch(error => {
+                let host = this.host;
+                let queryString = `shop=${shopName}`;
+                if(host != null){
+                  queryString +=`&host=${host}`
+                }
+                const response = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan/process/${plan.id}?${queryString}`).catch(error => {
                     console.error(error)
                 });
                 if(response.data.plan_type === 'free_plan'){
