@@ -534,9 +534,6 @@
             }
         },
         async mounted() {
-          console.log(this.app_manager_config.baseUrl);
-          console.log(this.$translations);
-
             this.planLoading = true;
             await this.fetchFeatures();
             await this.fetchPlans();

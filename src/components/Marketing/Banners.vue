@@ -70,7 +70,6 @@
         return isShow;
       },
       translateMe(message){
-        console.log(message);
         return this.$translations.hasOwnProperty(message)?this.$translations[message]:message;
       },
     },
