@@ -4,11 +4,11 @@
             v-for="(header, key) in mappedStaticContentHeaders" :key="key"
             :id="`static-content-header-${key}`"
             :status="header.status"
-            :title="header.title"
+            :title="translateMe(header.title)"
             @dismiss="() => dismissBanner(key)"
             v-if="date_compare(header.published_on) && (header.expired_on == null || !date_compare(header.expired_on))"
     >
-      <span v-html="header.content"></span>
+      <span v-html="translateMe(header.content)"></span>
     </PBanner>
   </PLayoutSection>
 </template>
@@ -37,6 +37,10 @@
       base_url: {
         type: String,
         default: null
+      },
+      translations:{
+        type: Object,
+        default: {}
       }
     },
     data() {
@@ -64,7 +68,11 @@
         var compareDate = new Date(published_on_obj[2]+'/'+published_on_obj[0]+'/'+published_on_obj[1]);
         var isShow = now.getTime() >= compareDate.getTime();
         return isShow;
-      }
+      },
+      translateMe(message){
+        console.log(message);
+        return this.$translations.hasOwnProperty(message)?this.$translations[message]:message;
+      },
     },
     async mounted() {
 
@@ -84,6 +92,9 @@
       });
     },
     created() {
+      if(Object.keys(this.translations).length > 0){
+        Vue.prototype.$translations  =  this.translations;
+      };
       if (this.base_url != null) {
         let config = {
           baseUrl: this.base_url

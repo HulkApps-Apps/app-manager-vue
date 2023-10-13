@@ -1,5 +1,5 @@
 <template>
-  <AppManagerGroupPlan @handlePlanSelect="handlePlanSelect" v-if="group_plan"
+  <AppManagerGroupPlan  @handlePlanSelect="handlePlanSelect" v-if="group_plan"
                        :shop_domain="shop_domain" :host="host"></AppManagerGroupPlan>
   <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" v-else :shop_domain="shop_domain" :host="host"></AppManagerSliderPlan>
 </template>
@@ -28,6 +28,10 @@ export default {
     host:{
       type: String,
       default: null
+    },
+    translations:{
+      type: Object,
+      default: {}
     }
   },
   methods: {
@@ -38,12 +42,15 @@ export default {
     }
   },
   created() {
-    if(this.base_url != null){
+    if(Object.keys(this.translations).length > 0){
+      Vue.prototype.$translations  =  this.translations;
+    };
+    if (this.base_url != null) {
       let config = {
         baseUrl: this.base_url
       }
-      install(Vue,config)
-    };
+      install(Vue, config)
+    }
   }
 }
 </script>

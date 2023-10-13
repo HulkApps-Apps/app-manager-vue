@@ -1,5 +1,5 @@
 <template>
-    <PSkeletonPage title="Plans"
+    <PSkeletonPage :title="translateMe('Plans')"
                    :fullWidth="false"
                    primaryAction
                    :secondaryActions="2"
@@ -41,13 +41,13 @@
         </PLayout>
     </PSkeletonPage>
     <PEmptyState
-            heading="No Plans"
+            :heading="translateMe('No Plans')"
             image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
             v-else-if="!this.planLoading && this.plans.length === 0"
      />
     <PPage
            class="app-manager-plan-page custom-title"
-           title="Plans"
+           :title="translateMe('Plans')"
            :subtitle = "subtitleContent"
            v-else
     >
@@ -55,7 +55,7 @@
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
                     <PButton v-if="monthlyPlan.length && yearlyPlan.length" :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
-                        <p style="font-size: 17px; font-weight: 500" slot="default">{{('Monthly')}}</p>
+                        <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
 
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
@@ -75,30 +75,30 @@
                             <template slot="head">
                                 <PDataTableRow v-if="selectedPlan === 'monthly'" style="box-shadow: none!important;">
                                     <PDataTableCol style="opacity: 0;visibility: hidden;border: 0 !important;" class="plan-heading">
-                                        <b>{{('features')}}</b>
+                                        <b>{{translateMe('features')}}</b>
                                     </PDataTableCol>
                                     <template v-for="(plan, key) in monthlyPlan" >
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === monthlyPlan.length}" :style="activePlanStyle(plan)">
-                                            <b v-if="plan.name !== 'Free'" style="font-size: 16px">{{(plan.name)}}</b>
+                                            <b v-if="plan.name !== 'Free'" style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                             <div v-if="plan.price === 0">
                                                 <p style="display: flex;margin-top: 10px">
-                                                    <PHeading style="font-size: 25px;font-weight: 700;">Free</PHeading>
+                                                    <PHeading style="font-size: 25px;font-weight: 700;">{{ translateMe('Free') }}</PHeading>
                                                 </p>
                                             </div>
                                             <div v-else-if="plan.discount && plan.discount > 0 && !isCurrentPlan(plan)" >
                                                 <p style="display: flex;margin-top: 10px">
                                                     <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
-                                                    <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{translateMe("mo")}}</b>
                                                 </p>
                                                 <p style="display: flex;margin-top: 7px">
                                                     <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                                    <b style="margin-top: 3px;font-size: 14px">/{{("mo")}}</b>
+                                                    <b style="margin-top: 3px;font-size: 14px">/{{translateMe("mo")}}</b>
                                                 </p>
                                             </div>
                                             <div v-else>
                                                 <p style="display: flex;margin-top: 10px">
                                                     <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                                    <b style="margin-top: 5px;font-size: 17px">/{{("mo")}}</b>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{translateMe("mo")}}</b>
                                                 </p>
                                             </div>
                                         </PDataTableCol>
@@ -106,30 +106,30 @@
                                 </PDataTableRow>
                                 <PDataTableRow v-else>
                                     <PDataTableCol style="opacity: 0;visibility: hidden; border: 0 !important;" class="plan-heading">
-                                        <b>{{('features')}}</b>
+                                        <b>{{translateMe('features')}}</b>
                                     </PDataTableCol>
                                     <template v-for="(plan,key) in yearlyPlan">
                                         <PDataTableCol :class="{'first-column': key === 0, 'plan-heading': true, 'last-column': (key+1) === yearlyPlan.length}" :style="activePlanStyle(plan)">
-                                            <b v-if="plan.name !== 'Free'"  style="font-size: 16px">{{(plan.name)}}</b>
+                                            <b v-if="plan.name !== 'Free'"  style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                             <div v-if="plan.price === 0">
                                                 <p style="display: flex;margin-top: 10px">
-                                                    <PHeading style="font-size: 25px;font-weight: 700;">Free</PHeading>
+                                                    <PHeading style="font-size: 25px;font-weight: 700;">{{ translateMe('Free') }}</PHeading>
                                                 </p>
                                             </div>
                                             <div v-else-if="plan.discount && plan.discount > 0 && !isCurrentPlan(plan)" >
                                                 <p style="display: flex;margin-top: 10px">
                                                     <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
-                                                    <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{translateMe("year")}}</b>
                                                 </p>
                                                 <p style="display: flex;margin-top: 7px">
                                                     <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                                    <b style="margin-top: 3px;font-size: 14px">/{{("year")}}</b>
+                                                    <b style="margin-top: 3px;font-size: 14px">/{{translateMe("year")}}</b>
                                                 </p>
                                             </div>
                                             <div v-else>
                                                 <p style="display: flex;margin-top: 10px">
                                                     <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                                    <b style="margin-top: 5px;font-size: 17px">/{{("year")}}</b>
+                                                    <b style="margin-top: 5px;font-size: 17px">/{{translateMe("year")}}</b>
                                                 </p>
                                             </div>
                                         </PDataTableCol>
@@ -139,10 +139,10 @@
                             <template slot="body">
                                 <template v-for="(featureGroup, groupKey) in featuresByGroup">
                                     <PDataTableRow v-if="groupKey !== 'null'" class="app-manager-group-row">
-                                        <PDataTableCol :colspan="selectedPlan === 'monthly' ? monthlyPlan.length + 1 : yearlyPlan.length + 1" class="app-manager-group-cell">{{ (groupKey) }}</PDataTableCol>
+                                        <PDataTableCol :colspan="selectedPlan === 'monthly' ? monthlyPlan.length + 1 : yearlyPlan.length + 1" class="app-manager-group-cell">{{ translateMe(groupKey) }}</PDataTableCol>
                                     </PDataTableRow>
                                     <PDataTableRow v-for="(feature, rIndex) in featureGroup" :key="`row-${rIndex + groupKey}`">
-                                        <PDataTableCol :class="`feature__type__${feature.value_type} feature__class`">{{ (feature.name) }}</PDataTableCol>
+                                        <PDataTableCol :class="`feature__type__${feature.value_type} feature__class`">{{ translateMe(feature.name) }}</PDataTableCol>
                                         <PDataTableCol :class="`feature__type__${feature.value_type}`" v-for="(plan, cIndex) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`cell-${cIndex}-row-${rIndex}`" :style="activePlanStyle(plan)">
                                             <template v-if="plan.features">
                                                 <template v-if="feature.value_type === 'boolean'">
@@ -151,7 +151,7 @@
                                                     <PIcon v-else color="subdued" source="MinusMinor"/>
                                                 </template>
                                                 <template v-else>
-                                                    <span v-if="plan.features[feature.uuid]">{{ format(plan.features[feature.uuid]) }}</span>
+                                                    <span v-if="plan.features[feature.uuid]">{{ translateMe(format(plan.features[feature.uuid])) }}</span>
                                                     <PIcon v-else color="subdued" source="MinusMinor"/>
                                                 </template>
                                             </template>
@@ -167,7 +167,7 @@
                                         <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
                                                  full-width
                                                  :pressed="isCurrentPlan(plan)">
-                                            {{ ('Current Plan') }}
+                                            {{ translateMe('Current Plan') }}
                                         </PButton>
                                         <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                  full-width
@@ -175,15 +175,15 @@
                                                  :primary="isPlanButtonColor(plan)"
                                                  :class="planChooseButtonClass(plan)"
                                         >
-                                            {{ ('Choose Plan') }}
+                                            {{ translateMe('Choose Plan') }}
                                         </PButton>
                                         <PButton v-else :disabled="true"
                                                  full-width
                                                  :pressed="true">
-                                            {{ ('Not applicable') }}
+                                            {{ translateMe('Not applicable') }}
                                         </PButton>
                                         <PTextContainer v-if="plan.store_base_plan && shop.plan && plan.shopify_plans.includes(shop.shopify_plan) && !isCurrentPlan(plan)" class="footer-note-container">
-                                            <PTextStyle class="text-break" v-if="plan.store_base_plan && !plan.shopify_plans.includes(shop.shopify_plan) && !(isCurrentPlan(plan)) && !isSamePlanInOtherInterval(plan)">Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan</PTextStyle>
+                                            <PTextStyle class="text-break" v-if="plan.store_base_plan && !plan.shopify_plans.includes(shop.shopify_plan) && !(isCurrentPlan(plan)) && !isSamePlanInOtherInterval(plan)">{{ translateMe('Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan')}}</PTextStyle>
                                         </PTextContainer>
                                     </PDataTableCol>
                                 </PDataTableRow>
@@ -193,7 +193,7 @@
                 </template>
                 <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
                     <PStackItem fill>
-                        <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
+                        <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
                     </PStackItem>
                 </PStack>
                 <PlanBanners />
@@ -296,11 +296,11 @@
                 };
             },
             headings() {
-                let headings = [('Plans & Features')];
+                let headings = [this.translateMe('Plans & Features')];
                 this.plans.forEach(plan => {
 
                     let heading = (plan.name);
-                    if (plan.price > 0) heading += ` ($${plan.price}/mo)`;
+                    if (plan.price > 0) heading += ` ($${plan.price}/` + this.translateMe('mo') + ')';
                     headings.push(heading);
                 });
                 return headings;
@@ -325,6 +325,9 @@
             },
         },
         methods: {
+            translateMe(message) {
+              return this.$translations.hasOwnProperty(message) ? this.$translations[message] : message;
+            },
             activePlanStyle(plan) {
                 return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
             },
@@ -339,19 +342,19 @@
                     if (feature.format === 'percentage') {
                         return `${feature.value}%`
                     } else if (feature.format === 'count') {
-                        return (feature.value < 0 ? (`Unlimited`) : feature.value)
+                        return (feature.value < 0 ? this.translateMe(`Unlimited`) : feature.value)
                     } else return feature.value
                 }
                 else if(feature?.value_type === 'array') {
                   let values= JSON.parse(feature.value);
                   let that = this;
                   values = values.map(function(value){
-                    return that.featureValues[feature.feature_id][value];
+                    return that.translateMe(that.featureValues[feature.feature_id][value]);
                   });
                   return values.join(', ')
                 }
                 else if(feature?.value_type === 'string') {
-                    return feature.value.replace('"', '').replace('"', '')
+                    return this.translateMe(feature.value.replace('"', '').replace('"', ''));
                 }
             },
             calculateDiscountedPrice(plan) {
@@ -446,7 +449,7 @@
                     this.plans = this.plans?.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
 
                     if (this.plans[0].store_base_plan) {
-                        this.subtitleContent = 'App plans are based on your existing shopify plan';
+                        this.subtitleContent = this.translateMe('App plans are based on your existing shopify plan');
                     }
 
                     this.plan = data.plan;

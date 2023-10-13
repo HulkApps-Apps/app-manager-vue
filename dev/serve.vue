@@ -18,6 +18,20 @@ export default Vue.extend({
     Banners,
     AppManagerPlan
   },
+  data() {
+    return {
+      translations:{
+        "Plans" : "Planss",
+        "Unlimited Plan" : "Unlimited Plan My",
+        "Free" : "Free 1",
+        "Grid" : "Gridd",
+        "mnb" : "MNB",
+        "This is html" : "This is html 001",
+        "Title" : "Title eng",
+        '<p>Contents</p>' : '<p>Contents eng</p>',
+      }
+    };
+  },
   methods: {
     handlePlanSelect(payload) {
 
@@ -27,6 +41,8 @@ export default Vue.extend({
       if (payload.free_plan && payload.free_plan === true) {
         //handle free_plan selection
       }
+    },
+    beforeCreate() {
     }
   }
 });
@@ -37,9 +53,9 @@ export default Vue.extend({
     <h1>Test</h1>
     <div id="app" class="app-manager">
       <div class="app-manager-body">
-        <Banners type="header" />
-        <Banners type="footer" />
-        <AppManagerPlan @handlePlanSelect="handlePlanSelect" :shop_domain="'demo-chirag-parmar.myshopify.com'" />
+        <Banners :translations="translations" type="header" base_url="https://redirects.localhost"/>
+        <Banners :translations="translations" type="footer" base_url="https://redirects.localhost"/>
+        <AppManagerPlan :translations="translations"  @handlePlanSelect="handlePlanSelect" :shop_domain="'demo-chirag-parmar.myshopify.com'" base_url="https://redirects.localhost" shop_host="asd"/>
       </div>
     </div>
   </div>

@@ -25,8 +25,8 @@ Vue.use(AppManager);
 ```vue
 <Banners type="header" />
 <Banners type="footer" />
-<AppManagerPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" />
-<AppManagerSliderPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" />
+<AppManagerPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" :translations="translations"/>
+<AppManagerSliderPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" :translations="translations"/>
 ```
 The AppManagerPlan component requires a Shop Domain
 
@@ -40,7 +40,7 @@ The AppManagerPlan component requires a Shop Domain
 
 <div id="app" class="app-manager">
     <Banners type="header"  />
-    <app-manager-plan shop_domain="<%= @store.shopify_domain %>" />
+    <app-manager-plan translations="<%= @store.translations %>" shop_domain="<%= @store.shopify_domain %>" />
 </div>
 
 <script>

@@ -5,7 +5,7 @@
         </div>
     </PLayoutSection>
     <span v-else>
-        <p style="font-size: 17px; font-weight: 500" slot="default">{{('Annually')}}</p>
+        <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Annually')}}</p>
     </span>
 </template>
 
@@ -25,6 +25,11 @@
             mappedStaticContent() {
                 return this.staticContent['yearlyPlanPromotions'];
             },
+        },
+        methods: {
+          translateMe(message) {
+            return this.$translations.hasOwnProperty(message) ? this.$translations[message] : message;
+          },
         },
         async mounted() {
             const { data } = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/marketing-banners`).catch(error => {
