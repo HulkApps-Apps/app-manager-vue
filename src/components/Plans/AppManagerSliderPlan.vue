@@ -1,5 +1,5 @@
 <template>
-    <PSkeletonPage title="Plans"
+    <PSkeletonPage :title="translateMe('Plans')"
                    :fullWidth="false"
                    primaryAction
                    :secondaryActions="2"
@@ -41,14 +41,14 @@
         </PLayout>
     </PSkeletonPage>
     <PEmptyState
-            heading="No Plans"
+          :heading="translateMe('No Plans')"
             image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
             v-else-if="!this.planLoading && this.plans.length === 0"
     >
     </PEmptyState>
     <PPage
             class="app-manager-plan-page-slider custom-title"
-            title="Plans"
+            :title="translateMe('Plans')"
             :subtitle = "subtitleContent"
             v-else
     >
@@ -57,7 +57,7 @@
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
                     <PButton v-if="monthlyPlan.length && yearlyPlan.length" :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
-                        <p style="font-size: 17px; font-weight: 500" slot="default">{{('Monthly')}}</p>
+                        <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
 
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
@@ -79,7 +79,7 @@
                                 <li class="Polaris-ResourceList__ItemWrapper pro_title" :class="`${feature.value_type}__type__${feature.slug} feature__type__${feature.value_type} feature__class`" v-for="(feature, key) in features" :key="key">
                                     <div class="Polaris-ResourceList-Item__Container">
                                         <div class="Polaris-ResourceList-Item__Content">
-                                            <h1 class="for-price-per-month"><span>{{ feature.name }}</span></h1>
+                                            <h1 class="for-price-per-month"><span>{{ translateMe(feature.name) }}</span></h1>
                                         </div>
                                     </div>
                                 </li>
@@ -91,27 +91,27 @@
                             <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`slide-${key}`" >
                                 <div class="plan__price" :style="activePlanStyle(plan)">
                                     <div v-if="plan.price === 0">
-                                        <b v-if="plan.name !== 'Free'" style="font-size: 16px">{{(plan.name)}}</b>
+                                        <b v-if="plan.name !== 'Free'" style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">Free</PHeading>
+                                            <PHeading style="font-size: 25px;font-weight: 700;">{{translateMe('Free')}}</PHeading>
                                         </p>
                                     </div>
                                     <div v-else-if="plan.discount && plan.discount > 0 && !isCurrentPlan(plan)" >
-                                        <b style="font-size: 16px">{{(plan.name)}}</b>
+                                        <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
+                                            <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                         <p style="display: flex;margin-top: 7px">
                                             <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                            <b style="margin-top: 3px;font-size: 14px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
+                                            <b style="margin-top: 3px;font-size: 14px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                     </div>
                                     <div v-else>
-                                        <b style="font-size: 16px">{{(plan.name)}}</b>
+                                        <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
                                             <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                               <b style="margin-top: 5px;font-size: 17px">/{{selectedPlan === 'monthly' ? ("mo") : ("year")}}</b>
+                                               <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                                             <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
                                                      full-width
                                                      :pressed="isCurrentPlan(plan)">
-                                                {{ ('Current Plan') }}
+                                                {{ translateMe('Current Plan') }}
                                             </PButton>
                                             <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                      full-width
@@ -146,12 +146,12 @@
                                                      :primary="isPlanButtonColor(plan)"
                                                      :class="planChooseButtonClass(plan)"
                                             >
-                                                {{ ('Choose Plan') }}
+                                                {{ translateMe('Choose Plan') }}
                                             </PButton>
                                             <PButton v-else :disabled="true"
                                                      full-width
                                                      :pressed="true">
-                                                {{ ('Not applicable') }}
+                                                {{ translateMe('Not applicable') }}
                                             </PButton>
                                         </li>
                                     </ul>
@@ -165,7 +165,7 @@
         <!--====================================================================-->
         <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
             <PStackItem fill>
-                <PButton plain @click="activePlan">{{ ('I will choose the plan later') }}</PButton>
+                <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
             </PStackItem>
         </PStack>
         <PlanBanners />
@@ -268,7 +268,7 @@
                 };
             },
             headings() {
-                let headings = [('Plans & Features')];
+                let headings = [this.translateMe('Plans & Features')];
                 this.plans.forEach(plan => {
 
                     let heading = (plan.name);
@@ -297,6 +297,9 @@
             }
         },
         methods: {
+          translateMe(message){
+            return this.$translations.hasOwnProperty(message)?this.$translations[message]:message;
+          },
             handleNavigationClick($event) {
                 const activeSlideIds = [];
                 let activeSlides = document.getElementsByClassName('VueCarousel-slide-active')
@@ -342,19 +345,19 @@
                     if (feature.format === 'percentage') {
                         return `${feature.value}%`
                     } else if (feature.format === 'count') {
-                        return (feature.value < 0 ? (`Unlimited`) : feature.value)
-                    } else return feature.value
+                        return (feature.value < 0 ? this.translateMe(`Unlimited`) : feature.value)
+                    } else return this.translateMe(feature.value);
                 }
                 else if(feature?.value_type === 'array') {
                   let values= JSON.parse(feature.value);
                   let that = this;
                   values = values.map(function(value){
-                    return that.featureValues[feature.feature_id][value];
+                    return that.translateMe(that.featureValues[feature.feature_id][value]);
                   });
-                  return values.join(', ')
+                  return values.join(', ');
                 }
                 else if(feature?.value_type === 'string') {
-                    return feature.value.replace('"', '').replace('"', '')
+                    return this.translateMe(feature.value.replace('"', '').replace('"', ''));
                 }
             },
             calculateDiscountedPrice(plan) {
@@ -490,7 +493,7 @@
                     this.plans = this.plans?.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
 
                     if (this.plans[0].store_base_plan) {
-                        this.subtitleContent = 'App plans are based on your existing shopify plan';
+                        this.subtitleContent = this.translateMe('App plans are based on your existing shopify plan');
                     }
 
                     this.plan = data.plan;
@@ -531,7 +534,6 @@
             }
         },
         async mounted() {
-
             this.planLoading = true;
             await this.fetchFeatures();
             await this.fetchPlans();
