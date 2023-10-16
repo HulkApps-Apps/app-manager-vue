@@ -9,9 +9,9 @@
                     :status="staticContent.status"
                     @dismiss="() => dismissBanner(key)"
             >
-                <div v-html="staticContent.content"></div>
+                <div v-html="translateMe(staticContent.content)"></div>
             </PBanner>
-            <div v-else v-html="staticContent.content"></div>
+            <div v-else v-html="translateMe(staticContent.content)"></div>
         </div>
     </PLayoutSection>
 </template>
@@ -33,6 +33,11 @@
             mappedStaticContentPlan() {
                 return this.staticContent['plans'];
             },
+        },
+        methods: {
+          translateMe(message) {
+            return this.$translations.hasOwnProperty(message) ? this.$translations[message] : message;
+          }
         },
         async mounted() {
 

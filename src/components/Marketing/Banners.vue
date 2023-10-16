@@ -91,9 +91,7 @@
       });
     },
     created() {
-      if(Object.keys(this.translations).length > 0){
-        Vue.prototype.$translations  =  this.translations;
-      };
+      Vue.prototype.$translations = (Object.keys(this.translations).length > 0)?this.translations:{};
       if (this.base_url != null) {
         let config = {
           baseUrl: this.base_url
