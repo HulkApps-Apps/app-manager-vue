@@ -23,10 +23,10 @@ Vue.use(AppManager);
 ## Usage
 
 ```vue
-<Banners type="header" />
-<Banners type="footer" />
-<AppManagerPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" :translations="translations"/>
-<AppManagerSliderPlan @handlePlanSelect="handlePlanSelectListener" :shop_domain="shop_domain" :translations="translations"/>
+<Banners type="header" @handleBannerClose="handleBannerClose" :translations="translations"/>
+<Banners type="footer" @handleBannerClose="handleBannerClose" :translations="translations"/>
+<AppManagerPlan @handlePlanSelect="handlePlanSelectListener" @handlePlanBannerClose="handleBannerClose" :shop_domain="shop_domain" :translations="translations"/>
+<AppManagerSliderPlan @handlePlanSelect="handlePlanSelectListener" @handlePlanBannerClose="handleBannerClose" :shop_domain="shop_domain" :translations="translations"/>
 ```
 The AppManagerPlan component requires a Shop Domain
 
@@ -39,8 +39,8 @@ The AppManagerPlan component requires a Shop Domain
 <link href="https://cdn.jsdelivr.net/npm/@hulkapps/app-manager-vue@2.0.3/dist/hulkapps-app-manager.css" rel="stylesheet">
 
 <div id="app" class="app-manager">
-    <Banners type="header"  />
-    <app-manager-plan translations="<%= @store.translations %>" shop_domain="<%= @store.shopify_domain %>" />
+    <Banners type="header"  @handleBannerClose="handleBannerClose"/>
+    <app-manager-plan  @handle-plan-select="handlePlanSelectListener" @handlePlanBannerClose="handleBannerClose" :translations="translations" shop_domain="<%= @store.shopify_domain %>" />
 </div>
 
 <script>
@@ -67,6 +67,16 @@ handlePlanSelectListener(payload) {
  if (payload.free_plan && payload.free_plan === true) {
          //handle free_plan selection
        }
+}
+```
+
+
+A `handleBannerClose` event is emitted when the user closed banner.
+
+```javascript
+handleBannerClose(payload) {
+
+    //handle close event
 }
 ```
 

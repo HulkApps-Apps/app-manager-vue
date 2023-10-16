@@ -1,7 +1,7 @@
 <template>
-  <AppManagerGroupPlan  @handlePlanSelect="handlePlanSelect" v-if="group_plan"
+  <AppManagerGroupPlan  @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-if="group_plan"
                        :shop_domain="shop_domain" :host="host"></AppManagerGroupPlan>
-  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" v-else :shop_domain="shop_domain" :host="host"></AppManagerSliderPlan>
+  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-else :shop_domain="shop_domain" :host="host"></AppManagerSliderPlan>
 </template>
 
 <script>
@@ -38,7 +38,10 @@ export default {
     handlePlanSelect(payload) {
       this.$emit('handlePlanSelect', payload)
       this.$emit('handle-plan-select', payload)
-
+    },
+    handlePlanBannerClose(payload) {
+      this.$emit('handlePlanBannerClose', payload)
+      this.$emit('handle-plan-banner-close', payload)
     }
   },
   created() {
