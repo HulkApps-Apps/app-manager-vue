@@ -42,6 +42,9 @@ export default Vue.extend({
         //handle free_plan selection
       }
     },
+    handleBannerClose(payload) {
+      console.log(payload);
+    },
     beforeCreate() {
     }
   }
@@ -53,9 +56,9 @@ export default Vue.extend({
     <h1>Test</h1>
     <div id="app" class="app-manager">
       <div class="app-manager-body">
-        <Banners :translations="translations" type="header" base_url="https://redirects.localhost"/>
-        <Banners :translations="translations" type="footer" base_url="https://redirects.localhost"/>
-        <AppManagerPlan :translations="translations"  @handlePlanSelect="handlePlanSelect" :shop_domain="'demo-chirag-parmar.myshopify.com'" base_url="https://redirects.localhost" shop_host="asd"/>
+        <Banners @handleBannerClose="handleBannerClose" :translations="translations" type="header" base_url="https://redirects.localhost"/>
+        <Banners @handleBannerClose="handleBannerClose" :translations="translations" type="footer" base_url="https://redirects.localhost"/>
+        <AppManagerPlan :translations='translations'  @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handleBannerClose" :shop_domain="'demo-chirag-parmar.myshopify.com'" base_url="https://redirects.localhost" shop_host="asd"/>
       </div>
     </div>
   </div>

@@ -68,7 +68,6 @@
         </PStack>
         <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" />
         <!--=======================================================-->
-
         <PLayout class="custom-plan">
             <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
@@ -168,7 +167,7 @@
                 <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
             </PStackItem>
         </PStack>
-        <PlanBanners />
+        <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
     </PPage>
 </template>
 
@@ -531,6 +530,10 @@
                     }
                 }
                 return 'custom-choose-button';
+            },
+            handlePlanBannerClose(payload) {
+              this.$emit('handlePlanBannerClose', payload)
+              this.$emit('handle-plan-banner-close', payload)
             }
         },
         async mounted() {

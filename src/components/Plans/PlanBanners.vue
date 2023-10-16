@@ -37,7 +37,11 @@
         methods: {
           translateMe(message) {
             return this.$translations.hasOwnProperty(message) ? this.$translations[message] : message;
-          }
+          },
+          dismissBanner(key) {
+            this.$emit('handlePlanBannerClose', {action:'close',type: 'plan banners'})
+            this.staticContent['plans'].splice(key, 1);
+          },
         },
         async mounted() {
 
@@ -60,5 +64,7 @@
 </script>
 
 <style scoped>
-
+.app-manager-plan-footer.Polaris-Layout__Section{
+  margin-bottom: 20px;
+}
 </style>

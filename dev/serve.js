@@ -5,9 +5,9 @@ import Dev from './serve.vue';
 
 import '../dist/hulkapps-app-manager.css';
 
-import AppManagerVue from '@/entry.esm';
+//import AppManagerVue from '@/entry.esm';
 // Vue.use(AppManagerVue);
-Vue.use(AppManagerVue, {baseUrl: 'https://subscription-plus.localhost'});
+//Vue.use(AppManagerVue, {baseUrl: 'https://subscription-plus.localhost'});
 
 Vue.config.productionTip = false;
 

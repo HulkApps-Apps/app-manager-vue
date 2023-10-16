@@ -60,6 +60,8 @@
     },
     methods: {
       dismissBanner(key) {
+        this.$emit('handleBannerClose', {action:'close',type: this.banner_type});
+        this.$emit('handle-banner-close', {action:'close',type: this.banner_type});
         this.staticContent[this.banner_type].splice(key, 1);
       },
       date_compare(published_on){
@@ -89,6 +91,7 @@
           });
         }
       });
+      console.log(this.staticContent);
     },
     created() {
       Vue.prototype.$translations = (Object.keys(this.translations).length > 0)?this.translations:{};
