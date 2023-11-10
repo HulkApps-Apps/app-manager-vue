@@ -31,7 +31,9 @@ export default {
     },
     translations:{
       type: Object,
-      default: {}
+      default() {
+        return {'hulkapps' : 'hulkapps'}
+      }
     }
   },
   methods: {
