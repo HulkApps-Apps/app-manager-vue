@@ -56,11 +56,11 @@
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
-                    <PButton v-if="monthlyPlan.length && yearlyPlan.length" :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
+                    <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
 
-                    <PButton v-if="yearlyPlan.length && monthlyPlan.length" :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
+                    <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
                     </PButton>
                 </PButtonGroup>
@@ -240,7 +240,7 @@
                 },
                 monthlyStyle:{
                     height: '55px',
-                    backgroundColor:'#f0f8f5',
+                    backgroundColor:'#FFFFFF',
                     boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
                     border:'none',
                     borderRadius:'8px',
@@ -249,7 +249,7 @@
                 yearlyStyle:{
                     color:'#258060',
                     height: '55px',
-                    backgroundColor:'#f0f8f5',
+                    backgroundColor:'#FFFFFF',
                     boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
                     border:'none',
                     borderRadius:'8px'
@@ -328,7 +328,7 @@
                 }
             },
             activePlanStyle(plan) {
-                return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#f0f8f5', color: '#257f60'} : {}];
+                return [plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? {backgroundColor: '#FFF', color: '#202223'} : {}];
             },
             activePlanClass(plan) {
                 return plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? 'active-plan' : '';
