@@ -94,7 +94,7 @@
                                                     <b style="margin-top: 3px;font-size: 14px">/{{translateMe("mo")}}</b>
                                                 </p>
                                             </div>
-                                            <div v-else-if="promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                            <div v-else-if="promotional_discount && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
                                               <p style="display: flex;margin-top: 10px">
                                                 <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                                 <b style="margin-top: 5px;font-size: 17px">/{{translateMe("mo")}}</b>
@@ -385,14 +385,14 @@
                     return plan.price - plan.discount
                 }
             },
-          calculatePromotionalDiscountedPrice(plan, promotional_discount) {
-            if (promotional_discount.type === 'percentage') {
-              return plan.price - (plan.price * promotional_discount.value)/100
-            }
-            else if (promotional_discount.type === 'amount') {
-              return plan.price - promotional_discount.value
-            }
-          },
+            calculatePromotionalDiscountedPrice(plan, promotional_discount) {
+                if (promotional_discount.type === 'percentage') {
+                  return plan.price - (plan.price * promotional_discount.value)/100
+                }
+                else if (promotional_discount.type === 'amount') {
+                  return plan.price - promotional_discount.value
+                }
+            },
             headerClasses(firstColumn) {
                 return {
                     'Polaris-DataTable__Cell': true,
