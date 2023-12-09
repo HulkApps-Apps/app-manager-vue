@@ -490,7 +490,8 @@
                     this.choose_later = data.choose_later;
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
-                    this.promotional_discount = data.promotional_discount;
+                    this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
+
                 }
             },
             /*cellColor(plan) {

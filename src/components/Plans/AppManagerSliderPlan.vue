@@ -517,14 +517,13 @@
                     this.plan = data.plan;
                     if (this.plan?.interval === 'ANNUAL') {
                         this.selectedPlan = 'annually'
-
                     }
                     this.shopify_plan = data.shopify_plan;
                     this.default_plan_id = data.default_plan_id;
                     this.choose_later = data.choose_later;
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
-                    this.promotional_discount = data.promotional_discount;
+                    this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
                 }
             },
             headerClasses(firstColumn) {
