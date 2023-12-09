@@ -95,7 +95,6 @@
       });
     },
     created() {
-      console.log(Object.keys(this.translations).length);
       Vue.prototype.$translations = (Object.keys(this.translations).length > 0)?this.translations:{};
       if (this.base_url != null) {
         let config = {

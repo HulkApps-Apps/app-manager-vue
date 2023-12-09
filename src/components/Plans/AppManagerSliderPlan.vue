@@ -106,6 +106,16 @@
                                             <b style="margin-top: 3px;font-size: 14px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                     </div>
+                                  <div v-else-if="promotional_discount && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                    <p style="display: flex;margin-top: 10px">
+                                      <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                      <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
+                                    </p>
+                                    <p style="display: flex;margin-top: 7px">
+                                      <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                      <b style="margin-top: 3px;font-size: 14px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
+                                    </p>
+                                  </div>
                                     <div v-else>
                                         <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
@@ -210,6 +220,7 @@
                 planLoading: false,
                 plan: {},
                 plans: [],
+                promotional_discount: [],
                 features: [],
                 featureValues:[],
                 shopify_plan: '',
@@ -367,6 +378,14 @@
                     return plan.price - plan.discount
                 }
             },
+            calculatePromotionalDiscountedPrice(plan, promotional_discount) {
+              if (promotional_discount.type === 'percentage') {
+                return plan.price - (plan.price * promotional_discount.value)/100
+              }
+              else if (promotional_discount.type === 'amount') {
+                return plan.price - promotional_discount.value
+              }
+            },
             async getPlanUrl(plan) {
                 let shopName = this.shop.name;
                 let host = this.host;
@@ -498,13 +517,13 @@
                     this.plan = data.plan;
                     if (this.plan?.interval === 'ANNUAL') {
                         this.selectedPlan = 'annually'
-
                     }
                     this.shopify_plan = data.shopify_plan;
                     this.default_plan_id = data.default_plan_id;
                     this.choose_later = data.choose_later;
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
+                    this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
                 }
             },
             headerClasses(firstColumn) {

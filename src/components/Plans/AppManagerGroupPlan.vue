@@ -94,6 +94,16 @@
                                                     <b style="margin-top: 3px;font-size: 14px">/{{translateMe("mo")}}</b>
                                                 </p>
                                             </div>
+                                            <div v-else-if="promotional_discount && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                              <p style="display: flex;margin-top: 10px">
+                                                <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                                <b style="margin-top: 5px;font-size: 17px">/{{translateMe("mo")}}</b>
+                                              </p>
+                                              <p style="display: flex;margin-top: 7px">
+                                                <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                                <b style="margin-top: 3px;font-size: 14px">/{{translateMe("mo")}}</b>
+                                              </p>
+                                            </div>
                                             <div v-else>
                                                 <p style="display: flex;margin-top: 10px">
                                                     <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
@@ -125,12 +135,22 @@
                                                     <b style="margin-top: 3px;font-size: 14px">/{{translateMe("year")}}</b>
                                                 </p>
                                             </div>
-                                            <div v-else>
-                                                <p style="display: flex;margin-top: 10px">
-                                                    <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
-                                                    <b style="margin-top: 5px;font-size: 17px">/{{translateMe("year")}}</b>
-                                                </p>
-                                            </div>
+                                          <div v-else-if="promotional_discount && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                            <p style="display: flex;margin-top: 10px">
+                                              <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                              <b style="margin-top: 5px;font-size: 17px">/{{translateMe("year")}}</b>
+                                            </p>
+                                            <p style="display: flex;margin-top: 7px">
+                                              <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                              <b style="margin-top: 3px;font-size: 14px">/{{translateMe("year")}}</b>
+                                            </p>
+                                          </div>
+                                          <div v-else>
+                                            <p style="display: flex;margin-top: 10px">
+                                              <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                              <b style="margin-top: 5px;font-size: 17px">/{{translateMe("year")}}</b>
+                                            </p>
+                                          </div>
                                         </PDataTableCol>
                                     </template>
                                 </PDataTableRow>
@@ -236,6 +256,7 @@
             return {
                 plan: {},
                 plans: [],
+                promotional_discount: [],
                 features: [],
                 featureValues: [],
                 featuresByGroup: [],
@@ -364,6 +385,14 @@
                     return plan.price - plan.discount
                 }
             },
+            calculatePromotionalDiscountedPrice(plan, promotional_discount) {
+                if (promotional_discount.type === 'percentage') {
+                  return plan.price - (plan.price * promotional_discount.value)/100
+                }
+                else if (promotional_discount.type === 'amount') {
+                  return plan.price - promotional_discount.value
+                }
+            },
             headerClasses(firstColumn) {
                 return {
                     'Polaris-DataTable__Cell': true,
@@ -461,6 +490,8 @@
                     this.choose_later = data.choose_later;
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
+                    this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
+
                 }
             },
             /*cellColor(plan) {
