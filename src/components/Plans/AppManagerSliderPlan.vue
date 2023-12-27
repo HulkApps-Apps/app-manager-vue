@@ -107,6 +107,7 @@
                                         </p>
                                     </div>
                                   <div v-else-if="promotional_discount && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                    <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
                                       <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                       <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
