@@ -106,7 +106,18 @@
                                             <b style="margin-top: 3px;font-size: 14px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                     </div>
-                                  <div v-else-if="promotional_discount && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                  <div v-else-if="promotional_discount && promotional_discount.plan_relation.length > 0 && promotional_discount.plan_relation.includes(plan.id)  && !isCurrentPlan(plan)" >
+                                    <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
+                                    <p style="display: flex;margin-top: 10px">
+                                      <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                      <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
+                                    </p>
+                                    <p style="display: flex;margin-top: 7px">
+                                      <PHeading style="font-size: 18px;font-weight: 500; text-decoration:line-through;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                      <b style="margin-top: 3px;font-size: 14px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
+                                    </p>
+                                  </div>
+                                  <div v-else-if="promotional_discount && promotional_discount.plan_relation.length === 0 && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
                                     <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
                                       <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
