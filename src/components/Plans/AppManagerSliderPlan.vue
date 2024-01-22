@@ -106,7 +106,7 @@
                                             <b style="margin-top: 3px;font-size: 14px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                     </div>
-                                  <div v-else-if="promotional_discount && promotional_discount.plan_relation.length > 0 && promotional_discount.plan_relation.includes(plan.id)  && !isCurrentPlan(plan)" >
+                                  <div v-else-if="((promotional_discount && !promotional_discount.errors && promotional_discount.length !== 0) || (promotional_discount && promotional_discount.length > 0)) && promotional_discount.plan_relation.length > 0 && promotional_discount.plan_relation.includes(plan.id)  && !isCurrentPlan(plan)" >
                                     <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
                                       <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
@@ -117,7 +117,7 @@
                                       <b style="margin-top: 3px;font-size: 14px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                     </p>
                                   </div>
-                                  <div v-else-if="promotional_discount && promotional_discount.plan_relation.length === 0 && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                  <div v-else-if="((promotional_discount && !promotional_discount.errors && promotional_discount.length !== 0) || (promotional_discount && promotional_discount.length > 0)) && promotional_discount.plan_relation.length === 0 && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
                                     <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
                                       <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
@@ -536,6 +536,7 @@
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
                     this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
+                    console.log(this.promotional_discount);
                 }
             },
             headerClasses(firstColumn) {
