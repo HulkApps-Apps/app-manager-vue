@@ -402,6 +402,9 @@
                     return plan.price - (plan.price * plan.discount)/100
                 }
                 else if (plan.discount_type === 'amount') {
+                  if(plan.discount > plan.price){
+                    return 0.00;
+                  }
                     return plan.price - plan.discount
                 }
             },
@@ -410,6 +413,9 @@
                   return plan.price - (plan.price * promotional_discount.value)/100
                 }
                 else if (promotional_discount.type === 'amount') {
+                  if(promotional_discount.value > plan.price){
+                    return 0.00;
+                  }
                   return plan.price - promotional_discount.value
                 }
             },
