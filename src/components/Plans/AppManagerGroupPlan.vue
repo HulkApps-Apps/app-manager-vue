@@ -271,7 +271,7 @@
     export default {
         name: "AppManagerGroupPlan",
         components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText, PEmptyState },
-        props: ['shop_domain','host'],
+        props: ['shop_domain','host', 'discountCode'],
         data() {
             return {
                 plan: {},
@@ -495,7 +495,7 @@
                 }
             },
             async fetchPlans() {
-                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain, 'discount_code': this.discountCode } }).catch(error => {
                     console.error(error)
                 });
                 if (data.plans.length) {
