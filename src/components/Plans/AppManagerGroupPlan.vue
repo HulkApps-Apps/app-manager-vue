@@ -440,10 +440,14 @@
             async getPlanUrl(plan) {
                 let shopName = this.shop.name;
                 let host = this.host;
+                let discount_code = this.discount_code;
                 let queryString = `shop=${shopName}`;
                 if(host != null){
                   queryString +=`&host=${host}`
                 }
+              if(discount_code != null){
+                queryString +=`&discount_code=${discount_code}`
+              }
                 const response = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan/process/${plan.id}?${queryString}`).catch(error => {
                     console.error(error)
                 });
