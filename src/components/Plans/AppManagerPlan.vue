@@ -1,7 +1,7 @@
 <template>
   <AppManagerGroupPlan  @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-if="group_plan"
-                       :shop_domain="shop_domain" :host="host"></AppManagerGroupPlan>
-  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-else :shop_domain="shop_domain" :host="host"></AppManagerSliderPlan>
+                       :shop_domain="shop_domain" :host="host" :discount_code="discount_code"></AppManagerGroupPlan>
+  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-else :shop_domain="shop_domain" :host="host" :discount_code="discount_code"></AppManagerSliderPlan>
 </template>
 
 <script>
@@ -26,6 +26,10 @@ export default {
       default: null
     },
     host:{
+      type: String,
+      default: null
+    },
+    discount_code: {
       type: String,
       default: null
     },

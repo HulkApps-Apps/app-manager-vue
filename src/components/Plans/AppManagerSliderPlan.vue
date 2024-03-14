@@ -223,7 +223,7 @@
     export default {
         name: "AppManagerSliderPlan",
         components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState },
-        props: ['shop_domain','host'],
+        props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
                 slideLength : 0,
@@ -407,10 +407,14 @@
             async getPlanUrl(plan) {
                 let shopName = this.shop.name;
                 let host = this.host;
+                let discount_code = this.discount_code;
                 let queryString = `shop=${shopName}`;
                 if(host != null){
                   queryString +=`&host=${host}`
                 }
+              if(discount_code != null){
+                queryString +=`&discount_code=${discount_code}`
+              }
                 const response = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan/process/${plan.id}?${queryString}`).catch(error => {
                     console.error(error)
                 });
@@ -521,7 +525,13 @@
                 }
             },
             async fetchPlans() {
-                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain } }).catch(error => {
+                let params = {
+                  'shop_domain': this.shop_domain
+                };
+                if (this.discount_code !== null) {
+                  params['discount_code'] = this.discount_code;
+                }
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params:  params }).catch(error => {
                     console.error(error)
                 });
                 if (data.plans.length) {
