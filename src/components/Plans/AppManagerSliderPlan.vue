@@ -525,7 +525,13 @@
                 }
             },
             async fetchPlans() {
-                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { 'shop_domain': this.shop_domain, 'discount_code': this.discount_code } }).catch(error => {
+                let params = {
+                  'shop_domain': this.shop_domain
+                };
+                if (this.discount_code !== null) {
+                  params['discount_code'] = this.discount_code;
+                }
+                let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, { params: { params} }).catch(error => {
                     console.error(error)
                 });
                 if (data.plans.length) {
