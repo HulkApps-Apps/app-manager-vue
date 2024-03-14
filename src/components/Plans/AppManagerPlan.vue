@@ -29,6 +29,10 @@ export default {
       type: String,
       default: null
     },
+    discount_code: {
+      type: String,
+      default: null
+    },
     translations:{
       type: Object,
       default() {
