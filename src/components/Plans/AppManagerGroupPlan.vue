@@ -43,7 +43,7 @@
     <PEmptyState
             :heading="translateMe('No Plans')"
             image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-            v-else-if="!this.planLoading && this.plans.length === 0"
+            v-if="!this.planLoading && this.plans.length === 0"
      />
     <PPage
            class="app-manager-plan-page custom-title"
