@@ -50,7 +50,7 @@
             class="app-manager-plan-page-slider custom-title"
             :title="translateMe('Plans')"
             :subtitle = "subtitleContent"
-            v-else
+            v-else-if="!this.planLoading && this.plans.length > 0"
     >
 
         <PStack slot="primaryAction">
