@@ -1,45 +1,45 @@
 <template>
-    <PSkeletonPage :title="translateMe('Plans')"
-                   :fullWidth="false"
-                   primaryAction
-                   :secondaryActions="2"
-                   :breadcrumbs="false"
-                   v-if="planLoading">
-        <PLayout>
-            <PLayoutSection oneThird="">
-                <PCard sectioned="">
-                    <PTextContainer>
-                        <PSkeletonDisplayText size="small" />
-                        <PSkeletonBodyText />
-                    </PTextContainer>
-                </PCard>
-            </PLayoutSection>
-            <PLayoutSection oneThird="">
-                <PCard sectioned="">
-                    <PTextContainer>
-                        <PSkeletonDisplayText size="small" />
-                        <PSkeletonBodyText />
-                    </PTextContainer>
-                </PCard>
-            </PLayoutSection>
-            <PLayoutSection oneThird="">
-                <PCard sectioned="">
-                    <PTextContainer>
-                        <PSkeletonDisplayText size="small" />
-                        <PSkeletonBodyText />
-                    </PTextContainer>
-                </PCard>
-            </PLayoutSection>
-        </PLayout>
-        <PLayout style="margin-top: 20px">
-            <PLayoutSection>
-                <PCard sectioned=""><PSkeletonBodyText /></PCard>
-                <PCard sectioned=""><PSkeletonBodyText /></PCard>
-                <PCard sectioned=""><PSkeletonBodyText /></PCard>
-                <PCard sectioned=""><PSkeletonBodyText /></PCard>
-            </PLayoutSection>
-        </PLayout>
-    </PSkeletonPage>
+<!--    <PSkeletonPage :title="translateMe('Plans')"-->
+<!--                   :fullWidth="false"-->
+<!--                   primaryAction-->
+<!--                   :secondaryActions="2"-->
+<!--                   :breadcrumbs="false"-->
+<!--                   v-if="planLoading">-->
+<!--        <PLayout>-->
+<!--            <PLayoutSection oneThird="">-->
+<!--                <PCard sectioned="">-->
+<!--                    <PTextContainer>-->
+<!--                        <PSkeletonDisplayText size="small" />-->
+<!--                        <PSkeletonBodyText />-->
+<!--                    </PTextContainer>-->
+<!--                </PCard>-->
+<!--            </PLayoutSection>-->
+<!--            <PLayoutSection oneThird="">-->
+<!--                <PCard sectioned="">-->
+<!--                    <PTextContainer>-->
+<!--                        <PSkeletonDisplayText size="small" />-->
+<!--                        <PSkeletonBodyText />-->
+<!--                    </PTextContainer>-->
+<!--                </PCard>-->
+<!--            </PLayoutSection>-->
+<!--            <PLayoutSection oneThird="">-->
+<!--                <PCard sectioned="">-->
+<!--                    <PTextContainer>-->
+<!--                        <PSkeletonDisplayText size="small" />-->
+<!--                        <PSkeletonBodyText />-->
+<!--                    </PTextContainer>-->
+<!--                </PCard>-->
+<!--            </PLayoutSection>-->
+<!--        </PLayout>-->
+<!--        <PLayout style="margin-top: 20px">-->
+<!--            <PLayoutSection>-->
+<!--                <PCard sectioned=""><PSkeletonBodyText /></PCard>-->
+<!--                <PCard sectioned=""><PSkeletonBodyText /></PCard>-->
+<!--                <PCard sectioned=""><PSkeletonBodyText /></PCard>-->
+<!--                <PCard sectioned=""><PSkeletonBodyText /></PCard>-->
+<!--            </PLayoutSection>-->
+<!--        </PLayout>-->
+<!--    </PSkeletonPage>-->
     <PEmptyState
             :heading="translateMe('No Plans')"
             image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
