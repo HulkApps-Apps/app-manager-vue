@@ -164,7 +164,6 @@
                                             <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                      full-width
                                                      @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                     :primary="isPlanButtonColor(plan)"
                                                      :class="planChooseButtonClass(plan)"
                                             >
                                                 {{ translateMe('Choose Plan') }}
@@ -562,18 +561,18 @@
                     'Polaris-DataTable__Cell--firstColumn': Boolean(firstColumn),
                 };
             },
-            isPlanButtonColor(plan){
-                if(this.has_active_charge && this.shop.plan){
-                    if(plan.price > this.shop.plan.price){
-                        return true;
-                    }
-                }
-                return false;
-            },
+            // isPlanButtonColor(plan){
+            //     if(this.has_active_charge && this.shop.plan){
+            //         if(plan.price > this.shop.plan.price){
+            //             return true;
+            //         }
+            //     }
+            //     return false;
+            // },
             planChooseButtonClass(plan){
                 if(this.has_active_charge && this.shop.plan){
                     if(plan.price > this.shop.plan.price){
-                        return '';
+                        return 'custom-highlighted-choose-button';
                     }
                 }
                 return 'custom-choose-button';
@@ -768,6 +767,12 @@
         background: #006e52;
         border-color: transparent;
         color: #fff;
+    }
+
+    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button:hover{
+        background: #006e52;
+        border-color: transparent;
+        color: #008060;
     }
 
 </style>
