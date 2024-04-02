@@ -769,10 +769,16 @@
         color: #fff;
     }
 
-    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button:hover{
-        background: #006e52;
+    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button{
+        background: #008060;
         border-color: transparent;
-        color: #008060;
+        color: #fff;
+    }
+
+    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button:hover{
+      background: #006e52;
+      border-color: transparent;
+      color: #fff;
     }
 
 </style>
