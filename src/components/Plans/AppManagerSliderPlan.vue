@@ -138,6 +138,7 @@
                                 </div>
                                 <div>
                                     <ul>
+
                                         <li v-for="(feature, key) in features" :class="`${feature.value_type}__type__${feature.slug} feature__list feature__type__${feature.value_type}`" :key="key" :style="activePlanStyle(plan)">
                                             <div>
                                                 <template v-if="plan.features && plan.features[feature.uuid]" style="display: flex">
@@ -154,26 +155,48 @@
                                                     <PIcon color="subdued" source="MinusMinor"/>
                                                 </template>
                                             </div>
-                                        </li>
-                                        <li>
-                                            <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
-                                                     full-width
-                                                     :pressed="isCurrentPlan(plan)">
+                                          </li>
+                                          <li v-if="features.length > 0" :class="`${features[features.length - 1].value_type}__type__${features[features.length - 1].slug} feature__list feature__type__${features[features.length - 1].value_type}`">
+                                            <div>
+                                              <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
+                                                       full-width
+                                                       :pressed="isCurrentPlan(plan)">
                                                 {{ translateMe('Current Plan') }}
-                                            </PButton>
-                                            <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
-                                                     full-width
-                                                     @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                     :class="planChooseButtonClass(plan)"
-                                            >
+                                              </PButton>
+                                              <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
+                                                       full-width
+                                                       @click="plan ? getPlanUrl(plan) : 'javascript:void'"
+                                                       :class="planChooseButtonClass(plan)">
                                                 {{ translateMe('Choose Plan') }}
-                                            </PButton>
-                                            <PButton v-else :disabled="true"
-                                                     full-width
-                                                     :pressed="true">
+                                              </PButton>
+                                              <PButton v-else :disabled="true"
+                                                       full-width
+                                                       :pressed="true">
                                                 {{ translateMe('Not applicable') }}
-                                            </PButton>
-                                        </li>
+                                              </PButton>
+                                            </div>
+                                          </li>
+
+                                      <li></li>
+<!--                                        <li >-->
+<!--                                            <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"-->
+<!--                                                     full-width-->
+<!--                                                     :pressed="isCurrentPlan(plan)">-->
+<!--                                                {{ translateMe('Current Plan') }}-->
+<!--                                            </PButton>-->
+<!--                                            <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"-->
+<!--                                                     full-width-->
+<!--                                                     @click="plan ? getPlanUrl(plan):'javascript:void'"-->
+<!--                                                     :class="planChooseButtonClass(plan)"-->
+<!--                                            >-->
+<!--                                                {{ translateMe('Choose Plan') }}-->
+<!--                                            </PButton>-->
+<!--                                            <PButton v-else :disabled="true"-->
+<!--                                                     full-width-->
+<!--                                                     :pressed="true">-->
+<!--                                                {{ translateMe('Not applicable') }}-->
+<!--                                            </PButton>-->
+<!--                                        </li>-->
                                     </ul>
                                 </div>
                             </slide>

@@ -551,12 +551,12 @@
                 return false;
             },
             planChooseButtonClass(plan){
-                if(this.has_active_charge && this.shop.plan){
-                    if(plan.price > this.shop.plan.price){
-                        return '';
-                    }
+              if(this.has_active_charge && this.shop.plan){
+                if(plan.price > this.shop.plan.price){
+                  return 'custom-highlighted-choose-button';
                 }
-                return 'custom-choose-button';
+              }
+              return 'custom-choose-button';
             },
             handlePlanBannerClose(payload) {
               this.$emit('handlePlanBannerClose', payload)
@@ -787,6 +787,18 @@
         background: #006e52;
         border-color: transparent;
         color: #fff;
+    }
+
+    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button{
+      background: #008060;
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button:hover{
+      background: #006e52;
+      border-color: transparent;
+      color: #fff;
     }
 
 </style>
