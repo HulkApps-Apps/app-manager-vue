@@ -211,8 +211,7 @@
                                         <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                  full-width
                                                  @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                 :primary="isPlanButtonColor(plan)"
-                                                 :class="planChooseButtonClass(plan)"
+                                                 class="custom-choose-button"
                                         >
                                             {{ translateMe('Choose Plan') }}
                                         </PButton>
@@ -553,7 +552,7 @@
             planChooseButtonClass(plan){
               if(this.has_active_charge && this.shop.plan){
                 if(plan.price > this.shop.plan.price){
-                  return 'custom-highlighted-choose-button';
+                  return '';
                 }
               }
               return 'custom-choose-button';
@@ -787,18 +786,6 @@
         background: #006e52;
         border-color: transparent;
         color: #fff;
-    }
-
-    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button{
-      background: #008060;
-      border-color: transparent;
-      color: #fff;
-    }
-
-    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button:hover{
-      background: #006e52;
-      border-color: transparent;
-      color: #fff;
     }
 
 </style>

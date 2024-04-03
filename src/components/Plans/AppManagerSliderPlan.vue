@@ -167,8 +167,7 @@
                                                        full-width
                                                        @click="plan ? getPlanUrl(plan) : 'javascript:void'"
                                                        class="custom-choose-button">
-<!--                                                {{ translateMe('Choose Plan') }}  -->
-                                                {{ translateMe('Not applicable') }}
+                                                      {{ translateMe('Choose Plan') }}
                                               </PButton>
                                               <PButton v-else :disabled="true"
                                                        full-width
@@ -585,18 +584,18 @@
                     'Polaris-DataTable__Cell--firstColumn': Boolean(firstColumn),
                 };
             },
-            // isPlanButtonColor(plan){
-            //     if(this.has_active_charge && this.shop.plan){
-            //         if(plan.price > this.shop.plan.price){
-            //             return true;
-            //         }
-            //     }
-            //     return false;
-            // },
+            isPlanButtonColor(plan){
+                if(this.has_active_charge && this.shop.plan){
+                    if(plan.price > this.shop.plan.price){
+                        return true;
+                    }
+                }
+                return false;
+            },
             planChooseButtonClass(plan){
                 if(this.has_active_charge && this.shop.plan){
                     if(plan.price > this.shop.plan.price){
-                        return 'custom-highlighted-choose-button';
+                        return '';
                     }
                 }
                 return 'custom-choose-button';
@@ -791,18 +790,6 @@
         background: #006e52;
         border-color: transparent;
         color: #fff;
-    }
-
-    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button{
-        background: #008060;
-        border-color: transparent;
-        color: #fff;
-    }
-
-    .app-manager .app-manager-plan-page-slider .custom-highlighted-choose-button:hover{
-      background: #006e52;
-      border-color: transparent;
-      color: #fff;
     }
 
 </style>
