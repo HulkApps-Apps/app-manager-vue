@@ -166,8 +166,9 @@
                                               <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                        full-width
                                                        @click="plan ? getPlanUrl(plan) : 'javascript:void'"
-                                                       :class="planChooseButtonClass(plan)">
-                                                {{ translateMe('Choose Plan') }}
+                                                       class="custom-choose-button">
+<!--                                                {{ translateMe('Choose Plan') }}  -->
+                                                {{ translateMe('Not applicable') }}
                                               </PButton>
                                               <PButton v-else :disabled="true"
                                                        full-width
