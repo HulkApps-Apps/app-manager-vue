@@ -46,6 +46,7 @@
             v-if="!this.planLoading && this.plans.length === 0"
     >
     </PEmptyState>
+    <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
     <PPage
             class="app-manager-plan-page-slider custom-title"
             :title="translateMe('Plans')"
@@ -211,7 +212,6 @@
                 <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
             </PStackItem>
         </PStack>
-        <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
     </PPage>
 </template>
 
