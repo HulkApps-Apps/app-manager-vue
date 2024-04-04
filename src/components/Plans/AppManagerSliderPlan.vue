@@ -46,13 +46,13 @@
             v-if="!this.planLoading && this.plans.length === 0"
     >
     </PEmptyState>
-    <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
     <PPage
             class="app-manager-plan-page-slider custom-title"
             :title="translateMe('Plans')"
             :subtitle = "subtitleContent"
             v-else-if="!this.planLoading && this.plans.length > 0"
     >
+      <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
 
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
