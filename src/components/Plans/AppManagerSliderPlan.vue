@@ -792,4 +792,37 @@
         color: #fff;
     }
 
+    @media (min-width: 0px) and (max-width: 576px) {
+      .custom-plan>.Polaris-Layout__Section>.VueCarousel>.VueCarousel-wrapper>.VueCarousel-inner {
+        overflow-x: scroll;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .Polaris-ButtonGroup__Item {
+        width: auto !important;
+      }
+    }
+
+    @media (min-width: 0px) and (max-width: 467px) {
+
+      .pro_title , .feature__list {
+        min-height: 164px !important;
+      }
+      .app-manager .Polaris-Page-Header__RightAlign {
+        margin-left: -34px !important;
+      }
+      #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
+        width: 222px !important;
+      }
+    }
+    @media (min-width: 467px) and (max-width: 1003px) {
+      #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
+        width: 222px !important;
+      }
+      .pro_title , .feature__list {
+        min-height: 117px !important;
+      }
+    }
+
 </style>
