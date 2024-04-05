@@ -52,7 +52,7 @@
             :subtitle = "subtitleContent"
             v-else-if="!this.planLoading && this.plans.length > 0"
     >
-      <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
+      <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
 
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
@@ -212,6 +212,7 @@
                 <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
             </PStackItem>
         </PStack>
+      <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
     </PPage>
 </template>
 
