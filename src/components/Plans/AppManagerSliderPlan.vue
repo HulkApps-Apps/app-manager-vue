@@ -810,6 +810,10 @@
       .Polaris-ButtonGroup__Item {
         width: auto !important;
       }
+      .app-manager *, .app-manager :after, .app-manager :before {
+        box-sizing: revert !important;
+      }
+
     }
 
     @media (min-width: 0px) and (max-width: 467px) {

@@ -798,7 +798,6 @@
     @media (max-width: 700px) {
       .app-manager .Polaris-DataTable__Table{
         width: auto !important;
-        overflow-x: scroll;
       }
     }
 
