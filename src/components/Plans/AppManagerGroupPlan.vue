@@ -789,5 +789,19 @@
         color: #fff;
     }
 
+    @media (min-width: 0px) and (max-width: 576px) {
+      .app-manager .app-manager, .app-manager .app-manager-body {
+        overflow-x: scroll;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .app-manager .Polaris-DataTable__Table{
+        width: auto !important;
+        overflow-x: scroll;
+      }
+    }
+
+
 
 </style>
