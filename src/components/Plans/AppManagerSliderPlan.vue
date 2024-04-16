@@ -46,7 +46,9 @@
             v-if="!this.planLoading && this.plans.length === 0"
     >
     </PEmptyState>
-    <div v-else-if="!this.planLoading && this.plans.length > 0"> <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
+    <div v-else-if="!this.planLoading && this.plans.length > 0" class="app-manager-plan-banner">
+      <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
+
     <PPage
             class="app-manager-plan-page-slider custom-title"
             :title="translateMe('Plans')"
@@ -791,6 +793,11 @@
         background: #006e52;
         border-color: transparent;
         color: #fff;
+    }
+
+    .app-manager-plan-banner {
+        margin-right: 30px;
+        margin-left: 30px;
     }
 
     @media (min-width: 0px) and (max-width: 576px) {
