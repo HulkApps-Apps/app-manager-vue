@@ -46,13 +46,12 @@
             v-if="!this.planLoading && this.plans.length === 0"
     >
     </PEmptyState>
+    <div v-else-if="!this.planLoading && this.plans.length > 0"> <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
     <PPage
             class="app-manager-plan-page-slider custom-title"
             :title="translateMe('Plans')"
             :subtitle = "subtitleContent"
-            v-else-if="!this.planLoading && this.plans.length > 0"
     >
-      <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
 
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
@@ -214,6 +213,7 @@
         </PStack>
       <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
     </PPage>
+    </div>
 </template>
 
 <script>
@@ -738,7 +738,7 @@
     }
     .app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide ul li:nth-last-child(2)
     {
-        border-bottom-right-radius: 12px;
+        border-bottom-right-radius: 0;
     }
     .app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide .plan__price
     {
