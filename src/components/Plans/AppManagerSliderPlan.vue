@@ -740,7 +740,11 @@
     }
     .app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide ul li:nth-last-child(2)
     {
-        border-bottom-right-radius: 0;
+        border-bottom-right-radius: 12px;
+    }
+    .app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.first-slide ul li:nth-last-child(2)
+    {
+      border-bottom-left-radius: 12px;
     }
     .app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide .plan__price
     {

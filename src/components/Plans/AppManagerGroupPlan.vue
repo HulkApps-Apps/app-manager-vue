@@ -685,7 +685,10 @@
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td:last-child {
         background: transparent;
-        border-radius: 0 0 0 0;
+        border-radius: 0 0 12px 0;
+    }
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td:nth-child(2){
+      border-radius: 0 0 0 12px !important;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td {
         background: transparent;
