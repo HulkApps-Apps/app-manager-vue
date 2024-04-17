@@ -46,11 +46,13 @@
             v-if="!this.planLoading && this.plans.length === 0"
     >
     </PEmptyState>
+    <div v-else-if="!this.planLoading && this.plans.length > 0" class="app-manager-plan-banner">
+      <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
+
     <PPage
             class="app-manager-plan-page-slider custom-title"
             :title="translateMe('Plans')"
             :subtitle = "subtitleContent"
-            v-else-if="!this.planLoading && this.plans.length > 0"
     >
 
         <PStack slot="primaryAction">
@@ -138,6 +140,7 @@
                                 </div>
                                 <div>
                                     <ul>
+
                                         <li v-for="(feature, key) in features" :class="`${feature.value_type}__type__${feature.slug} feature__list feature__type__${feature.value_type}`" :key="key" :style="activePlanStyle(plan)">
                                             <div>
                                                 <template v-if="plan.features && plan.features[feature.uuid]" style="display: flex">
@@ -154,27 +157,28 @@
                                                     <PIcon color="subdued" source="MinusMinor"/>
                                                 </template>
                                             </div>
-                                        </li>
-                                        <li>
-                                            <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
-                                                     full-width
-                                                     :pressed="isCurrentPlan(plan)">
+                                          </li>
+                                          <li v-if="features.length > 0" :class="`${features[features.length - 1].value_type}__type__${features[features.length - 1].slug} feature__list feature__type__${features[features.length - 1].value_type}`">
+                                            <div>
+                                              <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
+                                                       full-width
+                                                       :pressed="isCurrentPlan(plan)">
                                                 {{ translateMe('Current Plan') }}
-                                            </PButton>
-                                            <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
-                                                     full-width
-                                                     @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                     :primary="isPlanButtonColor(plan)"
-                                                     :class="planChooseButtonClass(plan)"
-                                            >
-                                                {{ translateMe('Choose Plan') }}
-                                            </PButton>
-                                            <PButton v-else :disabled="true"
-                                                     full-width
-                                                     :pressed="true">
+                                              </PButton>
+                                              <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
+                                                       full-width
+                                                       @click="plan ? getPlanUrl(plan) : 'javascript:void'"
+                                                       class="custom-choose-button">
+                                                      {{ translateMe('Choose Plan') }}
+                                              </PButton>
+                                              <PButton v-else :disabled="true"
+                                                       full-width
+                                                       :pressed="true">
                                                 {{ translateMe('Not applicable') }}
-                                            </PButton>
-                                        </li>
+                                              </PButton>
+                                            </div>
+                                          </li>
+                                      <li></li>
                                     </ul>
                                 </div>
                             </slide>
@@ -189,8 +193,9 @@
                 <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
             </PStackItem>
         </PStack>
-        <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
+      <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
     </PPage>
+    </div>
 </template>
 
 <script>
@@ -717,6 +722,10 @@
     {
         border-bottom-right-radius: 12px;
     }
+    .app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.first-slide ul li:nth-last-child(2)
+    {
+      border-bottom-left-radius: 12px;
+    }
     .app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide .plan__price
     {
         border-right: 1px solid #dddddd;
@@ -768,6 +777,48 @@
         background: #006e52;
         border-color: transparent;
         color: #fff;
+    }
+
+    .app-manager-plan-banner {
+        margin-right: 30px;
+        margin-left: 30px;
+    }
+
+    @media (min-width: 0px) and (max-width: 576px) {
+      .custom-plan>.Polaris-Layout__Section>.VueCarousel>.VueCarousel-wrapper>.VueCarousel-inner {
+        overflow-x: scroll;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .Polaris-ButtonGroup__Item {
+        width: auto !important;
+      }
+      .app-manager *, .app-manager :after, .app-manager :before {
+        box-sizing: revert !important;
+      }
+
+    }
+
+    @media (min-width: 0px) and (max-width: 467px) {
+
+      .pro_title , .feature__list {
+        min-height: 164px !important;
+      }
+      .app-manager .Polaris-Page-Header__RightAlign {
+        margin-left: -34px !important;
+      }
+      #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
+        width: 222px !important;
+      }
+    }
+    @media (min-width: 467px) and (max-width: 1003px) {
+      #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
+        width: 222px !important;
+      }
+      .pro_title , .feature__list {
+        min-height: 117px !important;
+      }
     }
 
 </style>

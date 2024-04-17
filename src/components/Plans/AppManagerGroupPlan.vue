@@ -45,12 +45,15 @@
             image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
             v-if="!this.planLoading && this.plans.length === 0"
      />
+
+    <div v-else-if="!this.planLoading && this.plans.length > 0"> <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
+
     <PPage
            class="app-manager-plan-page custom-title"
            :title="translateMe('Plans')"
            :subtitle = "subtitleContent"
-           v-else-if="!this.planLoading && this.plans.length > 0"
     >
+
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
@@ -211,8 +214,7 @@
                                         <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
                                                  full-width
                                                  @click="plan ? getPlanUrl(plan):'javascript:void'"
-                                                 :primary="isPlanButtonColor(plan)"
-                                                 :class="planChooseButtonClass(plan)"
+                                                 class="custom-choose-button"
                                         >
                                             {{ translateMe('Choose Plan') }}
                                         </PButton>
@@ -235,11 +237,12 @@
                         <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
                     </PStackItem>
                 </PStack>
-              <PlanBanners @handlePlanBannerClose="handlePlanBannerClose" />
+              <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
             </PLayoutSection>
         </PLayout>
         <!--====================================================================-->
     </PPage>
+    </div>
 </template>
 
 <script>
@@ -551,12 +554,12 @@
                 return false;
             },
             planChooseButtonClass(plan){
-                if(this.has_active_charge && this.shop.plan){
-                    if(plan.price > this.shop.plan.price){
-                        return '';
-                    }
+              if(this.has_active_charge && this.shop.plan){
+                if(plan.price > this.shop.plan.price){
+                  return '';
                 }
-                return 'custom-choose-button';
+              }
+              return 'custom-choose-button';
             },
             handlePlanBannerClose(payload) {
               this.$emit('handlePlanBannerClose', payload)
@@ -653,7 +656,7 @@
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) {
         overflow: hidden;
-        border-bottom-right-radius: 12px;
+        border-bottom-right-radius: 0;
         border-bottom-left-radius: 12px;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:first-child {
@@ -663,7 +666,7 @@
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:nth-last-child(2) td:last-child {
         overflow: hidden;
-        border-radius: 0 0 12px;
+        border-radius: 0 0 0;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr td:first-child {
         border-left: 0px !important;
@@ -671,13 +674,10 @@
         padding-left: 20px;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr td:last-child {
-        border-right: 0px !important;
-        border-bottom: 0px !important;
         text-align: center !important;
     }
     .app-manager .app-manager-plan-page .custom-plan table thead tr td:last-child {
-        border-right: 0px !important;
-        border-bottom: 0px !important;
+
         text-align: center !important;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody td:not(:first-child) {
@@ -687,8 +687,10 @@
         background: transparent;
         border-radius: 0 0 12px 0;
     }
+    .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td:nth-child(2){
+      border-radius: 0 0 0 12px !important;
+    }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td {
-        border: 0 !important;
         background: transparent;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child td:hover {
@@ -699,11 +701,12 @@
         background: transparent !important;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child {
-        background: transparent;
+        background: #fff!important;
         opacity:1.0;
     }
     .app-manager .app-manager-plan-page .custom-plan table tbody tr:last-child  td:first-child{
         visibility: hidden;
+        border-bottom: none!important;
     }
     .app-manager .app-manager-plan-page .plan-heading {
         padding-top: 30px;
@@ -788,5 +791,19 @@
         border-color: transparent;
         color: #fff;
     }
+
+    @media (min-width: 0px) and (max-width: 576px) {
+      .app-manager .app-manager, .app-manager .app-manager-body {
+        overflow-x: scroll;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .app-manager .Polaris-DataTable__Table{
+        width: auto !important;
+      }
+    }
+
+
 
 </style>
