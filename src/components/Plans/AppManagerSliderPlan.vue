@@ -178,27 +178,7 @@
                                               </PButton>
                                             </div>
                                           </li>
-
                                       <li></li>
-<!--                                        <li >-->
-<!--                                            <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"-->
-<!--                                                     full-width-->
-<!--                                                     :pressed="isCurrentPlan(plan)">-->
-<!--                                                {{ translateMe('Current Plan') }}-->
-<!--                                            </PButton>-->
-<!--                                            <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"-->
-<!--                                                     full-width-->
-<!--                                                     @click="plan ? getPlanUrl(plan):'javascript:void'"-->
-<!--                                                     :class="planChooseButtonClass(plan)"-->
-<!--                                            >-->
-<!--                                                {{ translateMe('Choose Plan') }}-->
-<!--                                            </PButton>-->
-<!--                                            <PButton v-else :disabled="true"-->
-<!--                                                     full-width-->
-<!--                                                     :pressed="true">-->
-<!--                                                {{ translateMe('Not applicable') }}-->
-<!--                                            </PButton>-->
-<!--                                        </li>-->
                                     </ul>
                                 </div>
                             </slide>
