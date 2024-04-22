@@ -784,9 +784,22 @@
         margin-left: 30px;
     }
 
+    .app-manager .Polaris-Button {
+      padding: 7px 45px !important;
+    }
+
+
     @media (min-width: 0px) and (max-width: 576px) {
-      .custom-plan>.Polaris-Layout__Section>.VueCarousel>.VueCarousel-wrapper>.VueCarousel-inner {
-        overflow-x: scroll;
+      .custom-plan > .Polaris-Layout__Section > .VueCarousel > .VueCarousel-wrapper {
+        display: flex;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Add smooth scrolling on iOS devices */
+        scroll-snap-type: x mandatory; /* Optional: Enable snapping behavior */
+      }
+
+      .custom-plan > .Polaris-Layout__Section > .VueCarousel > .VueCarousel-wrapper > .VueCarousel-inner {
+        flex: 0 0 auto; /* Optional: Prevent items from shrinking */
+        scroll-snap-align: start; /* Optional: Align items to start of container */
       }
     }
 
@@ -794,31 +807,32 @@
       .Polaris-ButtonGroup__Item {
         width: auto !important;
       }
-      .app-manager *, .app-manager :after, .app-manager :before {
-        box-sizing: revert !important;
-      }
-
     }
 
     @media (min-width: 0px) and (max-width: 467px) {
 
-      .pro_title , .feature__list {
-        min-height: 164px !important;
-      }
       .app-manager .Polaris-Page-Header__RightAlign {
         margin-left: -34px !important;
       }
       #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
         width: 222px !important;
       }
+      .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
+        min-height: 53px !important;
+      }
+      .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li{
+        padding: 16px 16px 16px 5px;
+      }
     }
+
     @media (min-width: 467px) and (max-width: 1003px) {
       #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
         width: 222px !important;
       }
-      .pro_title , .feature__list {
-        min-height: 117px !important;
+      .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
+        min-height: 53px !important;
       }
     }
+
 
 </style>
