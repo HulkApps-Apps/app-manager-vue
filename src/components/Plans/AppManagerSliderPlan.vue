@@ -784,22 +784,9 @@
         margin-left: 30px;
     }
 
-    .app-manager .Polaris-Button {
-      padding: 7px 45px !important;
-    }
-
-
     @media (min-width: 0px) and (max-width: 576px) {
-      .custom-plan > .Polaris-Layout__Section > .VueCarousel > .VueCarousel-wrapper {
-        display: flex;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch; /* Add smooth scrolling on iOS devices */
-        scroll-snap-type: x mandatory; /* Optional: Enable snapping behavior */
-      }
-
-      .custom-plan > .Polaris-Layout__Section > .VueCarousel > .VueCarousel-wrapper > .VueCarousel-inner {
-        flex: 0 0 auto; /* Optional: Prevent items from shrinking */
-        scroll-snap-align: start; /* Optional: Align items to start of container */
+      .custom-plan>.Polaris-Layout__Section>.VueCarousel>.VueCarousel-wrapper>.VueCarousel-inner {
+        overflow-x: scroll;
       }
     }
 
