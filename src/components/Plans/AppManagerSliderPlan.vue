@@ -794,6 +794,10 @@
       .Polaris-ButtonGroup__Item {
         width: auto !important;
       }
+      .app-manager .Polaris-Button {
+        padding: 7px 8px !important;
+      }
+
     }
 
     @media (min-width: 0px) and (max-width: 467px) {
@@ -805,10 +809,13 @@
         width: 222px !important;
       }
       .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
-        min-height: 53px !important;
+        min-height: 100px !important;
       }
       .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li{
         padding: 16px 16px 16px 5px;
+      }
+      .app-manager .Polaris-Button {
+        padding: 7px 8px !important;
       }
     }
 
@@ -817,9 +824,11 @@
         width: 222px !important;
       }
       .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
-        min-height: 53px !important;
+        min-height: 100px !important;
+      }
+      .app-manager .Polaris-Button {
+        padding: 7px 8px !important;
       }
     }
-
 
 </style>
