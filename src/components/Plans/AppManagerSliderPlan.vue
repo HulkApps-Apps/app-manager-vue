@@ -794,30 +794,40 @@
       .Polaris-ButtonGroup__Item {
         width: auto !important;
       }
-      .app-manager *, .app-manager :after, .app-manager :before {
-        box-sizing: revert !important;
+      .app-manager .Polaris-Button {
+        padding: 7px 8px !important;
       }
 
     }
 
     @media (min-width: 0px) and (max-width: 467px) {
 
-      .pro_title , .feature__list {
-        min-height: 164px !important;
-      }
       .app-manager .Polaris-Page-Header__RightAlign {
         margin-left: -34px !important;
       }
       #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
         width: 222px !important;
       }
+      .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
+        min-height: 100px !important;
+      }
+      .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li{
+        padding: 16px 16px 16px 5px;
+      }
+      .app-manager .Polaris-Button {
+        padding: 7px 8px !important;
+      }
     }
+
     @media (min-width: 467px) and (max-width: 1003px) {
       #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div{
         width: 222px !important;
       }
-      .pro_title , .feature__list {
-        min-height: 117px !important;
+      .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
+        min-height: 100px !important;
+      }
+      .app-manager .Polaris-Button {
+        padding: 7px 8px !important;
       }
     }
 
