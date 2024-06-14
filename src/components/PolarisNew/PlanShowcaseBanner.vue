@@ -1,0 +1,109 @@
+<script>
+export default {
+  name: "PlanShowcaseBanner",
+  props: {
+    showcaseData: {
+      type: Object,
+      required: false,
+      default() {
+        return {
+          saving_amount: "$1000",
+          original_amount: "$1050",
+          discounted_amount: "$199",
+          button_url: "#",
+        };
+      },
+    },
+  },
+  computed: {
+    isSlotEmpty() {
+      return !this.$slots.default;
+    },
+  },
+};
+</script>
+
+<template>
+  <div>
+    <div class="plan-showcase-banner">
+        <div v-if="!isSlotEmpty" class="plan-left">
+            <slot></slot>
+      </div>
+      <div class="plan-right">
+        <h3 class="plan-name">Monthly Bundle:</h3>
+        <div class="prices">
+          <span class="discounted-amount">{{
+            showcaseData.discounted_amount
+          }}</span>
+          <span class="original-amount">{{
+            showcaseData.original_amount
+          }}</span>
+        </div>
+        <a class="choose-button" :href="showcaseData.button_url"
+          ><span>Choose this plan</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.plan-showcase-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plan-name {
+  font-size: 14px;
+  font-weight: 450;
+  color: #303030;
+}
+
+.plan-left {
+  flex: 1;
+}
+
+.plan-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.prices {
+  display: flex;
+  gap: 8px;
+}
+
+.discounted-amount {
+  font-size: 30px;
+  font-weight: bold;
+  color: #303030;
+}
+
+.original-amount {
+  text-decoration: line-through;
+  color: #616161;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.choose-button {
+  padding: 6px 12px;
+  background-color: rgb(48, 48, 48);
+  background-image: linear-gradient(
+      rgba(48, 48, 48, 0) 63.53%,
+      rgba(255, 255, 255, 0.15)
+    ),
+    none;
+  color: white;
+  border-bottom-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.8) 0px -1px 0px 1px inset,
+    rgb(48, 48, 48) 0px 0px 0px 1px inset,
+    rgba(255, 255, 255, 0.25) 0px 0.5px 0px 1.5px inset;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 650;
+}
+</style>
