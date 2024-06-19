@@ -65,6 +65,10 @@
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
                     </PButton>
+                    
+                    <PButton :class="selectedPlan === 'bundle' ? 'plan-active-tab' : '' " :style="selectedPlan === 'bundle' ? bundleSelectedSyle : bundleStyle "  @click="selectPlan('bundle')">
+                        <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
+                    </PButton>
                 </PButtonGroup>
             </PStackItem>
         </PStack>
@@ -187,15 +191,32 @@
                 </template>
             </PLayoutSection>
         </PLayout>
+        <div class="bundle-plan">
+            <PlanShowcaseBanner :showcaseData="bundlePlan.price">
+                <p>Get 24 Shopify apps and save more than <strong>${{ bundlePlan.price.saving_amount }}</strong> per month!</p>
+                <p>No hidden costs. Just your store getting supercharged!</p>
+            </PlanShowcaseBanner>
+
+            <div class="bundle-category" v-for="category in bundlePlan.categories">
+                <CategoryHeading :headingData="category">
+                    Bestsellers
+                </CategoryHeading>
+                <div class="bundle-category-apps">
+                    <AppCard v-for="app in category.category_apps" :appData="app" />
+                </div>
+                
+            </div>
+            <BenefitsBanner :benefitsData="bundlePlan.additionalBenefits"  />
+        </div>
         <!--====================================================================-->
         <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
             <PStackItem fill>
                 <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
             </PStackItem>
         </PStack>
-      <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
+      <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" /> 
     </PPage>
-    </div>
+</div>
 </template>
 
 <script>
@@ -224,10 +245,14 @@
     import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
     import {PEmptyState} from "../polaris-vue/src/components/PEmptyState"
     import {Carousel, Slide} from 'vue-carousel';
+    import AppCard from "../PolarisNew/AppCard";
+    import PlanShowcaseBanner from "../PolarisNew/PlanShowcaseBanner";
+    import CategoryHeading from "../PolarisNew/CategoryHeading";
+    import BenefitsBanner from "../PolarisNew/BenefitsBanner";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -266,6 +291,13 @@
                     left:'-5px',
                     borderRadius:'8px'
                 },
+                bundleSelectedSyle:{
+                    height: '60px',
+                    backgroundColor:'#257f60',
+                    position:'relative',
+                    left:'-5px',
+                    borderRadius:'8px'
+                },
                 monthlyStyle:{
                     height: '55px',
                     backgroundColor:'#FFFFFF',
@@ -282,6 +314,112 @@
                     border:'none',
                     borderRadius:'8px'
                 },
+                bundleStyle:{
+                    color:'#258060',
+                    height: '55px',
+                    backgroundColor:'#FFFFFF',
+                    boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+                    border:'none',
+                    borderRadius:'8px'
+                },
+                // dummy bundle plan data
+                bundlePlan: {
+                    id: 999999,
+                    name: "Bundle Plan",
+                    price: {
+                        saving_amount: "1000",
+                        original_amount: "1050",
+                        discounted_amount: "199",
+                        button_url: "#",
+                    },
+                    interval: "BUNDLE",
+                    categories: [
+                        {
+                            category_name: "Bestsellers",
+                            category_descrioption: "Make a big impact with our top-selling apps.",
+                            category_apps: [
+                                {
+                                    app_name: "Releasit Form & Upsell",
+                                    app_logo_url:
+                                        "https://cdn.shopify.com/app-store/listing_images/59ff1b17b1415cf11af2ee0a00c68334/icon/CKKYs5695_ICEAE=.png",
+                                    app_reviews_count: "3,881",
+                                    app_tags: [
+                                        {
+                                        tag_name: "Cash/collect on delivery (COD)",
+                                        tag_ext_url: "#",
+                                        },
+                                        {
+                                        tag_name: "Upselling and cross-selling",
+                                        tag_ext_url: "#",
+                                        },
+                                    ],
+                                    app_bfs: false,
+                                    app_option_types_count: "12",
+                                    app_featured_option_types: [
+                                        "Dynamic Checkout Button",
+                                        "Color/Image Swatches",
+                                        "Color/Image Swatches"
+                                    ]
+                                },
+                                {
+                                    app_name: "Releasit Form & Upsell",
+                                    app_logo_url:
+                                        "https://cdn.shopify.com/app-store/listing_images/59ff1b17b1415cf11af2ee0a00c68334/icon/CKKYs5695_ICEAE=.png",
+                                    app_reviews_count: "3,881",
+                                    app_tags: [
+                                        {
+                                        tag_name: "Cash/collect on delivery (COD)",
+                                        tag_ext_url: "#",
+                                        },
+                                        {
+                                        tag_name: "Upselling and cross-selling",
+                                        tag_ext_url: "#",
+                                        },
+                                    ],
+                                    app_bfs: false,
+                                    app_option_types_count: "12",
+                                    app_featured_option_types: [
+                                        "Dynamic Checkout Button",
+                                        "Color/Image Swatches",
+                                        "Color/Image Swatches"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    additionalBenefits: [
+                        {
+                        benefit_description:
+                            "<strong>Unlimited</strong> Access to Enterprise Features",
+                        benefit_image_url:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
+                        },
+                        {
+                        benefit_description:
+                            "<strong>Unlimited</strong> Access to Enterprise Features",
+                        benefit_image_url:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
+                        },
+                        {
+                        benefit_description:
+                            "<strong>Unlimited</strong> Access to Enterprise Features",
+                        benefit_image_url:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
+                        },
+                        {
+                        benefit_description:
+                            "<strong>Unlimited</strong> Access to Enterprise Features",
+                        benefit_image_url:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
+                        },
+                        {
+                        benefit_description:
+                            "<strong>Unlimited</strong> Access to Enterprise Features",
+                        benefit_image_url:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
+                        }
+                    ]
+                }
             }
         },
         computed: {
@@ -450,6 +588,15 @@
             },
             async selectPlan(value){
                 this.selectedPlan = value;
+                let planElement = document.querySelector('.custom-plan');
+                let bundleElement = document.querySelector('.bundle-plan');
+                if (this.selectedPlan == 'bundle') {
+                    planElement.style.display = 'none';
+                    bundleElement.style.display = 'flex';
+                } else {
+                    bundleElement.style.display = 'none';
+                    planElement.style.display = 'flex';
+                }
                 this.$nextTick(() => {
 
                     let elements = document.querySelectorAll('.plan__price');
@@ -829,6 +976,11 @@
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
       }
+    }
+
+    .bundle-plan {
+        display: none;
+        flex-direction: column;
     }
 
 </style>

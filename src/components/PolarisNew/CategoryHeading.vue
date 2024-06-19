@@ -2,13 +2,12 @@
 export default {
   name: "CategoryHeading",
   props: {
-    showcaseData: {
+    headingData: {
       type: Object,
       required: false,
       default() {
         return {
           category_name: "Bestsellers",
-          category_apps_count: 5,
           category_descrioption: "Make a big impact with our top-selling apps.",
         };
       },
@@ -21,11 +20,11 @@ export default {
   <div>
     <div class="category-heading">
       <h4 class="category-name">
-        {{ showcaseData.category_name }}
-        ({{ showcaseData.category_apps_count }})
+        {{ headingData.category_name }}
+        ({{ headingData.category_apps.length }})
       </h4>
       <p class="category-description">
-        {{ showcaseData.category_descrioption }}
+        {{ headingData.category_descrioption }}
       </p>
     </div>
   </div>

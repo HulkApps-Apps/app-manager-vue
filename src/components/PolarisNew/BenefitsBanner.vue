@@ -3,11 +3,10 @@ export default {
   name: "BenefitsBanner",
   props: {
     benefitsData: {
-      type: Object,
+      type: Array,
       required: false,
       default() {
-        return {
-          benefits: [
+        return [
             {
               benefit_description:
                 "<strong>Unlimited</strong> Access to Enterprise Features",
@@ -37,9 +36,8 @@ export default {
                 "<strong>Unlimited</strong> Access to Enterprise Features",
               benefit_image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
-            },
-          ],
-        };
+            }
+        ];
       },
     },
   },
@@ -49,7 +47,7 @@ export default {
 <template>
   <div class="benefits-banner">
     <div class="benefits">
-      <div v-for="benefit in benefitsData.benefits" class="benefit">
+      <div v-for="benefit in benefitsData" class="benefit">
         <img
           :src="benefit.benefit_image_url"
           alt="benefit"

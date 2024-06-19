@@ -7,9 +7,9 @@ export default {
       required: false,
       default() {
         return {
-          saving_amount: "$1000",
-          original_amount: "$1050",
-          discounted_amount: "$199",
+          saving_amount: "1000",
+          original_amount: "1050",
+          discounted_amount: "199",
           button_url: "#",
         };
       },
@@ -32,10 +32,10 @@ export default {
       <div class="plan-right">
         <h3 class="plan-name">Monthly Bundle:</h3>
         <div class="prices">
-          <span class="discounted-amount">{{
+          <span class="discounted-amount">${{
             showcaseData.discounted_amount
           }}</span>
-          <span class="original-amount">{{
+          <span class="original-amount">${{
             showcaseData.original_amount
           }}</span>
         </div>
