@@ -106,4 +106,36 @@ export default {
   font-size: 13px;
   font-weight: 650;
 }
+
+@media (max-width: 767px) {
+  .plan-showcase-banner {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .plan-showcase-banner {
+    align-items: unset;
+  }
+  .choose-button {
+    margin-right: 0;
+    margin-left: auto;
+  }
+}
+@media (max-width: 480px) {
+  .plan-right {
+    flex-direction: column;
+    gap: 8px;
+    align-items: unset;
+  }
+  .plan-showcase-banner {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .plan-showcase-banner {
+    align-items: unset;
+  }
+  .choose-button {
+    margin-right: auto;
+    margin-left: 0;
+  }
+}
 </style>

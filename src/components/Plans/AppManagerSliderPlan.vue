@@ -982,5 +982,18 @@
         display: none;
         flex-direction: column;
     }
+    
+    .bundle-category {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .bundle-category-apps {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
 </style>

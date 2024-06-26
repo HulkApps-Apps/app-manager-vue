@@ -164,6 +164,7 @@ export default {
   line-height: 12px;
   font-weight: 550;
   text-decoration: none;
+  white-space: nowrap;
 }
 .app-tag > svg {
   margin-bottom: -5.5px;
@@ -177,5 +178,21 @@ export default {
   font-weight: 450;
   line-height: 20px;
   color: #5c5c5c;
+}
+
+@media (max-width: 767px) {
+  .details {
+    gap: 8px;
+  }
+  .app-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .upper-details, .lower-details {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 </style>

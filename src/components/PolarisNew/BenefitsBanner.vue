@@ -93,4 +93,10 @@ export default {
   width: 42px;
   height: 42px;
 }
+
+@media (max-width: 767px) {
+  .benefits {
+    flex-direction: column;
+  }
+}
 </style>
