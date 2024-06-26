@@ -1,6 +1,11 @@
 <script>
+import VariantButton from "./VariantButton";
+
 export default {
   name: "PlanShowcaseBanner",
+  components: {
+    VariantButton,
+  },
   props: {
     showcaseData: {
       type: Object,
@@ -26,22 +31,25 @@ export default {
 <template>
   <div>
     <div class="plan-showcase-banner">
-        <div v-if="!isSlotEmpty" class="plan-left">
-            <slot></slot>
+      <div v-if="!isSlotEmpty" class="plan-left">
+        <slot></slot>
       </div>
       <div class="plan-right">
         <h3 class="plan-name">Monthly Bundle:</h3>
         <div class="prices">
-          <span class="discounted-amount">${{
-            showcaseData.discounted_amount
-          }}</span>
-          <span class="original-amount">${{
-            showcaseData.original_amount
-          }}</span>
+          <span class="discounted-amount"
+            >${{ showcaseData.discounted_amount }}</span
+          >
+          <span class="original-amount"
+            >${{ showcaseData.original_amount }}</span
+          >
         </div>
-        <a class="choose-button" :href="showcaseData.button_url"
-          ><span>Choose this plan</span>
-        </a>
+        <VariantButton
+          :buttonData="{ button_url: showcaseData.button_url }"
+          variant="primary"
+        >
+          Choose this plan
+        </VariantButton>
       </div>
     </div>
   </div>

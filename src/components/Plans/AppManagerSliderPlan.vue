@@ -58,7 +58,7 @@
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
-                    <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
+                    <!-- <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
 
@@ -68,7 +68,16 @@
                     
                     <PButton :class="selectedPlan === 'bundle' ? 'plan-active-tab' : '' " :style="selectedPlan === 'bundle' ? bundleSelectedSyle : bundleStyle "  @click="selectPlan('bundle')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
-                    </PButton>
+                    </PButton> -->
+                    <VariantButton :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
+                        Annually
+                    </VariantButton>
+                    <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')">
+                        Monthly
+                    </VariantButton>
+                    <VariantButton :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')">
+                        Bundle
+                    </VariantButton>
                 </PButtonGroup>
             </PStackItem>
         </PStack>
@@ -249,10 +258,11 @@
     import PlanShowcaseBanner from "../PolarisNew/PlanShowcaseBanner";
     import CategoryHeading from "../PolarisNew/CategoryHeading";
     import BenefitsBanner from "../PolarisNew/BenefitsBanner";
+    import VariantButton from "../PolarisNew/VariantButton";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
