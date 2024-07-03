@@ -8,7 +8,7 @@ export default {
       default() {
         return {
           category_name: "Bestsellers",
-          category_descrioption: "Make a big impact with our top-selling apps.",
+          category_description: "Make a big impact with our top-selling apps.",
         };
       },
     },
@@ -21,10 +21,12 @@ export default {
     <div class="category-heading">
       <h4 class="category-name">
         {{ headingData.category_name }}
-        ({{ headingData.category_apps.length }})
+        <span v-if="headingData.apps_relation != null">
+          ({{ headingData.apps_relation.length }})
+        </span>
       </h4>
       <p class="category-description">
-        {{ headingData.category_descrioption }}
+        {{ headingData.category_description }}
       </p>
     </div>
   </div>

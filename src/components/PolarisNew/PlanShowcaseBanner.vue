@@ -10,38 +10,44 @@ export default {
     showcaseData: {
       type: Object,
       required: false,
-      default() {
-        return {
-          saving_amount: "1000",
-          original_amount: "1050",
-          discounted_amount: "199",
-          button_url: "#",
-        };
-      },
+    },
+    realPrice: {
+      type: String,
+      required: false,
+    },
+    oldPrice: {
+      type: Number,
+      required: false,
+    },
+    showDescription: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
-  computed: {
-    isSlotEmpty() {
-      return !this.$slots.default;
-    },
-  },
+  // computed: {
+  //   isSlotEmpty() {
+  //     return !this.$slots.default;
+  //   },
+  // },
 };
 </script>
 
 <template>
   <div>
     <div class="plan-showcase-banner">
-      <div v-if="!isSlotEmpty" class="plan-left">
-        <slot></slot>
+      <div v-if="showDescription" class="plan-left">
+        <p>Get 24 Shopify apps and save more than <strong>$1000</strong> per month!</p>
+        <p>No hidden costs. Just your store getting supercharged!</p>
       </div>
       <div class="plan-right">
         <h3 class="plan-name">Monthly Bundle:</h3>
         <div class="prices">
           <span class="discounted-amount"
-            >${{ showcaseData.discounted_amount }}</span
+            >${{ realPrice }}</span
           >
           <span class="original-amount"
-            >${{ showcaseData.original_amount }}</span
+            >${{ oldPrice }}</span
           >
         </div>
         <VariantButton

@@ -26,7 +26,7 @@ export default {
           app_featured_option_types: [
             "Dynamic Checkout Button",
             "Color/Image Swatches",
-            "Color/Image Swatches"
+            "Color/Image Swatches",
           ],
         };
       },
@@ -52,15 +52,45 @@ export default {
           <h3 class="app-name">
             {{ appData.app_name }}
           </h3>
+          <div v-if="appData.app_bundle_details.built_for_shopify" class="app-tags">
+            <a class="app-tag bfs-tag">
+              <svg
+                width="16"
+                height="14"
+                viewBox="0 0 16 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_61_2350)">
+                  <path
+                    d="M13 0L12 5L8 14L16 4.5L13 0ZM3 0L4 5L8 14L0 4.5L3 0Z"
+                    fill="#1495CC"
+                  />
+                  <path d="M3 0L4 5L8 14L12 5L13 0H3Z" fill="#58B7DF" />
+                  <path
+                    d="M8 14L4 5L0 4.5L8 14ZM8 14L12 5L16 4.5L8 14Z"
+                    fill="#035F86"
+                  />
+                  <path d="M8 5.5L4 5L8 14L12 5L8 5.5Z" fill="#1495CC" />
+                  <path d="M4 5L8 0L12 5L7.999 5.5L4 5Z" fill="#A9DEF4" />
+                  <path d="M4 5L3 0H8L4 5ZM12 5L13 0H8L12 5Z" fill="#58B7DF" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_61_2350">
+                    <rect width="16" height="14" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Built For Shopify
+            </a>
+          </div>
           <p class="app-reviews-count">
-            {{ appData.app_reviews_count }} Reviews
+            {{ appData.app_bundle_details.reviews }} Reviews
           </p>
           <div class="app-tags">
             <a
               class="app-tag"
-              v-for="tag in appData.app_tags"
-              :href="tag.tag_ext_url"
-              target="_blank"
+              v-for="tag in appData.app_bundle_details.features"
             >
               <svg
                 width="20"
@@ -84,7 +114,7 @@ export default {
                   fill="#0094D5"
                 />
               </svg>
-              {{ tag.tag_name }}
+              {{ tag }}
             </a>
           </div>
         </div>
@@ -99,11 +129,12 @@ export default {
             >
               <rect width="4" height="4" rx="2" fill="black" />
             </svg>
-            {{ appData.app_option_types_count }} Option Types
+            {{ appData.app_bundle_details.shopify_categories.length }} Option
+            Types
           </p>
           <span
             class="featured-options"
-            v-for="option in appData.app_featured_option_types"
+            v-for="option in appData.app_bundle_details.shopify_categories"
           >
             <svg
               width="4"
@@ -156,8 +187,9 @@ export default {
 }
 .app-tag {
   background-color: #e0f0ff;
+  width: fit-content;
   margin-right: 12px;
-  padding: 2px 4px;
+  padding: 3px 4px;
   border-radius: 8px;
   font-size: 12px;
   color: #00527c;
@@ -168,6 +200,12 @@ export default {
 }
 .app-tag > svg {
   margin-bottom: -5.5px;
+}
+.bfs-tag {
+  margin-right: 0px;
+}
+.bfs-tag > svg {
+  margin-bottom: -3px;
 }
 .app-option-type-count,
 .featured-options {
@@ -190,7 +228,8 @@ export default {
     gap: 8px;
     margin-bottom: 8px;
   }
-  .upper-details, .lower-details {
+  .upper-details,
+  .lower-details {
     flex-direction: column;
     gap: 8px;
   }

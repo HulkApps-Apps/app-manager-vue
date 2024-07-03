@@ -9,15 +9,9 @@ export default {
         return "primary";
       },
     },
-    buttonData: {
-      type: Object,
+    additionalText: {
+      type: String,
       required: false,
-      default() {
-        return {
-          button_url: "#",
-          button_additional_text: "24 Apps",
-        };
-      },
     },
   },
   methods: {
@@ -31,7 +25,7 @@ export default {
 
 <template>
   <a
-    :href="buttonData.button_url"
+    href="#"
     @click="handleClick"
     class="button"
     :class="`button-${variant}`"
@@ -39,9 +33,9 @@ export default {
     <slot></slot>
     <span
       :class="`additional-info-${variant}`"
-      v-if="buttonData.button_additional_text"
+      v-if="additionalText"
     >
-      {{ buttonData.button_additional_text }}
+      {{ additionalText }}
     </span>
   </a>
 </template>
