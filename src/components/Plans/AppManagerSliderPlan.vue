@@ -212,7 +212,7 @@
             </div>
             <CategoryHeading :headingData="additionalBenefitsHeading" />
             <BenefitsBanner :benefitsData="bundlePlan.additionalBenefits"  />
-            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false"/>
+            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" @plan-clicked="handlePlanClicked(bundle_plan)"/>
         </div>
         <!--====================================================================-->
         <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
