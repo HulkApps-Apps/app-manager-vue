@@ -41,46 +41,45 @@ export default {
 </template>
 
 <style scoped>
-.button {
+.button, .button:hover {
   display: flex;
-  height: 32px;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 600;
+  height: 32px !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 12px !important;
+  text-decoration: none !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
 }
-.button-primary {
-  background-color: rgb(48, 48, 48);
+.button-primary, .button-primary:hover {
+  background-color: rgb(48, 48, 48) !important;
   background-image: linear-gradient(
       rgba(48, 48, 48, 0) 63.53%,
       rgba(255, 255, 255, 0.15)
     ),
-    none;
-  color: white;
-  border-bottom-color: rgb(255, 255, 255);
+    none !important;
+  color: white !important;
+  border-bottom-color: rgb(255, 255, 255) !important;
   box-shadow: rgba(0, 0, 0, 0.8) 0px -1px 0px 1px inset,
     rgb(48, 48, 48) 0px 0px 0px 1px inset,
-    rgba(255, 255, 255, 0.25) 0px 0.5px 0px 1.5px inset;
-  border-radius: 8px;
+    rgba(255, 255, 255, 0.25) 0px 0.5px 0px 1.5px inset !important;
+  border-radius: 8px !important;
 }
 .button-secondary {
-  color: black;
-  /* Add any other styling for the secondary button */
+  color: black !important;
 }
 .additional-info-primary {
-  background-color: #656565;
-  color: white;
-  padding: 0px 6px;
-  border-radius: 6px;
-  font-weight: 550;
+  background-color: #656565 !important;
+  color: white !important;
+  padding: 0px 6px !important;
+  border-radius: 6px !important;
+  font-weight: 550 !important;
 }
 .additional-info-secondary {
-  background-color: #e3e3e3;
-  color: #616161;
-  padding: 0px 6px;
-  border-radius: 6px;
-  font-weight: 550;
+  background-color: #e3e3e3 !important;
+  color: #616161 !important;
+  padding: 0px 6px !important;
+  border-radius: 6px !important;
+  font-weight: 550 !important;
 }
 </style>
