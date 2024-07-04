@@ -24,6 +24,19 @@ export default {
       required: false,
       default: true,
     },
+    getPlanUrl: {
+      type: Function,
+      required: false,
+    },
+    plan: {
+      type: Object,
+      required: false,
+    },
+  },
+  methods: {
+    handlePlanClick() {
+      this.$emit("plan-clicked");
+    },
   },
   // computed: {
   //   isSlotEmpty() {
@@ -52,6 +65,7 @@ export default {
         </div>
         <VariantButton
           :buttonData="{ button_url: showcaseData.button_url }"
+          @click="handlePlanClick"
           variant="primary"
         >
           Choose this plan

@@ -202,7 +202,7 @@
             </PLayoutSection>
         </PLayout>
         <div class="bundle-plan">
-            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" />
+            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
@@ -446,7 +446,7 @@
                     }
                 ],
                 "bundle_plan": {
-                    "id": 26,
+                    "id": 742,
                     "type": "RECURRING",
                     "name": "Global Plan",
                     "price": 300,
@@ -784,6 +784,9 @@
                 return plan.price - promotional_discount.value
               }
             },
+            handlePlanClicked(plan) {
+                this.getPlanUrl(plan);
+            },
             async getPlanUrl(plan) {
                 let shopName = this.shop.name;
                 let host = this.host;
@@ -941,6 +944,12 @@
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
                     this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
+                    if (data.bundle_plan) {
+                        this.bundle_plan = data.bundle_plan;
+                    }
+                    if (data.bundle_details) {
+                        this.bundle_details = data.bundle_details;
+                    }
                 }
             },
             headerClasses(firstColumn) {

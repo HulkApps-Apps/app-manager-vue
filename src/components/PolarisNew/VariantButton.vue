@@ -13,11 +13,23 @@ export default {
       type: String,
       required: false,
     },
+    getPlanUrl: {
+      type: Function,
+      required: false,
+    },
+    plan: {
+      type: Object,
+      required: false,
+    },
   },
   methods: {
     handleClick() {
       event.preventDefault();
       this.$emit("click", event);
+    },
+    handlePlanClick() {
+      event.preventDefault();
+      this.$emit("plan-clicked", event);
     },
   },
 };

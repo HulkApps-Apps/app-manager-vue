@@ -90,7 +90,7 @@ export default {
           <div class="app-tags">
             <a
               class="app-tag"
-              v-for="tag in appData.app_bundle_details.features"
+              v-for="tag in appData.app_bundle_details.shopify_categories"
             >
               <svg
                 width="20"
@@ -129,12 +129,12 @@ export default {
             >
               <rect width="4" height="4" rx="2" fill="black" />
             </svg>
-            {{ appData.app_bundle_details.shopify_categories.length }} Option
+            {{ appData.app_bundle_details.features.length }} Option
             Types
           </p>
           <span
             class="featured-options"
-            v-for="option in appData.app_bundle_details.shopify_categories"
+            v-for="option in appData.app_bundle_details.features"
           >
             <svg
               width="4"
