@@ -65,7 +65,6 @@
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
                     </PButton>
-                    
                     <PButton :class="selectedPlan === 'bundle' ? 'plan-active-tab' : '' " :style="selectedPlan === 'bundle' ? bundleSelectedSyle : bundleStyle "  @click="selectPlan('bundle')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
                     </PButton> -->
@@ -75,7 +74,7 @@
                     <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
                         {{ translateMe('Monthly') }}
                     </VariantButton>
-                    <VariantButton :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
+                    <VariantButton v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
                         {{ translateMe('Bundle') }}
                     </VariantButton>
                 </PButtonGroup>
@@ -201,7 +200,7 @@
                 </template>
             </PLayoutSection>
         </PLayout>
-        <div class="bundle-plan">
+        <div v-if="bundle_plan !== null" class="bundle-plan">
             <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
@@ -342,7 +341,7 @@
                             {
                                 "id": 200,
                                 "app_name": "Order Lookup",
-                                "app_logo_url": null,
+                                "app_logo_url": 'https://cdn.shopify.com/s/files/applications/28a073435b1eb3e6dc7c6aed690ec0a9_512x512.png?height=120&width=120',
                                 "pivot": {
                                     "app_bundle_category_id": 1,
                                     "app_id": 200
@@ -374,7 +373,7 @@
                             {
                                 "id": 200,
                                 "app_name": "Order Lookup",
-                                "app_logo_url": null,
+                                "app_logo_url": 'https://cdn.shopify.com/s/files/applications/28a073435b1eb3e6dc7c6aed690ec0a9_512x512.png?height=120&width=120',
                                 "pivot": {
                                     "app_bundle_category_id": 1,
                                     "app_id": 200
@@ -730,14 +729,16 @@
             },
             async selectPlan(value){
                 this.selectedPlan = value;
-                let planElement = document.querySelector('.custom-plan');
-                let bundleElement = document.querySelector('.bundle-plan');
-                if (this.selectedPlan == 'bundle') {
-                    planElement.style.display = 'none';
-                    bundleElement.style.display = 'flex';
-                } else {
-                    bundleElement.style.display = 'none';
-                    planElement.style.display = 'flex';
+                if (this.bundle_plan !== null) {
+                    let planElement = document.querySelector('.custom-plan');
+                    let bundleElement = document.querySelector('.bundle-plan');
+                    if (this.selectedPlan == 'bundle') {
+                        planElement.style.display = 'none';
+                        bundleElement.style.display = 'flex';
+                    } else {
+                        bundleElement.style.display = 'none';
+                        planElement.style.display = 'flex';
+                    }
                 }
                 this.$nextTick(() => {
 

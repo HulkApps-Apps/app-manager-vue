@@ -57,17 +57,27 @@
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
-                    <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
+                    <!-- <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
 
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
-                    </PButton>
+                    </PButton> -->
+                    <VariantButton :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')" :additionalText="'20% off'">
+                        {{ translateMe('Annually') }}
+                    </VariantButton>
+                    <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
+                        {{ translateMe('Monthly') }}
+                    </VariantButton>
+                    <VariantButton v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
+                        {{ translateMe('Bundle') }}
+                    </VariantButton>
                 </PButtonGroup>
             </PStackItem>
         </PStack>
-        <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" />
+        <!-- <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" /> -->
+        <div class="light-divider" style="margin: 20px 0;"></div>
         <!--=======================================================-->
         <PLayout class="custom-plan">
             <PLayoutSection>
@@ -240,6 +250,19 @@
               <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
             </PLayoutSection>
         </PLayout>
+        <div class="bundle-plan" v-if="bundle_plan !== null">
+            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+            <div class="light-divider"></div>
+            <div class="bundle-category" v-for="category in bundle_details">
+                <CategoryHeading :headingData="category" />
+                <div class="bundle-category-apps">
+                    <AppCard v-for="app in category.apps_relation" :appData="app" />
+                </div>
+            </div>
+            <CategoryHeading :headingData="additionalBenefitsHeading" />
+            <BenefitsBanner />
+            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+        </div>
         <!--====================================================================-->
     </PPage>
     </div>
@@ -270,10 +293,15 @@
     import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
     import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
     import {PEmptyState} from "../polaris-vue/src/components/PEmptyState";
+    import AppCard from "../PolarisNew/AppCard";
+    import PlanShowcaseBanner from "../PolarisNew/PlanShowcaseBanner";
+    import CategoryHeading from "../PolarisNew/CategoryHeading";
+    import BenefitsBanner from "../PolarisNew/BenefitsBanner";
+    import VariantButton from "../PolarisNew/VariantButton";
 
     export default {
         name: "AppManagerGroupPlan",
-        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText, PEmptyState },
+        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -326,6 +354,244 @@
                     border:'none',
                     borderRadius:'8px'
                 },
+                bundleStyle:{
+                    color:'#258060',
+                    height: '55px',
+                    backgroundColor:'#FFFFFF',
+                    boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+                    border:'none',
+                    borderRadius:'8px'
+                },
+                additionalBenefitsHeading:{
+                    category_name: "Unlock Additional Benefits"
+                },
+                // new dummy bundle plan data
+                "bundle_details": [
+                    {
+                        "id": 1,
+                        "category_name": "Category11",
+                        "category_description": "This is a test category",
+                        "apps_relation": [
+                            {
+                                "id": 200,
+                                "app_name": "Order Lookup",
+                                "app_logo_url": 'https://cdn.shopify.com/s/files/applications/28a073435b1eb3e6dc7c6aed690ec0a9_512x512.png?height=120&width=120',
+                                "pivot": {
+                                    "app_bundle_category_id": 1,
+                                    "app_id": 200
+                                },
+                                "app_bundle_details": {
+                                    "id": 1,
+                                    "app_id": 198,
+                                    "feature_1": "testettstetstetts etstettstet",
+                                    "feature_2": "etetdfiushchls eohfcdilsjcl hovifr",
+                                    "feature_3": null,
+                                    "feature_4": null,
+                                    "feature_5": null,
+                                    "shopify_category_1": "Test",
+                                    "shopify_category_2": null,
+                                    "highest_plan": "$30",
+                                    "reviews": 350,
+                                    "built_for_shopify": true,
+                                    "created_at": "2024-06-28T12:40:02.000000Z",
+                                    "updated_at": "2024-06-28T12:40:02.000000Z",
+                                    "features": [
+                                        "testettstetstetts etstettstet",
+                                        "etetdfiushchls eohfcdilsjcl hovifr"
+                                    ],
+                                    "shopify_categories": [
+                                        "Test"
+                                    ]
+                                }
+                            },
+                            {
+                                "id": 200,
+                                "app_name": "Order Lookup",
+                                "app_logo_url": 'https://cdn.shopify.com/s/files/applications/28a073435b1eb3e6dc7c6aed690ec0a9_512x512.png?height=120&width=120',
+                                "pivot": {
+                                    "app_bundle_category_id": 1,
+                                    "app_id": 200
+                                },
+                                "app_bundle_details": {
+                                    "id": 1,
+                                    "app_id": 198,
+                                    "feature_1": "testettstetstetts etstettstet",
+                                    "feature_2": "etetdfiushchls eohfcdilsjcl hovifr",
+                                    "feature_3": null,
+                                    "feature_4": null,
+                                    "feature_5": null,
+                                    "shopify_category_1": "Test",
+                                    "shopify_category_2": null,
+                                    "highest_plan": "$30",
+                                    "reviews": 350,
+                                    "built_for_shopify": true,
+                                    "created_at": "2024-06-28T12:40:02.000000Z",
+                                    "updated_at": "2024-06-28T12:40:02.000000Z",
+                                    "features": [
+                                        "testettstetstetts etstettstet",
+                                        "etetdfiushchls eohfcdilsjcl hovifr"
+                                    ],
+                                    "shopify_categories": [
+                                        "Test"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "category_name": "Category2",
+                        "category_description": "This is a test category 2",
+                        "apps_relation": [
+                            {
+                                "id": 198,
+                                "app_name": "Easy Redirects",
+                                "app_logo_url": null,
+                                "pivot": {
+                                    "app_bundle_category_id": 2,
+                                    "app_id": 198
+                                },
+                                "app_bundle_details": {
+                                    "id": 1,
+                                    "app_id": 198,
+                                    "feature_1": "testettstetstetts etstettstet",
+                                    "feature_2": "etetdfiushchls eohfcdilsjcl hovifr",
+                                    "feature_3": null,
+                                    "feature_4": null,
+                                    "feature_5": null,
+                                    "shopify_category_1": "Test",
+                                    "shopify_category_2": null,
+                                    "highest_plan": "$30",
+                                    "reviews": 350,
+                                    "built_for_shopify": null,
+                                    "created_at": "2024-06-28T12:40:02.000000Z",
+                                    "updated_at": "2024-06-28T12:40:02.000000Z",
+                                    "features": [
+                                        "testettstetstetts etstettstet",
+                                        "etetdfiushchls eohfcdilsjcl hovifr"
+                                    ],
+                                    "shopify_categories": [
+                                        "Test"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "bundle_plan": {
+                    "id": 742,
+                    "type": "RECURRING",
+                    "name": "Global Plan",
+                    "price": 300,
+                    "offer_text": null,
+                    "interval": "EVERY_30_DAYS",
+                    "shopify_plans": [],
+                    "trial_days": 0,
+                    "test": null,
+                    "on_install": null,
+                    "is_custom": false,
+                    "app_id": 199,
+                    "base_plan": null,
+                    "created_at": null,
+                    "updated_at": "2024-04-25T08:08:56.000000Z",
+                    "public": true,
+                    "discount": 0,
+                    "cycle_count": null,
+                    "store_base_plan": false,
+                    "discount_type": "percentage",
+                    "affiliate": null,
+                    "deleted_at": null,
+                    "old_plan_id": null,
+                    "description": "global plan",
+                    "choose_later_plan": false,
+                    "is_external_charge": false,
+                    "external_charge_limit": 10000,
+                    "terms": null,
+                    "is_global": 1,
+                    "features": {
+                        "fd5275ee-2aaa-11ed-a261-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "fd5275ee-2aaa-11ed-a261-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Bulk 404 Redirects",
+                            "format": null,
+                            "slug": "bulk-301-redirects"
+                        },
+                        "fd5277d8-2aaa-11ed-a261-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "fd5277d8-2aaa-11ed-a261-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Group redirects to categorise and filter with ease",
+                            "format": null,
+                            "slug": "group-redirects"
+                        },
+                        "fd5278d2-2aaa-11ed-a261-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "fd5278d2-2aaa-11ed-a261-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Statistics and analysis",
+                            "format": null,
+                            "slug": "statistics-analysis"
+                        },
+                        "fd5279d6-2aaa-11ed-a261-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "fd5279d6-2aaa-11ed-a261-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Automatic 404 tracking",
+                            "format": null,
+                            "slug": "auto-404-tracking"
+                        },
+                        "fd527ada-2aaa-11ed-a261-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "fd527ada-2aaa-11ed-a261-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Alerts & reminders to manage 404 page errors easily",
+                            "format": null,
+                            "slug": "alerts-reminders-to-manage-404"
+                        },
+                        "fd527bde-2aaa-11ed-a261-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "fd527bde-2aaa-11ed-a261-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Redirect patterns to automate redirects",
+                            "format": null,
+                            "slug": "redirect-patterns"
+                        },
+                        "72d0f436-5dbc-11ee-8c99-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "72d0f436-5dbc-11ee-8c99-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Simple Live (Active page) Redirects",
+                            "format": null,
+                            "slug": "active-path-redirect"
+                        },
+                        "72d0f774-5dbc-11ee-8c99-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "72d0f774-5dbc-11ee-8c99-0242ac120002",
+                            "value": "1",
+                            "value_type": "boolean",
+                            "name": "Bulk Upload Live (Active page) Redirects",
+                            "format": null,
+                            "slug": "active-path-redirect-bulk-import"
+                        },
+                        "72d12212-5dbc-11ee-8c99-0242ac120002": {
+                            "plan_id": 26,
+                            "feature_id": "72d12212-5dbc-11ee-8c99-0242ac120002",
+                            "value": null,
+                            "value_type": "boolean",
+                            "name": "Live (Active page) Redirect Patterns - Coming Soon",
+                            "format": null,
+                            "slug": "active-patterns-redirect"
+                        }
+                    }
+                }
             }
         },
         computed: {
@@ -481,6 +747,17 @@
             },
             async selectPlan(value){
                 this.selectedPlan= value;
+                if (this.bundle_plan !== null) {
+                    let planElement = document.querySelector('.custom-plan');
+                    let bundleElement = document.querySelector('.bundle-plan');
+                    if (this.selectedPlan == 'bundle') {
+                        planElement.style.display = 'none';
+                        bundleElement.style.display = 'flex';
+                    } else {
+                        bundleElement.style.display = 'none';
+                        planElement.style.display = 'flex';
+                    }
+                }
             },
             async fetchFeatures() {
                 let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
@@ -530,7 +807,12 @@
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
                     this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
-
+                    if (data.bundle_plan) {
+                        this.bundle_plan = data.bundle_plan;
+                    }
+                    if (data.bundle_details) {
+                        this.bundle_details = data.bundle_details;
+                    }
                 }
             },
             /*cellColor(plan) {
@@ -564,6 +846,9 @@
             handlePlanBannerClose(payload) {
               this.$emit('handlePlanBannerClose', payload)
               this.$emit('handle-plan-banner-close', payload)
+            },
+            handlePlanClicked(plan) {
+                this.getPlanUrl(plan);
             }
         },
         async mounted() {
@@ -804,6 +1089,29 @@
       }
     }
 
+    .bundle-plan {
+        display: none;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .bundle-category {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 10px;
+    }
 
+    .bundle-category-apps {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .light-divider {
+        border-top: 1px solid #E3E3E3;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 
 </style>
