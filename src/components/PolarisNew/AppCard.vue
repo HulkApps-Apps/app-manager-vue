@@ -214,6 +214,7 @@ export default {
 }
 .bfs-tag {
   margin-right: 0px;
+  margin-bottom: 0px !important;
 }
 .bfs-tag > svg {
   margin-bottom: -3px;
