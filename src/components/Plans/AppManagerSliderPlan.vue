@@ -331,7 +331,6 @@
                 additionalBenefitsHeading:{
                     category_name: "Unlock Additional Benefits"
                 },
-                // new dummy bundle plan data
                 "bundle_details": null,
                 "bundle_plan": null
             }
