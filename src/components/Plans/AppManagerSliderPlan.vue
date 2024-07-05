@@ -201,7 +201,7 @@
             </PLayoutSection>
         </PLayout>
         <div v-if="bundle_plan !== null" class="bundle-plan">
-            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
@@ -211,7 +211,7 @@
             </div>
             <CategoryHeading :headingData="additionalBenefitsHeading" />
             <BenefitsBanner />
-            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" :isCurrentPlan="isCurrentPlanId(bundle_plan)" @plan-clicked="handlePlanClicked(bundle_plan)"/>
         </div>
         <!--====================================================================-->
         <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
@@ -412,6 +412,9 @@
             },
             activePlanClass(plan) {
                 return plan.shopify_plans.includes(this.shop.shopify_plan) || !plan.store_base_plan ? 'active-plan' : '';
+            },
+            isCurrentPlanId(plan) {
+                return this.shop.plan && plan.id === this.shop.plan.id;
             },
             isCurrentPlan(plan) {
                 return this.has_active_charge && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));

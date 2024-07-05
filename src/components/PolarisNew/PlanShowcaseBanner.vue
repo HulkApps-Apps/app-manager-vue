@@ -32,6 +32,11 @@ export default {
       type: Object,
       required: false,
     },
+    isCurrentPlan: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
     handlePlanClick() {
@@ -75,11 +80,21 @@ export default {
           <span class="original-amount">${{ translateMe(oldPrice) }}</span>
         </div>
         <VariantButton
+          v-if="!isCurrentPlan"
           :buttonData="{ button_url: showcaseData.button_url }"
           @click="handlePlanClick"
           variant="primary"
         >
           {{ translateMe("Choose this plan") }}
+        </VariantButton>
+        <VariantButton
+          v-if="isCurrentPlan"
+          :buttonData="{ button_url: showcaseData.button_url }"
+          :disabled="true"
+          @click="handlePlanClick"
+          variant="primary"
+        >
+          {{ translateMe("Current Plan") }}
         </VariantButton>
       </div>
     </div>

@@ -21,6 +21,11 @@ export default {
       type: Object,
       required: false,
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
     handleClick() {
@@ -45,7 +50,7 @@ export default {
     href="#"
     @click="handleClick"
     class="button"
-    :class="`button-${variant}`"
+    :class="`button-${variant}` + (disabled ? ' disabled' : '')"
   >
     <slot></slot>
     <span
@@ -98,5 +103,11 @@ export default {
   padding: 0px 6px !important;
   border-radius: 6px !important;
   font-weight: 550 !important;
+}
+.disabled {
+  background-color: rgb(120, 120, 120) !important;
+  color: white !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
 }
 </style>
