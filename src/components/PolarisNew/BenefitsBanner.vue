@@ -41,6 +41,13 @@ export default {
       },
     },
   },
+  methods: {
+    translateMe(message) {
+      return this.$translations.hasOwnProperty(message)
+        ? this.$translations[message]
+        : message;
+    },
+  },
 };
 </script>
 
@@ -61,7 +68,10 @@ export default {
           />
         </svg>
         <p class="benefit-description">
-          <strong>Unlimited</strong> Access to Enterprise Features
+          <strong>
+            {{ translateMe("Unlimited") }}
+          </strong>
+          {{ translateMe("Access to Enterprise Features") }}
         </p>
       </div>
 
@@ -86,8 +96,9 @@ export default {
           </defs>
         </svg>
         <p class="benefit-description">
-          <strong>24/7</strong>Live Chat & Email Support
-          <strong>+ Priority Status</strong>
+          <strong>{{ translateMe("24/7") }}</strong
+          >{{ translateMe("Live Chat & Email Support") }}
+          <strong>+ {{ translateMe("Priority Status") }}</strong>
         </p>
       </div>
 
@@ -141,7 +152,9 @@ export default {
         </svg>
 
         <p class="benefit-description">
-          Full <strong>Onboarding</strong>, Setup and Migration Assistance
+          {{ translateMe("Full") }}
+          <strong>{{ translateMe("Onboarding") }}</strong
+          >,{{ translateMe("Setup and Migration Assistance") }}
         </p>
       </div>
 
@@ -160,7 +173,9 @@ export default {
         </svg>
 
         <p class="benefit-description">
-          Access to <strong>200+</strong> Tech and Marketing Professionals
+          {{ translateMe("Access to") }}
+          <strong>{{ translateMe("200+") }}</strong>
+          {{ translateMe("Tech and Marketing Professionals") }}
         </p>
       </div>
 
@@ -186,7 +201,8 @@ export default {
         </svg>
 
         <p class="benefit-description">
-          <strong>Dedicated</strong> Account Manager
+          <strong>{{ translateMe("Dedicated") }}</strong>
+          {{ translateMe("Account Manager") }}
         </p>
       </div>
     </div>

@@ -70,13 +70,13 @@
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
                     </PButton> -->
                     <VariantButton :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')" :additionalText="'20% off'">
-                        Annually
+                        {{ translateMe('Annually') }}
                     </VariantButton>
                     <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
-                        Monthly
+                        {{ translateMe('Monthly') }}
                     </VariantButton>
                     <VariantButton :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
-                        Bundle
+                        {{ translateMe('Bundle') }}
                     </VariantButton>
                 </PButtonGroup>
             </PStackItem>
@@ -211,7 +211,7 @@
                 </div>
             </div>
             <CategoryHeading :headingData="additionalBenefitsHeading" />
-            <BenefitsBanner :benefitsData="bundlePlan.additionalBenefits"  />
+            <BenefitsBanner />
             <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" @plan-clicked="handlePlanClicked(bundle_plan)"/>
         </div>
         <!--====================================================================-->
@@ -558,104 +558,6 @@
                             "slug": "active-patterns-redirect"
                         }
                     }
-                },
-                // dummy bundle plan data
-                bundlePlan: {
-                    id: 999999,
-                    name: "Bundle Plan",
-                    price: {
-                        saving_amount: "1000",
-                        original_amount: "1050",
-                        discounted_amount: "199",
-                        button_url: "#",
-                    },
-                    interval: "BUNDLE",
-                    categories: [
-                        {
-                            category_name: "Bestsellers",
-                            category_descrioption: "Make a big impact with our top-selling apps.",
-                            category_apps: [
-                                {
-                                    app_name: "Releasit Form & Upsell",
-                                    app_logo_url:
-                                        "https://cdn.shopify.com/app-store/listing_images/59ff1b17b1415cf11af2ee0a00c68334/icon/CKKYs5695_ICEAE=.png",
-                                    app_reviews_count: "3,881",
-                                    app_tags: [
-                                        {
-                                        tag_name: "Cash/collect on delivery (COD)",
-                                        tag_ext_url: "#",
-                                        },
-                                        {
-                                        tag_name: "Upselling and cross-selling",
-                                        tag_ext_url: "#",
-                                        },
-                                    ],
-                                    app_bfs: false,
-                                    app_option_types_count: "12",
-                                    app_featured_option_types: [
-                                        "Dynamic Checkout Button",
-                                        "Color/Image Swatches",
-                                        "Color/Image Swatches"
-                                    ]
-                                },
-                                {
-                                    app_name: "Releasit Form & Upsell",
-                                    app_logo_url:
-                                        "https://cdn.shopify.com/app-store/listing_images/59ff1b17b1415cf11af2ee0a00c68334/icon/CKKYs5695_ICEAE=.png",
-                                    app_reviews_count: "3,881",
-                                    app_tags: [
-                                        {
-                                        tag_name: "Cash/collect on delivery (COD)",
-                                        tag_ext_url: "#",
-                                        },
-                                        {
-                                        tag_name: "Upselling and cross-selling",
-                                        tag_ext_url: "#",
-                                        },
-                                    ],
-                                    app_bfs: false,
-                                    app_option_types_count: "12",
-                                    app_featured_option_types: [
-                                        "Dynamic Checkout Button",
-                                        "Color/Image Swatches",
-                                        "Color/Image Swatches"
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    additionalBenefits: [
-                        {
-                        benefit_description:
-                            "<strong>Unlimited</strong> Access to Enterprise Features",
-                        benefit_image_url:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
-                        },
-                        {
-                        benefit_description:
-                            "<strong>Unlimited</strong> Access to Enterprise Features",
-                        benefit_image_url:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
-                        },
-                        {
-                        benefit_description:
-                            "<strong>Unlimited</strong> Access to Enterprise Features",
-                        benefit_image_url:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
-                        },
-                        {
-                        benefit_description:
-                            "<strong>Unlimited</strong> Access to Enterprise Features",
-                        benefit_image_url:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
-                        },
-                        {
-                        benefit_description:
-                            "<strong>Unlimited</strong> Access to Enterprise Features",
-                        benefit_image_url:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s",
-                        }
-                    ]
                 }
             }
         },

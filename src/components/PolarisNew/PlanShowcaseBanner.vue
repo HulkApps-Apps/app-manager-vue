@@ -37,6 +37,11 @@ export default {
     handlePlanClick() {
       this.$emit("plan-clicked");
     },
+    translateMe(message) {
+      return this.$translations.hasOwnProperty(message)
+        ? this.$translations[message]
+        : message;
+    },
   },
   // computed: {
   //   isSlotEmpty() {
@@ -50,25 +55,31 @@ export default {
   <div>
     <div class="plan-showcase-banner">
       <div v-if="showDescription" class="plan-left">
-        <p>Get 24 Shopify apps and save more than <strong>$1000</strong> per month!</p>
-        <p>No hidden costs. Just your store getting supercharged!</p>
+        <p>
+          {{ translateMe("Get 24 Shopify apps and save more than") }}
+          <strong>{{ translateMe("$1000") }}</strong>
+          {{ translateMe("per month!") }}
+        </p>
+        <p>
+          {{
+            translateMe(
+              "No hidden costs. Just your store getting supercharged!"
+            )
+          }}
+        </p>
       </div>
       <div class="plan-right">
-        <h3 class="plan-name">Monthly Bundle:</h3>
+        <h3 class="plan-name">{{ translateMe("Monthly Bundle:") }}</h3>
         <div class="prices">
-          <span class="discounted-amount"
-            >${{ realPrice }}</span
-          >
-          <span class="original-amount"
-            >${{ oldPrice }}</span
-          >
+          <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
+          <span class="original-amount">${{ translateMe(oldPrice) }}</span>
         </div>
         <VariantButton
           :buttonData="{ button_url: showcaseData.button_url }"
           @click="handlePlanClick"
           variant="primary"
         >
-          Choose this plan
+          {{ translateMe("Choose this plan") }}
         </VariantButton>
       </div>
     </div>

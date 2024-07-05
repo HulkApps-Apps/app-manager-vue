@@ -13,6 +13,13 @@ export default {
       },
     },
   },
+  methods: {
+    translateMe(message) {
+      return this.$translations.hasOwnProperty(message)
+        ? this.$translations[message]
+        : message;
+    },
+  },
 };
 </script>
 
@@ -20,35 +27,35 @@ export default {
   <div>
     <div class="category-heading">
       <h4 class="category-name">
-        {{ headingData.category_name }}
+        {{ translateMe(headingData.category_name) }}
         <span v-if="headingData.apps_relation != null">
-          ({{ headingData.apps_relation.length }})
+          ({{ translateMe(headingData.apps_relation.length) }})
         </span>
       </h4>
       <p class="category-description">
-        {{ headingData.category_description }}
+        {{ translateMe(headingData.category_description) }}
       </p>
     </div>
   </div>
 </template>
 
 <style scoped>
-  .category-heading {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    gap: 4px;
-  }
-  .category-name {
-    font-size: 13px;
-    font-weight: 750;
-    line-height: 20px;
-    color: black;
-  }
-  .category-description {
-    font-size: 12px;
-    font-weight: 450;
-    font-variation-settings: "slnt" 0;
-    color: #303030;
-  }
+.category-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 4px;
+}
+.category-name {
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 20px;
+  color: black;
+}
+.category-description {
+  font-size: 12px;
+  font-weight: 450;
+  font-variation-settings: "slnt" 0;
+  color: #303030;
+}
 </style>

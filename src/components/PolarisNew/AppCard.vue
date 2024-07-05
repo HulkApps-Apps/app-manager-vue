@@ -32,6 +32,13 @@ export default {
       },
     },
   },
+  methods: {
+    translateMe(message) {
+      return this.$translations.hasOwnProperty(message)
+        ? this.$translations[message]
+        : message;
+    },
+  },
 };
 </script>
 
@@ -50,9 +57,12 @@ export default {
       <div class="details">
         <div class="upper-details">
           <h3 class="app-name">
-            {{ appData.app_name }}
+            {{ translateMe(appData.app_name) }}
           </h3>
-          <div v-if="appData.app_bundle_details.built_for_shopify" class="app-tags">
+          <div
+            v-if="appData.app_bundle_details.built_for_shopify"
+            class="app-tags"
+          >
             <a class="app-tag bfs-tag">
               <svg
                 width="16"
@@ -81,11 +91,12 @@ export default {
                   </clipPath>
                 </defs>
               </svg>
-              Built For Shopify
+              {{ translateMe("Built For Shopify") }}
             </a>
           </div>
           <p class="app-reviews-count">
-            {{ appData.app_bundle_details.reviews }} Reviews
+            {{ appData.app_bundle_details.reviews }}
+            {{ translateMe("Reviews") }}
           </p>
           <div class="app-tags">
             <a
@@ -114,7 +125,7 @@ export default {
                   fill="#0094D5"
                 />
               </svg>
-              {{ tag }}
+              {{ translateMe(tag) }}
             </a>
           </div>
         </div>
@@ -129,8 +140,8 @@ export default {
             >
               <rect width="4" height="4" rx="2" fill="black" />
             </svg>
-            {{ appData.app_bundle_details.features.length }} Option
-            Types
+            {{ appData.app_bundle_details.features.length }}
+            {{ translateMe("Option Types") }}
           </p>
           <span
             class="featured-options"
@@ -145,7 +156,7 @@ export default {
             >
               <rect width="4" height="4" rx="2" fill="black" />
             </svg>
-            {{ option }}</span
+            {{ translateMe(option) }}</span
           >
         </div>
       </div>

@@ -31,6 +31,11 @@ export default {
       event.preventDefault();
       this.$emit("plan-clicked", event);
     },
+    translateMe(message) {
+      return this.$translations.hasOwnProperty(message)
+        ? this.$translations[message]
+        : message;
+    },
   },
 };
 </script>
@@ -47,7 +52,7 @@ export default {
       :class="`additional-info-${variant}`"
       v-if="additionalText"
     >
-      {{ additionalText }}
+      {{ translateMe(additionalText) }}
     </span>
   </a>
 </template>
