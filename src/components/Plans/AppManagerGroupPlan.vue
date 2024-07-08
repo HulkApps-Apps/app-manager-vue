@@ -57,17 +57,27 @@
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <PButtonGroup class="btn-group" segmented>
-                    <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
+                    <!-- <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
 
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
-                    </PButton>
+                    </PButton> -->
+                    <VariantButton :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')" :additionalText="'20% off'">
+                        {{ translateMe('Annually') }}
+                    </VariantButton>
+                    <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
+                        {{ translateMe('Monthly') }}
+                    </VariantButton>
+                    <VariantButton v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
+                        {{ translateMe('Bundle') }}
+                    </VariantButton>
                 </PButtonGroup>
             </PStackItem>
         </PStack>
-        <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" />
+        <!-- <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" /> -->
+        <div class="light-divider" style="margin: 20px 0;"></div>
         <!--=======================================================-->
         <PLayout class="custom-plan">
             <PLayoutSection>
@@ -97,7 +107,7 @@
                                                     <b style="margin-top: 3px;font-size: 14px">/{{translateMe("mo")}}</b>
                                                 </p>
                                             </div>
-                                            <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && promotional_discount.plan_relation.length > 0 && promotional_discount.plan_relation.includes(plan.id)  && !isCurrentPlan(plan)" >
+                                            <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && !plan.is_global && promotional_discount.plan_relation.length > 0 && promotional_discount.plan_relation.includes(plan.id)  && !isCurrentPlan(plan)" >
                                               <p style="display: flex;margin-top: 10px">
                                                 <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                                 <b style="margin-top: 5px;font-size: 17px">/{{translateMe("mo")}}</b>
@@ -107,7 +117,7 @@
                                                 <b style="margin-top: 3px;font-size: 14px">/{{translateMe("mo")}}</b>
                                               </p>
                                             </div>
-                                            <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && promotional_discount.plan_relation.length === 0 && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
+                                            <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && !plan.is_global && promotional_discount.plan_relation.length === 0 && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
                                               <p style="display: flex;margin-top: 10px">
                                                 <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                                 <b style="margin-top: 5px;font-size: 17px">/{{translateMe("mo")}}</b>
@@ -240,6 +250,19 @@
               <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
             </PLayoutSection>
         </PLayout>
+        <div class="bundle-plan" v-if="bundle_plan !== null">
+            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+            <div class="light-divider"></div>
+            <div class="bundle-category" v-for="category in bundle_details">
+                <CategoryHeading :headingData="category" />
+                <div class="bundle-category-apps">
+                    <AppCard v-for="app in category.apps_relation" :appData="app" />
+                </div>
+            </div>
+            <CategoryHeading :headingData="additionalBenefitsHeading" />
+            <BenefitsBanner />
+            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+        </div>
         <!--====================================================================-->
     </PPage>
     </div>
@@ -270,10 +293,15 @@
     import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
     import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
     import {PEmptyState} from "../polaris-vue/src/components/PEmptyState";
+    import AppCard from "../PolarisNew/AppCard";
+    import PlanShowcaseBanner from "../PolarisNew/PlanShowcaseBanner";
+    import CategoryHeading from "../PolarisNew/CategoryHeading";
+    import BenefitsBanner from "../PolarisNew/BenefitsBanner";
+    import VariantButton from "../PolarisNew/VariantButton";
 
     export default {
         name: "AppManagerGroupPlan",
-        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText, PEmptyState },
+        components: { YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCard, PCardSection, PSkeletonPage, PSkeletonBodyText, PSkeletonDisplayText, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -326,6 +354,19 @@
                     border:'none',
                     borderRadius:'8px'
                 },
+                bundleStyle:{
+                    color:'#258060',
+                    height: '55px',
+                    backgroundColor:'#FFFFFF',
+                    boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+                    border:'none',
+                    borderRadius:'8px'
+                },
+                additionalBenefitsHeading:{
+                    category_name: "Unlock Additional Benefits"
+                },
+                "bundle_details": null,
+                "bundle_plan": null
             }
         },
         computed: {
@@ -481,6 +522,17 @@
             },
             async selectPlan(value){
                 this.selectedPlan= value;
+                if (this.bundle_plan !== null) {
+                    let planElement = document.querySelector('.custom-plan');
+                    let bundleElement = document.querySelector('.bundle-plan');
+                    if (this.selectedPlan == 'bundle') {
+                        planElement.style.display = 'none';
+                        bundleElement.style.display = 'flex';
+                    } else {
+                        bundleElement.style.display = 'none';
+                        planElement.style.display = 'flex';
+                    }
+                }
             },
             async fetchFeatures() {
                 let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
@@ -530,7 +582,12 @@
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
                     this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
-
+                    if (data.bundle_plan) {
+                        this.bundle_plan = data.bundle_plan;
+                    }
+                    if (data.bundle_details) {
+                        this.bundle_details = data.bundle_details;
+                    }
                 }
             },
             /*cellColor(plan) {
@@ -564,6 +621,9 @@
             handlePlanBannerClose(payload) {
               this.$emit('handlePlanBannerClose', payload)
               this.$emit('handle-plan-banner-close', payload)
+            },
+            handlePlanClicked(plan) {
+                this.getPlanUrl(plan);
             }
         },
         async mounted() {
@@ -804,6 +864,29 @@
       }
     }
 
+    .bundle-plan {
+        display: none;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .bundle-category {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 10px;
+    }
 
+    .bundle-category-apps {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .light-divider {
+        border-top: 1px solid #E3E3E3;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 
 </style>
