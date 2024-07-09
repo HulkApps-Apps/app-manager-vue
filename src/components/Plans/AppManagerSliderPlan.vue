@@ -68,7 +68,7 @@
                     <PButton :class="selectedPlan === 'bundle' ? 'plan-active-tab' : '' " :style="selectedPlan === 'bundle' ? bundleSelectedSyle : bundleStyle "  @click="selectPlan('bundle')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
                     </PButton> -->
-                    <VariantButton :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')" :additionalText="'20% off'">
+                    <VariantButton v-if="!isCurrentPlanId(bundle_plan)" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')" :additionalText="'20% off'">
                         {{ translateMe('Annually') }}
                     </VariantButton>
                     <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
