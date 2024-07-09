@@ -183,7 +183,9 @@ export default {
 .upper-details,
 .lower-details {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  row-gap: 2px;
+  column-gap: 8px;
 }
 .app-name {
   font-size: 14px;
@@ -227,6 +229,7 @@ export default {
   font-size: 13px;
   font-weight: 450;
   line-height: 20px;
+  text-wrap: nowrap;
   color: #5c5c5c;
 }
 
@@ -243,7 +246,9 @@ export default {
   .upper-details,
   .lower-details {
     flex-direction: column;
-    gap: 8px;
+    flex-wrap: wrap;
+    row-gap: 2px;
+    column-gap: 8px;
   }
 }
 </style>
