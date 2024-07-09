@@ -64,7 +64,7 @@
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
                     </PButton> -->
-                    <VariantButton v-if="!isCurrentPlanId(bundle_plan)" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')" :additionalText="'20% off'">
+                    <VariantButton v-if="!isCurrentPlanId(bundle_plan) || valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')" :additionalText="'20% off'">
                         {{ translateMe('Annually') }}
                     </VariantButton>
                     <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
@@ -250,8 +250,8 @@
               <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose" />
             </PLayoutSection>
         </PLayout>
-        <div class="bundle-plan" v-if="bundle_plan !== null">
-            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+        <div v-if="bundle_plan !== null" class="bundle-plan">
+            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
@@ -261,7 +261,7 @@
             </div>
             <CategoryHeading :headingData="additionalBenefitsHeading" />
             <BenefitsBanner />
-            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" :isCurrentPlan="isCurrentPlanId(bundle_plan)" @plan-clicked="handlePlanClicked(bundle_plan)"/>
         </div>
         <!--====================================================================-->
     </PPage>
@@ -307,6 +307,7 @@
             return {
                 plan: {},
                 plans: [],
+                valid_annual_plans: [],
                 promotional_discount: [],
                 features: [],
                 featureValues: [],
@@ -417,6 +418,9 @@
             },
             isCurrentPlan(plan) {
                 return this.has_active_charge && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
+            },
+            isCurrentPlanId(plan) {
+                return this.shop.plan && plan.id === this.shop.plan.id;
             },
             isSamePlanInOtherInterval(plan) {
                 return this.shop.plan && (plan.shopify_plans === this.shop.plan.shopify_plans)
@@ -564,6 +568,11 @@
                     console.error(error)
                 });
                 if (data.plans.length) {
+                    for (let i = 0; i < data.plans.length; i++) {
+                        if (data.plans[i].interval === 'ANNUAL') {
+                            this.valid_annual_plans.push(data.plans[i]);
+                        }
+                    }
                     this.plans = data.plans;
                     this.plans = this.plans?.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
 
