@@ -234,6 +234,9 @@ export default {
 }
 
 @media (max-width: 767px) {
+  .featured-options {
+    text-wrap: wrap;
+  }
   .details {
     gap: 8px;
   }
