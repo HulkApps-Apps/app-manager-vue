@@ -130,19 +130,6 @@ export default {
           </div>
         </div>
         <div class="lower-details">
-          <p class="app-option-type-count">
-            <svg
-              width="4"
-              height="4"
-              viewBox="0 0 4 4"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="4" height="4" rx="2" fill="black" />
-            </svg>
-            {{ appData.app_bundle_details.features.length }}
-            {{ translateMe("Option Types") }}
-          </p>
           <span
             class="featured-options"
             v-for="option in appData.app_bundle_details.features"
