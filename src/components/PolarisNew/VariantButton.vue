@@ -65,6 +65,7 @@ export default {
 <style scoped>
 .button, .button:hover {
   display: flex;
+  width: fit-content !important;
   height: 32px !important;
   align-items: center !important;
   gap: 8px !important;

@@ -130,19 +130,6 @@ export default {
           </div>
         </div>
         <div class="lower-details">
-          <p class="app-option-type-count">
-            <svg
-              width="4"
-              height="4"
-              viewBox="0 0 4 4"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="4" height="4" rx="2" fill="black" />
-            </svg>
-            {{ appData.app_bundle_details.features.length }}
-            {{ translateMe("Option Types") }}
-          </p>
           <span
             class="featured-options"
             v-for="option in appData.app_bundle_details.features"
@@ -183,7 +170,9 @@ export default {
 .upper-details,
 .lower-details {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  row-gap: 2px;
+  column-gap: 8px;
 }
 .app-name {
   font-size: 14px;
@@ -227,10 +216,14 @@ export default {
   font-size: 13px;
   font-weight: 450;
   line-height: 20px;
+  text-wrap: nowrap;
   color: #5c5c5c;
 }
 
 @media (max-width: 767px) {
+  .featured-options {
+    text-wrap: wrap;
+  }
   .details {
     gap: 8px;
   }
@@ -243,7 +236,9 @@ export default {
   .upper-details,
   .lower-details {
     flex-direction: column;
-    gap: 8px;
+    flex-wrap: wrap;
+    row-gap: 2px;
+    column-gap: 8px;
   }
 }
 </style>
