@@ -898,4 +898,8 @@
         margin-bottom: 10px;
     }
 
+    .app-manager .Polaris-Icon--colorSuccess svg {
+      fill: black !important;
+    }
+
 </style>
