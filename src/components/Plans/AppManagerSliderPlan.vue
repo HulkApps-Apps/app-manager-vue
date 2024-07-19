@@ -854,9 +854,9 @@
     }
 
     .app-manager .app-manager-plan-page-slider .custom-choose-button:hover{
-        background: #006e52;
-        border-color: transparent;
-        color: #fff;
+        // background: #006e52;
+        // border-color: transparent;
+        // color: #fff;
     }
 
     .app-manager-plan-banner {
