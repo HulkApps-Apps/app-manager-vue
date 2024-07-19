@@ -87,7 +87,7 @@
             <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
                     <template >
-                        <div class="Polaris-ResourceList__ResourceListWrapper features" style="width: 30%">
+                        <div class="Polaris-ResourceList__ResourceListWrapper features" style="width: 20%">
                             <div class="plan__price"></div>
                             <ul class="Polaris-ResourceList">
                                 <li class="Polaris-ResourceList__ItemWrapper pro_title" :class="`${feature.value_type}__type__${feature.slug} feature__type__${feature.value_type} feature__class`" v-for="(feature, key) in features" :key="key">
@@ -100,20 +100,20 @@
                             </ul>
                         </div>
                     </template>
-                    <carousel style="width: 70%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :paginationEnabled="false" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
+                    <carousel style="width: 80%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :paginationEnabled="false" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
                         <template>
                             <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`slide-${key}`" >
                                 <div class="plan__price" :style="activePlanStyle(plan)">
                                     <div v-if="plan.price === 0">
                                         <b v-if="plan.name !== 'Free'" style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">{{translateMe('Free')}}</PHeading>
+                                            <PHeading style="font-size: 23px;font-weight: 700;">{{translateMe('Free')}}</PHeading>
                                         </p>
                                     </div>
                                     <div v-else-if="plan.discount && plan.discount > 0 && !isCurrentPlan(plan)" >
                                         <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
+                                            <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
                                             <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                         <p style="display: flex;margin-top: 7px">
@@ -124,7 +124,7 @@
                                   <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && !plan.is_global && promotional_discount.plan_relation.length > 0 && promotional_discount.plan_relation.includes(plan.id)  && !isCurrentPlan(plan)" >
                                     <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
-                                      <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                      <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                       <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                     </p>
                                     <p style="display: flex;margin-top: 7px">
@@ -135,7 +135,7 @@
                                   <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && !plan.is_global && promotional_discount.plan_relation.length === 0 && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
                                     <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
-                                      <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                      <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                       <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                     </p>
                                     <p style="display: flex;margin-top: 7px">
@@ -146,7 +146,7 @@
                                     <div v-else>
                                         <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                            <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
                                                <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                     </div>
