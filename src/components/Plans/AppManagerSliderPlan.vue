@@ -203,7 +203,7 @@
             </PLayoutSection>
         </PLayout>
         <div v-if="bundle_plan !== null" class="bundle-plan">
-            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
+            <PlanShowcaseBanner useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
