@@ -56,7 +56,7 @@
 
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
-                <PButtonGroup class="btn-group" segmented>
+                <!-- <PButtonGroup class="btn-group" segmented> -->
                     <!-- <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
@@ -64,6 +64,7 @@
                     <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
                         <YearlyPlanPromotion />
                     </PButton> -->
+                <div class="button-group-new">    
                     <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
                         {{ translateMe('Monthly') }}
                     </VariantButton>
@@ -73,7 +74,8 @@
                     <VariantButton v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
                         {{ translateMe('Bundle') }}
                     </VariantButton>
-                </PButtonGroup>
+                </div>
+                <!-- </PButtonGroup> -->
             </PStackItem>
         </PStack>
         <!-- <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" /> -->
@@ -251,7 +253,7 @@
             </PLayoutSection>
         </PLayout>
         <div v-if="bundle_plan !== null" class="bundle-plan">
-            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
+            <PlanShowcaseBanner useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
@@ -856,9 +858,9 @@
     }
 
     .app-manager .app-manager-plan-page .custom-choose-button:hover{
-        background: #006e52;
-        border-color: transparent;
-        color: #fff;
+        // background: #006e52;
+        // border-color: transparent;
+        // color: #fff;
     }
 
     @media (min-width: 0px) and (max-width: 576px) {
@@ -900,6 +902,13 @@
 
     .app-manager .Polaris-Icon--colorSuccess svg {
       fill: black !important;
+    }
+
+    .button-group-new {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
     }
 
 </style>
