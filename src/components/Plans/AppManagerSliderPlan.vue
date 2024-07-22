@@ -866,6 +866,42 @@
         margin-left: 30px;
     }
 
+    .bundle-plan {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .bundle-category {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+
+    .bundle-category-apps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .light-divider {
+      border-top: 1px solid #E3E3E3;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .app-manager .Polaris-Icon--colorSuccess svg {
+      fill: black !important;
+    }
+
+    .button-group-new {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
     @media (min-width: 0px) and (max-width: 576px) {
       .custom-plan>.Polaris-Layout__Section>.VueCarousel>.VueCarousel-wrapper>.VueCarousel-inner {
         overflow-x: scroll;
@@ -879,7 +915,6 @@
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
       }
-
     }
 
     @media (min-width: 0px) and (max-width: 467px) {
@@ -911,42 +946,6 @@
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
       }
-    }
-
-    .bundle-plan {
-        display: none;
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .bundle-category {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        margin-bottom: 10px;
-    }
-
-    .bundle-category-apps {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .light-divider {
-        border-top: 1px solid #E3E3E3;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
-    .app-manager .Polaris-Icon--colorSuccess svg {
-      fill: black !important;
-    }
-
-    .button-group-new {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
     }
 
 </style>
