@@ -37,6 +37,11 @@ export default {
       required: false,
       default: false,
     },
+    useCardStyle: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
     handlePlanClick() {
@@ -58,7 +63,7 @@ export default {
 
 <template>
   <div>
-    <div class="plan-showcase-banner">
+    <div :class="`plan-showcase-banner` + (useCardStyle ? ' banner-card' : '')">
       <div v-if="showDescription" class="plan-left">
         <p>
           {{ translateMe("Get 24 Shopify apps and save more than") }}
@@ -102,6 +107,15 @@ export default {
 </template>
 
 <style scoped>
+
+.banner-card {
+  display: flex;
+  padding: 16px;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border-radius: 12px;
+  gap: 16px;
+}
 .plan-showcase-banner {
   display: flex;
   justify-content: space-between;
