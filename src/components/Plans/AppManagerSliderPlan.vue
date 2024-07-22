@@ -57,7 +57,7 @@
 
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
-                <PButtonGroup class="btn-group" segmented>
+                <!-- <PButtonGroup class="btn-group" segmented> -->
                     <!-- <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
                     </PButton>
@@ -68,6 +68,7 @@
                     <PButton :class="selectedPlan === 'bundle' ? 'plan-active-tab' : '' " :style="selectedPlan === 'bundle' ? bundleSelectedSyle : bundleStyle "  @click="selectPlan('bundle')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
                     </PButton> -->
+                <div class="button-group-new">
                     <VariantButton :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
                         {{ translateMe('Monthly') }}
                     </VariantButton>
@@ -77,7 +78,8 @@
                     <VariantButton v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
                         {{ translateMe('Bundle') }}
                     </VariantButton>
-                </PButtonGroup>
+                </div>
+                <!-- </PButtonGroup> -->
             </PStackItem>
         </PStack>
         <!-- <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" /> -->
@@ -87,7 +89,7 @@
             <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
                     <template >
-                        <div class="Polaris-ResourceList__ResourceListWrapper features" style="width: 30%">
+                        <div class="Polaris-ResourceList__ResourceListWrapper features" style="width: 20%">
                             <div class="plan__price"></div>
                             <ul class="Polaris-ResourceList">
                                 <li class="Polaris-ResourceList__ItemWrapper pro_title" :class="`${feature.value_type}__type__${feature.slug} feature__type__${feature.value_type} feature__class`" v-for="(feature, key) in features" :key="key">
@@ -100,20 +102,20 @@
                             </ul>
                         </div>
                     </template>
-                    <carousel style="width: 70%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :paginationEnabled="false" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
+                    <carousel style="width: 80%" :per-page="perPage" :mouseDrag="false" :navigation-enabled="true" :paginationEnabled="false" :navigateTo="[this.currentSlide,true]" @transition-start="handleNavigationClick($event)">
                         <template>
                             <slide :id="key" :class="`slide-${key}`" v-for="(plan, key) in selectedPlan === 'monthly' ? monthlyPlan : yearlyPlan" :key="`slide-${key}`" >
                                 <div class="plan__price" :style="activePlanStyle(plan)">
                                     <div v-if="plan.price === 0">
                                         <b v-if="plan.name !== 'Free'" style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">{{translateMe('Free')}}</PHeading>
+                                            <PHeading style="font-size: 23px;font-weight: 700;">{{translateMe('Free')}}</PHeading>
                                         </p>
                                     </div>
                                     <div v-else-if="plan.discount && plan.discount > 0 && !isCurrentPlan(plan)" >
                                         <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
+                                            <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(calculateDiscountedPrice(plan)).toFixed(2)}}</PHeading>
                                             <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                         <p style="display: flex;margin-top: 7px">
@@ -124,7 +126,7 @@
                                   <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && !plan.is_global && promotional_discount.plan_relation.length > 0 && promotional_discount.plan_relation.includes(plan.id)  && !isCurrentPlan(plan)" >
                                     <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
-                                      <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                      <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                       <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                     </p>
                                     <p style="display: flex;margin-top: 7px">
@@ -135,7 +137,7 @@
                                   <div v-else-if="promotional_discount && promotional_discount.length !== 0 && !promotional_discount.errors && !plan.is_global && promotional_discount.plan_relation.length === 0 && promotional_discount.value > 0 && !isCurrentPlan(plan)" >
                                     <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                     <p style="display: flex;margin-top: 10px">
-                                      <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
+                                      <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(calculatePromotionalDiscountedPrice(plan, promotional_discount)).toFixed(2)}}</PHeading>
                                       <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                     </p>
                                     <p style="display: flex;margin-top: 7px">
@@ -146,7 +148,7 @@
                                     <div v-else>
                                         <b style="font-size: 16px">{{translateMe(plan.name)}}</b>
                                         <p style="display: flex;margin-top: 10px">
-                                            <PHeading style="font-size: 25px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
+                                            <PHeading style="font-size: 23px;font-weight: 700;">${{parseFloat(plan.price).toFixed(2)}}</PHeading>
                                                <b style="margin-top: 5px;font-size: 17px">/{{translateMe(selectedPlan === 'monthly' ? ("mo") : ("year"))}}</b>
                                         </p>
                                     </div>
@@ -201,7 +203,7 @@
             </PLayoutSection>
         </PLayout>
         <div v-if="bundle_plan !== null" class="bundle-plan">
-            <PlanShowcaseBanner :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
+            <PlanShowcaseBanner useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
@@ -854,14 +856,50 @@
     }
 
     .app-manager .app-manager-plan-page-slider .custom-choose-button:hover{
-        background: #006e52;
-        border-color: transparent;
-        color: #fff;
+        // background: #006e52;
+        // border-color: transparent;
+        // color: #fff;
     }
 
     .app-manager-plan-banner {
         margin-right: 30px;
         margin-left: 30px;
+    }
+
+    .bundle-plan {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .bundle-category {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+
+    .bundle-category-apps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .light-divider {
+      border-top: 1px solid #E3E3E3;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .app-manager .Polaris-Icon--colorSuccess svg {
+      fill: black !important;
+    }
+
+    .button-group-new {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
     }
 
     @media (min-width: 0px) and (max-width: 576px) {
@@ -877,7 +915,6 @@
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
       }
-
     }
 
     @media (min-width: 0px) and (max-width: 467px) {
@@ -909,31 +946,6 @@
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
       }
-    }
-
-    .bundle-plan {
-        display: none;
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .bundle-category {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        margin-bottom: 10px;
-    }
-
-    .bundle-category-apps {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .light-divider {
-        border-top: 1px solid #E3E3E3;
-        margin-top: 10px;
-        margin-bottom: 10px;
     }
 
 </style>

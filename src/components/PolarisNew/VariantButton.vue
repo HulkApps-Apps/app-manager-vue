@@ -63,51 +63,53 @@ export default {
 </template>
 
 <style scoped>
-.button, .button:hover {
+.button {
   display: flex;
   width: fit-content !important;
-  height: 32px !important;
+  height: 28px !important;
   align-items: center !important;
   gap: 8px !important;
-  padding: 6px 12px !important;
+  padding: 4px 12px !important;
   text-decoration: none !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  color: rgb(74, 74, 74) !important;
 }
-.button-primary, .button-primary:hover {
-  background-color: rgb(48, 48, 48) !important;
-  background-image: linear-gradient(
-      rgba(48, 48, 48, 0) 63.53%,
-      rgba(255, 255, 255, 0.15)
-    ),
-    none !important;
-  color: white !important;
-  border-bottom-color: rgb(255, 255, 255) !important;
-  box-shadow: rgba(0, 0, 0, 0.8) 0px -1px 0px 1px inset,
-    rgb(48, 48, 48) 0px 0px 0px 1px inset,
-    rgba(255, 255, 255, 0.25) 0px 0.5px 0px 1.5px inset !important;
+.button:hover {
+  background-color: #0000000d !important;
   border-radius: 8px !important;
+}
+.button-primary {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  color: #303030 !important;
+  border-radius: 8px !important;
+}
+.button-primary:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;  
 }
 .button-secondary {
   color: black !important;
 }
 .additional-info-primary {
-  background-color: #656565 !important;
-  color: white !important;
+  background-color: rgba(0, 0, 0, 0.06) !important;
+  color: #616161 !important;
   padding: 0px 6px !important;
-  border-radius: 6px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
   font-weight: 550 !important;
 }
 .additional-info-secondary {
-  background-color: #e3e3e3 !important;
+  background-color: rgba(0, 0, 0, 0.06) !important;
   color: #616161 !important;
   padding: 0px 6px !important;
-  border-radius: 6px !important;
+  border-radius: 8px !important;
   font-weight: 550 !important;
 }
 .disabled {
-  background-color: rgb(120, 120, 120) !important;
-  color: white !important;
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  color: rgb(74, 74, 74) !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
 }
