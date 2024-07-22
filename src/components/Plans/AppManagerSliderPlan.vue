@@ -934,6 +934,9 @@
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
       }
+      .VueCarousel-slide {
+        flex-basis: auto !important;
+      }
     }
 
     @media (min-width: 467px) and (max-width: 1003px) {
