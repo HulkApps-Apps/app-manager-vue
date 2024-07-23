@@ -812,6 +812,7 @@
     }
     .app-manager .Polaris-Button:focus {
       box-shadow: none !important;
+      border-color: black !important;
     }
     .app-manager .app-manager-plan-page.custom-title .Polaris-HorizontalDivider{
         background-color: #e2e3e4;
