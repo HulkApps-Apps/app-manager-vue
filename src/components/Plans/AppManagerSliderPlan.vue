@@ -836,6 +836,13 @@
         margin-left: 0px !important;
         z-index: unset !important;
     }
+    .app-manager .Polaris-Button::after {
+        box-shadow: none !important;
+    }
+    .app-manager .Polaris-Button:focus {
+        box-shadow: none !important;
+        border-color: black !important;
+    }
     .app-manager .app-manager-plan-page-slider .feature__list,
     .app-manager .app-manager-plan-page-slider .feature__type__array
     {
@@ -933,6 +940,12 @@
       }
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
+      }
+      .VueCarousel-slide {
+        flex-basis: auto !important;
+      }
+      .Polaris-ResourceList__ResourceListWrapper.features{
+        width: 30% !important;
       }
     }
 
