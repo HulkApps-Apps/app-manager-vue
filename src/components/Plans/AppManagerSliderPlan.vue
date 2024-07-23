@@ -840,7 +840,8 @@
         box-shadow: none !important;
     }
     .app-manager .Polaris-Button:focus {
-      box-shadow: none !important;
+        box-shadow: none !important;
+        border-color: black !important;
     }
     .app-manager .app-manager-plan-page-slider .feature__list,
     .app-manager .app-manager-plan-page-slider .feature__type__array
