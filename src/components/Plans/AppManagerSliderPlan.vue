@@ -944,7 +944,7 @@
         flex-basis: auto !important;
       }
       .Polaris-ResourceList__ResourceListWrapper.features{
-        width: 23% !important;
+        width: 30% !important;
       }
     }
 
