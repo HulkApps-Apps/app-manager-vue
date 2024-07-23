@@ -807,6 +807,13 @@
         margin-left: 0px !important;
         z-index: unset !important;
     }
+    .app-manager .Polaris-Button::after {
+      box-shadow: none !important;
+    }
+    .app-manager .Polaris-Button:focus {
+      box-shadow: none !important;
+      border-color: black !important;
+    }
     .app-manager .app-manager-plan-page.custom-title .Polaris-HorizontalDivider{
         background-color: #e2e3e4;
     }
