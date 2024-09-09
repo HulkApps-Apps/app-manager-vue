@@ -85,6 +85,7 @@ export default {
           <span class="original-amount">${{ translateMe(oldPrice) }}</span>
         </div>
         <VariantButton
+          id = "choose-bundle"
           v-if="!isCurrentPlan"
           :buttonData="{ button_url: showcaseData.button_url }"
           @click="handlePlanClick"
