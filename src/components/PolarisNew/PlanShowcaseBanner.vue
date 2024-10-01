@@ -63,7 +63,7 @@ export default {
 
 <template>
   <div>
-    <div :class="`plan-showcase-banner` + (useCardStyle ? ' banner-card' : '')">
+    <div class="plan-showcase-banner banner-card">
       <div v-if="showDescription" class="plan-left">
         <p>
           {{ translateMe("Get 24 Shopify apps and save more than") }}
@@ -82,7 +82,7 @@ export default {
         <h3 class="plan-name">{{ translateMe("Monthly Bundle:") }}</h3>
         <div class="prices">
           <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
-          <span class="original-amount">${{ translateMe(oldPrice) }}</span>
+          <span class="original-amount" v-if="realPrice < oldPrice">${{ translateMe(oldPrice) }}</span>
         </div>
         <VariantButton
           id = "choose-bundle"
