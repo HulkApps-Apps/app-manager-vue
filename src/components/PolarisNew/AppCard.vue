@@ -1,6 +1,9 @@
 <script>
+import VariantButton from "@/components/PolarisNew/VariantButton.vue";
+
 export default {
   name: "AppCard",
+  components: {VariantButton},
   props: {
     appData: {
       type: Object,
@@ -147,6 +150,13 @@ export default {
           >
         </div>
       </div>
+      <div class="install-app-button">
+        <a :href="appData.app_install_link" class="button-link">
+          <VariantButton variant="primary">
+            {{ translateMe('Install App') }}
+          </VariantButton>
+        </a>
+      </div>
     </div>
     <slot></slot>
   </div>
@@ -160,6 +170,7 @@ export default {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   border-radius: 12px;
   gap: 16px;
+  align-items: center;
 }
 .logo-image,
 .logo {
@@ -218,6 +229,19 @@ export default {
   line-height: 20px;
   text-wrap: nowrap;
   color: #5c5c5c;
+}
+.install-app-button {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.button-link {
+  text-decoration: none;
+}
+
+.button-link {
+  display: block;
 }
 
 @media (max-width: 767px) {
