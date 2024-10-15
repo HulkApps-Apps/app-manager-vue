@@ -66,7 +66,7 @@ export default {
             v-if="appData.app_bundle_details.built_for_shopify"
             class="app-tags"
           >
-            <a class="app-tag bfs-tag">
+            <span class="app-tag bfs-tag">
               <svg
                 width="16"
                 height="14"
@@ -95,14 +95,14 @@ export default {
                 </defs>
               </svg>
               {{ translateMe("Built For Shopify") }}
-            </a>
+            </span>
           </div>
           <p class="app-reviews-count">
             {{ appData.app_bundle_details.reviews }}
             {{ translateMe("Reviews") }}
           </p>
           <div class="app-tags">
-            <a
+            <span
               class="app-tag"
               v-for="tag in appData.app_bundle_details.shopify_categories"
             >
@@ -129,7 +129,7 @@ export default {
                 />
               </svg>
               {{ translateMe(tag) }}
-            </a>
+            </span>
           </div>
         </div>
         <div class="lower-details">
@@ -151,10 +151,8 @@ export default {
         </div>
       </div>
       <div class="install-app-div">
-        <a :href="appData.app_shopify_store_link" class="button-link" target="_blank">
-          <button class="install-app-button">
-            {{ translateMe('Install App') }}
-          </button>
+        <a :href="appData.app_shopify_store_link" class="button-link install-app-button" target="_blank">
+          {{ translateMe('Install App') }}
         </a>
       </div>
     </div>
