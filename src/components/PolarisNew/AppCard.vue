@@ -151,7 +151,7 @@ export default {
         </div>
       </div>
       <div class="install-app-div">
-        <a :href="appData.app_shopify_store_link" class="button-link">
+        <a :href="appData.app_shopify_store_link" class="button-link" target="_blank">
           <button class="install-app-button">
             {{ translateMe('Install App') }}
           </button>
