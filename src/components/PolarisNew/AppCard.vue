@@ -150,11 +150,11 @@ export default {
           >
         </div>
       </div>
-      <div class="install-app-button">
-        <a :href="appData.app_install_link" class="button-link">
-          <VariantButton variant="primary">
+      <div class="install-app-div">
+        <a :href="appData.app_shopify_store_link" class="button-link">
+          <button class="install-app-button">
             {{ translateMe('Install App') }}
-          </VariantButton>
+          </button>
         </a>
       </div>
     </div>
@@ -177,6 +177,9 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 4px;
+}
+.lower-details {
+  margin-top: 8px;
 }
 .upper-details,
 .lower-details {
@@ -230,19 +233,37 @@ export default {
   text-wrap: nowrap;
   color: #5c5c5c;
 }
-.install-app-button {
+.install-app-div {
   margin-left: auto;
   display: flex;
   align-items: center;
   white-space: nowrap;
 }
+.install-app-button {
+  display: flex;
+  width: fit-content !important;
+  height: 28px !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 4px 12px !important;
+  text-decoration: none !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  color: #303030 !important;
+  border-radius: 8px !important;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+}
+.install-app-button:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px !important;
+}
 .button-link {
   text-decoration: none;
 }
 
-.button-link {
-  display: block;
-}
+
 
 @media (max-width: 767px) {
   .featured-options {
@@ -263,6 +284,10 @@ export default {
     flex-wrap: wrap;
     row-gap: 2px;
     column-gap: 8px;
+  }
+  .install-app-button {
+    margin-right: 0;
+    margin-left: auto;
   }
 }
 </style>

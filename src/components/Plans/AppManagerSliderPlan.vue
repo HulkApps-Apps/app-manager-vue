@@ -51,7 +51,7 @@
 
     <PPage
             class="app-manager-plan-page-slider custom-title"
-            :title="translateMe('Plans')"
+            :title="selectedPlan === 'bundle' ? '' : translateMe('Plans')"
             :subtitle = "subtitleContent"
     >
 
@@ -75,7 +75,7 @@
                     <VariantButton id="pricing-tab" v-if="valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
                         {{ translateMe('Annually') }}
                     </VariantButton>
-                    <VariantButton id="pricing-tab" v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'24 Apps'">
+                    <VariantButton id="pricing-tab" v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'25 Apps'">
                         {{ translateMe('Bundle') }}
                     </VariantButton>
                 </div>
@@ -180,7 +180,7 @@
                                                        :pressed="isCurrentPlan(plan)">
                                                 {{ translateMe('Current Plan') }}
                                               </PButton>
-                                              <PButton v-else-if="!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan)"
+                                              <PButton v-else-if="isActivePlanGlobal() ? isActiveGlobalCharge() : (!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan))"
                                                        full-width
                                                        @click="plan ? getPlanUrl(plan) : 'javascript:void'"
                                                        class="custom-choose-button">
@@ -279,6 +279,7 @@
                 onboard: true,
                 choose_later: false,
                 has_active_charge: false,
+                global_plan_charge: false,
                 subtitleContent: '',
                 checkList: [
                     "60 days free trial",
@@ -375,7 +376,7 @@
                     }
                 }
                 return plans;
-            }
+            },
         },
         methods: {
           translateMe(message){
@@ -420,6 +421,12 @@
             },
             isCurrentPlan(plan) {
                 return this.has_active_charge && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
+            },
+            isActivePlanGlobal() {
+              return this.shop.plan.is_global;
+            },
+            isActiveGlobalCharge() {
+              return this.global_plan_charge;
             },
             isSamePlanInOtherInterval(plan) {
                 return this.shop.plan && (plan.shopify_plans === this.shop.plan.shopify_plans)
@@ -627,11 +634,15 @@
                     if (this.plan?.interval === 'ANNUAL') {
                         this.selectedPlan = 'annually'
                     }
+                    if (this.plan?.is_global) {
+                      this.selectedPlan = 'bundle'
+                    }
                     this.shopify_plan = data.shopify_plan;
                     this.default_plan_id = data.default_plan_id;
                     this.choose_later = data.choose_later;
                     this.onboard = this.default_plan_id && this.choose_later;
                     this.has_active_charge = data.has_active_charge;
+                    this.global_plan_charge = data.global_plan_charge;
                     this.promotional_discount = (data.promotional_discount !== undefined)?data.promotional_discount:[];
                     if (data.bundle_plan) {
                         this.bundle_plan = data.bundle_plan;
@@ -739,6 +750,8 @@
                         }
                     }
                 }, 100)
+
+              this.selectPlan(this.selectedPlan);
 
             });
         },
