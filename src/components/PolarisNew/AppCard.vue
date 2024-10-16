@@ -1,6 +1,9 @@
 <script>
+import VariantButton from "@/components/PolarisNew/VariantButton.vue";
+
 export default {
   name: "AppCard",
+  components: {VariantButton},
   props: {
     appData: {
       type: Object,
@@ -63,7 +66,7 @@ export default {
             v-if="appData.app_bundle_details.built_for_shopify"
             class="app-tags"
           >
-            <a class="app-tag bfs-tag">
+            <span class="app-tag bfs-tag">
               <svg
                 width="16"
                 height="14"
@@ -92,14 +95,14 @@ export default {
                 </defs>
               </svg>
               {{ translateMe("Built For Shopify") }}
-            </a>
+            </span>
           </div>
           <p class="app-reviews-count">
             {{ appData.app_bundle_details.reviews }}
             {{ translateMe("Reviews") }}
           </p>
           <div class="app-tags">
-            <a
+            <span
               class="app-tag"
               v-for="tag in appData.app_bundle_details.shopify_categories"
             >
@@ -126,7 +129,7 @@ export default {
                 />
               </svg>
               {{ translateMe(tag) }}
-            </a>
+            </span>
           </div>
         </div>
         <div class="lower-details">
@@ -147,6 +150,11 @@ export default {
           >
         </div>
       </div>
+      <div class="install-app-div">
+        <a :href="appData.app_shopify_store_link" class="button-link install-app-button" target="_blank">
+          {{ translateMe('Install App') }}
+        </a>
+      </div>
     </div>
     <slot></slot>
   </div>
@@ -160,12 +168,16 @@ export default {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   border-radius: 12px;
   gap: 16px;
+  align-items: center;
 }
 .logo-image,
 .logo {
   width: 40px;
   height: 40px;
   border-radius: 4px;
+}
+.lower-details {
+  margin-top: 8px;
 }
 .upper-details,
 .lower-details {
@@ -219,6 +231,37 @@ export default {
   text-wrap: nowrap;
   color: #5c5c5c;
 }
+.install-app-div {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.install-app-button {
+  display: flex;
+  width: fit-content !important;
+  height: 28px !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 4px 12px !important;
+  text-decoration: none !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  color: #303030 !important;
+  border-radius: 8px !important;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+}
+.install-app-button:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px !important;
+}
+.button-link {
+  text-decoration: none;
+}
+
+
 
 @media (max-width: 767px) {
   .featured-options {
@@ -239,6 +282,10 @@ export default {
     flex-wrap: wrap;
     row-gap: 2px;
     column-gap: 8px;
+  }
+  .install-app-button {
+    margin-right: 0;
+    margin-left: auto;
   }
 }
 </style>
