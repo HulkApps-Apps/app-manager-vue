@@ -423,7 +423,7 @@
                 return this.has_active_charge && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
             },
             isActivePlanGlobal() {
-              return this.shop.plan.is_global;
+              return this.shop.plan?.is_global;
             },
             isActiveGlobalCharge() {
               return this.global_plan_charge;
