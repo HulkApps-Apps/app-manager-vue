@@ -180,11 +180,12 @@
                                                        :pressed="isCurrentPlan(plan)">
                                                 {{ translateMe('Current Plan') }}
                                               </PButton>
-                                              <PButton v-else-if="isActivePlanGlobal() ? isActiveGlobalCharge() : (!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan))"
+                                              <PButton v-else-if="(!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan))"
                                                        full-width
+                                                       :disabled="isActivePlanGlobal() && !isActiveGlobalCharge()"
                                                        @click="plan ? getPlanUrl(plan) : 'javascript:void'"
                                                        class="custom-choose-button">
-                                                      {{ translateMe('Choose Plan') }}
+                                                {{ isActivePlanGlobal() ? (!isActiveGlobalCharge() ? translateMe('Not Applicable') : translateMe('Choose Plan')) : translateMe('Choose Plan') }}
                                               </PButton>
                                               <PButton v-else :disabled="true"
                                                        full-width
