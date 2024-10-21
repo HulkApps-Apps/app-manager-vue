@@ -283,9 +283,22 @@ export default {
     row-gap: 2px;
     column-gap: 8px;
   }
+  .install-app-div {
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 12px;
+  }
   .install-app-button {
-    margin-right: 0;
-    margin-left: auto;
+    width: 100%;
+    justify-content: center;
+  }
+  .app-card{
+    flex-direction: column;
+    justify-content: center;
+  }
+  .logo{
+    justify-content: flex-start;
+    width: 100%;
   }
 }
 </style>
