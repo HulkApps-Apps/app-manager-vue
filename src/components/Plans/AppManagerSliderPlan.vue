@@ -52,7 +52,7 @@
     <PPage
             class="app-manager-plan-page-slider custom-title"
             :title="selectedPlan === 'bundle' ? '' : translateMe('Plans')"
-            :subtitle = "subtitleContent"
+            :subtitle = "selectedPlan === 'bundle' ? '' : subtitleContent"
     >
 
         <PStack slot="primaryAction">
@@ -424,10 +424,10 @@
                 return this.has_active_charge && this.shop.plan && (plan.id === this.shop.plan.id || (!plan.is_custom && plan.base_plan === this.shop.plan.id));
             },
             isActivePlanGlobal() {
-              return this.shop.plan?.is_global;
+              return Boolean(this.shop.plan?.is_global);
             },
             isActiveGlobalCharge() {
-              return this.global_plan_charge;
+              return Boolean(this.global_plan_charge);
             },
             isSamePlanInOtherInterval(plan) {
                 return this.shop.plan && (plan.shopify_plans === this.shop.plan.shopify_plans)
