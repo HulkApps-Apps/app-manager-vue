@@ -51,7 +51,7 @@
     <PPage
            class="app-manager-plan-page custom-title"
            :title="selectedPlan === 'bundle' ? '' : translateMe('Plans')"
-           :subtitle = "subtitleContent"
+           :subtitle="selectedPlan === 'bundle' ? '' : subtitleContent"
     >
 
         <PStack slot="primaryAction">
