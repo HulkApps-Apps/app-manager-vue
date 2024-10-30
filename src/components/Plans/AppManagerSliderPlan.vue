@@ -51,10 +51,15 @@
 
     <PPage
             class="app-manager-plan-page-slider custom-title"
-            :title="selectedPlan === 'bundle' ? '' : translateMe('Plans')"
-            :subtitle = "selectedPlan === 'bundle' ? '' : subtitleContent"
     >
-
+    <div class="bill-cycle-select-group">
+        <SelectButton id="pricing-tab" :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')">
+            {{ translateMe('Billed Monthly') }}
+        </SelectButton>
+        <SelectButton id="pricing-tab" v-if="valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
+            {{ translateMe('Billed Yearly 17% Off') }}
+        </SelectButton>
+    </div>
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
                 <!-- <PButtonGroup class="btn-group" segmented> -->
@@ -68,7 +73,8 @@
                     <PButton :class="selectedPlan === 'bundle' ? 'plan-active-tab' : '' " :style="selectedPlan === 'bundle' ? bundleSelectedSyle : bundleStyle "  @click="selectPlan('bundle')">
                         <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
                     </PButton> -->
-                <div class="button-group-new">
+               
+                <!-- <div class="button-group-new">
                     <VariantButton id="pricing-tab" :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
                         {{ translateMe('Monthly') }}
                     </VariantButton>
@@ -78,7 +84,7 @@
                     <VariantButton id="pricing-tab" v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'25 Apps'">
                         {{ translateMe('Bundle') }}
                     </VariantButton>
-                </div>
+                </div> -->
                 <!-- </PButtonGroup> -->
             </PStackItem>
         </PStack>
@@ -258,10 +264,11 @@
     import CategoryHeading from "../PolarisNew/CategoryHeading";
     import BenefitsBanner from "../PolarisNew/BenefitsBanner";
     import VariantButton from "../PolarisNew/VariantButton";
+    import SelectButton from "../PolarisNew/SelectButton.vue";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -921,6 +928,17 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
+    }
+
+    .bill-cycle-select-group {
+        width: fit-content;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 40px;
+        padding: 4px;
+        border: 1px solid black;
     }
 
     @media (min-width: 0px) and (max-width: 576px) {
