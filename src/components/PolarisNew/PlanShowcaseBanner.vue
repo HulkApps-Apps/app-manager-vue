@@ -63,7 +63,7 @@ export default {
 
 <template>
   <div>
-    <div class="plan-showcase-banner banner-card">
+    <div class="bundle-plan-showcase-banner banner-card">
       <div v-if="showDescription" class="plan-left">
         <p>
           {{ translateMe("Get 24 Shopify apps and save more than") }}
@@ -117,10 +117,11 @@ export default {
   border-radius: 12px;
   gap: 16px;
 }
-.plan-showcase-banner {
-  display: flex;
+.bundle-plan-showcase-banner {
+  display: none;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .plan-name {
@@ -177,11 +178,11 @@ export default {
 }
 
 @media (max-width: 767px) {
-  .plan-showcase-banner {
+  .bundle-plan-showcase-banner {
     flex-direction: column;
     gap: 12px;
   }
-  .plan-showcase-banner {
+  .bundle-plan-showcase-banner {
     align-items: unset;
   }
   .choose-button {
@@ -195,11 +196,11 @@ export default {
     gap: 8px;
     align-items: unset;
   }
-  .plan-showcase-banner {
+  .bundle-plan-showcase-banner {
     flex-direction: column;
     gap: 12px;
   }
-  .plan-showcase-banner {
+  .bundle-plan-showcase-banner {
     align-items: unset;
   }
   .choose-button {

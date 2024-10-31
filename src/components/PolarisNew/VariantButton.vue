@@ -80,12 +80,12 @@ export default {
   border-radius: 8px !important;
 }
 .button-primary {
-  background-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #f2f2f2 !important;
   color: #303030 !important;
   border-radius: 8px !important;
 }
 .button-primary:hover {
-  background-color: rgba(0, 0, 0, 0.05) !important;  
+  background-color: #f6f6f6 !important;  
 }
 .button-secondary {
   color: black !important;

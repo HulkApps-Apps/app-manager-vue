@@ -1,3 +1,4 @@
+
 <template>
 <!--    <PSkeletonPage :title="translateMe('Plans')"-->
 <!--                   :fullWidth="false"-->
@@ -48,17 +49,26 @@
     </PEmptyState>
     <div v-else-if="!this.planLoading && this.plans.length > 0" class="app-manager-plan-banner">
       <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
-
+      <PlanShowcaseBanner :useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
     <PPage
             class="app-manager-plan-page-slider custom-title"
     >
     <div class="bill-cycle-select-group">
-        <SelectButton id="pricing-tab" :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')">
-            {{ translateMe('Billed Monthly') }}
-        </SelectButton>
-        <SelectButton id="pricing-tab" v-if="valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
-            {{ translateMe('Billed Yearly 17% Off') }}
-        </SelectButton>
+        <a class="bill-cycle-back" @click="selectPlan('monthly')">
+            <img src="../../assets/ArrowLeft.svg" alt="Left Arrow">
+            {{ translateMe('Back to App pricing') }}
+        </a>
+        <div class="bill-cycle-select-group__inner-left">
+            <SelectButton id="pricing-tab" :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')">
+                {{ translateMe('Billed Monthly') }}
+            </SelectButton>
+            <SelectButton id="pricing-tab" v-if="valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
+                {{ translateMe('Billed Yearly 17% Off') }}
+            </SelectButton>
+        </div>
+        <ToggleButton id="pricing-tab" v-if="bundle_plan !== null" :toggled="selectedPlan === 'bundle' ? true : false" @click="selectPlan('bundle')">
+            {{ translateMe('App Bundle Plan - 70% Off') }}
+        </ToggleButton>
     </div>
         <PStack slot="primaryAction">
             <PStackItem style="margin-top: 20px">
@@ -89,7 +99,11 @@
             </PStackItem>
         </PStack>
         <!-- <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" /> -->
-        <div class="light-divider" style="margin: 20px 0;"></div>
+        <div class="promotional-banner">
+            <VariantButton id="pricing-tab" :variant="'primary'" @click="selectPlan('bundle')">
+                {{ translateMe('Start Saving Now') }}
+            </VariantButton>
+        </div>
         <!--=======================================================-->
         <PLayout class="custom-plan">
             <PLayoutSection style="display: flex;border-radius: 20px;">
@@ -210,7 +224,7 @@
             </PLayoutSection>
         </PLayout>
         <div v-if="bundle_plan !== null" class="bundle-plan">
-            <PlanShowcaseBanner useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
+            <!-- <PlanShowcaseBanner :useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/> -->
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
@@ -220,7 +234,6 @@
             </div>
             <CategoryHeading :headingData="additionalBenefitsHeading" />
             <BenefitsBanner />
-            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" :isCurrentPlan="isCurrentPlanId(bundle_plan)" @plan-clicked="handlePlanClicked(bundle_plan)"/>
         </div>
         <!--====================================================================-->
         <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
@@ -265,10 +278,11 @@
     import BenefitsBanner from "../PolarisNew/BenefitsBanner";
     import VariantButton from "../PolarisNew/VariantButton";
     import SelectButton from "../PolarisNew/SelectButton.vue";
+    import ToggleButton from "../PolarisNew/ToggleButton.vue";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -528,12 +542,24 @@
                 if (this.bundle_plan !== null) {
                     let planElement = document.querySelector('.custom-plan');
                     let bundleElement = document.querySelector('.bundle-plan');
+                    let billCycleBack = document.querySelector('.bill-cycle-back');
+                    let billCycleSelect = document.querySelector('.bill-cycle-select-group__inner-left');
+                    let promotionalBanner = document.querySelector('.promotional-banner');
+                    let bundlePlanShowcaseBanner = document.querySelector('.bundle-plan-showcase-banner');
                     if (this.selectedPlan == 'bundle') {
                         planElement.style.display = 'none';
                         bundleElement.style.display = 'flex';
+                        billCycleBack.style.display = 'flex';
+                        billCycleSelect.style.display = 'none';
+                        promotionalBanner.style.display = 'none';
+                        bundlePlanShowcaseBanner.style.display = 'flex';
                     } else {
                         bundleElement.style.display = 'none';
                         planElement.style.display = 'flex';
+                        billCycleBack.style.display = 'none';
+                        billCycleSelect.style.display = 'flex';
+                        promotionalBanner.style.display = 'flex';
+                        bundlePlanShowcaseBanner.style.display = 'none';
                     }
                 }
                 this.$nextTick(() => {
@@ -931,6 +957,14 @@
     }
 
     .bill-cycle-select-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      margin-bottom: 32px;
+    }
+
+    .bill-cycle-select-group__inner-left {
         width: fit-content;
         display: flex;
         gap: 4px;
@@ -939,6 +973,31 @@
         border-radius: 40px;
         padding: 4px;
         border: 1px solid black;
+    }
+
+    .bill-cycle-back {
+        display: none;
+        align-items: center;
+        color: #006FBB;
+        cursor: pointer;
+        gap: 4px;
+        font-weight: 450;
+        font-size: 14px;
+    }
+
+    .promotional-banner {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding-right: 36px;
+        background-image: url('../../assets/25for70lessBanner.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 8px;
+        margin-bottom: 22px;
     }
 
     @media (min-width: 0px) and (max-width: 576px) {
