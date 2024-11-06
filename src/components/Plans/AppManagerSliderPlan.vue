@@ -106,6 +106,7 @@
         </div>
         <!--=======================================================-->
         <PLayout class="custom-plan">
+            <PlanCardsHighlights :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked"/>
             <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
                     <template >
@@ -279,10 +280,11 @@
     import VariantButton from "../PolarisNew/VariantButton";
     import SelectButton from "../PolarisNew/SelectButton.vue";
     import ToggleButton from "../PolarisNew/ToggleButton.vue";
+    import PlanCardsHighlights from "../PolarisNew/PlanCardsHighlights.vue";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -496,7 +498,8 @@
               }
             },
             handlePlanClicked(plan) {
-                this.getPlanUrl(plan);
+                console.log(plan.id);
+                // this.getPlanUrl(plan);
             },
             async getPlanUrl(plan) {
                 let shopName = this.shop.name;
@@ -1000,6 +1003,11 @@
         margin-bottom: 22px;
     }
 
+    .custom-plan {
+        flex-direction: column;
+        gap: 20px;
+    }
+
     @media (min-width: 0px) and (max-width: 576px) {
       .custom-plan>.Polaris-Layout__Section>.VueCarousel>.VueCarousel-wrapper>.VueCarousel-inner {
         overflow-x: scroll;
@@ -1050,6 +1058,13 @@
       .app-manager .Polaris-Button {
         padding: 7px 8px !important;
       }
+    }
+
+    @media (max-width: 767px) {
+        .bill-cycle-select-group {
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
     }
 
 </style>
