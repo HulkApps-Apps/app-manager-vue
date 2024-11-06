@@ -67,7 +67,7 @@ export default {
   color: #303030 !important;
   border-left: 1px solid #e3e3e3;
   border-top: 1px solid #e3e3e3;
-    border-right: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3;
   background-color: white !important;
   border-radius: 8px !important;
   transition: all 0.3s !important;
@@ -88,4 +88,5 @@ export default {
   border-radius: 8px !important;
   cursor: pointer !important;
 }
+
 </style>
