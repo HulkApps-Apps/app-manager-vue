@@ -87,6 +87,9 @@ export default {
 .button-primary:hover {
   background-color: #f6f6f6 !important;  
 }
+.button-primary:active {
+  background-color: #f2f2f2 !important;
+}
 .button-secondary {
   color: black !important;
 }
