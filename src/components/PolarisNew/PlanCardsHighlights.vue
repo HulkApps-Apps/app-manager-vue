@@ -302,6 +302,7 @@ export default {
   border-radius: 12px;
   overflow-x: clip;
   overflow-y: visible;
+  box-shadow: 0px 4px 6px -1px #0000001a;
 }
 .card {
   height: 100%;
