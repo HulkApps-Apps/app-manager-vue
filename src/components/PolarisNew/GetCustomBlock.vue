@@ -56,6 +56,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   gap: 16px;
   padding: 20px;
   background-color: white;
@@ -79,8 +80,10 @@ export default {
     text-align: center;
 }
 .button {
-    width: 261px !important;
+    /* width: 261px !important; */
+    width: 100% !important;
     display: flex !important;
+    flex-grow: 1 !important;
     justify-content: center !important;
 }
 </style>
