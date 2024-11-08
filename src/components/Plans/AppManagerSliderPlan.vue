@@ -63,11 +63,13 @@
                 {{ translateMe('Billed Monthly') }}
             </SelectButton>
             <SelectButton id="pricing-tab" v-if="valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
-                {{ translateMe('Billed Yearly 17% Off') }}
+                {{ translateMe('Billed Yearly') }}
+                <strong style="white-space: pre;">{{ translateMe(' 17% Off') }}</strong>
             </SelectButton>
         </div>
         <ToggleButton id="pricing-tab" v-if="bundle_plan !== null" :toggled="selectedPlan === 'bundle' ? true : false" @click="selectPlan('bundle')">
-            {{ translateMe('App Bundle Plan - 70% Off') }}
+            {{ translateMe('App Bundle Plan -') }}
+            <strong style="white-space: pre;">{{ translateMe('70% Off') }}</strong>
         </ToggleButton>
     </div>
         <PStack slot="primaryAction">

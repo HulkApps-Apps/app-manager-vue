@@ -67,9 +67,6 @@ export default {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
       },
-      scrollbar: {
-        el: ".swiper-scrollbar",
-      },
       breakpoints: {
         640: {
           slidesPerView: 2,
@@ -94,9 +91,6 @@ export default {
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
-      },
-      scrollbar: {
-        el: ".swiper-scrollbar",
       },
       breakpoints: {
         640: {
@@ -128,13 +122,30 @@ export default {
           :key="plan.id"
           class="swiper-slide"
         >
-          <div :class="['card', { 'card-border': index !== 0 }]">
+          <div
+            :class="[
+              'card',
+              {
+                'card-border':
+                  index !== 0 &&
+                  index !== 2 &&
+                  !(annualPlans[index - 1] && index - 1 === 2),
+              },
+            ]"
+          >
+            <div class="most-popular" v-if="index == 2">
+              <div class="most-popular-label">
+                {{ translateMe("Most Popular") }}
+              </div>
+            </div>
             <h3 class="title">
               {{ plan.name }}
             </h3>
             <h2 class="price">
               {{ plan.price !== 0 ? "$" + plan.price : "Free" }}
-              <span v-if="plan.price !== 0"> /mo </span>
+              <span v-if="plan.price !== 0">
+                {{ translateMe("/mo") }}
+              </span>
             </h2>
             <h6 class="description">
               {{
@@ -145,7 +156,7 @@ export default {
               :variant="'primary'"
               @click="handlePlanClick(plan)"
               class="button"
-              >Choose Plan</VariantButton
+              >{{ translateMe("Choose Plan") }}</VariantButton
             >
             <div class="features">
               <ul>
@@ -193,13 +204,30 @@ export default {
           :key="plan.id"
           class="swiper-slide"
         >
-          <div :class="['card', { 'card-border': index !== 0 }]">
+          <div
+            :class="[
+              'card',
+              {
+                'card-border':
+                  index !== 0 &&
+                  index !== 2 &&
+                  !(annualPlans[index - 1] && index - 1 === 2),
+              },
+            ]"
+          >
+            <div class="most-popular" v-if="index == 2">
+              <div class="most-popular-label">
+                {{ translateMe("Most Popular") }}
+              </div>
+            </div>
             <h3 class="title">
               {{ plan.name }}
             </h3>
             <h2 class="price">
               {{ plan.price !== 0 ? "$" + plan.price : "Free" }}
-              <span v-if="plan.price !== 0"> /mo </span>
+              <span v-if="plan.price !== 0">
+                {{ translateMe("/yr") }}
+              </span>
             </h2>
             <h6 class="description">
               {{
@@ -210,7 +238,7 @@ export default {
               :variant="'primary'"
               @click="handlePlanClick(plan)"
               class="button"
-              >Choose Plan</VariantButton
+              >{{ translateMe("Choose Plan") }}</VariantButton
             >
             <div class="features">
               <ul>
@@ -251,8 +279,7 @@ export default {
 
 <style scoped>
 .container {
-  padding: 20px;
-  padding-right: 0;
+  padding: 40px 0px 0px 20px;
   width: 100%;
 }
 .swiper.cards.annually {
@@ -273,6 +300,8 @@ export default {
   flex-grow: 1;
   border: 1px solid #e5e5e5;
   border-radius: 12px;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 .card {
   height: 100%;
@@ -299,7 +328,7 @@ export default {
   font-size: 13px;
   font-weight: 400;
   color: #00000080;
-  margin-left: -8px;
+  margin-left: -6px;
   line-height: 0;
 }
 .card .description {
@@ -336,10 +365,34 @@ export default {
   font-weight: 400;
   color: #00000080;
 }
+.most-popular {
+  position: absolute;
+  z-index: -1;
+  top: -20px;
+  width: 100%;
+  height: calc(100% + 20px);
+  border-radius: 12px 12px 0 0;
+  border-left: 1px solid #91d0ff;
+  border-right: 1px solid #91d0ff;
+  overflow: hidden;
+}
+
+.most-popular .most-popular-label {
+  background-color: #91d0ff;
+  color: #00527c;
+  font-size: 12px;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+}
 
 @media (max-width: 640px) {
   .card-border {
     border-left: none;
+  }
+  .most-popular {
+    border: 1px solid #91d0ff;
+    border-radius: 12px;
   }
 }
 </style>
