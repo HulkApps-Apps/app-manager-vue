@@ -109,7 +109,10 @@
         <!--=======================================================-->
         <PLayout class="custom-plan">
             <PlanCardsHighlights :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked"/>
-            <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px;" />
+            <div style="display: flex; width: 100%;">
+                <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />
+                <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 60%; flex-grow: 1;" />
+            </div>
             <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
                     <template >
