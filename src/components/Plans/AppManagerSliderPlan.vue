@@ -69,7 +69,7 @@
         </div>
         <ToggleButton id="pricing-tab" v-if="bundle_plan !== null" :toggled="selectedPlan === 'bundle' ? true : false" @click="selectPlan('bundle')">
             {{ translateMe('App Bundle Plan -') }}
-            <strong style="white-space: pre;">{{ translateMe('70% Off') }}</strong>
+            <strong style="white-space: pre; font-weight: 900;">{{ translateMe('70% Off') }}</strong>
         </ToggleButton>
     </div>
         <PStack slot="primaryAction">
@@ -109,6 +109,7 @@
         <!--=======================================================-->
         <PLayout class="custom-plan">
             <PlanCardsHighlights :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked"/>
+            <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px;" />
             <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
                     <template >
@@ -283,10 +284,11 @@
     import SelectButton from "../PolarisNew/SelectButton.vue";
     import ToggleButton from "../PolarisNew/ToggleButton.vue";
     import PlanCardsHighlights from "../PolarisNew/PlanCardsHighlights.vue";
+    import GetCustomBlock from "../PolarisNew/GetCustomBlock.vue";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights, GetCustomBlock },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -914,11 +916,11 @@
         white-space: initial;
     }
 
-    .app-manager .app-manager-plan-page-slider .custom-choose-button:hover{
-        // background: #006e52;
-        // border-color: transparent;
-        // color: #fff;
-    }
+    // .app-manager .app-manager-plan-page-slider .custom-choose-button:hover{
+    //     background: #006e52;
+    //     border-color: transparent;
+    //     color: #fff;
+    // }
 
     .app-manager-plan-banner {
         margin-right: 30px;
