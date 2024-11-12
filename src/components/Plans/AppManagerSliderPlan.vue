@@ -109,6 +109,7 @@
         <!--=======================================================-->
         <PLayout class="custom-plan">
             <PlanCardsHighlights :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked"/>
+            <PlanTable :plans="plans" @click="handlePlanClicked" style="margin-left: 20px;"/>
             <div style="display: flex; width: 100%;">
                 <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />
                 <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 60%; flex-grow: 1;" />
@@ -288,10 +289,11 @@
     import ToggleButton from "../PolarisNew/ToggleButton.vue";
     import PlanCardsHighlights from "../PolarisNew/PlanCardsHighlights.vue";
     import GetCustomBlock from "../PolarisNew/GetCustomBlock.vue";
+    import PlanTable from "../PolarisNew/PlanTable.vue";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights, GetCustomBlock },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights, GetCustomBlock, PlanTable },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
