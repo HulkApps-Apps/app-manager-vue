@@ -47,13 +47,9 @@
             v-if="!this.planLoading && this.plans.length === 0"
     >
     </PEmptyState>
-    <div v-else-if="!this.planLoading && this.plans.length > 0" class="app-manager-plan-banner">
-      <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" />
-      <PlanShowcaseBanner :useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
-    <PPage
-            class="app-manager-plan-page-slider custom-title"
-    >
-    <div class="bill-cycle-select-group">
+    <div v-else-if="!this.planLoading && this.plans.length > 0">
+      <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" class="app-manager-plan-banner"/>
+      <div class="bill-cycle-select-group">
         <a class="bill-cycle-back" @click="selectPlan('monthly')">
             <img src="../../assets/ArrowLeft.svg" alt="Left Arrow">
             {{ translateMe('Back to App pricing') }}
@@ -72,34 +68,10 @@
             <strong style="white-space: pre; font-weight: 900;">{{ translateMe('70% Off') }}</strong>
         </ToggleButton>
     </div>
-        <PStack slot="primaryAction">
-            <PStackItem style="margin-top: 20px">
-                <!-- <PButtonGroup class="btn-group" segmented> -->
-                    <!-- <PButton v-if="monthlyPlan.length && yearlyPlan.length" :class="selectedPlan === 'monthly' ? 'plan-active-tab' : '' " :style="selectedPlan === 'monthly' ? monthlySelectedStyle : monthlyStyle "  @click="selectPlan('monthly')">
-                        <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Monthly')}}</p>
-                    </PButton>
-
-                    <PButton v-if="yearlyPlan.length && monthlyPlan.length" :class="selectedPlan === 'annually'? 'plan-active-tab' : '' " :style="selectedPlan === 'annually' ? yearlySelectedStyle : yearlyStyle " @click="selectPlan('annually')" :primary="selectedPlan === 'annually' " >
-                        <YearlyPlanPromotion />
-                    </PButton>
-                    <PButton :class="selectedPlan === 'bundle' ? 'plan-active-tab' : '' " :style="selectedPlan === 'bundle' ? bundleSelectedSyle : bundleStyle "  @click="selectPlan('bundle')">
-                        <p style="font-size: 17px; font-weight: 500" slot="default">{{translateMe('Bundle')}}</p>
-                    </PButton> -->
-               
-                <!-- <div class="button-group-new">
-                    <VariantButton id="pricing-tab" :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'" @click="selectPlan('monthly')" :additionalText="'1 App'">
-                        {{ translateMe('Monthly') }}
-                    </VariantButton>
-                    <VariantButton id="pricing-tab" v-if="valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
-                        {{ translateMe('Annually') }}
-                    </VariantButton>
-                    <VariantButton id="pricing-tab" v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'25 Apps'">
-                        {{ translateMe('Bundle') }}
-                    </VariantButton>
-                </div> -->
-                <!-- </PButtonGroup> -->
-            </PStackItem>
-        </PStack>
+    <PlanShowcaseBanner :useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
+    <PPage
+            class="app-manager-plan-page-slider custom-title"
+    >
         <!-- <hr style="width: 100%; margin-right: auto;margin-left: auto;margin-bottom: 20px;" /> -->
         <div class="promotional-banner">
             <VariantButton id="pricing-tab" :variant="'primary'" @click="selectPlan('bundle')">
@@ -109,12 +81,17 @@
         <!--=======================================================-->
         <PLayout class="custom-plan">
             <PlanCardsHighlights :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked"/>
-            <PlanTable :plans="plans" @plan-clicked="handlePlanClicked" style="margin-left: 20px;"/>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+            <a href="#" class="toggle-plans-features" @click.prevent="togglePlansFeatures">
+                {{ showPlansFeatures ? translateMe("Hide all features") : translateMe("Show all features") }}
+            </a>
+            <PlanTable v-if="showPlansFeatures" :plans="plans" @plan-clicked="handlePlanClicked" style="margin-left: 20px; margin-top: 20px;" />
+            </div>
             <div style="display: flex; width: 100%;">
                 <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />
                 <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 60%; flex-grow: 1;" />
             </div>
-            <PLayoutSection style="display: flex;border-radius: 20px;">
+            <!-- <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
                     <template >
                         <div class="Polaris-ResourceList__ResourceListWrapper features" style="width: 20%">
@@ -229,7 +206,7 @@
                         </template>
                     </carousel>
                 </template>
-            </PLayoutSection>
+            </PLayoutSection> -->
         </PLayout>
         <div v-if="bundle_plan !== null" class="bundle-plan">
             <!-- <PlanShowcaseBanner :useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/> -->
@@ -369,7 +346,8 @@
                     category_name: "Unlock Additional Benefits"
                 },
                 "bundle_details": null,
-                "bundle_plan": null
+                "bundle_plan": null,
+                "showPlansFeatures": false,
             }
         },
         computed: {
@@ -725,7 +703,10 @@
             handlePlanBannerClose(payload) {
               this.$emit('handlePlanBannerClose', payload)
               this.$emit('handle-plan-banner-close', payload)
-            }
+            },
+            togglePlansFeatures() {
+                this.showPlansFeatures = !this.showPlansFeatures;
+            },
         },
         async mounted() {
             this.planLoading = true;
@@ -973,7 +954,10 @@
       align-items: center;
       justify-content: space-between;
       gap: 4px;
-      margin-bottom: 32px;
+      max-width: 998px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0px 32px;
     }
 
     .bill-cycle-select-group__inner-left {
@@ -1013,8 +997,17 @@
     }
 
     .custom-plan {
+        display: flex;
         flex-direction: column;
+        align-items: center !important;
         gap: 20px;
+    }
+
+    .toggle-plans-features {
+        font-size: 13px;
+        font-weight: 500;
+        color: #303030;
+        text-decoration: none;
     }
 
     @media (min-width: 0px) and (max-width: 576px) {

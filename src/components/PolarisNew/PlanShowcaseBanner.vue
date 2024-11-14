@@ -62,30 +62,28 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div class="bundle-plan-showcase-banner banner-card">
+  <div class="bundle-plan-showcase-banner banner-card">
+    <div class="banner__inner">
       <div v-if="showDescription" class="plan-left">
-        <p>
+        <p class="bundle-offer-label">
+          {{ translateMe("Bundle Offer") }}
+        </p>
+        <p class="bundle-desc-label">
           {{ translateMe("Get 24 Shopify apps and save more than") }}
           <strong>{{ translateMe("$1000") }}</strong>
           {{ translateMe("per month!") }}
-        </p>
-        <p>
-          {{
-            translateMe(
-              "No hidden costs. Just your store getting supercharged!"
-            )
-          }}
         </p>
       </div>
       <div class="plan-right">
         <h3 class="plan-name">{{ translateMe("Monthly Bundle:") }}</h3>
         <div class="prices">
           <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
-          <span class="original-amount" v-if="realPrice < oldPrice">${{ translateMe(oldPrice) }}</span>
+          <span class="original-amount" v-if="realPrice < oldPrice"
+            >${{ translateMe(oldPrice) }}</span
+          >
         </div>
         <VariantButton
-          id = "choose-bundle"
+          id="choose-bundle"
           v-if="!isCurrentPlan"
           :buttonData="{ button_url: showcaseData.button_url }"
           @click="handlePlanClick"
@@ -108,13 +106,11 @@ export default {
 </template>
 
 <style scoped>
-
 .banner-card {
   display: flex;
   padding: 16px;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  border-radius: 12px;
   gap: 16px;
 }
 .bundle-plan-showcase-banner {
@@ -122,6 +118,20 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-top: 32px;
+  position: sticky;
+  top: 0;
+}
+
+.banner__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 998px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px 32px;
 }
 
 .plan-name {
@@ -143,6 +153,19 @@ export default {
 .prices {
   display: flex;
   gap: 8px;
+}
+
+.bundle-offer-label {
+  font-size: 20px;
+  font-weight: 600;
+  color: #202223;
+  margin-bottom: 4px;
+}
+
+.bundle-desc-label {
+  font-size: 14px;
+  font-weight: 450;
+  color: #303030;
 }
 
 .discounted-amount {

@@ -68,6 +68,14 @@ export default {
       this.syncHeights("features");
       this.syncHeights("plans");
     },
+    syncNavigationWidth() {
+      const swiperPlanNavigation = document.querySelector(
+        ".swiper-plan-navigation"
+      );
+      const pricingTable = document.querySelector(".pricing-table");
+      swiperPlanNavigation.style.width = `${pricingTable.offsetWidth + 100}px`;
+      swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 50}px`;
+    },
   },
 
   computed: {
@@ -91,22 +99,54 @@ export default {
         });
       });
       return allFeatures;
-    },
+    }
   },
 
   mounted() {
-    const swiperInstance = new Swiper(this.$refs.swiperAnnuallyTable, {
+    new Swiper(this.$refs.swiperMonthlyTable, {
       modules: [Navigation, Pagination],
       loop: false,
       slidesPerView: 3,
       speed: 500,
-      pagination: {
-        el: ".swiper-table-pagination",
-        clickable: true,
-      },
       navigation: {
         nextEl: ".swiper-plan-next",
         prevEl: ".swiper-plan-prev",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      },
+      on: {
+        slideChange: this.syncAllHeights, // Run syncHeights on each slide change
+        afterInit: this.syncAllHeights, // Sync heights after initial Swiper setup
+      },
+    });
+    new Swiper(this.$refs.swiperAnnuallyTable, {
+      modules: [Navigation, Pagination],
+      loop: false,
+      slidesPerView: 3,
+      speed: 500,
+      navigation: {
+        nextEl: ".swiper-plan-next",
+        prevEl: ".swiper-plan-prev",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
       },
       on: {
         slideChange: this.syncAllHeights, // Run syncHeights on each slide change
@@ -115,16 +155,25 @@ export default {
     });
 
     this.syncAllHeights(); // Run syncHeights once after mount
+    this.syncNavigationWidth(); // Sync navigation width after mount
   },
 };
 </script>
 
 <template>
   <div class="container">
+    <div class="swiper-plan-navigation">
+      <button class="swiper-plan-prev">
+        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+      </button>
+      <button class="swiper-plan-next">
+        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+      </button>
+    </div>
     <div class="pricing-table">
       <div class="pricing-table-inner__left">
         <div class="table-header plans-available">
-          {{ plans.length }} {{ translateMe("Plans available") }}
+          <h3>{{ annualPlans.length }} {{ translateMe("Plans available") }}</h3>
         </div>
         <div
           class="plan-feature-name"
@@ -144,23 +193,22 @@ export default {
           >
             <div class="plan-header-wrapper">
               <div class="upper">
-
                 <h4>{{ plan.name }}</h4>
                 <h4>
                   ${{ plan.price }}
                   <h6>
                     {{
                       plan.interval === "EVERY_30_DAYS"
-                      ? translateMe("/mo")
-                      : translateMe("/yr")
+                        ? translateMe("/mo")
+                        : translateMe("/yr")
                     }}
-                </h6>
-              </h4>
-            </div>
+                  </h6>
+                </h4>
+              </div>
               <VariantButton
                 :variant="'primary'"
                 @click="handlePlanClick(plan)"
-                class="button"
+                class="choose-button"
                 >{{ translateMe("Choose Plan") }}</VariantButton
               >
             </div>
@@ -215,13 +263,17 @@ export default {
   height: 100%;
 }
 .table-header {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
+  padding: 16px;
+  border-bottom: 1px solid #e3e3e3;
+}
+.table-header h3 {
   font-size: 13px;
   font-weight: 700;
   line-height: 20px;
   color: #303030;
-  background-color: #f1f1f1;
-  padding: 16px;
-  border-bottom: 1px solid #e3e3e3;
 }
 .plan-header-wrapper {
   padding: 16px;
@@ -273,5 +325,37 @@ export default {
   color: #00000080;
   margin-left: -4px;
   line-height: 0;
+}
+.swiper-plan-navigation {
+  position: absolute;
+  margin-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0px;
+}
+.swiper-plan-prev, .swiper-plan-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: #1A1A1A;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.swiper-plan-prev:disabled, .swiper-plan-next:disabled {
+  visibility: hidden;
+}
+.choose-button {
+  background-color: white !important;
+}
+.choose-button:hover {
+  background-color: #f9f9f9 !important;
+}
+
+@media (max-width: 768px) {
+  .swiper-plan-navigation {
+    display: none;
+  }
 }
 </style>

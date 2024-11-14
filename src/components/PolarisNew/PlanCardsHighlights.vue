@@ -32,7 +32,7 @@ export default {
     },
     annualPlans() {
       return this.plans.filter((plan) => plan.interval === "ANNUAL");
-    },
+    }
   },
   methods: {
     handlePlanClick(plan) {
@@ -42,6 +42,14 @@ export default {
       return this.$translations.hasOwnProperty(message)
         ? this.$translations[message]
         : message;
+    },
+    syncNavigationWidth() {
+      const swiperPlanNavigation = document.querySelector(
+        ".swiper-plan-h-navigation"
+      );
+      const pricingTable = document.querySelector(".plans-h-cards");
+      swiperPlanNavigation.style.width = `${pricingTable.offsetWidth + 100}px`;
+      swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 50}px`;
     },
   },
   watch: {
@@ -64,8 +72,8 @@ export default {
         clickable: true,
       },
       navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+        nextEl: ".swiper-plan-h-next",
+        prevEl: ".swiper-plan-h-prev",
       },
       breakpoints: {
         640: {
@@ -89,8 +97,8 @@ export default {
         clickable: true,
       },
       navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+        nextEl: ".swiper-plan-h-next",
+        prevEl: ".swiper-plan-h-prev",
       },
       breakpoints: {
         640: {
@@ -104,15 +112,24 @@ export default {
         },
       },
     });
+    this.syncNavigationWidth(); // Sync navigation width after mount
   },
 };
 </script>
 
 <template>
   <div class="container">
+    <div class="swiper-plan-h-navigation">
+      <button class="swiper-plan-h-prev">
+        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+      </button>
+      <button class="swiper-plan-h-next">
+        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+      </button>
+    </div>
     <div
       ref="swiperMonthly"
-      class="swiper cards monthly"
+      class="swiper cards monthly plans-h-cards"
       v-if="interval == 'EVERY_30_DAYS'"
     >
       <div class="swiper-wrapper">
@@ -273,7 +290,16 @@ export default {
         </div>
       </div>
     </div>
-    <div class="swiper-pagination"></div>
+    <div
+      class="swiper-pagination"
+      :style="{
+        display:
+          (interval === 'ANNUAL' && annualPlans.length <= 4) ||
+          (interval === 'EVERY_30_DAYS' && monthlyPlans.length <= 4)
+            ? 'none'
+            : 'block',
+      }"
+    ></div>
   </div>
 </template>
 
@@ -385,6 +411,29 @@ export default {
   font-weight: 600;
   width: 100%;
   text-align: center;
+}
+
+.swiper-plan-h-navigation {
+  position: absolute;
+  margin-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0px;
+}
+.swiper-plan-h-prev,
+.swiper-plan-h-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.swiper-plan-h-prev:disabled,
+.swiper-plan-h-next:disabled {
+  visibility: hidden;
 }
 
 @media (max-width: 640px) {
