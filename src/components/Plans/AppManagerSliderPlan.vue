@@ -87,9 +87,9 @@
             </a>
             <PlanTable v-if="showPlansFeatures" :plans="plans" @plan-clicked="handlePlanClicked" style="margin-left: 20px; margin-top: 20px;" />
             </div>
-            <div style="display: flex; width: 100%;">
+            <div class="customization-bundle-section">
                 <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />
-                <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 60%; flex-grow: 1;" />
+                <BundlePlanCard :plan="bundle_plan" :plan_details="bundle_details" @plan-clicked="selectPlan" style="margin-left: 20px; flex-basis: 62%; flex-grow: 1;" />
             </div>
             <!-- <PLayoutSection style="display: flex;border-radius: 20px;">
                 <template style="margin-bottom: 20px; display: flex !important;">
@@ -267,10 +267,11 @@
     import PlanCardsHighlights from "../PolarisNew/PlanCardsHighlights.vue";
     import GetCustomBlock from "../PolarisNew/GetCustomBlock.vue";
     import PlanTable from "../PolarisNew/PlanTable.vue";
+    import BundlePlanCard from "../PolarisNew/BundlePlanCard.vue";
 
     export default {
         name: "AppManagerSliderPlan",
-        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights, GetCustomBlock, PlanTable },
+        components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights, GetCustomBlock, PlanTable, BundlePlanCard },
         props: ['shop_domain','host', 'discount_code'],
         data() {
             return {
@@ -1010,6 +1011,11 @@
         text-decoration: none;
     }
 
+    .customization-bundle-section {
+        display: flex;
+        width: 100%;
+    }
+
     @media (min-width: 0px) and (max-width: 576px) {
       .custom-plan>.Polaris-Layout__Section>.VueCarousel>.VueCarousel-wrapper>.VueCarousel-inner {
         overflow-x: scroll;
@@ -1069,4 +1075,11 @@
         }
     }
 
+    @media (max-width: 1023px) {
+        .customization-bundle-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
 </style>

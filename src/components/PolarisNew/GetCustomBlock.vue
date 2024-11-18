@@ -83,7 +83,7 @@ export default {
     /* width: 261px !important; */
     width: 100% !important;
     display: flex !important;
-    flex-grow: 1 !important;
+    height: fit-content !important;
     justify-content: center !important;
 }
 </style>

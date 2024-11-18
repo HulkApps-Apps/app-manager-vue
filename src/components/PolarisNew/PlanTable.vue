@@ -240,7 +240,7 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  padding-right: 20px;
+  padding: 0 10px 0 10px;
 }
 .pricing-table {
   display: grid;
