@@ -73,8 +73,8 @@ export default {
         ".swiper-plan-navigation"
       );
       const pricingTable = document.querySelector(".pricing-table");
-      swiperPlanNavigation.style.width = `${pricingTable.offsetWidth + 100}px`;
-      swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 50}px`;
+      swiperPlanNavigation.style.width = `${pricingTable.offsetWidth + 110}px`;
+      swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 55}px`;
     },
   },
 

@@ -32,7 +32,7 @@ export default {
     },
     annualPlans() {
       return this.plans.filter((plan) => plan.interval === "ANNUAL");
-    }
+    },
   },
   methods: {
     handlePlanClick(plan) {
@@ -44,19 +44,45 @@ export default {
         : message;
     },
     syncNavigationWidth() {
-      const swiperPlanNavigation = document.querySelector(
+      const swiperPlanNavigations = document.querySelectorAll(
         ".swiper-plan-h-navigation"
       );
       const pricingTable = document.querySelector(".plans-h-cards");
-      swiperPlanNavigation.style.width = `${pricingTable.offsetWidth + 100}px`;
-      swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 50}px`;
+      if (!pricingTable) {
+        console.error("No `.plans-h-cards` element found.");
+        return;
+      }
+      swiperPlanNavigations.forEach((navigation) => {
+        navigation.style.width = `${pricingTable.offsetWidth + 110}px`;
+        navigation.style.left = `${pricingTable.offsetLeft - 55}px`;
+      });
     },
   },
   watch: {
     selectedInterval() {
+      let monthlyPlanCards = document.querySelector(".monthly");
+      let annuallyPlanCards = document.querySelector(".annually");
+      let monthlyPlanNavigation = document.querySelector(".nav-monthly");
+      let annuallyPlanNavigation = document.querySelector(".nav-annually");
       if (this.selectedInterval === "monthly") {
+        monthlyPlanCards.style.visibility = "visible";
+        monthlyPlanCards.style.height = "auto";
+        monthlyPlanCards.style.border = "1px solid #e5e5e5";
+        annuallyPlanCards.style.visibility = "hidden";
+        annuallyPlanCards.style.height = "0px";
+        annuallyPlanCards.style.border = "0px";
+        monthlyPlanNavigation.style.display = "flex";
+        annuallyPlanNavigation.style.display = "none";
         this.interval = "EVERY_30_DAYS";
       } else if (this.selectedInterval === "annually") {
+        monthlyPlanCards.style.visibility = "hidden";
+        monthlyPlanCards.style.height = "0px";
+        monthlyPlanCards.style.border = "0px";
+        annuallyPlanCards.style.visibility = "visible";
+        annuallyPlanCards.style.height = "auto";
+        annuallyPlanCards.style.border = "1px solid #e5e5e5";
+        monthlyPlanNavigation.style.display = "none";
+        annuallyPlanNavigation.style.display = "flex";
         this.interval = "ANNUAL";
       }
     },
@@ -72,8 +98,8 @@ export default {
         clickable: true,
       },
       navigation: {
-        nextEl: ".swiper-plan-h-next",
-        prevEl: ".swiper-plan-h-prev",
+        nextEl: ".swiper-plan-h-next-monthly",
+        prevEl: ".swiper-plan-h-prev-monthly",
       },
       breakpoints: {
         640: {
@@ -97,8 +123,8 @@ export default {
         clickable: true,
       },
       navigation: {
-        nextEl: ".swiper-plan-h-next",
-        prevEl: ".swiper-plan-h-prev",
+        nextEl: ".swiper-plan-h-next-annually",
+        prevEl: ".swiper-plan-h-prev-annually",
       },
       breakpoints: {
         640: {
@@ -119,19 +145,23 @@ export default {
 
 <template>
   <div class="container">
-    <div class="swiper-plan-h-navigation">
-      <button class="swiper-plan-h-prev">
+    <div class="swiper-plan-h-navigation nav-monthly">
+      <button class="swiper-plan-h-prev-monthly">
         <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
       </button>
-      <button class="swiper-plan-h-next">
+      <button class="swiper-plan-h-next-monthly">
         <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
       </button>
     </div>
-    <div
-      ref="swiperMonthly"
-      class="swiper cards monthly plans-h-cards"
-      v-if="interval == 'EVERY_30_DAYS'"
-    >
+    <div class="swiper-plan-h-navigation nav-annually">
+      <button class="swiper-plan-h-prev-annually">
+        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+      </button>
+      <button class="swiper-plan-h-next-annually">
+        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+      </button>
+    </div>
+    <div ref="swiperMonthly" class="swiper cards monthly plans-h-cards">
       <div class="swiper-wrapper">
         <div
           v-for="(plan, index) in monthlyPlans"
@@ -209,11 +239,7 @@ export default {
         </div>
       </div>
     </div>
-    <div
-      ref="swiperAnnually"
-      class="swiper cards annually"
-      v-if="interval == 'ANNUAL'"
-    >
+    <div ref="swiperAnnually" class="swiper cards annually">
       <div class="swiper-wrapper">
         <div
           v-for="(plan, index) in annualPlans"
@@ -309,6 +335,8 @@ export default {
   width: 100%;
 }
 .swiper.cards.annually {
+  visibility: hidden;
+  height: 0px;
   position: relative;
 }
 .swiper-pagination {
@@ -420,8 +448,13 @@ export default {
   justify-content: space-between;
   padding: 16px 0px;
 }
-.swiper-plan-h-prev,
-.swiper-plan-h-next {
+.nav-annually {
+  display: none;
+}
+.swiper-plan-h-prev-monthly,
+.swiper-plan-h-prev-annually,
+.swiper-plan-h-next-monthly,
+.swiper-plan-h-next-annually {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -431,8 +464,10 @@ export default {
   border-radius: 8px;
   cursor: pointer;
 }
-.swiper-plan-h-prev:disabled,
-.swiper-plan-h-next:disabled {
+.swiper-plan-h-prev-monthly:disabled,
+.swiper-plan-h-next-monthly:disabled,
+.swiper-plan-h-next-annually:disabled,
+.swiper-plan-h-prev-annually:disabled {
   visibility: hidden;
 }
 

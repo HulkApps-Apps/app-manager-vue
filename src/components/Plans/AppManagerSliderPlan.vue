@@ -1009,6 +1009,7 @@
         font-weight: 500;
         color: #303030;
         text-decoration: none;
+        margin-left: 20px;
     }
 
     .customization-bundle-section {
