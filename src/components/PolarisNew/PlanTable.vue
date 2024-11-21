@@ -13,6 +13,10 @@ export default {
       type: Array,
       required: true,
     },
+    selectedInterval: {
+      type: String,
+      required: false,
+    },
   },
   methods: {
     handlePlanClick(plan) {
@@ -34,10 +38,14 @@ export default {
         setTimeout(() => {
           const slides = document.querySelectorAll(".swiper-slide");
           if (which === "features") {
-            const featureNames =
-              document.querySelectorAll(".plan-feature-name");
+            const featureType = `-${this.selectedInterval}`; // Append '-monthly' or '-annually' based on selectedInterval
+            const featureNames = document.querySelectorAll(
+              `.plan-feature-name${featureType}`
+            );
             slides.forEach((slide) => {
-              const features = slide.querySelectorAll(".plan-feature");
+              const features = slide.querySelectorAll(
+                `.plan-feature${featureType}`
+              );
               featureNames.forEach((featureName, index) => {
                 const feature = features[index];
                 if (featureName && feature) {
@@ -46,9 +54,14 @@ export default {
               });
             });
           } else if (which === "plans") {
-            const planNames = document.querySelectorAll(".plan-header-wrapper");
-            const plansAvailableName =
-              document.querySelector(".plans-available");
+            const planType = `-${this.selectedInterval}`;
+            const planNames = document.querySelectorAll(
+              `.plan-header-wrapper${planType}`
+            );
+            const plansAvailableName = document.querySelector(
+              `.plans-available${planType}`
+            );
+            if (!plansAvailableName) return;
             let planNameHeight = 0;
             slides.forEach((slide, index) => {
               const planName = planNames[index];
@@ -58,8 +71,8 @@ export default {
                   planNameHeight
                 );
               }
-              plansAvailableName.style.height = `${planNameHeight}px`;
             });
+            plansAvailableName.style.height = `${planNameHeight}px`;
           }
         }, 0); // delay 0ms
       });
@@ -69,12 +82,19 @@ export default {
       this.syncHeights("plans");
     },
     syncNavigationWidth() {
-      const swiperPlanNavigation = document.querySelector(
+      const swiperPlanNavigations = document.querySelectorAll(
         ".swiper-plan-navigation"
       );
       const pricingTable = document.querySelector(".pricing-table");
-      swiperPlanNavigation.style.width = `${pricingTable.offsetWidth + 110}px`;
-      swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 55}px`;
+
+      if (!pricingTable) return; // Ensure the pricing table exists
+
+      swiperPlanNavigations.forEach((swiperPlanNavigation) => {
+        swiperPlanNavigation.style.width = `${
+          pricingTable.offsetWidth + 110
+        }px`;
+        swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 55}px`;
+      });
     },
   },
 
@@ -99,7 +119,61 @@ export default {
         });
       });
       return allFeatures;
-    }
+    },
+    monthlyPlansFeatures() {
+      let plansWithFeatures = this.monthlyPlans.flatMap(
+        (plan) => plan.features
+      );
+      let allFeatures = [];
+      let seenIds = new Set();
+      plansWithFeatures.forEach((plan) => {
+        Object.keys(plan).forEach((featureKey) => {
+          const feature = plan[featureKey];
+          if (!seenIds.has(feature.feature_id)) {
+            allFeatures.push(feature);
+            seenIds.add(feature.feature_id);
+          }
+        });
+      });
+      return allFeatures;
+    },
+  },
+
+  watch: {
+    selectedInterval() {
+      let monthlyPlanTable = document.querySelector(".monthly-table");
+      let annuallyPlanTable = document.querySelector(".annually-table");
+      let monthlyPlanTableNavigation =
+        document.querySelector(".nav-monthly-table");
+      let annuallyPlanTableNavigation = document.querySelector(
+        ".nav-annually-table"
+      );
+      if (this.selectedInterval === "monthly") {
+        monthlyPlanTable.style.visibility = "visible";
+        monthlyPlanTable.style.height = "auto";
+        monthlyPlanTable.style.border = "1px solid #e5e5e5";
+        monthlyPlanTable.style.padding = "16px";
+        annuallyPlanTable.style.visibility = "hidden";
+        annuallyPlanTable.style.height = "0px";
+        annuallyPlanTable.style.border = "0px";
+        monthlyPlanTableNavigation.style.display = "flex";
+        annuallyPlanTableNavigation.style.display = "none";
+        this.interval = "EVERY_30_DAYS";
+        this.syncAllHeights();
+      } else if (this.selectedInterval === "annually") {
+        monthlyPlanTable.style.visibility = "hidden";
+        monthlyPlanTable.style.height = "0px";
+        monthlyPlanTable.style.border = "0px";
+        monthlyPlanTable.style.padding = "0px";
+        annuallyPlanTable.style.visibility = "visible";
+        annuallyPlanTable.style.height = "auto";
+        annuallyPlanTable.style.border = "1px solid #e5e5e5";
+        monthlyPlanTableNavigation.style.display = "none";
+        annuallyPlanTableNavigation.style.display = "flex";
+        this.interval = "ANNUAL";
+        this.syncAllHeights();
+      }
+    },
   },
 
   mounted() {
@@ -109,8 +183,8 @@ export default {
       slidesPerView: 3,
       speed: 500,
       navigation: {
-        nextEl: ".swiper-plan-next",
-        prevEl: ".swiper-plan-prev",
+        nextEl: ".swiper-plan-monthly-next",
+        prevEl: ".swiper-plan-monthly-prev",
       },
       breakpoints: {
         0: {
@@ -134,8 +208,8 @@ export default {
       slidesPerView: 3,
       speed: 500,
       navigation: {
-        nextEl: ".swiper-plan-next",
-        prevEl: ".swiper-plan-prev",
+        nextEl: ".swiper-plan-annually-next",
+        prevEl: ".swiper-plan-annually-prev",
       },
       breakpoints: {
         0: {
@@ -162,36 +236,47 @@ export default {
 
 <template>
   <div class="container">
-    <div class="swiper-plan-navigation">
-      <button class="swiper-plan-prev">
+    <div class="swiper-plan-navigation nav-monthly-table">
+      <button class="swiper-plan-monthly-prev">
         <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
       </button>
-      <button class="swiper-plan-next">
+      <button class="swiper-plan-monthly-next">
         <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
       </button>
     </div>
-    <div class="pricing-table">
+    <div class="swiper-plan-navigation nav-annually-table">
+      <button class="swiper-plan-annually-prev">
+        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+      </button>
+      <button class="swiper-plan-annually-next">
+        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+      </button>
+    </div>
+
+    <div class="pricing-table monthly-table">
       <div class="pricing-table-inner__left">
-        <div class="table-header plans-available">
-          <h3>{{ annualPlans.length }} {{ translateMe("Plans available") }}</h3>
+        <div class="table-header plans-available plans-available-monthly">
+          <h3>
+            {{ monthlyPlans.length }} {{ translateMe("Plans available") }}
+          </h3>
         </div>
         <div
-          class="plan-feature-name"
-          v-for="(feature, index) in annualPlansFeatures"
+          class="plan-feature-name plan-feature-name-monthly"
+          v-for="(feature, index) in monthlyPlansFeatures"
           :key="feature.id"
         >
           {{ feature.name }}
         </div>
       </div>
-      <div class="swiper plans annually" ref="swiperAnnuallyTable">
+      <div class="swiper plans annually" ref="swiperMonthlyTable">
         <div class="swiper-wrapper">
           <div
-            v-for="(plan, index) in annualPlans"
+            v-for="(plan, index) in monthlyPlans"
             :key="plan.id"
             class="swiper-slide"
-            :class="{ 'last-slide': index === annualPlans.length - 1 }"
+            :class="{ 'last-slide': index === monthlyPlans.length - 1 }"
           >
-            <div class="plan-header-wrapper">
+            <div class="plan-header-wrapper plan-header-wrapper-monthly">
               <div class="upper">
                 <h4>{{ plan.name }}</h4>
                 <h4>
@@ -213,7 +298,71 @@ export default {
               >
             </div>
             <div
-              class="plan-feature"
+              class="plan-feature plan-feature-monthly"
+              v-for="(feature, index) in monthlyPlansFeatures"
+              :key="feature.id"
+            >
+              <img
+                src="../../assets/CheckTrue.svg"
+                alt="Checkmark True"
+                class="plan-table-checkmark"
+                v-if="hasFeature(plan, feature)"
+              />
+              <img
+                src="../../assets/CheckFalse.svg"
+                alt="Checkmark False"
+                class="plan-table-checkmark"
+                v-if="!hasFeature(plan, feature)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pricing-table annually-table">
+      <div class="pricing-table-inner__left">
+        <div class="table-header plans-available plans-available-annually">
+          <h3>{{ annualPlans.length }} {{ translateMe("Plans available") }}</h3>
+        </div>
+        <div
+          class="plan-feature-name plan-feature-name-annually"
+          v-for="(feature, index) in annualPlansFeatures"
+          :key="feature.id"
+        >
+          {{ feature.name }}
+        </div>
+      </div>
+      <div class="swiper plans annually" ref="swiperAnnuallyTable">
+        <div class="swiper-wrapper">
+          <div
+            v-for="(plan, index) in annualPlans"
+            :key="plan.id"
+            class="swiper-slide"
+            :class="{ 'last-slide': index === annualPlans.length - 1 }"
+          >
+            <div class="plan-header-wrapper plan-header-wrapper-annually">
+              <div class="upper">
+                <h4>{{ plan.name }}</h4>
+                <h4>
+                  ${{ plan.price }}
+                  <h6>
+                    {{
+                      plan.interval === "EVERY_30_DAYS"
+                        ? translateMe("/mo")
+                        : translateMe("/yr")
+                    }}
+                  </h6>
+                </h4>
+              </div>
+              <VariantButton
+                :variant="'primary'"
+                @click="handlePlanClick(plan)"
+                class="choose-button"
+                >{{ translateMe("Choose Plan") }}</VariantButton
+              >
+            </div>
+            <div
+              class="plan-feature plan-feature-annually"
               v-for="(feature, index) in annualPlansFeatures"
               :key="feature.id"
             >
@@ -253,6 +402,11 @@ export default {
 }
 .plans {
   grid-column: span 2;
+}
+.annually-table {
+  visibility: hidden;
+  height: 0px;
+  border: 0px;
 }
 .pricing-table-inner__left {
   display: flex;
@@ -333,17 +487,26 @@ export default {
   justify-content: space-between;
   padding: 16px 0px;
 }
-.swiper-plan-prev, .swiper-plan-next {
+.nav-annually-table {
+  display: none;
+}
+.swiper-plan-monthly-prev,
+.swiper-plan-monthly-next,
+.swiper-plan-annually-next,
+.swiper-plan-annually-prev {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
-  background-color: #1A1A1A;
+  background-color: #1a1a1a;
   border-radius: 8px;
   cursor: pointer;
 }
-.swiper-plan-prev:disabled, .swiper-plan-next:disabled {
+.swiper-plan-monthly-prev:disabled,
+.swiper-plan-monthly-next:disabled,
+.swiper-plan-annually-next:disabled,
+.swiper-plan-annually-prev:disabled {
   visibility: hidden;
 }
 .choose-button {

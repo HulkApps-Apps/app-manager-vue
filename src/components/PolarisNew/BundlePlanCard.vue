@@ -28,9 +28,6 @@ export default {
   },
   computed: {
     allApps() {
-      console.log(
-        this.plan_details.flatMap((category) => category.apps_relation)
-      );
       return this.plan_details.flatMap((category) => category.apps_relation);
     },
     totalAppsCount() {
