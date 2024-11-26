@@ -85,7 +85,7 @@
             <a href="#" class="toggle-plans-features" @click.prevent="togglePlansFeatures">
                 {{ showPlansFeatures ? translateMe("Hide all features") : translateMe("Show all features") }}
             </a>
-            <PlanTable v-if="showPlansFeatures" :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked" style="margin-left: 20px; margin-top: 20px;" />
+            <PlanTable :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked" style="margin-left: 20px; margin-top: 20px;" :class="{ 'hide-all-features': !showPlansFeatures }" />
             </div>
             <div class="customization-bundle-section">
                 <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />
@@ -1010,6 +1010,13 @@
         color: #303030;
         text-decoration: none;
         margin-left: 20px;
+    }
+
+    .hide-all-features {
+        visibility: hidden;
+        overflow: hidden;
+        height: 0px;
+        margin-top: 0px !important;
     }
 
     .customization-bundle-section {

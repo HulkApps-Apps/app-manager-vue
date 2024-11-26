@@ -73,6 +73,7 @@ export default {
               }
             });
             plansAvailableName.style.height = `${planNameHeight}px`;
+            console.log('Syncing plan heights', planNames, planNameHeight);
           }
         }, 0); // delay 0ms
       });
@@ -80,6 +81,7 @@ export default {
     syncAllHeights() {
       this.syncHeights("features");
       this.syncHeights("plans");
+      console.log('Syncing all heights');
     },
     syncNavigationWidth() {
       const swiperPlanNavigations = document.querySelectorAll(
@@ -160,6 +162,7 @@ export default {
         annuallyPlanTableNavigation.style.display = "none";
         this.interval = "EVERY_30_DAYS";
         this.syncAllHeights();
+        console.log('Selected interval is monthly');
       } else if (this.selectedInterval === "annually") {
         monthlyPlanTable.style.visibility = "hidden";
         monthlyPlanTable.style.height = "0px";
@@ -172,6 +175,7 @@ export default {
         annuallyPlanTableNavigation.style.display = "flex";
         this.interval = "ANNUAL";
         this.syncAllHeights();
+        console.log('Selected interval is annually');
       }
     },
   },
