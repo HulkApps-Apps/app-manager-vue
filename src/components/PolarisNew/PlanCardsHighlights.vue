@@ -13,6 +13,10 @@ export default {
       type: Array,
       required: true,
     },
+    currentPlan: {
+      type: Object,
+      required: false,
+    },
     selectedInterval: {
       type: String,
       required: false,
@@ -201,9 +205,14 @@ export default {
             </h6>
             <VariantButton
               :variant="'primary'"
+              :disabled="currentPlan.id === plan.id"
               @click="handlePlanClick(plan)"
               class="button"
-              >{{ translateMe("Choose Plan") }}</VariantButton
+              >{{
+                currentPlan.id === plan.id
+                  ? translateMe("Current Plan")
+                  : translateMe("Choose Plan")
+              }}</VariantButton
             >
             <div class="features">
               <ul>
@@ -279,9 +288,14 @@ export default {
             </h6>
             <VariantButton
               :variant="'primary'"
+              :disabled="currentPlan.id === plan.id"
               @click="handlePlanClick(plan)"
               class="button"
-              >{{ translateMe("Choose Plan") }}</VariantButton
+              >{{
+                currentPlan.id === plan.id
+                  ? translateMe("Current Plan")
+                  : translateMe("Choose Plan")
+              }}</VariantButton
             >
             <div class="features">
               <ul>

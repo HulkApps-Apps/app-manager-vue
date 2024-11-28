@@ -80,12 +80,12 @@
         </div>
         <!--=======================================================-->
         <PLayout class="custom-plan">
-            <PlanCardsHighlights :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked"/>
+            <PlanCardsHighlights :plans="plans" :currentPlan="plan" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked"/>
             <div style="display: flex; flex-direction: column; align-items: center;">
             <a href="#" class="toggle-plans-features" @click.prevent="togglePlansFeatures">
                 {{ showPlansFeatures ? translateMe("Hide all features") : translateMe("Show all features") }}
             </a>
-            <PlanTable :plans="plans" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked" style="margin-left: 20px; margin-top: 20px;" :class="{ 'hide-all-features': !showPlansFeatures }" />
+            <PlanTable :plans="plans" :currentPlan="plan" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked" style="margin-left: 20px; margin-top: 20px;" :class="{ 'hide-all-features': !showPlansFeatures }" />
             </div>
             <div class="customization-bundle-section">
                 <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />

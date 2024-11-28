@@ -13,6 +13,10 @@ export default {
       type: Array,
       required: true,
     },
+    currentPlan: {
+      type: Object,
+      required: false,
+    },
     selectedInterval: {
       type: String,
       required: false,
@@ -73,7 +77,6 @@ export default {
               }
             });
             plansAvailableName.style.height = `${planNameHeight}px`;
-            console.log('Syncing plan heights', planNames, planNameHeight);
           }
         }, 0); // delay 0ms
       });
@@ -81,7 +84,6 @@ export default {
     syncAllHeights() {
       this.syncHeights("features");
       this.syncHeights("plans");
-      console.log('Syncing all heights');
     },
     syncNavigationWidth() {
       const swiperPlanNavigations = document.querySelectorAll(
@@ -162,7 +164,6 @@ export default {
         annuallyPlanTableNavigation.style.display = "none";
         this.interval = "EVERY_30_DAYS";
         this.syncAllHeights();
-        console.log('Selected interval is monthly');
       } else if (this.selectedInterval === "annually") {
         monthlyPlanTable.style.visibility = "hidden";
         monthlyPlanTable.style.height = "0px";
@@ -175,7 +176,6 @@ export default {
         annuallyPlanTableNavigation.style.display = "flex";
         this.interval = "ANNUAL";
         this.syncAllHeights();
-        console.log('Selected interval is annually');
       }
     },
   },
@@ -296,9 +296,14 @@ export default {
               </div>
               <VariantButton
                 :variant="'primary'"
+                :disabled="currentPlan.id === plan.id"
                 @click="handlePlanClick(plan)"
                 class="choose-button"
-                >{{ translateMe("Choose Plan") }}</VariantButton
+                >{{
+                  currentPlan.id === plan.id
+                    ? translateMe("Current Plan")
+                    : translateMe("Choose Plan")
+                }}</VariantButton
               >
             </div>
             <div
@@ -360,9 +365,14 @@ export default {
               </div>
               <VariantButton
                 :variant="'primary'"
+                :disabled="currentPlan.id === plan.id"
                 @click="handlePlanClick(plan)"
                 class="choose-button"
-                >{{ translateMe("Choose Plan") }}</VariantButton
+                >{{
+                  currentPlan.id === plan.id
+                    ? translateMe("Current Plan")
+                    : translateMe("Choose Plan")
+                }}</VariantButton
               >
             </div>
             <div
@@ -518,6 +528,9 @@ export default {
 }
 .choose-button:hover {
   background-color: #f9f9f9 !important;
+}
+.choose-button.disabled {
+  background-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 @media (max-width: 768px) {

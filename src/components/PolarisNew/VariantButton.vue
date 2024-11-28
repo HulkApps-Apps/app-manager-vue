@@ -109,7 +109,7 @@ export default {
   font-weight: 550 !important;
 }
 .disabled {
-  background-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(0, 0, 0, 0.15) !important;
   font-size: 13px !important;
   font-weight: 450 !important;
   color: rgb(74, 74, 74) !important;
