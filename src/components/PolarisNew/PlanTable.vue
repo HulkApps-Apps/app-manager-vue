@@ -4,6 +4,11 @@ import "swiper/swiper-bundle.css";
 import VariantButton from "./VariantButton";
 
 export default {
+  data() {
+    return {
+      isSyncing: false,
+    };
+  },
   name: "PlanTable",
   components: {
     VariantButton,
@@ -76,7 +81,7 @@ export default {
                 );
               }
             });
-            plansAvailableName.style.height = `${planNameHeight}px`;
+            plansAvailableName.style.minHeight = `${planNameHeight}px`;
           }
         }, 0); // delay 0ms
       });
@@ -90,14 +95,33 @@ export default {
         ".swiper-plan-navigation"
       );
       const pricingTable = document.querySelector(".pricing-table");
-
-      if (!pricingTable) return; // Ensure the pricing table exists
-
+      if (!pricingTable) return;
       swiperPlanNavigations.forEach((swiperPlanNavigation) => {
         swiperPlanNavigation.style.width = `${
           pricingTable.offsetWidth + 110
         }px`;
         swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 55}px`;
+      });
+    },
+    syncScroll(source, targets) {
+      if (this.isSyncing) return;
+      this.isSyncing = true;
+      const scrollTop = source.scrollTop;
+      targets.forEach((target) => {
+        if (target !== source) {
+          target.scrollTop = scrollTop;
+        }
+      });
+      this.isSyncing = false;
+    },
+    setupScrollListeners() {
+      const tableLeftElements = document.querySelectorAll("#table-left");
+      const plansTableElements = document.querySelectorAll("#plans-table");
+      const allElements = [...tableLeftElements, ...plansTableElements];
+      allElements.forEach((element) => {
+        element.addEventListener("scroll", () => {
+          this.syncScroll(element, allElements);
+        });
       });
     },
   },
@@ -234,6 +258,7 @@ export default {
 
     this.syncAllHeights(); // Run syncHeights once after mount
     this.syncNavigationWidth(); // Sync navigation width after mount
+    this.setupScrollListeners();
   },
 };
 </script>
@@ -258,7 +283,7 @@ export default {
     </div>
 
     <div class="pricing-table monthly-table">
-      <div class="pricing-table-inner__left">
+      <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-monthly">
           <h3>
             {{ monthlyPlans.length }} {{ translateMe("Plans available") }}
@@ -272,7 +297,7 @@ export default {
           {{ feature.name }}
         </div>
       </div>
-      <div class="swiper plans annually" ref="swiperMonthlyTable">
+      <div class="swiper plans monthly" ref="swiperMonthlyTable" id="plans-table">
         <div class="swiper-wrapper">
           <div
             v-for="(plan, index) in monthlyPlans"
@@ -329,7 +354,7 @@ export default {
       </div>
     </div>
     <div class="pricing-table annually-table">
-      <div class="pricing-table-inner__left">
+      <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-annually">
           <h3>{{ annualPlans.length }} {{ translateMe("Plans available") }}</h3>
         </div>
@@ -341,7 +366,7 @@ export default {
           {{ feature.name }}
         </div>
       </div>
-      <div class="swiper plans annually" ref="swiperAnnuallyTable">
+      <div class="swiper plans annually" ref="swiperAnnuallyTable" id="plans-table">
         <div class="swiper-wrapper">
           <div
             v-for="(plan, index) in annualPlans"
@@ -416,6 +441,8 @@ export default {
 }
 .plans {
   grid-column: span 2;
+  max-height: 360px;
+  overflow-y: auto;
 }
 .annually-table {
   visibility: hidden;
@@ -425,6 +452,8 @@ export default {
 .pricing-table-inner__left {
   display: flex;
   flex-direction: column;
+  max-height: 360px;
+  overflow-y: auto;
 }
 .swiper {
   width: 100%;
@@ -436,6 +465,8 @@ export default {
   background-color: #f1f1f1;
   padding: 16px;
   border-bottom: 1px solid #e3e3e3;
+  position: sticky;
+  top: 0;
 }
 .table-header h3 {
   font-size: 13px;
@@ -479,6 +510,8 @@ export default {
   background-color: #f1f1f1;
   border-left: 1px solid #f1f1f1;
   border-right: 1px solid #f1f1f1;
+  position: sticky;
+  top: 0;
 }
 .plan-header-wrapper .upper h4 {
   display: inline;
@@ -531,6 +564,13 @@ export default {
 }
 .choose-button.disabled {
   background-color: rgba(0, 0, 0, 0.15) !important;
+}
+#table-left {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#table-left::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 768px) {
