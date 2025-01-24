@@ -63,6 +63,7 @@ export default {
               });
             });
           } else if (which === "plans") {
+
             const planType = `-${this.selectedInterval}`;
             const planNames = document.querySelectorAll(
               `.plan-header-wrapper${planType}`
@@ -81,9 +82,15 @@ export default {
                 );
               }
             });
+            // Set the minHeight for the plans available name
             plansAvailableName.style.minHeight = `${planNameHeight}px`;
+
+            // Set the minHeight for all elements
+            planNames.forEach((el) => {
+              el.style.minHeight = `${planNameHeight}px`;
+            });
           }
-        }, 0); // delay 0ms
+        }, 2); // delay 0ms
       });
     },
     syncAllHeights() {
@@ -308,7 +315,7 @@ export default {
             <div class="plan-header-wrapper plan-header-wrapper-monthly">
               <div class="upper">
                 <h4>{{ plan.name }}</h4>
-                <h4>
+                <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
                   ${{ plan.price }}
                   <h6>
                     {{
@@ -377,7 +384,7 @@ export default {
             <div class="plan-header-wrapper plan-header-wrapper-annually">
               <div class="upper">
                 <h4>{{ plan.name }}</h4>
-                <h4>
+                <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
                   ${{ plan.price }}
                   <h6>
                     {{

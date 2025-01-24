@@ -30,6 +30,9 @@ export default {
         ? this.$translations[message]
         : message;
     },
+    handleCustomizePlan(){
+      this.$emit('handleCustomizePlan')
+    }
   },
 };
 </script>

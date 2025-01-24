@@ -49,9 +49,7 @@ export default {
       <h2>${{ plan.price - plan.discount }}</h2>
       <span class="mo-label">{{ translateMe("/mo") }}</span>
       <h4>${{ plan.price }}</h4>
-      <span class="apps-count"
-        >{{ allApps.length }} {{ translateMe("Apps") }}</span
-      >
+      <span class="apps-count">{{ allApps.length }} {{ translateMe("Apps") }}</span>
     </div>
     <div class="apps-list">
       <div v-for="(app, index) in allApps" :key="app.id" class="app">

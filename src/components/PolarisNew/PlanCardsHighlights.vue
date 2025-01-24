@@ -143,6 +143,9 @@ export default {
       },
     });
     this.syncNavigationWidth(); // Sync navigation width after mount
+
+    console.log('Plans:', this.plans);
+    console.log('Monthly Plans:', this.monthlyPlans);
   },
 };
 </script>
@@ -184,7 +187,7 @@ export default {
               },
             ]"
           >
-            <div class="most-popular" v-if="index == 2">
+            <div class="most-popular" v-if="plan.is_popular">
               <div class="most-popular-label">
                 {{ translateMe("Most Popular") }}
               </div>
@@ -217,7 +220,7 @@ export default {
             <div class="features">
               <ul>
                 <li
-                  class="feature"
+                   class="feature"
                   v-for="(featureKey, index) in Object.entries(
                     plan.features
                   ).slice(0, 4)"
@@ -267,7 +270,7 @@ export default {
               },
             ]"
           >
-            <div class="most-popular" v-if="index == 2">
+            <div class="most-popular" v-if="plan.is_popular">
               <div class="most-popular-label">
                 {{ translateMe("Most Popular") }}
               </div>
@@ -300,7 +303,7 @@ export default {
             <div class="features">
               <ul>
                 <li
-                  class="feature"
+                    class="feature"
                   v-for="(featureKey, index) in Object.entries(
                     plan.features
                   ).slice(0, 4)"

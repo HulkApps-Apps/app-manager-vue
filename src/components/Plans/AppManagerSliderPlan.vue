@@ -68,7 +68,7 @@
             <strong style="white-space: pre; font-weight: 900;">{{ translateMe('70% Off') }}</strong>
         </ToggleButton>
     </div>
-    <PlanShowcaseBanner :useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
+    <PlanShowcaseBanner v-if="bundle_plan" :useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
     <PPage
             class="app-manager-plan-page-slider custom-title"
     >
@@ -88,7 +88,7 @@
             <PlanTable :plans="plans" :currentPlan="plan" :selectedInterval="selectedPlan" @plan-clicked="handlePlanClicked" style="margin-left: 20px; margin-top: 20px;" :class="{ 'hide-all-features': !showPlansFeatures }" />
             </div>
             <div class="customization-bundle-section">
-                <GetCustomBlock :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />
+                <GetCustomBlock v-if="is_customizable" @click="handleCustomizePlan" :title="translateMe('Customization')" :description="translateMe('Check out all customization services that we offer')" :buttonText="translateMe('Get customization now')" style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;" />
                 <BundlePlanCard :plan="bundle_plan" :plan_details="bundle_details" @plan-clicked="selectPlan" style="margin-left: 20px; flex-basis: 62%; flex-grow: 1;" />
             </div>
             <!-- <PLayoutSection style="display: flex;border-radius: 20px;">
@@ -272,7 +272,7 @@
     export default {
         name: "AppManagerSliderPlan",
         components: { Carousel, Slide, YearlyPlanPromotion, PlanBanners, PPage, PStack, PStackItem, PButton, PButtonGroup, PHeading, PLayout, PLayoutSection, PTextContainer, PDataTable, PDataTableCol, PDataTableRow, PIcon, PTextStyle, PCardSection, PCard, PSkeletonDisplayText, PSkeletonBodyText, PSkeletonPage, PEmptyState, AppCard, PlanShowcaseBanner, CategoryHeading, BenefitsBanner, VariantButton, SelectButton, ToggleButton, PlanCardsHighlights, GetCustomBlock, PlanTable, BundlePlanCard },
-        props: ['shop_domain','host', 'discount_code'],
+        props: ['shop_domain','host', 'discount_code', 'is_customizable'],
         data() {
             return {
                 slideLength : 0,
@@ -391,9 +391,9 @@
             },
         },
         methods: {
-          translateMe(message){
-            return this.$translations.hasOwnProperty(message)?this.$translations[message]:message;
-          },
+            translateMe(message){
+              return this.$translations.hasOwnProperty(message)?this.$translations[message]:message;
+            },
             handleNavigationClick($event) {
                 const activeSlideIds = [];
                 let activeSlides = document.getElementsByClassName('VueCarousel-slide-active')
@@ -463,7 +463,7 @@
                     return this.translateMe(feature.value.replace('"', '').replace('"', ''));
                 }
             },
-            calculateDiscountedPrice(plan) {
+            calculateDiscountedPrice(plan) { console.log(plan);
                 if (plan.discount_type === 'percentage') {
                     return plan.price - (plan.price * plan.discount)/100
                 }
@@ -708,6 +708,9 @@
             togglePlansFeatures() {
                 this.showPlansFeatures = !this.showPlansFeatures;
             },
+            handleCustomizePlan(){
+              this.$emit('handleCustomizePlan')
+            }
         },
         async mounted() {
             this.planLoading = true;
