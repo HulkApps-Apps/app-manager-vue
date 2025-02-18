@@ -71,7 +71,7 @@
                     <VariantButton id="pricing-tab" v-if="valid_annual_plans.length > 0" :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'" @click="selectPlan('annually')">
                         {{ translateMe('Annually') }}
                     </VariantButton>
-                    <VariantButton id="pricing-tab" v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText="'25 Apps'">
+                    <VariantButton id="pricing-tab" v-if="bundle_plan !== null" :variant="selectedPlan === 'bundle' ? 'primary' : 'secondary'" @click="selectPlan('bundle')" :additionalText=" totalBundleApps +' Apps'">
                         {{ translateMe('Bundle') }}
                     </VariantButton>
                 </div>
@@ -253,7 +253,7 @@
             </PLayoutSection>
         </PLayout>
         <div v-if="bundle_plan !== null" class="bundle-plan">
-            <PlanShowcaseBanner useCardStyle="true" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
+            <PlanShowcaseBanner useCardStyle="true" :bundleApps="totalBundleApps" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)" :isCurrentPlan="isCurrentPlanId(bundle_plan)"/>
             <div class="light-divider"></div>
             <div class="bundle-category" v-for="category in bundle_details">
                 <CategoryHeading :headingData="category" />
@@ -263,7 +263,7 @@
             </div>
             <CategoryHeading :headingData="additionalBenefitsHeading" />
             <BenefitsBanner />
-            <PlanShowcaseBanner style="margin-top: 20px;" :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" :isCurrentPlan="isCurrentPlanId(bundle_plan)" @plan-clicked="handlePlanClicked(bundle_plan)"/>
+            <PlanShowcaseBanner style="margin-top: 20px;" :bundleApps="totalBundleApps"  :showcaseData="bundle_plan" :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)" :oldPrice="bundle_plan.price" :showDescription="false" :isCurrentPlan="isCurrentPlanId(bundle_plan)" @plan-clicked="handlePlanClicked(bundle_plan)"/>
         </div>
         <!--====================================================================-->
     </PPage>
@@ -411,6 +411,15 @@
                 }
                 return plans;
             },
+            totalBundleApps() {
+                let totalApps = 0;
+                if (this.bundle_details) {
+                    this.bundle_details.forEach(category => {
+                        totalApps += category.apps_relation.length;
+                    });
+                }
+                return totalApps;
+            }
         },
         methods: {
             translateMe(message) {
