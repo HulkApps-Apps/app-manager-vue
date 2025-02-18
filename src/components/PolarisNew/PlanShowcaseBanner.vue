@@ -42,6 +42,11 @@ export default {
       required: false,
       default: false,
     },
+    bundleApps: {
+      type: Number,
+      required: false,
+      default: 18
+    },
   },
   methods: {
     handlePlanClick() {
@@ -66,7 +71,9 @@ export default {
     <div class="plan-showcase-banner banner-card">
       <div v-if="showDescription" class="plan-left">
         <p>
-          {{ translateMe("Get 24 Shopify apps and save more than") }}
+          {{ translateMe("Get") }}
+          {{bundleApps}}
+          {{ translateMe("Shopify apps and save more than") }}
           <strong>{{ translateMe("$1000") }}</strong>
           {{ translateMe("per month!") }}
         </p>
