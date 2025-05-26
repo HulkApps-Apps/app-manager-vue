@@ -1,6 +1,6 @@
 <script>
 import VariantButton from "./VariantButton";
-import Swiper, { Navigation, Pagination } from "swiper";
+import Swiper, {Navigation, Pagination} from "swiper";
 import "swiper/swiper-bundle.css";
 
 export default {
@@ -27,6 +27,14 @@ export default {
       interval: "EVERY_30_DAYS",
       placeholder: {
         description: "Perfect for everything",
+      },
+      remainingPlansMonthly: {
+        before: 0,
+        after: 0
+      },
+      remainingPlansAnnually: {
+        before: 0,
+        after: 0
       },
     };
   },
@@ -57,9 +65,41 @@ export default {
         return;
       }
       swiperPlanNavigations.forEach((navigation) => {
-        navigation.style.width = `${pricingTable.offsetWidth + 110}px`;
-        navigation.style.left = `${pricingTable.offsetLeft - 55}px`;
+        navigation.style.width = `${pricingTable.offsetWidth + 130}px`;
+        navigation.style.left = `${pricingTable.offsetLeft - 65}px`;
       });
+    },
+    updateRemainingPlans(swiper, type = 'monthly') {
+      if (!swiper) return;
+
+      const totalSlides = swiper.slides.length;
+      const currentIndex = swiper.activeIndex;
+
+      let visibleSlides = 1;
+      if (typeof swiper.params.slidesPerView === 'number') {
+        visibleSlides = swiper.params.slidesPerView;
+      } else if (swiper.params.breakpoints) {
+        const viewport = window.innerWidth;
+        const breakpoints = swiper.params.breakpoints;
+        const sorted = Object.keys(breakpoints)
+            .map(Number)
+            .sort((a, b) => a - b);
+
+        for (const bp of sorted) {
+          if (viewport >= bp && typeof breakpoints[bp].slidesPerView === 'number') {
+            visibleSlides = breakpoints[bp].slidesPerView;
+          }
+        }
+      }
+
+      const after = Math.max(totalSlides - (currentIndex + visibleSlides), 0);
+      const before = currentIndex;
+
+      if (type === 'annually') {
+        this.remainingPlansAnnually = {after, before};
+      } else {
+        this.remainingPlansMonthly = {after, before};
+      }
     },
   },
   watch: {
@@ -110,10 +150,18 @@ export default {
           slidesPerView: 2,
         },
         768: {
-          slidesPerView: 3,
+          slidesPerView: Math.min(this.monthlyPlans.length, 3),
         },
         1024: {
-          slidesPerView: 4,
+          slidesPerView: Math.min(this.monthlyPlans.length, 4),
+        },
+      },
+      on: {
+        slideChange: (swiper) => {
+          this.updateRemainingPlans(swiper)
+        },
+        afterInit: (swiper) => {
+          this.updateRemainingPlans(swiper)
         },
       },
     });
@@ -135,10 +183,18 @@ export default {
           slidesPerView: 2,
         },
         768: {
-          slidesPerView: 3,
+          slidesPerView: Math.min(this.annualPlans.length, 3),
         },
         1024: {
-          slidesPerView: 4,
+          slidesPerView: Math.min(this.annualPlans.length, 4),
+        },
+      },
+      on: {
+        slideChange: (swiper) => {
+          this.updateRemainingPlans(swiper, 'annually')
+        },
+        afterInit: (swiper) => {
+          this.updateRemainingPlans(swiper, 'annually')
         },
       },
     });
@@ -146,6 +202,7 @@ export default {
 
     console.log('Plans:', this.plans);
     console.log('Monthly Plans:', this.monthlyPlans);
+    console.log('Annually Plans:', this.annualPlans);
   },
 };
 </script>
@@ -154,18 +211,29 @@ export default {
   <div class="container">
     <div class="swiper-plan-h-navigation nav-monthly">
       <button class="swiper-plan-h-prev-monthly">
-        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+        <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">+{{
+            this.remainingPlansMonthly.before
+          }} Plans</span>
+        <img src="../../assets/NavigationLeft.svg" alt="Nav Left"/>
       </button>
       <button class="swiper-plan-h-next-monthly">
-        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+        <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">+{{
+            this.remainingPlansMonthly.after
+          }} Plans</span>
+        <img src="../../assets/NavigationRight.svg" alt="Nav Right"/>
       </button>
     </div>
     <div class="swiper-plan-h-navigation nav-annually">
       <button class="swiper-plan-h-prev-annually">
-        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+        <span class="plans-remaining"
+              v-if="this.remainingPlansAnnually.before > 0">+{{ this.remainingPlansAnnually.before }} Plans</span>
+        <img src="../../assets/NavigationLeft.svg" alt="Nav Left"/>
       </button>
       <button class="swiper-plan-h-next-annually">
-        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+        <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">+{{
+            this.remainingPlansAnnually.after
+          }} Plans</span>
+        <img src="../../assets/NavigationRight.svg" alt="Nav Right"/>
       </button>
     </div>
     <div ref="swiperMonthly" class="swiper cards monthly plans-h-cards">
@@ -179,12 +247,7 @@ export default {
           <div
             :class="[
               'card',
-              {
-                'card-border':
-                  index !== 0 &&
-                  index !== 2 &&
-                  !(annualPlans[index - 1] && index - 1 === 2),
-              },
+              'card-border'
             ]"
           >
             <div class="most-popular" v-if="plan.is_popular">
@@ -207,15 +270,15 @@ export default {
               }}
             </h6>
             <VariantButton
-              :variant="'primary'"
-              :disabled="currentPlan.id === plan.id"
-              @click="handlePlanClick(plan)"
-              class="button"
-              >{{
-                currentPlan.id === plan.id
-                  ? translateMe("Current Plan")
-                  : translateMe("Choose Plan")
-              }}</VariantButton
+                :variant="'secondary'"
+                :disabled="currentPlan && currentPlan.id === plan.id"
+                @click="handlePlanClick(plan)"
+            >{{
+                currentPlan && currentPlan.id === plan.id
+                    ? translateMe("Current Plan")
+                    : translateMe("Choose Plan")
+              }}
+            </VariantButton
             >
             <div class="features">
               <ul>
@@ -262,12 +325,7 @@ export default {
           <div
             :class="[
               'card',
-              {
-                'card-border':
-                  index !== 0 &&
-                  index !== 2 &&
-                  !(annualPlans[index - 1] && index - 1 === 2),
-              },
+              'card-border'
             ]"
           >
             <div class="most-popular" v-if="plan.is_popular">
@@ -290,15 +348,15 @@ export default {
               }}
             </h6>
             <VariantButton
-              :variant="'primary'"
-              :disabled="currentPlan.id === plan.id"
-              @click="handlePlanClick(plan)"
-              class="button"
-              >{{
-                currentPlan.id === plan.id
-                  ? translateMe("Current Plan")
-                  : translateMe("Choose Plan")
-              }}</VariantButton
+                :variant="'secondary'"
+                :disabled="currentPlan && currentPlan.id === plan.id"
+                @click="handlePlanClick(plan)"
+            >{{
+                currentPlan && currentPlan.id === plan.id
+                    ? translateMe("Current Plan")
+                    : translateMe("Choose Plan")
+              }}
+            </VariantButton
             >
             <div class="features">
               <ul>
@@ -351,11 +409,13 @@ export default {
   padding: 40px 0px 0px 20px;
   width: 100%;
 }
+
 .swiper.cards.annually {
   visibility: hidden;
   height: 0px;
   position: relative;
 }
+
 .swiper-pagination {
   height: 12px;
   position: relative;
@@ -365,6 +425,7 @@ export default {
   gap: 0px;
   margin-top: 26px;
 }
+
 .cards {
   display: flex;
   background-color: white;
@@ -373,29 +434,34 @@ export default {
   border-radius: 12px;
   overflow-x: clip;
   overflow-y: visible;
-  box-shadow: 0px 4px 6px -1px #0000001a;
+  box-shadow: 0 4px 6px -1px #0000001a;
 }
+
 .card {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   padding: 16px;
 }
-.card-border {
+
+.swiper-wrapper .swiper-slide:not(.swiper-slide-active) .card-border {
   border-left: 1px solid #cccccc;
 }
+
 .card .title {
   font-size: 16px;
   font-weight: 700;
   color: black;
 }
+
 .card .price {
   font-size: 30px;
   font-weight: 700;
   color: black;
 }
+
 .card .price span {
   font-size: 13px;
   font-weight: 400;
@@ -403,40 +469,48 @@ export default {
   margin-left: -6px;
   line-height: 0;
 }
+
 .card .description {
   font-size: 13px;
   font-weight: 400;
   color: #00000080;
 }
+
 .button {
   display: flex;
   justify-content: center;
   width: 100% !important;
   text-align: center !important;
 }
+
 .features {
   margin-top: 19px;
 }
+
 .features ul {
   display: flex;
   align-items: flex-start;
   gap: 6px;
   flex-direction: column;
 }
+
 .features .feature {
   display: flex;
   align-items: center;
   gap: 4px;
 }
+
 .features .feature svg {
   min-width: 20px;
   min-height: 20px;
 }
+
 .feature span {
   font-size: 13px;
   font-weight: 400;
   color: #00000080;
 }
+
 .most-popular {
   position: absolute;
   z-index: -1;
@@ -465,9 +539,11 @@ export default {
   justify-content: space-between;
   padding: 16px 0px;
 }
+
 .nav-annually {
   display: none;
 }
+
 .swiper-plan-h-prev-monthly,
 .swiper-plan-h-prev-annually,
 .swiper-plan-h-next-monthly,
@@ -481,6 +557,7 @@ export default {
   border-radius: 8px;
   cursor: pointer;
 }
+
 .swiper-plan-h-prev-monthly:disabled,
 .swiper-plan-h-next-monthly:disabled,
 .swiper-plan-h-next-annually:disabled,
@@ -488,10 +565,38 @@ export default {
   visibility: hidden;
 }
 
+.plans-remaining {
+  position: absolute;
+  top: -30px;
+  background-color: white;
+  color: #333;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 4px 8px #00000026;
+}
+
+.plans-remaining::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+}
+
 @media (max-width: 640px) {
   .card-border {
     border-left: none;
   }
+
   .most-popular {
     border: 1px solid #91d0ff;
     border-radius: 12px;
@@ -501,13 +606,13 @@ export default {
 
 <style>
 .swiper-pagination .swiper-pagination-bullet {
-  background: none;
-  background-color: #757575;
+  background: #757575 none;
   opacity: 1;
   transition: all 0.5s;
   width: 8px;
   height: 8px;
 }
+
 .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #0094d5;
   width: 12px;

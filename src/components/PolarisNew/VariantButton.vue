@@ -73,26 +73,60 @@ export default {
   text-decoration: none !important;
   font-size: 13px !important;
   font-weight: 450 !important;
-  color: rgb(74, 74, 74) !important;
+  color: rgb(74, 74, 74);
 }
+
 .button:hover {
   background-color: #0000000d !important;
   border-radius: 8px !important;
 }
+
 .button-primary {
-  background-color: #f2f2f2 !important;
-  color: #303030 !important;
-  border-radius: 8px !important;
+  padding: 6px 12px;
+  background-color: #303030;
+  background-image: linear-gradient(
+      #30303000 63.53%,
+      #ffffff26
+  );
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 650;
+  box-shadow:
+      #000000cc 0 -1px 0 1px inset,
+      #303030 0 0 0 1px inset,
+      #ffffff40 0 0.5px 0 1.5px inset;
 }
+
 .button-primary:hover {
-  background-color: #f6f6f6 !important;  
+  background-color: #1a1a1a !important;
 }
-.button-primary:active {
-  background-color: #f2f2f2 !important;
+
+.button-primary:active,
+.button-primary.disabled,
+.button-secondary:active,
+.button-secondary.disabled {
+  background-color: #cccccc !important;
+  box-shadow: 0 2px 1px 0 #1a1a1a33 inset;
 }
+
 .button-secondary {
-  color: black !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-radius: 8px !important;
+  box-shadow:
+      #e3e3e3 0 1px 0 0 inset,
+      #e3e3e3 1px 0 0 0 inset,
+      #e3e3e3 -1px 0 0 0 inset,
+      #b5b5b5 0 -1px 0 0 inset;
 }
+
+.button-secondary:hover {
+  background-color: #fafafa !important;
+}
+
 .additional-info-primary {
   background-color: rgba(0, 0, 0, 0.06) !important;
   color: #616161 !important;
@@ -101,6 +135,7 @@ export default {
   font-size: 13px !important;
   font-weight: 550 !important;
 }
+
 .additional-info-secondary {
   background-color: rgba(0, 0, 0, 0.06) !important;
   color: #616161 !important;
@@ -108,6 +143,7 @@ export default {
   border-radius: 8px !important;
   font-weight: 550 !important;
 }
+
 .disabled {
   background-color: rgba(0, 0, 0, 0.15) !important;
   font-size: 13px !important;

@@ -26,8 +26,8 @@ export default {
 <template>
   <a @click="handleClick" class="button" :class="{ 'is-toggled': toggled }">
     <svg
-      width="12"
-      height="13"
+      width="18"
+      height="18"
       viewBox="0 0 12 13"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -59,8 +59,8 @@ export default {
   display: flex;
   width: fit-content !important;
   align-items: center !important;
-  gap: 4px !important;
-  padding: 12px !important;
+  gap: 3px !important;
+  padding: 10px 12px !important;
   text-decoration: none !important;
   font-size: 12px !important;
   font-weight: 550 !important;
@@ -68,25 +68,26 @@ export default {
   border-left: 1px solid #e3e3e3;
   border-top: 1px solid #e3e3e3;
   border-right: 1px solid #e3e3e3;
-  background-color: white !important;
-  border-radius: 8px !important;
+  background-color: #ffffff !important;
+  border-radius: 32px !important;
   transition: all 0.3s !important;
-  box-shadow: 0px 1px 0px 0px #e3e3e3 inset;
-  box-shadow: 1px 0px 0px 0px #e3e3e3 inset;
-  box-shadow: -1px 0px 0px 0px #e3e3e3 inset;
-  box-shadow: 0px -1px 0px 0px #b5b5b5 inset;
+  box-shadow:
+      #e3e3e3 0 1px 0 0 inset,
+      #e3e3e3 1px 0 0 0 inset,
+      #e3e3e3 -1px 0 0 0 inset,
+      #b5b5b5 0 -1px 0 0 inset;
+  cursor: pointer;
 }
 .button.is-toggled {
   background-color: #cccccc !important;
   color: #303030 !important;
-  box-shadow: 0px 2px 1px 0px #1a1a1a33 inset;
-  box-shadow: 1px 0px 1px 0px #1a1a1a1f inset;
-  box-shadow: -1px 0px 1px 0px #1a1a1a1f inset;
+  box-shadow:
+      #1a1a1a33 0 2px 1px 0 inset,
+      #1a1a1a1f 1px 0 1px 0 inset,
+      #1a1a1a1f -1px 0 1px 0 inset;
 }
 .button:hover {
-  background-color: #0000000d !important;
-  border-radius: 8px !important;
-  cursor: pointer !important;
+  background-color: #f4f4f4 !important;
 }
 
 </style>

@@ -52,7 +52,7 @@ export default {
       <span class="apps-count">{{ allApps.length }} {{ translateMe("Apps") }}</span>
     </div>
     <div class="apps-list">
-      <div v-for="(app, index) in allApps" :key="app.id" class="app">
+      <div v-for="(app, index) in allApps" :key="app.id + '_' + index" class="app">
         <template v-if="index <= 8">
           <img
             :src="app.app_logo_url"

@@ -7,6 +7,14 @@ export default {
   data() {
     return {
       isSyncing: false,
+      remainingPlansMonthly: {
+        before: 0,
+        after: 0
+      },
+      remainingPlansAnnually: {
+        before: 0,
+        after: 0
+      },
     };
   },
   name: "PlanTable",
@@ -105,9 +113,9 @@ export default {
       if (!pricingTable) return;
       swiperPlanNavigations.forEach((swiperPlanNavigation) => {
         swiperPlanNavigation.style.width = `${
-          pricingTable.offsetWidth + 110
+          pricingTable.offsetWidth + 130
         }px`;
-        swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 55}px`;
+        swiperPlanNavigation.style.left = `${pricingTable.offsetLeft - 65}px`;
       });
     },
     syncScroll(source, targets) {
@@ -130,6 +138,39 @@ export default {
           this.syncScroll(element, allElements);
         });
       });
+    },
+
+    updateRemainingPlans(swiper, type = 'monthly') {
+      if (!swiper) return;
+
+      const totalSlides = swiper.slides.length;
+      const currentIndex = swiper.activeIndex;
+
+      let visibleSlides = 1;
+      if (typeof swiper.params.slidesPerView === 'number') {
+        visibleSlides = swiper.params.slidesPerView;
+      } else if (swiper.params.breakpoints) {
+        const viewport = window.innerWidth;
+        const breakpoints = swiper.params.breakpoints;
+        const sorted = Object.keys(breakpoints)
+            .map(Number)
+            .sort((a, b) => a - b);
+
+        for (const bp of sorted) {
+          if (viewport >= bp && typeof breakpoints[bp].slidesPerView === 'number') {
+            visibleSlides = breakpoints[bp].slidesPerView;
+          }
+        }
+      }
+
+      const after = Math.max(totalSlides - (currentIndex + visibleSlides), 0);
+      const before = currentIndex;
+
+      if (type === 'annually') {
+        this.remainingPlansAnnually = { after, before };
+      } else {
+        this.remainingPlansMonthly = { after, before };
+      }
     },
   },
 
@@ -215,7 +256,7 @@ export default {
     new Swiper(this.$refs.swiperMonthlyTable, {
       modules: [Navigation, Pagination],
       loop: false,
-      slidesPerView: 3,
+      slidesPerView: 2,
       speed: 500,
       navigation: {
         nextEl: ".swiper-plan-monthly-next",
@@ -229,18 +270,24 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: 3,
+          slidesPerView: Math.min(this.monthlyPlans.length, 3),
         },
       },
       on: {
-        slideChange: this.syncAllHeights, // Run syncHeights on each slide change
-        afterInit: this.syncAllHeights, // Sync heights after initial Swiper setup
+        slideChange: (swiper) => {
+          this.syncAllHeights()
+          this.updateRemainingPlans(swiper)
+        }, // Run syncHeights on each slide change
+        afterInit: (swiper) => {
+          this.syncAllHeights()
+          this.updateRemainingPlans(swiper)
+        }, // Sync heights after initial Swiper setup
       },
     });
     new Swiper(this.$refs.swiperAnnuallyTable, {
       modules: [Navigation, Pagination],
       loop: false,
-      slidesPerView: 3,
+      slidesPerView: 2,
       speed: 500,
       navigation: {
         nextEl: ".swiper-plan-annually-next",
@@ -254,12 +301,18 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: 3,
+          slidesPerView: Math.min(this.annualPlans.length, 3),
         },
       },
       on: {
-        slideChange: this.syncAllHeights, // Run syncHeights on each slide change
-        afterInit: this.syncAllHeights, // Sync heights after initial Swiper setup
+        slideChange: (swiper) => {
+          this.syncAllHeights()
+          this.updateRemainingPlans(swiper, 'annually')
+        }, // Run syncHeights on each slide change
+        afterInit: (swiper) => {
+          this.syncAllHeights()
+          this.updateRemainingPlans(swiper, 'annually')
+        }, // Sync heights after initial Swiper setup
       },
     });
 
@@ -274,17 +327,21 @@ export default {
   <div class="container">
     <div class="swiper-plan-navigation nav-monthly-table">
       <button class="swiper-plan-monthly-prev">
+        <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">+{{ this.remainingPlansMonthly.before }} Plans</span>
         <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
       </button>
       <button class="swiper-plan-monthly-next">
+        <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">+{{ this.remainingPlansMonthly.after }} Plans</span>
         <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
       </button>
     </div>
     <div class="swiper-plan-navigation nav-annually-table">
       <button class="swiper-plan-annually-prev">
+        <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">+{{ this.remainingPlansAnnually.before }} Plans</span>
         <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
       </button>
       <button class="swiper-plan-annually-next">
+        <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">+{{ this.remainingPlansAnnually.after }} Plans</span>
         <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
       </button>
     </div>
@@ -327,12 +384,12 @@ export default {
                 </h4>
               </div>
               <VariantButton
-                :variant="'primary'"
-                :disabled="currentPlan.id === plan.id"
+                :variant="'secondary'"
+                :disabled="currentPlan && currentPlan.id === plan.id"
                 @click="handlePlanClick(plan)"
-                class="choose-button"
+                class="button"
                 >{{
-                  currentPlan.id === plan.id
+                  currentPlan && currentPlan.id === plan.id
                     ? translateMe("Current Plan")
                     : translateMe("Choose Plan")
                 }}</VariantButton
@@ -396,12 +453,12 @@ export default {
                 </h4>
               </div>
               <VariantButton
-                :variant="'primary'"
-                :disabled="currentPlan.id === plan.id"
+                :variant="'secondary'"
+                :disabled="currentPlan && currentPlan.id === plan.id"
                 @click="handlePlanClick(plan)"
-                class="choose-button"
+                class="button"
                 >{{
-                  currentPlan.id === plan.id
+                  currentPlan && currentPlan.id === plan.id
                     ? translateMe("Current Plan")
                     : translateMe("Choose Plan")
                 }}</VariantButton
@@ -578,6 +635,33 @@ export default {
 }
 #table-left::-webkit-scrollbar {
   display: none;
+}
+
+.plans-remaining {
+  position: absolute;
+  top: -30px;
+  background-color: white;
+  color: #333;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 4px 8px #00000026;
+}
+
+.plans-remaining::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
 }
 
 @media (max-width: 768px) {
