@@ -633,6 +633,7 @@ export default {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 #table-left::-webkit-scrollbar {
   display: none;
 }
