@@ -211,37 +211,78 @@ export default {
           return planDetails;
         });
     },
-    annualPlansFeatures() {
-      let plansWithFeatures = this.annualPlans.flatMap((plan) => plan.features);
-      let allFeatures = [];
-      let seenIds = new Set();
-      plansWithFeatures.forEach((plan) => {
-        Object.keys(plan).forEach((featureKey) => {
-          const feature = plan[featureKey];
-          if (!seenIds.has(feature.feature_id)) {
-            allFeatures.push(feature);
-            seenIds.add(feature.feature_id);
-          }
-        });
-      });
-      return allFeatures;
-    },
     monthlyPlansFeatures() {
       let plansWithFeatures = this.monthlyPlans.flatMap(
         (plan) => plan.features
       );
-      let allFeatures = [];
+      let groupedFeatures = {};
       let seenIds = new Set();
+      let hasGroupFields = false;
+
       plansWithFeatures.forEach((plan) => {
         Object.keys(plan).forEach((featureKey) => {
           const feature = plan[featureKey];
           if (!seenIds.has(feature.feature_id)) {
-            allFeatures.push(feature);
+            if (feature.group && feature.group_order) {
+              hasGroupFields = true;
+            }
+            
+            const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
+            if (!groupedFeatures[group]) {
+              groupedFeatures[group] = {
+                name: group,
+                order: hasGroupFields ? (feature.group_order || 999) : 999,
+                features: []
+              };
+            }
+            groupedFeatures[group].features.push(feature);
             seenIds.add(feature.feature_id);
           }
         });
       });
-      return allFeatures;
+
+      const groups = Object.values(groupedFeatures).sort((a, b) => a.order - b.order);
+      if (groups.length === 1 || !hasGroupFields) {
+        groups.forEach(group => group.name = '');
+      }
+      
+      return groups;
+    },
+    annualPlansFeatures() {
+      let plansWithFeatures = this.annualPlans.flatMap((plan) => plan.features);
+      let groupedFeatures = {};
+      let seenIds = new Set();
+      let hasGroupFields = false;
+
+      plansWithFeatures.forEach((plan) => {
+        Object.keys(plan).forEach((featureKey) => {
+          const feature = plan[featureKey];
+          if (!seenIds.has(feature.feature_id)) {
+            if (feature.group && feature.group_order) {
+              hasGroupFields = true;
+            }
+            
+            const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
+            if (!groupedFeatures[group]) {
+              groupedFeatures[group] = {
+                name: group,
+                order: hasGroupFields ? (feature.group_order || 999) : 999,
+                features: []
+              };
+            }
+            groupedFeatures[group].features.push(feature);
+            seenIds.add(feature.feature_id);
+          }
+        });
+      });
+
+      const groups = Object.values(groupedFeatures).sort((a, b) => a.order - b.order);
+      
+      if (groups.length === 1 || !hasGroupFields) {
+        groups.forEach(group => group.name = '');
+      }
+      
+      return groups;
     },
   },
 
@@ -261,7 +302,6 @@ export default {
         monthlyPlanTable.style.padding = "16px";
         annuallyPlanTable.style.visibility = "hidden";
         annuallyPlanTable.style.height = "0px";
-        annuallyPlanTable.style.border = "0px";
         annuallyPlanTable.style.padding = "0px";
         monthlyPlanTableNavigation.style.display = "flex";
         annuallyPlanTableNavigation.style.display = "none";
@@ -271,7 +311,6 @@ export default {
         monthlyPlanTable.style.visibility = "hidden";
         monthlyPlanTable.style.height = "0px";
         monthlyPlanTable.style.padding = "0px";
-        monthlyPlanTable.style.border = "0px";
         monthlyPlanTable.style.padding = "0px";
         annuallyPlanTable.style.visibility = "visible";
         annuallyPlanTable.style.height = "auto";
@@ -385,13 +424,18 @@ export default {
             {{ monthlyPlans.length }} {{ translateMe("Plans available") }}
           </h3>
         </div>
-        <div
-          class="plan-feature-name plan-feature-name-monthly"
-          v-for="(feature, index) in monthlyPlansFeatures"
-          :key="feature.id"
-        >
-          {{ feature.name }}
-        </div>
+        <template v-for="group in monthlyPlansFeatures">
+          <div v-if="group.name" class="feature-group-header plan-feature-name plan-feature-name-monthly">
+            {{ group.name }}
+          </div>
+          <div
+            class="plan-feature-name plan-feature-name-monthly"
+            v-for="feature in group.features"
+            :key="feature.feature_id"
+          >
+            {{ feature.name }}
+          </div>
+        </template>
       </div>
       <div class="swiper plans monthly" ref="swiperMonthlyTable" id="plans-table">
         <div class="swiper-wrapper">
@@ -438,24 +482,29 @@ export default {
                   )
               }}</VariantButton>
             </div>
-            <div
-              class="plan-feature plan-feature-monthly"
-              v-for="(feature, index) in monthlyPlansFeatures"
-              :key="feature.id"
-            >
-              <img
-                src="../../assets/CheckTrue.svg"
-                alt="Checkmark True"
-                class="plan-table-checkmark"
-                v-if="hasFeature(plan, feature)"
-              />
-              <img
-                src="../../assets/CheckFalse.svg"
-                alt="Checkmark False"
-                class="plan-table-checkmark"
-                v-if="!hasFeature(plan, feature)"
-              />
-            </div>
+            <template v-for="group in monthlyPlansFeatures">
+              <div v-if="group.name" class="feature-group-header plan-feature plan-feature-monthly">
+                {{ group.name }}
+              </div>
+              <div
+                class="plan-feature plan-feature-monthly"
+                v-for="feature in group.features"
+                :key="feature.feature_id"
+              >
+                <img
+                  src="../../assets/CheckTrue.svg"
+                  alt="Checkmark True"
+                  class="plan-table-checkmark"
+                  v-if="hasFeature(plan, feature)"
+                />
+                <img
+                  src="../../assets/CheckFalse.svg"
+                  alt="Checkmark False"
+                  class="plan-table-checkmark"
+                  v-if="!hasFeature(plan, feature)"
+                />
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -465,13 +514,18 @@ export default {
         <div class="table-header plans-available plans-available-annually">
           <h3>{{ annualPlans.length }} {{ translateMe("Plans available") }}</h3>
         </div>
-        <div
-          class="plan-feature-name plan-feature-name-annually"
-          v-for="(feature, index) in annualPlansFeatures"
-          :key="feature.id"
-        >
-          {{ feature.name }}
-        </div>
+        <template v-for="group in annualPlansFeatures">
+          <div v-if="group.name" class="feature-group-header plan-feature-name plan-feature-name-annually">
+            {{ group.name }}
+          </div>
+          <div
+            class="plan-feature-name plan-feature-name-annually"
+            v-for="feature in group.features"
+            :key="feature.feature_id"
+          >
+            {{ feature.name }}
+          </div>
+        </template>
       </div>
       <div class="swiper plans annually" ref="swiperAnnuallyTable" id="plans-table">
         <div class="swiper-wrapper">
@@ -518,24 +572,29 @@ export default {
                   )
               }}</VariantButton>
             </div>
-            <div
-              class="plan-feature plan-feature-annually"
-              v-for="(feature, index) in annualPlansFeatures"
-              :key="feature.id"
-            >
-              <img
-                src="../../assets/CheckTrue.svg"
-                alt="Checkmark True"
-                class="plan-table-checkmark"
-                v-if="hasFeature(plan, feature)"
-              />
-              <img
-                src="../../assets/CheckFalse.svg"
-                alt="Checkmark False"
-                class="plan-table-checkmark"
-                v-if="!hasFeature(plan, feature)"
-              />
-            </div>
+            <template v-for="group in annualPlansFeatures">
+              <div v-if="group.name" class="feature-group-header plan-feature plan-feature-annually">
+                {{ group.name }}
+              </div>
+              <div
+                class="plan-feature plan-feature-annually"
+                v-for="feature in group.features"
+                :key="feature.feature_id"
+              >
+                <img
+                  src="../../assets/CheckTrue.svg"
+                  alt="Checkmark True"
+                  class="plan-table-checkmark"
+                  v-if="hasFeature(plan, feature)"
+                />
+                <img
+                  src="../../assets/CheckFalse.svg"
+                  alt="Checkmark False"
+                  class="plan-table-checkmark"
+                  v-if="!hasFeature(plan, feature)"
+                />
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -547,13 +606,15 @@ export default {
 .container {
   width: 100%;
 }
+
 .pricing-table {
   display: grid;
-  width: 100%;
+  width: calc(100% + 2px);
   grid-template-columns: repeat(3, 1fr);
   background-color: white;
   border-radius: 16px;
-  box-shadow: 0px 4px 6px -1px #0000001a;
+  box-shadow: 0 4px 6px -1px #0000001a;
+  border: 1px solid #e5e5e5;
 }
 
 .pricing-table.monthly-table {
@@ -562,24 +623,27 @@ export default {
 
 .plans {
   grid-column: span 2;
-  max-height: 420px;
+  max-height: 500px;
   overflow-y: auto;
 }
+
 .annually-table {
   visibility: hidden;
-  height: 0px;
-  border: 0px;
+  height: 0;
 }
+
 .pricing-table-inner__left {
   display: flex;
   flex-direction: column;
-  max-height: 420px;
+  max-height: 500px;
   overflow-y: auto;
 }
+
 .swiper {
   width: 100%;
   height: 100%;
 }
+
 .table-header {
   display: flex;
   align-items: center;
@@ -589,16 +653,19 @@ export default {
   position: sticky;
   top: 0;
 }
+
 .table-header h3 {
   font-size: 13px;
   font-weight: 700;
   line-height: 20px;
   color: #303030;
 }
+
 .plan-header-wrapper {
   padding: 16px;
   border-bottom: 1px solid #e3e3e3;
 }
+
 .plan-feature {
   display: flex;
   align-items: center;
@@ -670,6 +737,7 @@ export default {
   font-weight: 700;
   color: #303030;
 }
+
 .plan-header-wrapper .price-wrapper h4 h6 {
   display: inline;
   font-size: 13px;
@@ -678,6 +746,7 @@ export default {
   margin-left: -4px;
   line-height: 0;
 }
+
 .swiper-plan-navigation {
   position: absolute;
   margin-top: 32px;
@@ -685,9 +754,11 @@ export default {
   justify-content: space-between;
   padding: 16px 0px;
 }
+
 .nav-annually-table {
   display: none;
 }
+
 .swiper-plan-monthly-prev,
 .swiper-plan-monthly-next,
 .swiper-plan-annually-next,
@@ -701,21 +772,26 @@ export default {
   border-radius: 8px;
   cursor: pointer;
 }
+
 .swiper-plan-monthly-prev:disabled,
 .swiper-plan-monthly-next:disabled,
 .swiper-plan-annually-next:disabled,
 .swiper-plan-annually-prev:disabled {
   visibility: hidden;
 }
+
 .choose-button {
   background-color: white !important;
 }
+
 .choose-button:hover {
   background-color: #f9f9f9 !important;
 }
+
 .choose-button.disabled {
   background-color: rgba(0, 0, 0, 0.15) !important;
 }
+
 #table-left {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -752,9 +828,37 @@ export default {
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
 }
 
+.feature-group-header.plan-feature-name {
+  font-size: 0 !important;
+}
+
+.feature-group-header {
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #f5f5f5;
+  color: #303030;
+  max-height: 30px;
+  padding: 5px !important;
+  border-bottom: 1px solid #e3e3e3;
+  border-left: 1px solid #e3e3e3;
+}
+
+.feature-group-header.plan-feature {
+  text-align: center;
+  border-left: 1px solid #e3e3e3;
+}
+
+.last-slide .feature-group-header.plan-feature {
+  border-right: 1px solid #e3e3e3;
+}
+
 @media (max-width: 640px) {
   .swiper-plan-navigation {
     display: none;
+  }
+
+  .pricing-table {
+    width: calc(100% + -1px);
   }
 }
 </style>
