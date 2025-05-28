@@ -391,7 +391,11 @@ export default {
                 >{{
                   currentPlan && currentPlan.id === plan.id
                     ? translateMe("Current Plan")
-                    : translateMe("Choose Plan")
+                    : (
+                      plan.price > currentPlan.price 
+                      ? translateMe("Upgrade") 
+                      : translateMe("Switch to this plan")
+                    )
                 }}</VariantButton
               >
             </div>
@@ -459,8 +463,12 @@ export default {
                 class="button"
                 >{{
                   currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Current Plan")
-                    : translateMe("Choose Plan")
+                    ? translateMe("Selected Plan")
+                    : (
+                      plan.price > currentPlan.price 
+                      ? translateMe("Upgrade") 
+                      : translateMe("Switch to this plan")
+                    )
                 }}</VariantButton
               >
             </div>

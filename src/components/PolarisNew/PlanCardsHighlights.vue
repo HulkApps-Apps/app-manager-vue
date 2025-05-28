@@ -38,6 +38,7 @@ export default {
       },
       anyMonthlyPlanHasDiscount: false,
       anyAnnuallyPlanHasDiscount: false,
+      loadingPlanId: null
     };
   },
   computed: {
@@ -53,8 +54,14 @@ export default {
     },
   },
   methods: {
-    handlePlanClick(plan) {
-      this.$emit("plan-clicked", plan);
+    async handlePlanClick(plan) {
+      this.loadingPlanId = plan.id;
+      try {
+        await this.$emit("plan-clicked", plan);
+      } catch (error) {
+        console.error('Error handling plan click:', error);
+        this.loadingPlanId = null;
+      }
     },
     translateMe(message) {
       return this.$translations.hasOwnProperty(message)
@@ -329,11 +336,16 @@ export default {
             <VariantButton
                 :variant="'secondary'"
                 :disabled="currentPlan && currentPlan.id === plan.id"
+                :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
             >{{
                 currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Current Plan")
-                    : translateMe("Choose Plan")
+                    ? translateMe("Selected Plan")
+                    : (
+                      plan.price > currentPlan.price 
+                      ? translateMe("Upgrade") 
+                      : translateMe("Choose Plan")
+                    )
               }}
             </VariantButton
             >
@@ -422,11 +434,16 @@ export default {
             <VariantButton
                 :variant="'secondary'"
                 :disabled="currentPlan && currentPlan.id === plan.id"
+                :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
             >{{
                 currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Current Plan")
-                    : translateMe("Choose Plan")
+                    ? translateMe("Selected Plan")
+                    : (
+                      plan.price > currentPlan.price 
+                      ? translateMe("Upgrade") 
+                      : translateMe("Choose Plan")
+                    )
               }}
             </VariantButton
             >

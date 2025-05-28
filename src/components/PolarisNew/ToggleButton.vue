@@ -69,7 +69,7 @@ export default {
   border-top: 1px solid #e3e3e3;
   border-right: 1px solid #e3e3e3;
   background-color: #ffffff !important;
-  border-radius: 32px !important;
+  border-radius: 8px !important;
   transition: all 0.3s !important;
   box-shadow:
       #e3e3e3 0 1px 0 0 inset,
@@ -78,6 +78,8 @@ export default {
       #b5b5b5 0 -1px 0 0 inset;
   cursor: pointer;
 }
+
+.button:hover,
 .button.is-toggled {
   background-color: #cccccc !important;
   color: #303030 !important;
@@ -85,9 +87,6 @@ export default {
       #1a1a1a33 0 2px 1px 0 inset,
       #1a1a1a1f 1px 0 1px 0 inset,
       #1a1a1a1f -1px 0 1px 0 inset;
-}
-.button:hover {
-  background-color: #f4f4f4 !important;
 }
 
 </style>
