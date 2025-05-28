@@ -176,6 +176,9 @@ export default {
         prevEl: ".swiper-plan-h-prev-monthly",
       },
       breakpoints: {
+        375: {
+          slidesPerView: 1.5,
+        },
         640: {
           slidesPerView: 2,
         },
@@ -209,6 +212,9 @@ export default {
         prevEl: ".swiper-plan-h-prev-annually",
       },
       breakpoints: {
+        375: {
+          slidesPerView: 1.5,
+        },
         640: {
           slidesPerView: 2,
         },
@@ -476,13 +482,13 @@ export default {
 
 <style scoped>
 .container {
-  padding: 40px 0px 0px 20px;
+  padding-top: 40px;
   width: 100%;
 }
 
 .swiper.cards.annually {
   visibility: hidden;
-  height: 0px;
+  height: 0;
   position: relative;
 }
 
@@ -492,7 +498,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 0px;
+  gap: 0;
   margin-top: 26px;
 }
 
@@ -682,6 +688,10 @@ export default {
   .most-popular {
     border: 1px solid #91d0ff;
     border-radius: 12px;
+  }
+
+  .swiper-plan-h-navigation {
+    display: none !important;
   }
 }
 </style>

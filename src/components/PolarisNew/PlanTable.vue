@@ -257,11 +257,12 @@ export default {
       if (this.selectedInterval === "monthly") {
         monthlyPlanTable.style.visibility = "visible";
         monthlyPlanTable.style.height = "auto";
-        monthlyPlanTable.style.border = "1px solid #e5e5e5";
+        monthlyPlanTable.style.padding = "16px";
         monthlyPlanTable.style.padding = "16px";
         annuallyPlanTable.style.visibility = "hidden";
         annuallyPlanTable.style.height = "0px";
         annuallyPlanTable.style.border = "0px";
+        annuallyPlanTable.style.padding = "0px";
         monthlyPlanTableNavigation.style.display = "flex";
         annuallyPlanTableNavigation.style.display = "none";
         this.interval = "EVERY_30_DAYS";
@@ -269,11 +270,12 @@ export default {
       } else if (this.selectedInterval === "annually") {
         monthlyPlanTable.style.visibility = "hidden";
         monthlyPlanTable.style.height = "0px";
+        monthlyPlanTable.style.padding = "0px";
         monthlyPlanTable.style.border = "0px";
         monthlyPlanTable.style.padding = "0px";
         annuallyPlanTable.style.visibility = "visible";
         annuallyPlanTable.style.height = "auto";
-        annuallyPlanTable.style.border = "1px solid #e5e5e5";
+        annuallyPlanTable.style.padding = "16px";
         monthlyPlanTableNavigation.style.display = "none";
         annuallyPlanTableNavigation.style.display = "flex";
         this.interval = "ANNUAL";
@@ -544,20 +546,23 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  padding: 0 10px 0 10px;
 }
 .pricing-table {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
-  padding: 16px;
   background-color: white;
   border-radius: 16px;
   box-shadow: 0px 4px 6px -1px #0000001a;
 }
+
+.pricing-table.monthly-table {
+  padding: 16px;
+}
+
 .plans {
   grid-column: span 2;
-  max-height: 360px;
+  max-height: 420px;
   overflow-y: auto;
 }
 .annually-table {
@@ -568,7 +573,7 @@ export default {
 .pricing-table-inner__left {
   display: flex;
   flex-direction: column;
-  max-height: 360px;
+  max-height: 420px;
   overflow-y: auto;
 }
 .swiper {
@@ -747,7 +752,7 @@ export default {
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .swiper-plan-navigation {
     display: none;
   }

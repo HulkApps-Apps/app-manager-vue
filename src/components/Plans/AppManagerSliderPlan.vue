@@ -65,7 +65,7 @@
           :selectedInterval="selectedPlan"
           @plan-clicked="handlePlanClicked"
         />
-        <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
           <a href="#" class="toggle-plans-features" @click.prevent="togglePlansFeatures">
             {{ showPlansFeatures ? translateMe("Hide all features") : translateMe("Show all features") }}
           </a>
@@ -75,7 +75,6 @@
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
             @plan-clicked="handlePlanClicked"
-            style="margin-left: 20px; margin-top: 20px;"
             :class="{ 'hide-all-features': !showPlansFeatures }"
           />
         </div>
@@ -86,20 +85,20 @@
             :title="translateMe('Customization')"
             :description="translateMe('Check out all customization services that we offer')"
             :buttonText="translateMe('Get customization now')"
-            style="margin-left: 20px; flex-basis: 30%; flex-grow: 1;"
-          />
-          <CustomizationModal
-            :visible="this.showCustomizationModal"
-            @cancel="handleCustomizePlanClose"
-            @submit=""
+            style="flex-basis: 30%; flex-grow: 1;"
           />
           <BundlePlanCard
             :plan="bundle_plan"
             :plan_details="bundle_details"
             @plan-clicked="selectPlan"
-            style="margin-left: 20px; flex-basis: 62%; flex-grow: 1;"
+            style="flex-basis: 62%; flex-grow: 1;"
           />
         </div>
+        <CustomizationModal
+          :visible="this.showCustomizationModal"
+          @cancel="handleCustomizePlanClose"
+          @submit=""
+        />
       </PLayout>
       <div v-if="bundle_plan !== null" class="bundle-plan">
         <div class="light-divider"></div>
@@ -863,7 +862,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center !important;
-  gap: 20px;
+  gap: 24px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .toggle-plans-features {
@@ -871,7 +872,6 @@ export default {
   font-weight: 500;
   color: #303030;
   text-decoration: none;
-  margin-left: 20px;
 }
 
 .hide-all-features {
@@ -883,6 +883,8 @@ export default {
 
 .customization-bundle-section {
   display: flex;
+  flex-direction: row;
+  gap: 24px;
   width: 100%;
 }
 
@@ -947,7 +949,6 @@ export default {
 
 @media (max-width: 1023px) {
   .customization-bundle-section {
-    display: flex;
     flex-direction: column;
     gap: 20px;
   }

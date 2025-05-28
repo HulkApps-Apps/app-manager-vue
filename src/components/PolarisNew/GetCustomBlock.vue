@@ -65,6 +65,7 @@ export default {
   background-color: white;
   border-radius: 16px;
   box-shadow: 0px 4px 6px -1px #0000001a;
+  border: 1px solid #e5e5e5;
 }
 .block img {
     width: auto;
