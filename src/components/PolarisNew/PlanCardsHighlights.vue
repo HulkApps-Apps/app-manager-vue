@@ -2,7 +2,7 @@
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
 import "swiper/swiper-bundle.css";
-import { getPlanPriceDetails } from "@/helpers";
+import { calculatePlanPriceWithDiscounts } from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -51,7 +51,7 @@ export default {
       return this.plans
         .filter(plan => plan.interval === "EVERY_30_DAYS")
         .map(plan => {
-          const planDetails = getPlanPriceDetails(plan, this.promotionalDiscount);
+          const planDetails = calculatePlanPriceWithDiscounts(plan, this.promotionalDiscount);
           if (planDetails.has_discount && !this.anyMonthlyPlanHasDiscount) {
             this.anyMonthlyPlanHasDiscount = true;
           }
@@ -62,7 +62,7 @@ export default {
       return this.plans
         .filter(plan => plan.interval === "ANNUAL")
         .map(plan => {
-          const planDetails = getPlanPriceDetails(plan, this.promotionalDiscount);
+          const planDetails = calculatePlanPriceWithDiscounts(plan, this.promotionalDiscount);
           if (planDetails.has_discount && !this.anyAnnuallyPlanHasDiscount) {
             this.anyAnnuallyPlanHasDiscount = true;
           }

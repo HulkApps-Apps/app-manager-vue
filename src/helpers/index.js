@@ -4,7 +4,7 @@
  * @param {Object|null} promotionalDiscount - Optional promotional discount to apply
  * @returns {Object} - Plan object with calculated price details
  */
-export const getPlanPriceDetails = (plan, promotionalDiscount = null) => {
+export const calculatePlanPriceWithDiscounts = (plan, promotionalDiscount = null) => {
   const originalPrice = plan.price;
   let finalPrice = originalPrice;
   let hasDiscount = false;

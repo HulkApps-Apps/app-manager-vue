@@ -161,6 +161,7 @@ import GetCustomBlock from "../PolarisNew/GetCustomBlock.vue";
 import PlanTable from "../PolarisNew/PlanTable.vue";
 import BundlePlanCard from "../PolarisNew/BundlePlanCard.vue";
 import CustomizationModal from "@/components/PolarisNew/CustomizationModal.vue";
+import { calculatePlanPriceWithDiscounts } from "@/helpers";
 
 export default {
   name: "AppManagerSliderPlan",
@@ -356,15 +357,8 @@ export default {
       }
     },
     calculateDiscountedPrice(plan) {
-      console.log(plan);
-      if (plan.discount_type === 'percentage') {
-        return plan.price - (plan.price * plan.discount) / 100
-      } else if (plan.discount_type === 'amount') {
-        if (plan.discount > plan.price) {
-          return 0.00;
-        }
-        return plan.price - plan.discount
-      }
+      const planDetails = calculatePlanPriceWithDiscounts(plan, this.promotional_discount);
+      return planDetails.price;
     },
     handlePlanClicked(plan) {
       this.getPlanUrl(plan);
