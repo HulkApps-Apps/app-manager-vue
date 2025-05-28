@@ -61,6 +61,7 @@
         <PlanCardsHighlights
           :plans="plans"
           :currentPlan="plan"
+          :promotionalDiscount="promotional_discount"
           :selectedInterval="selectedPlan"
           @plan-clicked="handlePlanClicked"
         />
@@ -71,6 +72,7 @@
           <PlanTable
             :plans="plans"
             :currentPlan="plan"
+            :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
             @plan-clicked="handlePlanClicked"
             style="margin-left: 20px; margin-top: 20px;"
@@ -200,7 +202,7 @@ export default {
     PlanTable,
     BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable'],
+  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'is_grouped_features'],
   data() {
     return {
       slideLength: 0,
@@ -210,7 +212,7 @@ export default {
       plan: {},
       plans: [],
       valid_annual_plans: [],
-      promotional_discount: [],
+      promotional_discount: {},
       features: [],
       featureValues: [],
       shopify_plan: '',
@@ -362,16 +364,6 @@ export default {
           return 0.00;
         }
         return plan.price - plan.discount
-      }
-    },
-    calculatePromotionalDiscountedPrice(plan, promotional_discount) {
-      if (promotional_discount.type === 'percentage') {
-        return plan.price - (plan.price * promotional_discount.value) / 100
-      } else if (promotional_discount.type === 'amount') {
-        if (promotional_discount.value > plan.price) {
-          return 0.00;
-        }
-        return plan.price - promotional_discount.value
       }
     },
     handlePlanClicked(plan) {
@@ -555,7 +547,12 @@ export default {
         this.onboard = this.default_plan_id && this.choose_later;
         this.has_active_charge = data.has_active_charge;
         this.global_plan_charge = data.global_plan_charge;
-        this.promotional_discount = (data.promotional_discount !== undefined) ? data.promotional_discount : [];
+        this.promotional_discount =
+          data.promotional_discount
+          && typeof data.promotional_discount === 'object'
+          && Object.keys(data.promotional_discount).length > 0
+            ? data.promotional_discount
+            : {};
         if (data.bundle_plan) {
           this.bundle_plan = data.bundle_plan;
         }

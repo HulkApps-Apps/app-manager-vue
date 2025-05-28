@@ -2,6 +2,7 @@
 import Swiper, { Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
 import VariantButton from "./VariantButton";
+import { getPlanPriceDetails } from "@/helpers";
 
 export default {
   data() {
@@ -15,6 +16,8 @@ export default {
         before: 0,
         after: 0
       },
+      anyMonthlyPlanHasDiscount: false,
+      anyAnnuallyPlanHasDiscount: false,
     };
   },
   name: "PlanTable",
@@ -34,6 +37,10 @@ export default {
       type: String,
       required: false,
     },
+    promotionalDiscount: {
+      type: Object,
+      required: false,
+    }
   },
   methods: {
     handlePlanClick(plan) {
@@ -176,10 +183,26 @@ export default {
 
   computed: {
     monthlyPlans() {
-      return this.plans.filter((plan) => plan.interval === "EVERY_30_DAYS");
+      return this.plans
+        .filter(plan => plan.interval === "EVERY_30_DAYS")
+        .map(plan => {
+          const planDetails = getPlanPriceDetails(plan, this.promotionalDiscount);
+          if (planDetails.has_discount && !this.anyMonthlyPlanHasDiscount) {
+            this.anyMonthlyPlanHasDiscount = true;
+          }
+          return planDetails;
+        });
     },
     annualPlans() {
-      return this.plans.filter((plan) => plan.interval === "ANNUAL");
+      return this.plans
+        .filter(plan => plan.interval === "ANNUAL")
+        .map(plan => {
+          const planDetails = getPlanPriceDetails(plan, this.promotionalDiscount);
+          if (planDetails.has_discount && !this.anyAnnuallyPlanHasDiscount) {
+            this.anyAnnuallyPlanHasDiscount = true;
+          }
+          return planDetails;
+        });
     },
     annualPlansFeatures() {
       let plansWithFeatures = this.annualPlans.flatMap((plan) => plan.features);
@@ -370,18 +393,25 @@ export default {
             :class="{ 'last-slide': index === monthlyPlans.length - 1 }"
           >
             <div class="plan-header-wrapper plan-header-wrapper-monthly">
-              <div class="upper">
-                <h4>{{ plan.name }}</h4>
-                <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
-                  ${{ plan.price }}
-                  <h6>
-                    {{
-                      plan.interval === "EVERY_30_DAYS"
-                        ? translateMe("/mo")
-                        : translateMe("/yr")
-                    }}
-                  </h6>
-                </h4>
+              <div
+                :class="[
+                  'price-wrapper',
+                  anyMonthlyPlanHasDiscount ? 'has-discount' : ''
+                ]"
+              >
+                <template v-if="plan.strike_price">
+                  <h5>
+                    <span class="strike-price">${{ plan.strike_price }}</span>
+                    <span class="plan-interval" v-if="plan.strike_price !== 0">{{ translateMe("/mo") }}</span>
+                  </h5>
+                </template>
+                <div class="main-price">
+                  <h4 class="plan-name">{{ plan.name }}</h4>
+                  <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
+                    <span class="plan-price">${{ plan.price }}</span>
+                    <span class="plan-interval">{{ translateMe("/mo") }}</span>
+                  </h4>
+                </div>
               </div>
               <VariantButton
                 :variant="'secondary'"
@@ -443,18 +473,25 @@ export default {
             :class="{ 'last-slide': index === annualPlans.length - 1 }"
           >
             <div class="plan-header-wrapper plan-header-wrapper-annually">
-              <div class="upper">
-                <h4>{{ plan.name }}</h4>
-                <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
-                  ${{ plan.price }}
-                  <h6>
-                    {{
-                      plan.interval === "EVERY_30_DAYS"
-                        ? translateMe("/mo")
-                        : translateMe("/yr")
-                    }}
-                  </h6>
-                </h4>
+              <div
+                :class="[
+                  'price-wrapper',
+                  anyAnnuallyPlanHasDiscount ? 'has-discount' : ''
+                ]"
+              >
+                <template v-if="plan.strike_price">
+                  <h5>
+                    <span class="strike-price">${{ plan.strike_price }}</span>
+                    <span class="plan-interval" v-if="plan.strike_price !== 0">{{ translateMe("/yr") }}</span>
+                  </h5>
+                </template>
+                <div class="main-price">
+                  <h4 class="plan-name">{{ plan.name }}</h4>
+                  <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
+                    <span class="plan-price">${{ plan.price }}</span>
+                    <span class="plan-interval">{{ translateMe("/yr") }}</span>
+                  </h4>
+                </div>
               </div>
               <VariantButton
                 :variant="'secondary'"
@@ -585,13 +622,43 @@ export default {
   position: sticky;
   top: 0;
 }
-.plan-header-wrapper .upper h4 {
+
+.plan-header-wrapper .price-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.plan-header-wrapper .price-wrapper.has-discount {
+  min-height: 44px;
+}
+
+.plan-header-wrapper .price-wrapper .main-price {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.plan-header-wrapper .price-wrapper .strike-price {
+  text-decoration: line-through;
+}
+
+.plan-header-wrapper .price-wrapper .plan-interval {
+  color: #999999;
+  font-weight: normal;
+}
+
+.plan-header-wrapper .price-wrapper h4 {
   display: inline;
   font-size: 16px;
   font-weight: 700;
   color: #303030;
 }
-.plan-header-wrapper .upper h4 h6 {
+.plan-header-wrapper .price-wrapper h4 h6 {
   display: inline;
   font-size: 13px;
   font-weight: 400;

@@ -1,7 +1,13 @@
 <template>
-  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" :shop_domain="shop_domain" :host="host" :discount_code="discount_code"
-                        :is_customizable="is_customizable" :is_group_plans="is_group_plans"
-                        @handleCustomizePlan="handleCustomizePlan"
+  <AppManagerSliderPlan
+    :shop_domain="shop_domain"
+    :host="host"
+    :discount_code="discount_code"
+    :is_customizable="is_customizable"
+    :is_grouped_features="is_grouped_features"
+    @handlePlanSelect="handlePlanSelect"
+    @handlePlanBannerClose="handlePlanBannerClose"
+    @handleCustomizePlan="handleCustomizePlan"
   ></AppManagerSliderPlan>
 </template>
 
@@ -35,6 +41,10 @@ export default {
       default: null
     },
     is_customizable: {
+      type: Boolean,
+      default: false
+    },
+    is_grouped_features: {
       type: Boolean,
       default: false
     },

@@ -2,6 +2,7 @@
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
 import "swiper/swiper-bundle.css";
+import { getPlanPriceDetails } from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -14,6 +15,10 @@ export default {
       required: true,
     },
     currentPlan: {
+      type: Object,
+      required: false,
+    },
+    promotionalDiscount: {
       type: Object,
       required: false,
     },
@@ -45,12 +50,24 @@ export default {
     monthlyPlans() {
       return this.plans
         .filter(plan => plan.interval === "EVERY_30_DAYS")
-        .map(plan => this.getPlanPriceDetails(plan, this.promotional_discount));
+        .map(plan => {
+          const planDetails = getPlanPriceDetails(plan, this.promotionalDiscount);
+          if (planDetails.has_discount && !this.anyMonthlyPlanHasDiscount) {
+            this.anyMonthlyPlanHasDiscount = true;
+          }
+          return planDetails;
+        });
     },
     annualPlans() {
       return this.plans
         .filter(plan => plan.interval === "ANNUAL")
-        .map(plan => this.getPlanPriceDetails(plan, this.promotional_discount));
+        .map(plan => {
+          const planDetails = getPlanPriceDetails(plan, this.promotionalDiscount);
+          if (planDetails.has_discount && !this.anyAnnuallyPlanHasDiscount) {
+            this.anyAnnuallyPlanHasDiscount = true;
+          }
+          return planDetails;
+        });
     },
   },
   methods: {
@@ -114,42 +131,6 @@ export default {
         this.remainingPlansMonthly = {after, before};
       }
     },
-    getPlanPriceDetails(plan, promotional_discount = null) {
-      const originalPrice = plan.price;
-      let finalPrice = originalPrice;
-      let hasDiscount = false;
-
-      // Apply promotional discount if available
-      if (promotional_discount?.value > 0) {
-        hasDiscount = true;
-        finalPrice = promotional_discount.type === 'percentage'
-          ? originalPrice - (originalPrice * promotional_discount.value) / 100
-          : Math.max(0, originalPrice - promotional_discount.value);
-
-      // Otherwise, apply plan's own discount
-      } else if (plan.discount > 0) {
-        hasDiscount = true;
-        finalPrice = plan.discount_type === 'percentage'
-          ? originalPrice - (originalPrice * plan.discount) / 100
-          : Math.max(0, originalPrice - plan.discount);
-      }
-
-      // Update flags for discounted plans
-      if (hasDiscount) {
-        if (plan.interval === "EVERY_30_DAYS" && !this.anyMonthlyPlanHasDiscount) {
-          this.anyMonthlyPlanHasDiscount = true;
-        }
-        if (plan.interval === "ANNUAL" && !this.anyAnnuallyPlanHasDiscount) {
-          this.anyAnnuallyPlanHasDiscount = true;
-        }
-      }
-
-      return {
-        ...plan,
-        price: parseFloat(finalPrice.toFixed(2)),
-        strike_price: hasDiscount ? parseFloat(originalPrice.toFixed(2)) : null
-      };
-    }
   },
   watch: {
     selectedInterval() {
