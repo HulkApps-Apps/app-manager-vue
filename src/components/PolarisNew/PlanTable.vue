@@ -18,6 +18,7 @@ export default {
       },
       anyMonthlyPlanHasDiscount: false,
       anyAnnuallyPlanHasDiscount: false,
+      loadingPlanId: null
     };
   },
   name: "PlanTable",
@@ -43,8 +44,14 @@ export default {
     }
   },
   methods: {
-    handlePlanClick(plan) {
-      this.$emit("plan-clicked", plan);
+    async handlePlanClick(plan) {
+      this.loadingPlanId = plan.id;
+      try {
+        await this.$emit("plan-clicked", plan);
+      } catch (error) {
+        console.error('Error handling plan click:', error);
+        this.loadingPlanId = null;
+      }
     },
     translateMe(message) {
       return this.$translations.hasOwnProperty(message)
@@ -416,18 +423,18 @@ export default {
               <VariantButton
                 :variant="'secondary'"
                 :disabled="currentPlan && currentPlan.id === plan.id"
+                :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
                 class="button"
-                >{{
-                  currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Current Plan")
-                    : (
-                      plan.price > currentPlan.price 
-                      ? translateMe("Upgrade") 
-                      : translateMe("Switch to this plan")
-                    )
-                }}</VariantButton
-              >
+              >{{
+                currentPlan && currentPlan.id === plan.id
+                  ? translateMe("Current Plan")
+                  : (
+                    plan.price > currentPlan.price 
+                    ? translateMe("Upgrade") 
+                    : translateMe("Switch to this plan")
+                  )
+              }}</VariantButton>
             </div>
             <div
               class="plan-feature plan-feature-monthly"
@@ -496,18 +503,18 @@ export default {
               <VariantButton
                 :variant="'secondary'"
                 :disabled="currentPlan && currentPlan.id === plan.id"
+                :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
                 class="button"
-                >{{
-                  currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Selected Plan")
-                    : (
-                      plan.price > currentPlan.price 
-                      ? translateMe("Upgrade") 
-                      : translateMe("Switch to this plan")
-                    )
-                }}</VariantButton
-              >
+              >{{
+                currentPlan && currentPlan.id === plan.id
+                  ? translateMe("Selected Plan")
+                  : (
+                    plan.price > currentPlan.price 
+                    ? translateMe("Upgrade") 
+                    : translateMe("Switch to this plan")
+                  )
+              }}</VariantButton>
             </div>
             <div
               class="plan-feature plan-feature-annually"
