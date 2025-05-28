@@ -36,14 +36,20 @@ export default {
         before: 0,
         after: 0
       },
+      anyMonthlyPlanHasDiscount: false,
+      anyAnnuallyPlanHasDiscount: false,
     };
   },
   computed: {
     monthlyPlans() {
-      return this.plans.filter((plan) => plan.interval === "EVERY_30_DAYS");
+      return this.plans
+        .filter(plan => plan.interval === "EVERY_30_DAYS")
+        .map(plan => this.getPlanPriceDetails(plan, this.promotional_discount));
     },
     annualPlans() {
-      return this.plans.filter((plan) => plan.interval === "ANNUAL");
+      return this.plans
+        .filter(plan => plan.interval === "ANNUAL")
+        .map(plan => this.getPlanPriceDetails(plan, this.promotional_discount));
     },
   },
   methods: {
@@ -101,6 +107,42 @@ export default {
         this.remainingPlansMonthly = {after, before};
       }
     },
+    getPlanPriceDetails(plan, promotional_discount = null) {
+      const originalPrice = plan.price;
+      let finalPrice = originalPrice;
+      let hasDiscount = false;
+
+      // Apply promotional discount if available
+      if (promotional_discount?.value > 0) {
+        hasDiscount = true;
+        finalPrice = promotional_discount.type === 'percentage'
+          ? originalPrice - (originalPrice * promotional_discount.value) / 100
+          : Math.max(0, originalPrice - promotional_discount.value);
+
+      // Otherwise, apply plan's own discount
+      } else if (plan.discount > 0) {
+        hasDiscount = true;
+        finalPrice = plan.discount_type === 'percentage'
+          ? originalPrice - (originalPrice * plan.discount) / 100
+          : Math.max(0, originalPrice - plan.discount);
+      }
+
+      // Update flags for discounted plans
+      if (hasDiscount) {
+        if (plan.interval === "EVERY_30_DAYS" && !this.anyMonthlyPlanHasDiscount) {
+          this.anyMonthlyPlanHasDiscount = true;
+        }
+        if (plan.interval === "ANNUAL" && !this.anyAnnuallyPlanHasDiscount) {
+          this.anyAnnuallyPlanHasDiscount = true;
+        }
+      }
+
+      return {
+        ...plan,
+        price: parseFloat(finalPrice.toFixed(2)),
+        strike_price: hasDiscount ? parseFloat(originalPrice.toFixed(2)) : null
+      };
+    }
   },
   watch: {
     selectedInterval() {
@@ -258,12 +300,27 @@ export default {
             <h3 class="title">
               {{ plan.name }}
             </h3>
-            <h2 class="price">
-              {{ plan.price !== 0 ? "$" + plan.price : "Free" }}
-              <span v-if="plan.price !== 0">
+            <div
+              :class="[
+                'price-wrapper',
+                anyMonthlyPlanHasDiscount ? 'has-discount' : ''
+              ]"
+            >
+              <template v-if="plan.strike_price">
+                <h5 class="strike-price">
+                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
+                  <span style="color: #999;" v-if="plan.strike_price !== 0">
                 {{ translateMe("/mo") }}
               </span>
-            </h2>
+                </h5>
+              </template>
+              <h2 class="price">
+                {{ plan.price !== 0 ? "$" + plan.price : "Free" }}
+                <span v-if="plan.price !== 0">
+                {{ translateMe("/mo") }}
+              </span>
+              </h2>
+            </div>
             <h6 class="description">
               {{
                 plan.description ? plan.description : placeholder.description
@@ -336,12 +393,27 @@ export default {
             <h3 class="title">
               {{ plan.name }}
             </h3>
-            <h2 class="price">
-              {{ plan.price !== 0 ? "$" + plan.price : "Free" }}
-              <span v-if="plan.price !== 0">
-                {{ translateMe("/yr") }}
+            <div
+              :class="[
+                'price-wrapper',
+                anyAnnuallyPlanHasDiscount ? 'has-discount' : ''
+              ]"
+            >
+              <template v-if="plan.strike_price">
+                <h5 class="strike-price">
+                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
+                  <span style="color: #999;" v-if="plan.strike_price !== 0">
+                {{ translateMe("/mo") }}
               </span>
-            </h2>
+                </h5>
+              </template>
+              <h2 class="price">
+                {{ plan.price !== 0 ? "$" + plan.price : "Free" }}
+                <span v-if="plan.price !== 0">
+                {{ translateMe("/mo") }}
+              </span>
+              </h2>
+            </div>
             <h6 class="description">
               {{
                 plan.description ? plan.description : placeholder.description
@@ -454,6 +526,18 @@ export default {
   font-size: 16px;
   font-weight: 700;
   color: black;
+}
+
+.card .price-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.card .price-wrapper.has-discount {
+  min-height: 44px;
 }
 
 .card .price {

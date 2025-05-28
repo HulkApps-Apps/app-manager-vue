@@ -26,6 +26,11 @@ export default {
       required: false,
       default: false,
     },
+    fullWidth: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
     handleClick() {
@@ -50,7 +55,13 @@ export default {
     href="#"
     @click="handleClick"
     class="button"
-    :class="`button-${variant}` + (disabled ? ' disabled' : '')"
+    :class="[
+      `button-${variant}`,
+      {
+        'disabled': disabled,
+         'button-fullwidth': fullWidth
+      }
+    ]"
   >
     <slot></slot>
     <span
@@ -66,6 +77,7 @@ export default {
 .button {
   display: flex;
   width: fit-content !important;
+  justify-content: center;
   height: 28px !important;
   align-items: center !important;
   gap: 8px !important;
@@ -125,6 +137,10 @@ export default {
 
 .button-secondary:hover {
   background-color: #fafafa !important;
+}
+
+.button.button-fullwidth {
+  width: 100% !important;
 }
 
 .additional-info-primary {

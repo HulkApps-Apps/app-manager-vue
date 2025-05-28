@@ -1,8 +1,6 @@
 <template>
-  <AppManagerGroupPlan  @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-if="group_plan"
-                       :shop_domain="shop_domain" :host="host" :discount_code="discount_code"></AppManagerGroupPlan>
-  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-else :shop_domain="shop_domain" :host="host" :discount_code="discount_code"
-                        :is_customizable="is_customizable"
+  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" :shop_domain="shop_domain" :host="host" :discount_code="discount_code"
+                        :is_customizable="is_customizable" :is_group_plans="is_group_plans"
                         @handleCustomizePlan="handleCustomizePlan"
   ></AppManagerSliderPlan>
 </template>
