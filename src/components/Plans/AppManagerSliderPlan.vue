@@ -202,7 +202,7 @@ export default {
     PlanTable,
     BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'is_grouped_features'],
+  props: ['shop_domain', 'host', 'discount_code', 'is_customizable'],
   data() {
     return {
       slideLength: 0,
