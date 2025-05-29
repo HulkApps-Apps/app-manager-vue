@@ -33,4 +33,36 @@ export const calculatePlanPriceWithDiscounts = (plan, promotionalDiscount = null
     strike_price: hasDiscount ? parseFloat(originalPrice.toFixed(2)) : null,
     has_discount: hasDiscount
   };
-}; 
+};
+
+export const formatFeatureValue = function(feature) {
+  if (!feature) return '';
+
+  if (['double', 'integer'].includes(feature?.value_type)) {
+    if (feature.format === 'percentage') {
+      return `${feature.value}%`;
+    } else if (feature.format === 'count') {
+      return (parseInt(feature.value) < 0 ? 'Unlimited' : feature.value);
+    } else {
+      return feature.value;
+    }
+  }
+
+  if (feature?.value_type === 'array') {
+    let values = [];
+
+    try {
+      values = Array.isArray(feature.value) ? feature.value : JSON.parse(feature.value);
+    } catch (e) {
+      console.error('Invalid array feature value:', feature.value);
+      return '';
+    }
+    return values.join(',')
+  }
+
+  if (feature?.value_type === 'string') {
+    return feature.value?.replace(/"/g, '') || '';
+  }
+
+  return feature.value;
+};

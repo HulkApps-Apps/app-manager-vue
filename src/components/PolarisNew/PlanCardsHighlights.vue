@@ -2,7 +2,7 @@
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
 import "swiper/swiper-bundle.css";
-import { calculatePlanPriceWithDiscounts } from "@/helpers";
+import {calculatePlanPriceWithDiscounts, formatFeatureValue} from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -71,6 +71,7 @@ export default {
     },
   },
   methods: {
+    formatFeatureValue,
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
       try {
@@ -343,7 +344,7 @@ export default {
                   v-for="(featureKey, index) in Object.entries(
                     plan.features
                   ).slice(0, 4)"
-                  :key="featureKey[0]"
+                  :key="featureKey[0] + '_' + index"
                 >
                   <svg
                     width="20"
@@ -361,6 +362,7 @@ export default {
                   </svg>
 
                   <span>
+                    {{ featureKey[1].value_type !== 'boolean' ? translateMe(formatFeatureValue(featureKey[1])) : '' }}
                     {{ featureKey[1].name }}
                   </span>
                 </li>
@@ -441,7 +443,7 @@ export default {
                   v-for="(featureKey, index) in Object.entries(
                     plan.features
                   ).slice(0, 4)"
-                  :key="featureKey[0]"
+                  :key="featureKey[0] + '_' + index"
                 >
                   <svg
                     width="20"
@@ -458,6 +460,7 @@ export default {
                     />
                   </svg>
                   <span>
+                    {{ featureKey[1].value_type !== 'boolean' ? translateMe(formatFeatureValue(featureKey[1])) : '' }}
                     {{ featureKey[1].name }}
                   </span>
                 </li>

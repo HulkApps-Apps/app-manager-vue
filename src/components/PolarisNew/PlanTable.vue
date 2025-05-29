@@ -2,7 +2,7 @@
 import Swiper, { Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
 import VariantButton from "./VariantButton";
-import { calculatePlanPriceWithDiscounts } from "@/helpers";
+import {calculatePlanPriceWithDiscounts, formatFeatureValue} from "@/helpers";
 
 export default {
   data() {
@@ -18,7 +18,7 @@ export default {
       },
       anyMonthlyPlanHasDiscount: false,
       anyAnnuallyPlanHasDiscount: false,
-      loadingPlanId: null
+      loadingPlanId: null,
     };
   },
   name: "PlanTable",
@@ -44,6 +44,7 @@ export default {
     }
   },
   methods: {
+    formatFeatureValue,
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
       try {
@@ -491,18 +492,23 @@ export default {
                 v-for="feature in group.features"
                 :key="feature.feature_id"
               >
-                <img
-                  src="../../assets/CheckTrue.svg"
-                  alt="Checkmark True"
-                  class="plan-table-checkmark"
-                  v-if="hasFeature(plan, feature)"
-                />
-                <img
-                  src="../../assets/CheckFalse.svg"
-                  alt="Checkmark False"
-                  class="plan-table-checkmark"
-                  v-if="!hasFeature(plan, feature)"
-                />
+                <div v-if="feature.value_type === 'boolean'">
+                  <img
+                    src="../../assets/CheckTrue.svg"
+                    alt="Checkmark True"
+                    class="plan-table-checkmark"
+                    v-if="hasFeature(plan, feature)"
+                  />
+                  <img
+                    src="../../assets/CheckFalse.svg"
+                    alt="Checkmark False"
+                    class="plan-table-checkmark"
+                    v-if="!hasFeature(plan, feature)"
+                  />
+                </div>
+                <div v-else>
+                  <span>{{ translateMe(formatFeatureValue(plan.features[feature.feature_id])) }}</span>
+                </div>
               </div>
             </template>
           </div>
@@ -581,18 +587,23 @@ export default {
                 v-for="feature in group.features"
                 :key="feature.feature_id"
               >
-                <img
-                  src="../../assets/CheckTrue.svg"
-                  alt="Checkmark True"
-                  class="plan-table-checkmark"
-                  v-if="hasFeature(plan, feature)"
-                />
-                <img
-                  src="../../assets/CheckFalse.svg"
-                  alt="Checkmark False"
-                  class="plan-table-checkmark"
-                  v-if="!hasFeature(plan, feature)"
-                />
+                <div v-if="feature.value_type === 'boolean'">
+                  <img
+                    src="../../assets/CheckTrue.svg"
+                    alt="Checkmark True"
+                    class="plan-table-checkmark"
+                    v-if="hasFeature(plan, feature)"
+                  />
+                  <img
+                    src="../../assets/CheckFalse.svg"
+                    alt="Checkmark False"
+                    class="plan-table-checkmark"
+                    v-if="!hasFeature(plan, feature)"
+                  />
+                </div>
+                <div v-else>
+                  <span>{{ translateMe(formatFeatureValue(plan.features[feature.feature_id])) }}</span>
+                </div>
               </div>
             </template>
           </div>
@@ -854,11 +865,11 @@ export default {
 
 @media (max-width: 640px) {
   .swiper-plan-navigation {
-    display: none;
+    display: none !important;
   }
 
   .pricing-table {
-    width: calc(100% + -1px);
+    width: calc(100% + -2px);
   }
 }
 </style>
