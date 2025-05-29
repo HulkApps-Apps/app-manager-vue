@@ -280,14 +280,16 @@ export default {
           v-if="plan.interval === 'EVERY_30_DAYS'"
           :key="plan.id"
           class="swiper-slide"
+          style="height: auto !important;"
         >
           <div
             :class="[
               'card',
-              'card-border'
+              'card-border',
+              index === (monthlyPlans.length - 1) ? 'last-card' : '',
             ]"
           >
-            <div class="most-popular" v-if="plan.is_popular">
+            <div class="most-popular" v-if="plan.choose_later_plan">
               <div class="most-popular-label">
                 {{ translateMe("Most Popular") }}
               </div>
@@ -379,14 +381,16 @@ export default {
           v-if="plan.interval === 'ANNUAL'"
           :key="plan.id"
           class="swiper-slide"
+          style="height: auto !important;"
         >
           <div
             :class="[
               'card',
-              'card-border'
+              'card-border',
+              index === (annualPlans.length - 1) ? 'last-card' : '',
             ]"
           >
-            <div class="most-popular" v-if="plan.is_popular">
+            <div class="most-popular" v-if="plan.choose_later_plan">
               <div class="most-popular-label">
                 {{ translateMe("Most Popular") }}
               </div>
@@ -525,6 +529,7 @@ export default {
   padding: 16px;
 }
 
+.swiper-wrapper .swiper-slide .card-border.last-card,
 .swiper-wrapper .swiper-slide:not(.swiper-slide-active) .card-border {
   border-left: 1px solid #cccccc;
 }
@@ -686,11 +691,6 @@ export default {
 @media (max-width: 640px) {
   .card-border {
     border-left: none;
-  }
-
-  .most-popular {
-    border: 1px solid #91d0ff;
-    border-radius: 12px;
   }
 
   .swiper-plan-h-navigation {
