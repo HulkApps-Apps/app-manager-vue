@@ -523,58 +523,6 @@ export default {
         this.plans = data.plans;
         this.plans = this.plans?.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
 
-        const feature1Values = [100, 200, 1000, -1];
-        const feature2Values = ["Basic", "Advance", "Advance", "Advance"];
-        const feature3Values = [
-          ["value1, value2"],
-          ["value2"],
-          ["value3"],
-          ["value1", "value2"]
-        ];
-
-        this.plans.forEach((plan, planIndex) => {
-          const featureEntries = Object.entries(plan.features);
-
-          featureEntries.forEach(([key, feature], index) => {
-            // Grouping
-            if (index < 3) {
-              feature.group_order = 1;
-              feature.group = "Group 1";
-            } else {
-              feature.group_order = 2;
-              feature.group = "Group 2";
-            }
-
-            // Feature 1
-            if (index === 0) {
-              feature.value_type = "integer";
-              feature.format = "count";
-              feature.value = feature1Values[planIndex % feature1Values.length];
-            }
-
-            // Feature 2
-            if (index === 1) {
-              feature.value_type = "string";
-              feature.format = null;
-              feature.value = feature2Values[planIndex % feature2Values.length];
-            }
-
-            // Feature 3
-            if (index === 2) {
-              feature.value_type = "array";
-              feature.format = null;
-              feature.values = {
-                "value-1": "Value 1",
-                "value-2": "Value 2",
-                "value-3": "Value 4"
-              };
-              feature.value = JSON.stringify(feature3Values[planIndex % feature3Values.length]);
-            }
-
-            plan.features[key] = feature;
-          });
-        });
-
         if (this.plans[0].store_base_plan) {
           this.subtitleContent = this.translateMe('App plans are based on your existing shopify plan');
         }
