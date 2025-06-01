@@ -41,6 +41,11 @@ export default {
     promotionalDiscount: {
       type: Object,
       required: false,
+    },
+    features: {
+      type: Array,
+      required: false,
+      default: () => []
     }
   },
   methods: {
@@ -60,10 +65,7 @@ export default {
         : message;
     },
     hasFeature(plan, feature) {
-      const featuresArray = Array.isArray(plan.features)
-        ? plan.features
-        : Object.values(plan.features);
-      return featuresArray.some((f) => f.feature_id === feature.feature_id);
+      return !!plan.features[feature.uuid];
     },
     syncHeights(which = "features") {
       this.$nextTick(() => {
@@ -213,33 +215,25 @@ export default {
         });
     },
     monthlyPlansFeatures() {
-      let plansWithFeatures = this.monthlyPlans.flatMap(
-        (plan) => plan.features
-      );
+      if (!this.features.length) return [];
+
       let groupedFeatures = {};
-      let seenIds = new Set();
       let hasGroupFields = false;
 
-      plansWithFeatures.forEach((plan) => {
-        Object.keys(plan).forEach((featureKey) => {
-          const feature = plan[featureKey];
-          if (!seenIds.has(feature.feature_id)) {
-            if (feature.group && feature.group_order) {
-              hasGroupFields = true;
-            }
-            
-            const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
-            if (!groupedFeatures[group]) {
-              groupedFeatures[group] = {
-                name: group,
-                order: hasGroupFields ? (feature.group_order || 999) : 999,
-                features: []
-              };
-            }
-            groupedFeatures[group].features.push(feature);
-            seenIds.add(feature.feature_id);
-          }
-        });
+      this.features.forEach((feature) => {
+        if (feature.group && feature.group_order) {
+          hasGroupFields = true;
+        }
+        
+        const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
+        if (!groupedFeatures[group]) {
+          groupedFeatures[group] = {
+            name: group,
+            order: hasGroupFields ? (feature.group_order || 999) : 999,
+            features: []
+          };
+        }
+        groupedFeatures[group].features.push(feature);
       });
 
       const groups = Object.values(groupedFeatures).sort((a, b) => a.order - b.order);
@@ -250,40 +244,7 @@ export default {
       return groups;
     },
     annualPlansFeatures() {
-      let plansWithFeatures = this.annualPlans.flatMap((plan) => plan.features);
-      let groupedFeatures = {};
-      let seenIds = new Set();
-      let hasGroupFields = false;
-
-      plansWithFeatures.forEach((plan) => {
-        Object.keys(plan).forEach((featureKey) => {
-          const feature = plan[featureKey];
-          if (!seenIds.has(feature.feature_id)) {
-            if (feature.group && feature.group_order) {
-              hasGroupFields = true;
-            }
-            
-            const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
-            if (!groupedFeatures[group]) {
-              groupedFeatures[group] = {
-                name: group,
-                order: hasGroupFields ? (feature.group_order || 999) : 999,
-                features: []
-              };
-            }
-            groupedFeatures[group].features.push(feature);
-            seenIds.add(feature.feature_id);
-          }
-        });
-      });
-
-      const groups = Object.values(groupedFeatures).sort((a, b) => a.order - b.order);
-      
-      if (groups.length === 1 || !hasGroupFields) {
-        groups.forEach(group => group.name = '');
-      }
-      
-      return groups;
+      return this.monthlyPlansFeatures; // Use the same grouping for both intervals
     },
   },
 
@@ -475,11 +436,15 @@ export default {
                 class="button"
               >{{
                 currentPlan && currentPlan.id === plan.id
-                  ? translateMe("Current Plan")
+                  ? translateMe("Selected Plan")
                   : (
-                    plan.price > currentPlan.price 
-                    ? translateMe("Upgrade") 
-                    : translateMe("Switch to this plan")
+                    !currentPlan
+                    ? translateMe("Choose Plan")
+                    : (
+                      plan.price > currentPlan.price 
+                      ? translateMe("Upgrade") 
+                      : translateMe("Switch to this plan")
+                    )
                   )
               }}</VariantButton>
             </div>
@@ -572,9 +537,13 @@ export default {
                 currentPlan && currentPlan.id === plan.id
                   ? translateMe("Selected Plan")
                   : (
-                    plan.price > currentPlan.price 
-                    ? translateMe("Upgrade") 
-                    : translateMe("Switch to this plan")
+                    !currentPlan
+                    ? translateMe("Choose Plan")
+                    : (
+                      plan.price > currentPlan.price 
+                      ? translateMe("Upgrade") 
+                      : translateMe("Switch to this plan")
+                    )
                   )
               }}</VariantButton>
             </div>

@@ -332,7 +332,7 @@ export default {
                 currentPlan && currentPlan.id === plan.id
                     ? translateMe("Selected Plan")
                     : (
-                      plan.price > currentPlan.price 
+                      currentPlan && plan.price > currentPlan.price 
                       ? translateMe("Upgrade") 
                       : translateMe("Choose Plan")
                     )
@@ -433,7 +433,7 @@ export default {
                 currentPlan && currentPlan.id === plan.id
                     ? translateMe("Selected Plan")
                     : (
-                      plan.price > currentPlan.price 
+                      currentPlan && plan.price > currentPlan.price 
                       ? translateMe("Upgrade") 
                       : translateMe("Choose Plan")
                     )

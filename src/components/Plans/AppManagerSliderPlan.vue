@@ -74,6 +74,7 @@
             :currentPlan="plan"
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
+            :features="features"
             @plan-clicked="handlePlanClicked"
             :class="{ 'hide-all-features': !showPlansFeatures }"
           />
