@@ -217,24 +217,35 @@ export default {
     monthlyPlansFeatures() {
       if (!this.features.length) return [];
 
+      // First, find which features are actually used in any monthly plan
+      const usedFeatures = new Set();
+      this.monthlyPlans.forEach(plan => {
+        Object.keys(plan.features).forEach(featureUuid => {
+          usedFeatures.add(featureUuid);
+        });
+      });
+
+      // Filter features and group them
       let groupedFeatures = {};
       let hasGroupFields = false;
 
-      this.features.forEach((feature) => {
-        if (feature.group && feature.group_order) {
-          hasGroupFields = true;
-        }
-        
-        const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
-        if (!groupedFeatures[group]) {
-          groupedFeatures[group] = {
-            name: group,
-            order: hasGroupFields ? (feature.group_order || 999) : 999,
-            features: []
-          };
-        }
-        groupedFeatures[group].features.push(feature);
-      });
+      this.features
+        .filter(feature => usedFeatures.has(feature.uuid) && !feature.hidden_feature) // Filter out hidden features
+        .forEach((feature) => {
+          if (feature.group && feature.group_order) {
+            hasGroupFields = true;
+          }
+          
+          const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
+          if (!groupedFeatures[group]) {
+            groupedFeatures[group] = {
+              name: group,
+              order: hasGroupFields ? (feature.group_order || 999) : 999,
+              features: []
+            };
+          }
+          groupedFeatures[group].features.push(feature);
+        });
 
       const groups = Object.values(groupedFeatures).sort((a, b) => a.order - b.order);
       if (groups.length === 1 || !hasGroupFields) {
@@ -244,7 +255,45 @@ export default {
       return groups;
     },
     annualPlansFeatures() {
-      return this.monthlyPlansFeatures; // Use the same grouping for both intervals
+      if (!this.features.length) return [];
+
+      // First, find which features are actually used in any annual plan
+      const usedFeatures = new Set();
+      this.annualPlans.forEach(plan => {
+        // Use feature.uuid instead of feature_id to match with plan.features
+        Object.keys(plan.features).forEach(featureUuid => {
+          usedFeatures.add(featureUuid);
+        });
+      });
+
+      // Filter features and group them
+      let groupedFeatures = {};
+      let hasGroupFields = false;
+
+      this.features
+        .filter(feature => usedFeatures.has(feature.uuid) && !feature.hidden_feature) // Filter out hidden features
+        .forEach((feature) => {
+          if (feature.group && feature.group_order) {
+            hasGroupFields = true;
+          }
+          
+          const group = hasGroupFields ? (feature.group || 'Default') : 'Default';
+          if (!groupedFeatures[group]) {
+            groupedFeatures[group] = {
+              name: group,
+              order: hasGroupFields ? (feature.group_order || 999) : 999,
+              features: []
+            };
+          }
+          groupedFeatures[group].features.push(feature);
+        });
+
+      const groups = Object.values(groupedFeatures).sort((a, b) => a.order - b.order);
+      if (groups.length === 1 || !hasGroupFields) {
+        groups.forEach(group => group.name = '');
+      }
+      
+      return groups;
     },
   },
 
@@ -393,7 +442,7 @@ export default {
           <div
             class="plan-feature-name plan-feature-name-monthly"
             v-for="feature in group.features"
-            :key="feature.feature_id"
+            :key="feature.uuid"
           >
             {{ feature.name }}
           </div>
@@ -455,24 +504,27 @@ export default {
               <div
                 class="plan-feature plan-feature-monthly"
                 v-for="feature in group.features"
-                :key="feature.feature_id"
+                :key="feature.uuid"
               >
-                <div v-if="feature.value_type === 'boolean'">
-                  <img
-                    src="../../assets/CheckTrue.svg"
-                    alt="Checkmark True"
-                    class="plan-table-checkmark"
-                    v-if="hasFeature(plan, feature)"
-                  />
-                  <img
-                    src="../../assets/CheckFalse.svg"
-                    alt="Checkmark False"
-                    class="plan-table-checkmark"
-                    v-if="!hasFeature(plan, feature)"
-                  />
+                <div v-if="hasFeature(plan, feature)">
+                  <div v-if="feature.value_type === 'boolean'">
+                    <img
+                      src="../../assets/CheckTrue.svg"
+                      alt="Feature is included"
+                      class="plan-table-checkmark"
+                      v-if="hasFeature(plan, feature)"
+                    />
+                  </div>
+                  <div v-else>
+                    <span>{{ translateMe(formatFeatureValue(plan.features[feature.uuid])) }}</span>
+                  </div>
                 </div>
                 <div v-else>
-                  <span>{{ translateMe(formatFeatureValue(plan.features[feature.feature_id])) }}</span>
+                  <img
+                    src="../../assets/CheckFalse.svg"
+                    alt="Feature is not included"
+                    class="plan-table-checkmark"
+                  />
                 </div>
               </div>
             </template>
@@ -492,7 +544,7 @@ export default {
           <div
             class="plan-feature-name plan-feature-name-annually"
             v-for="feature in group.features"
-            :key="feature.feature_id"
+            :key="feature.uuid"
           >
             {{ feature.name }}
           </div>
@@ -554,24 +606,27 @@ export default {
               <div
                 class="plan-feature plan-feature-annually"
                 v-for="feature in group.features"
-                :key="feature.feature_id"
+                :key="feature.uuid"
               >
-                <div v-if="feature.value_type === 'boolean'">
-                  <img
-                    src="../../assets/CheckTrue.svg"
-                    alt="Checkmark True"
-                    class="plan-table-checkmark"
-                    v-if="hasFeature(plan, feature)"
-                  />
-                  <img
-                    src="../../assets/CheckFalse.svg"
-                    alt="Checkmark False"
-                    class="plan-table-checkmark"
-                    v-if="!hasFeature(plan, feature)"
-                  />
+                <div v-if="hasFeature(plan, feature)">
+                  <div v-if="feature.value_type === 'boolean'">
+                    <img
+                      src="../../assets/CheckTrue.svg"
+                      alt="Feature is included"
+                      class="plan-table-checkmark"
+                      v-if="hasFeature(plan, feature)"
+                    />
+                  </div>
+                  <div v-else>
+                    <span>{{ translateMe(formatFeatureValue(plan.features[feature.uuid])) }}</span>
+                  </div>
                 </div>
                 <div v-else>
-                  <span>{{ translateMe(formatFeatureValue(plan.features[feature.feature_id])) }}</span>
+                  <img
+                    src="../../assets/CheckFalse.svg"
+                    alt="Feature is not included"
+                    class="plan-table-checkmark"
+                  />
                 </div>
               </div>
             </template>
@@ -716,6 +771,7 @@ export default {
   font-size: 16px;
   font-weight: 700;
   color: #303030;
+  width: max-content;
 }
 
 .plan-header-wrapper .price-wrapper h4 h6 {

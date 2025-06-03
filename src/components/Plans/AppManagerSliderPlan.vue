@@ -60,6 +60,7 @@
       <PLayout class="custom-plan">
         <PlanCardsHighlights
           :plans="plans"
+          :features="features"
           :currentPlan="plan"
           :promotionalDiscount="promotional_discount"
           :selectedInterval="selectedPlan"

@@ -26,6 +26,11 @@ export default {
       type: String,
       required: false,
     },
+    features: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
   },
   data() {
     return {
@@ -332,8 +337,8 @@ export default {
                 currentPlan && currentPlan.id === plan.id
                     ? translateMe("Selected Plan")
                     : (
-                      currentPlan && plan.price > currentPlan.price 
-                      ? translateMe("Upgrade") 
+                      currentPlan && plan.price > currentPlan.price
+                      ? translateMe("Upgrade")
                       : translateMe("Choose Plan")
                     )
               }}
@@ -342,10 +347,8 @@ export default {
             <div class="features">
               <ul>
                 <li
-                   class="feature"
-                  v-for="(featureKey, index) in Object.entries(
-                    plan.features
-                  ).slice(0, 4)"
+                  class="feature"
+                  v-for="(featureKey, index) in Object.entries(plan.features).slice(0, 4)"
                   :key="featureKey[0] + '_' + index"
                 >
                   <svg
@@ -433,8 +436,8 @@ export default {
                 currentPlan && currentPlan.id === plan.id
                     ? translateMe("Selected Plan")
                     : (
-                      currentPlan && plan.price > currentPlan.price 
-                      ? translateMe("Upgrade") 
+                      currentPlan && plan.price > currentPlan.price
+                      ? translateMe("Upgrade")
                       : translateMe("Choose Plan")
                     )
               }}
@@ -443,10 +446,8 @@ export default {
             <div class="features">
               <ul>
                 <li
-                    class="feature"
-                  v-for="(featureKey, index) in Object.entries(
-                    plan.features
-                  ).slice(0, 4)"
+                  class="feature"
+                  v-for="(featureKey, index) in Object.entries(plan.features).slice(0, 4)"
                   :key="featureKey[0] + '_' + index"
                 >
                   <svg
