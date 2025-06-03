@@ -2,7 +2,7 @@
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
 import "swiper/swiper-bundle.css";
-import {calculatePlanPriceWithDiscounts, formatFeatureValue} from "@/helpers";
+import {calculatePlanPriceWithDiscounts, formatFeature} from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -74,9 +74,27 @@ export default {
           return planDetails;
         });
     },
+    sortedPlanFeatures() {
+      return (plan) => {
+        const assignedFeatures = Object.keys(plan.features);
+        
+        return this.features
+          .filter(feature =>
+            assignedFeatures.includes(feature.uuid) && !feature.hidden_feature
+          )
+          .sort((a, b) => 
+            (parseInt(a.display_order) || 999) - (parseInt(b.display_order) || 999)
+          )
+          .slice(0, 4)
+          .map(feature => ({
+            ...feature,
+            value: plan.features[feature.uuid].value || plan.features[feature.uuid]
+          }));
+      };
+    }
   },
   methods: {
-    formatFeatureValue,
+    formatFeature,
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
       try {
@@ -348,8 +366,8 @@ export default {
               <ul>
                 <li
                   class="feature"
-                  v-for="(featureKey, index) in Object.entries(plan.features).slice(0, 4)"
-                  :key="featureKey[0] + '_' + index"
+                  v-for="feature in sortedPlanFeatures(plan)"
+                  :key="feature.uuid"
                 >
                   <svg
                     width="20"
@@ -367,8 +385,8 @@ export default {
                   </svg>
 
                   <span>
-                    {{ featureKey[1].value_type !== 'boolean' ? translateMe(formatFeatureValue(featureKey[1])) : '' }}
-                    {{ featureKey[1].name }}
+                    {{ feature.value_type !== 'boolean' ? translateMe(formatFeature(feature)) : '' }}
+                    {{ feature.name }}
                   </span>
                 </li>
               </ul>
@@ -447,8 +465,8 @@ export default {
               <ul>
                 <li
                   class="feature"
-                  v-for="(featureKey, index) in Object.entries(plan.features).slice(0, 4)"
-                  :key="featureKey[0] + '_' + index"
+                  v-for="feature in sortedPlanFeatures(plan)"
+                  :key="feature.uuid"
                 >
                   <svg
                     width="20"
@@ -464,9 +482,10 @@ export default {
                       fill="#303030"
                     />
                   </svg>
+
                   <span>
-                    {{ featureKey[1].value_type !== 'boolean' ? translateMe(formatFeatureValue(featureKey[1])) : '' }}
-                    {{ featureKey[1].name }}
+                    {{ feature.value_type !== 'boolean' ? translateMe(formatFeature(feature)) : '' }}
+                    {{ feature.name }}
                   </span>
                 </li>
               </ul>

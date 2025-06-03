@@ -2,7 +2,7 @@
 import Swiper, { Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
 import VariantButton from "./VariantButton";
-import {calculatePlanPriceWithDiscounts, formatFeatureValue} from "@/helpers";
+import {calculatePlanPriceWithDiscounts, formatFeature} from "@/helpers";
 
 export default {
   data() {
@@ -49,7 +49,7 @@ export default {
     }
   },
   methods: {
-    formatFeatureValue,
+    formatFeature,
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
       try {
@@ -516,7 +516,7 @@ export default {
                     />
                   </div>
                   <div v-else>
-                    <span>{{ translateMe(formatFeatureValue(plan.features[feature.uuid])) }}</span>
+                    <span>{{ translateMe(formatFeature(plan.features[feature.uuid])) }}</span>
                   </div>
                 </div>
                 <div v-else>
@@ -618,7 +618,7 @@ export default {
                     />
                   </div>
                   <div v-else>
-                    <span>{{ translateMe(formatFeatureValue(plan.features[feature.uuid])) }}</span>
+                    <span>{{ translateMe(formatFeature(plan.features[feature.uuid])) }}</span>
                   </div>
                 </div>
                 <div v-else>

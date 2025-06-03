@@ -80,6 +80,13 @@
             :class="{ 'hide-all-features': !showPlansFeatures }"
           />
         </div>
+
+        <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
+          <PStackItem fill>
+            <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
+          </PStackItem>
+        </PStack>
+
         <div class="customization-bundle-section">
           <GetCustomBlock
             v-if="is_customizable"
@@ -113,12 +120,6 @@
         <CategoryHeading :headingData="additionalBenefitsHeading"/>
         <BenefitsBanner/>
       </div>
-      <!--====================================================================-->
-      <PStack v-if="onboard" class="choose-plan-btn" alignment="center" distribution="center" vertical>
-        <PStackItem fill>
-          <PButton plain @click="activePlan">{{ translateMe('I will choose the plan later') }}</PButton>
-        </PStackItem>
-      </PStack>
       <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose"/>
     </PPage>
   </div>

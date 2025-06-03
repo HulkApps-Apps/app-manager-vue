@@ -35,7 +35,7 @@ export const calculatePlanPriceWithDiscounts = (plan, promotionalDiscount = null
   };
 };
 
-export const formatFeatureValue = function(feature) {
+export const formatFeature = function(feature) {
   if (!feature) return '';
 
   if (['double', 'integer'].includes(feature?.value_type)) {
