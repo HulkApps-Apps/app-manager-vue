@@ -82,9 +82,18 @@ export default {
           .filter(feature =>
             assignedFeatures.includes(feature.uuid) && !feature.hidden_feature
           )
-          .sort((a, b) => 
-            (parseInt(a.display_order) || 999) - (parseInt(b.display_order) || 999)
-          )
+          .sort((a, b) => {
+            // First check popularity field
+            const popularityA = parseInt(a.popularity) || 999;
+            const popularityB = parseInt(b.popularity) || 999;
+            
+            if (popularityA !== popularityB) {
+              return popularityA - popularityB; // Lower popularity number first (1 is highest)
+            }
+            
+            // If popularity is same or not present, use display_order
+            return (parseInt(a.display_order) || 999) - (parseInt(b.display_order) || 999);
+          })
           .slice(0, 4)
           .map(feature => ({
             ...feature,
@@ -260,9 +269,10 @@ export default {
     });
     this.syncNavigationWidth(); // Sync navigation width after mount
 
-    console.log('Plans:', this.plans);
-    console.log('Monthly Plans:', this.monthlyPlans);
-    console.log('Annually Plans:', this.annualPlans);
+    // console.log('Plans:', this.plans);
+    // console.log('Monthly Plans:', this.monthlyPlans);
+    // console.log('Annually Plans:', this.annualPlans);
+    // console.log('Features:', this.features);
   },
 };
 </script>
