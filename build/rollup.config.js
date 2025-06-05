@@ -9,6 +9,8 @@ import replace from '@rollup/plugin-replace';
 import babel from '@rollup/plugin-babel';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 import { terser } from 'rollup-plugin-terser';
+import url from '@rollup/plugin-url';
+import postcss from 'rollup-plugin-postcss';
 import minimist from 'minimist';
 
 // Get browserslist config and remove ie from es build targets
@@ -36,6 +38,16 @@ const baseConfig = {
             replacement: `${path.resolve(projectRoot, 'src')}`,
           },
         ],
+      }),
+      url({
+        include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif'],
+        limit: 0, // Always emit separate files
+        fileName: '[name][extname]'
+      }),
+      postcss({
+        extract: true,
+        minimize: true,
+        modules: false
       }),
     ],
     replace: {
