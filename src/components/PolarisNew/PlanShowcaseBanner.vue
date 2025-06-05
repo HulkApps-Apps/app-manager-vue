@@ -71,11 +71,12 @@ export default {
     <div class="banner__inner">
       <div v-if="showDescription" class="plan-left">
         <p class="bundle-offer-label">
-          {{bundleApps}}
           {{ translateMe("Bundle Offer") }}
         </p>
         <p class="bundle-desc-label">
-          {{ translateMe("Get 24 Shopify apps and save more than") }}
+          {{ translateMe("Get") }}
+          {{bundleApps}}
+          {{ translateMe("Shopify apps and save more than") }}
           <strong>{{ translateMe("$1000") }}</strong>
           {{ translateMe("per month!") }}
         </p>
