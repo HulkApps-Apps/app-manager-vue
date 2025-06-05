@@ -51,12 +51,13 @@
     <PPage
       class="app-manager-plan-page-slider custom-title"
     >
-      <div class="promotional-banner">
+      <!-- -------------------- Bundle Plan Banner -------------------- -->
+      <!-- <div class="promotional-banner">
         <VariantButton id="pricing-tab" :variant="'primary'" @click="selectPlan('bundle')">
           {{ translateMe('Start Saving Now') }}
         </VariantButton>
-      </div>
-      <!--=======================================================-->
+      </div> -->
+
       <PLayout class="custom-plan">
         <PlanCardsHighlights
           :plans="plans"
@@ -88,14 +89,15 @@
         </PStack>
 
         <div class="customization-bundle-section">
-          <GetCustomBlock
+          <!-- -------------------- Customization Block -------------------- -->
+          <!-- <GetCustomBlock
             v-if="is_customizable"
             @click="handleCustomizePlan"
             :title="translateMe('Customization')"
             :description="translateMe('Check out all customization services that we offer')"
             :buttonText="translateMe('Get customization now')"
             style="flex-basis: 30%; flex-grow: 1;"
-          />
+          /> -->
           <BundlePlanCard
             :plan="bundle_plan"
             :plan_details="bundle_details"
@@ -418,14 +420,18 @@ export default {
           bundleElement.style.display = 'flex';
           billCycleBack.style.display = 'flex';
           billCycleSelect.style.display = 'none';
-          promotionalBanner.style.display = 'none';
+          if (promotionalBanner) {
+            promotionalBanner.style.display = 'none';
+          }
           bundlePlanShowcaseBanner.style.display = 'flex';
         } else {
           bundleElement.style.display = 'none';
           planElement.style.display = 'flex';
           billCycleBack.style.display = 'none';
           billCycleSelect.style.display = 'flex';
-          promotionalBanner.style.display = 'flex';
+          if (promotionalBanner) {
+            promotionalBanner.style.display = 'flex';
+          }
           bundlePlanShowcaseBanner.style.display = 'none';
         }
       }

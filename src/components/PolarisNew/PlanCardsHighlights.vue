@@ -174,7 +174,6 @@ export default {
       if (this.selectedInterval === "monthly") {
         monthlyPlanCards.style.visibility = "visible";
         monthlyPlanCards.style.height = "auto";
-        monthlyPlanCards.style.border = "1px solid #e5e5e5";
         annuallyPlanCards.style.visibility = "hidden";
         annuallyPlanCards.style.height = "0px";
         annuallyPlanCards.style.border = "0px";
@@ -187,7 +186,6 @@ export default {
         monthlyPlanCards.style.border = "0px";
         annuallyPlanCards.style.visibility = "visible";
         annuallyPlanCards.style.height = "auto";
-        annuallyPlanCards.style.border = "1px solid #e5e5e5";
         monthlyPlanNavigation.style.display = "none";
         annuallyPlanNavigation.style.display = "flex";
         this.interval = "ANNUAL";
@@ -541,13 +539,9 @@ export default {
 
 .cards {
   display: flex;
-  background-color: white;
   flex-grow: 1;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
   overflow-x: clip;
   overflow-y: visible;
-  box-shadow: 0 4px 6px -1px #0000001a;
 }
 
 .card {
@@ -562,6 +556,25 @@ export default {
 .swiper-wrapper .swiper-slide .card-border.last-card,
 .swiper-wrapper .swiper-slide:not(.swiper-slide-active) .card-border {
   border-left: 1px solid #cccccc;
+}
+
+.swiper-wrapper .swiper-slide {
+  background-color: white;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 4px 6px -1px #0000001a;
+}
+
+.swiper-wrapper .swiper-slide:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-left: 1px solid #e5e5e5;
+}
+
+.swiper-wrapper .swiper-slide:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-right: 1px solid #e5e5e5;
 }
 
 .card .title {

@@ -53,7 +53,7 @@ export default {
     </div>
     <div class="apps-list">
       <div v-for="(app, index) in allApps" :key="app.id + '_' + index" class="app">
-        <template v-if="index <= 8">
+        <template v-if="index <= 10">
           <img
             :src="app.app_logo_url"
             :alt="`${app.app_name} Logo`"
@@ -62,8 +62,8 @@ export default {
           />
           <h5>{{ app.app_name }}</h5>
         </template>
-        <template v-else-if="index === 9">
-          <h5 class="more-apps-label">+ {{ allApps.length - 9 }} {{ translateMe('More Apps') }}</h5>
+        <template v-else-if="index === 11">
+          <h5 class="more-apps-label">+ {{ allApps.length - 11 }} {{ translateMe('More Apps') }}</h5>
         </template>
       </div>
     </div>
@@ -136,7 +136,7 @@ export default {
 }
 .apps-list .app {
   display: flex;
-  flex-basis: calc(50% - 8px);
+  flex-basis: calc(33% - 8px);
   align-items: center;
   gap: 8px;
 }
@@ -144,5 +144,10 @@ export default {
     font-size: 13px;
     font-weight: 700;
     color: black;
+}
+@media (max-width: 640px) {
+  .apps-list .app {
+    flex-basis: calc(50% - 8px);
+  }
 }
 </style>
