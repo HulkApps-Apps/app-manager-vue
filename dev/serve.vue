@@ -29,7 +29,8 @@ export default Vue.extend({
         "This is html" : "This is html 001",
         "Title" : "Title eng",
         '<p>Contents</p>' : '<p>Contents eng</p>',
-      }
+      },
+      is_customizable: true,
     };
   },
   methods: {
@@ -45,6 +46,9 @@ export default Vue.extend({
     handleBannerClose(payload) {
       console.log(payload);
     },
+    handleCustomizePlan(){
+      console.log("Customize Plan");
+    },
     beforeCreate() {
     }
   }
@@ -56,9 +60,9 @@ export default Vue.extend({
     <h1>Test</h1>
     <div id="app" class="app-manager">
       <div class="app-manager-body">
-        <Banners @handleBannerClose="handleBannerClose" :translations="translations" type="header" base_url="https://redirects.localhost"/>
-        <Banners @handleBannerClose="handleBannerClose" :translations="translations" type="footer" base_url="https://redirects.localhost"/>
-        <AppManagerPlan :translations='translations'  @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handleBannerClose" :shop_domain="'demo-chirag-parmar.myshopify.com'" base_url="https://redirects.localhost" shop_host="asd"/>
+<!--        <Banners @handleBannerClose="handleBannerClose" :translations="translations" type="header" base_url="https://redirects.localhost"/>-->
+<!--        <Banners @handleBannerClose="handleBannerClose" :translations="translations" type="footer" base_url="https://redirects.localhost"/>-->
+        <AppManagerPlan :is_customizable="is_customizable" @handleCustomizePlan="handleCustomizePlan" :translations='translations'  @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handleBannerClose" :shop_domain="'shailesh-local.myshopify.com'" base_url="https://redirects.localhost" shop_host="asd"/>
       </div>
     </div>
   </div>

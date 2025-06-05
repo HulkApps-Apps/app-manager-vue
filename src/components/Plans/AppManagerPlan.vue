@@ -1,7 +1,13 @@
 <template>
-  <AppManagerGroupPlan  @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-if="group_plan"
-                       :shop_domain="shop_domain" :host="host" :discount_code="discount_code"></AppManagerGroupPlan>
-  <AppManagerSliderPlan @handlePlanSelect="handlePlanSelect" @handlePlanBannerClose="handlePlanBannerClose" v-else :shop_domain="shop_domain" :host="host" :discount_code="discount_code"></AppManagerSliderPlan>
+  <AppManagerSliderPlan
+    :shop_domain="shop_domain"
+    :host="host"
+    :discount_code="discount_code"
+    :is_customizable="is_customizable"
+    @handlePlanSelect="handlePlanSelect"
+    @handlePlanBannerClose="handlePlanBannerClose"
+    @handleCustomizePlan="handleCustomizePlan"
+  ></AppManagerSliderPlan>
 </template>
 
 <script>
@@ -33,6 +39,10 @@ export default {
       type: String,
       default: null
     },
+    is_customizable: {
+      type: Boolean,
+      default: false
+    },
     translations:{
       type: Object,
       default() {
@@ -48,6 +58,9 @@ export default {
     handlePlanBannerClose(payload) {
       this.$emit('handlePlanBannerClose', payload)
       this.$emit('handle-plan-banner-close', payload)
+    },
+    handleCustomizePlan(){
+      this.$emit('handleCustomizePlan')
     }
   },
   created() {
