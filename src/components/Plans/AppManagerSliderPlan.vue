@@ -139,20 +139,7 @@ import {PButton} from "../polaris-vue/src/components/PButton";
 import {PButtonGroup} from "../polaris-vue/src/components/PButtonGroup";
 import {PHeading} from "../polaris-vue/src/components/PHeading";
 import {PLayout} from "../polaris-vue/src/components/PLayout";
-import {PLayoutSection} from "../polaris-vue/src/components/PLayout/components/PLayoutSection";
-import {PTextContainer} from "../polaris-vue/src/components/PTextContainer";
-import {PDataTable} from "../polaris-vue/src/components/PDataTable";
-import {PDataTableCol} from "../polaris-vue/src/components/PDataTable/components/PDataTableCol";
-import {PDataTableRow} from "../polaris-vue/src/components/PDataTable/components/PDataTableRow";
-import {PIcon} from "../polaris-vue/src/components/PIcon";
-import {PTextStyle} from "../polaris-vue/src/components/PTextStyle";
-import {PCard} from "../polaris-vue/src/components/PCard"
-import {PCardSection} from "../polaris-vue/src/components/PCard/components/PCardSection"
-import {PSkeletonPage} from "../polaris-vue/src/components/PSkeletonPage"
-import {PSkeletonDisplayText} from "../polaris-vue/src/components/PSkeletonDisplayText"
-import {PSkeletonBodyText} from "../polaris-vue/src/components/PSkeletonBodyText"
 import {PEmptyState} from "../polaris-vue/src/components/PEmptyState"
-import {Carousel, Slide} from 'vue-carousel';
 import AppCard from "../PolarisNew/AppCard";
 import PlanShowcaseBanner from "../PolarisNew/PlanShowcaseBanner";
 import CategoryHeading from "../PolarisNew/CategoryHeading";
@@ -171,10 +158,6 @@ export default {
   name: "AppManagerSliderPlan",
   components: {
     CustomizationModal,
-    Carousel,
-    Slide,
-    YearlyPlanPromotion,
-    PlanBanners,
     PPage,
     PStack,
     PStackItem,
@@ -182,18 +165,6 @@ export default {
     PButtonGroup,
     PHeading,
     PLayout,
-    PLayoutSection,
-    PTextContainer,
-    PDataTable,
-    PDataTableCol,
-    PDataTableRow,
-    PIcon,
-    PTextStyle,
-    PCardSection,
-    PCard,
-    PSkeletonDisplayText,
-    PSkeletonBodyText,
-    PSkeletonPage,
     PEmptyState,
     AppCard,
     PlanShowcaseBanner,
@@ -210,9 +181,6 @@ export default {
   props: ['shop_domain', 'host', 'discount_code', 'is_customizable'],
   data() {
     return {
-      slideLength: 0,
-      perPage: 0,
-      currentSlide: 0,
       planLoading: false,
       plan: {},
       plans: [],
@@ -227,64 +195,11 @@ export default {
       has_active_charge: false,
       global_plan_charge: false,
       subtitleContent: '',
-      checkList: [
-        "60 days free trial",
-      ],
       selectedPlan: 'monthly',
-      monthlySelectedStyle: {
-        height: '60px',
-        backgroundColor: '#257f60',
-        color: '#fff',
-        position: 'relative',
-        right: '-5px',
-        borderRadius: '8px',
-        zIndex: 1,
-      },
-      yearlySelectedStyle: {
-        height: '60px',
-        backgroundColor: '#257f60',
-        position: 'relative',
-        left: '-5px',
-        borderRadius: '8px'
-      },
-      bundleSelectedSyle: {
-        height: '60px',
-        backgroundColor: '#257f60',
-        position: 'relative',
-        left: '-5px',
-        borderRadius: '8px'
-      },
-      monthlyStyle: {
-        height: '55px',
-        backgroundColor: '#FFFFFF',
-        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-        border: 'none',
-        borderRadius: '8px',
-        ZIndex: 11,
-      },
-      yearlyStyle: {
-        color: '#258060',
-        height: '55px',
-        backgroundColor: '#FFFFFF',
-        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-        border: 'none',
-        borderRadius: '8px'
-      },
-      bundleStyle: {
-        color: '#258060',
-        height: '55px',
-        backgroundColor: '#FFFFFF',
-        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-        border: 'none',
-        borderRadius: '8px'
-      },
-      additionalBenefitsHeading: {
-        category_name: "Unlock Additional Benefits"
-      },
-      "bundle_details": null,
-      "bundle_plan": null,
-      "showPlansFeatures": false,
-      "showCustomizationModal": false
+      bundle_details: null,
+      bundle_plan: null,
+      showPlansFeatures: false,
+      showCustomizationModal: false
     }
   },
   computed: {
@@ -297,33 +212,11 @@ export default {
         "default_plan_id": this.default_plan_id,
       };
     },
-    headings() {
-      let headings = [this.translateMe('Plans & Features')];
-      this.plans.forEach(plan => {
-
-        let heading = (plan.name);
-        if (plan.price > 0) heading += ` ($${plan.price}/mo)`;
-        headings.push(heading);
-      });
-      return headings;
-    },
     monthlyPlan() {
-      const plans = [];
-      for (let planKey in this.plans) {
-        if (this.plans[planKey].interval === 'EVERY_30_DAYS') {
-          plans.push(this.plans[planKey]);
-        }
-      }
-      return plans;
+      return this.plans.filter(plan => plan.interval === 'EVERY_30_DAYS');
     },
     yearlyPlan() {
-      const plans = [];
-      for (let planKey in this.plans) {
-        if (this.plans[planKey].interval === 'ANNUAL') {
-          plans.push(this.plans[planKey]);
-        }
-      }
-      return plans;
+      return this.plans.filter(plan => plan.interval === 'ANNUAL');
     },
   },
   methods: {
@@ -393,7 +286,6 @@ export default {
     async activePlan() {
       const response = await this.activeWithoutPlan()
       if (response.data.status === true && this.onboard) {
-        // Create the event
         this.$emit('handlePlanSelect', {choose_later: true})
         this.onboard = false;
       }
@@ -435,67 +327,6 @@ export default {
           bundlePlanShowcaseBanner.style.display = 'none';
         }
       }
-      this.$nextTick(() => {
-
-        let elements = document.querySelectorAll('.plan__price');
-        let maxHeight = 0;
-        elements.forEach((item) => {
-          if (maxHeight < item.offsetHeight) {
-            maxHeight = item.offsetHeight
-          }
-        });
-        elements.forEach((item) => {
-          item.style.minHeight = maxHeight + 'px';
-        });
-
-        this.slideLength = this.selectedPlan === 'monthly' ? this.monthlyPlan.length : this.yearlyPlan.length;
-        this.perPage = this.slideLength >= 4 ? 4 : this.slideLength;
-
-        // calculate and reset height of rows
-        this.features.forEach((feature) => {
-          let className = feature.value_type + '__type__' + feature.slug;
-          let elements = document.querySelectorAll('.' + className);
-          let maxHeight = 0;
-          elements.forEach((item) => {
-            item.style.minHeight = 'unset';
-            if (maxHeight < item.offsetHeight) {
-              maxHeight = item.offsetHeight
-            }
-          });
-          elements.forEach((item) => {
-            item.style.minHeight = maxHeight + 'px';
-          });
-        })
-
-        // remove first-slide and last-slide classes
-        let allSlides = document.getElementsByClassName('VueCarousel-slide');
-        for (let i = 0, max = allSlides.length; i < max; i++) {
-          let slide = document.getElementById(allSlides[i].id);
-          slide.classList.remove('first-slide')
-          slide.classList.remove('last-slide')
-        }
-
-        // add first-slide and last-slide classes
-        let pagesCount = this.slideLength;
-        setTimeout(() => {
-          let element = document.querySelector('.slide-0');
-          if (element) {
-            element.classList.add('first-slide')
-            if (pagesCount < 4) {
-              let lastSlideClass = '.slide-' + (pagesCount - 1)
-              element = document.querySelector(lastSlideClass);
-              element.classList.add('last-slide')
-            } else {
-              element = document.querySelector('.slide-3');
-              element.classList.add('last-slide')
-            }
-            if (document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev')) {
-              document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
-            }
-          }
-        }, 100)
-
-      });
     },
     async fetchFeatures() {
       let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
@@ -583,79 +414,11 @@ export default {
     await this.fetchFeatures();
     await this.fetchPlans();
     this.planLoading = false;
-
-    this.$nextTick(() => {
-
-      // calculate height of cell
-      setTimeout(() => {
-
-        let elements = document.querySelectorAll('.plan__price');
-        let maxHeight = 0;
-        elements.forEach((item) => {
-          item.style.minHeight = 'unset';
-          if (maxHeight < item.offsetHeight) {
-            maxHeight = item.offsetHeight
-          }
-        });
-        elements.forEach((item) => {
-          item.style.minHeight = maxHeight + 'px';
-        });
-
-        this.features.forEach((feature) => {
-          let className = feature.value_type + '__type__' + feature.slug;
-          elements = document.querySelectorAll('.' + className);
-          maxHeight = 0;
-          elements.forEach((item) => {
-            if (maxHeight < item.offsetHeight) {
-              maxHeight = item.offsetHeight
-            }
-          });
-          elements.forEach((item) => {
-            item.style.minHeight = maxHeight + 'px';
-          });
-        })
-      }, 100);
-
-      // remove fist-slide and last-slide classes from all slides
-      let allSlides = document.getElementsByClassName('VueCarousel-slide');
-      for (let i = 0, max = allSlides.length; i < max; i++) {
-        let slide = document.getElementById(allSlides[i].id);
-        slide.classList.remove('first-slide')
-        slide.classList.remove('last-slide')
-      }
-
-      // add first-slide and last-slide
-      this.slideLength = this.selectedPlan === 'monthly' ? this.monthlyPlan.length : this.yearlyPlan.length;
-      this.perPage = this.slideLength >= 4 ? 4 : this.slideLength;
-
-      let pagesCount = this.slideLength;
-      setTimeout(() => {
-        let element = document.querySelector('.slide-0');
-        if (element) {
-          element.classList.add('first-slide')
-          if (pagesCount < 4) {
-            let lastSlideClass = '.slide-' + (pagesCount - 1)
-            element = document.querySelector(lastSlideClass);
-            element.classList.add('last-slide')
-          } else {
-            element = document.querySelector('.slide-3');
-            element.classList.add('last-slide')
-          }
-          if (document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev')) {
-            document.querySelector('.VueCarousel-navigation-button.VueCarousel-navigation-prev').style.left = -document.querySelector('.Polaris-ResourceList__ResourceListWrapper.features').offsetWidth + 'px';
-          }
-        }
-      }, 100)
-
-      this.selectPlan(this.selectedPlan);
-
-    });
   },
 }
 </script>
 
 <style lang="scss">
-
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
 .app-manager .app-manager-plan-page-slider ul {
@@ -665,29 +428,19 @@ export default {
 }
 
 .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li,
-.app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li,
 .app-manager .app-manager-plan-page-slider .plan__price {
   padding: 16px 16px 16px 20px;
 }
 
-.app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li,
-.app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:not(:last-child),
-.app-manager .app-manager-plan-page-slider .Polaris-Layout.custom-plan .VueCarousel .plan__price {
+.app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li {
   border-top: 1px solid #dddddd;
   border-right: 1px solid #dddddd;
   background: #fff;
-}
-
-.app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li {
   border-right: none;
   border-left: 1px solid #dddddd;
 }
 
-/*.app-manager .app-manager-plan-page-slider .plan__price{
-    min-height:121px;
-}*/
-.app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li:last-child,
-.app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
+.app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li:last-child {
   border-bottom: 1px solid #dddddd;
 }
 
@@ -699,60 +452,11 @@ export default {
   border-bottom-left-radius: 12px;
 }
 
-.app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.first-slide ul li:not(:last-child) {
-  border-left: 1px solid #dddddd;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.first-slide .plan__price {
+.app-manager .app-manager-plan-page-slider .plan__price {
   border-left: 1px solid #dddddd;
   box-shadow: none;
   border-top-left-radius: 12px;
   overflow: hidden;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide ul li:nth-last-child(2) {
-  border-bottom-right-radius: 12px;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.first-slide ul li:nth-last-child(2) {
-  border-bottom-left-radius: 12px;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide .plan__price {
-  border-right: 1px solid #dddddd;
-  box-shadow: none;
-  border-top-right-radius: 12px;
-  overflow: hidden;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.last-slide {
-  border-top-right-radius: 12px;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel-inner .VueCarousel-slide.first-slide {
-  border-top-left-radius: 12px;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel .VueCarousel-inner li {
-  text-align: center;
-}
-
-.app-manager .app-manager-plan-page-slider .VueCarousel-navigation-button {
-  color: #257f60;
-}
-
-.app-manager .app-manager-plan-page-slider .btn-group .Polaris-ButtonGroup__Item {
-  margin-left: 0px !important;
-  z-index: unset !important;
-}
-
-.app-manager .Polaris-Button::after {
-  box-shadow: none !important;
-}
-
-.app-manager .Polaris-Button:focus {
-  box-shadow: none !important;
-  border-color: black !important;
 }
 
 .app-manager .app-manager-plan-page-slider .feature__list,
@@ -772,12 +476,6 @@ export default {
   word-wrap: break-word;
   white-space: initial;
 }
-
-// .app-manager .app-manager-plan-page-slider .custom-choose-button:hover{
-//     background: #006e52;
-//     border-color: transparent;
-//     color: #fff;
-// }
 
 .app-manager-plan-banner {
   margin-right: 30px;
@@ -897,52 +595,9 @@ export default {
   width: 100%;
 }
 
-@media (min-width: 0px) and (max-width: 576px) {
-  .custom-plan > .Polaris-Layout__Section > .VueCarousel > .VueCarousel-wrapper > .VueCarousel-inner {
-    overflow-x: scroll;
-  }
-}
-
 @media (max-width: 700px) {
   .Polaris-ButtonGroup__Item {
     width: auto !important;
-  }
-  .app-manager .Polaris-Button {
-    padding: 7px 8px !important;
-  }
-}
-
-@media (min-width: 0px) and (max-width: 467px) {
-
-  .app-manager .Polaris-Page-Header__RightAlign {
-    margin-left: -34px !important;
-  }
-  #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div {
-    width: 222px !important;
-  }
-  .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
-    min-height: 100px !important;
-  }
-  .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li {
-    padding: 16px 16px 16px 5px;
-  }
-  .app-manager .Polaris-Button {
-    padding: 7px 8px !important;
-  }
-  .VueCarousel-slide {
-    flex-basis: auto !important;
-  }
-  .Polaris-ResourceList__ResourceListWrapper.features {
-    width: 30% !important;
-  }
-}
-
-@media (min-width: 467px) and (max-width: 1003px) {
-  #app_manager > div > div.Polaris-Page-Header.Polaris-Page-Header--hasNavigation.Polaris-Page-Header--mediumTitle.Polaris-Page-Header--mobileView > div > div.Polaris-Page-Header__RightAlign > div > div > div > div > div > div:nth-child(2) > button > span > span > div > div > div > span > span > div {
-    width: 222px !important;
-  }
-  .app-manager .app-manager-plan-page-slider .Polaris-Layout__Section .VueCarousel-slide li:nth-last-child(2) {
-    min-height: 100px !important;
   }
   .app-manager .Polaris-Button {
     padding: 7px 8px !important;
