@@ -199,7 +199,10 @@ export default {
       bundle_details: null,
       bundle_plan: null,
       showPlansFeatures: false,
-      showCustomizationModal: false
+      showCustomizationModal: false,
+      additionalBenefitsHeading:{
+        category_name: "Unlock Additional Benefits"
+      },
     }
   },
   computed: {
