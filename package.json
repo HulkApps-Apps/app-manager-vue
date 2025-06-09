@@ -8,7 +8,8 @@
   "unpkg": "dist/app-manager-vue.min.js",
   "files": [
     "dist/*",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "src/assets/**/*"
   ],
   "sideEffects": false,
   "scripts": {

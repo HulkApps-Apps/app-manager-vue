@@ -130,8 +130,6 @@
 <script>
 
 import axios from "axios";
-import PlanBanners from "./PlanBanners";
-import YearlyPlanPromotion from "./YearlyPlanPromotion";
 import PPage from "../polaris-vue/src/components/PPage/PPage";
 import PStack from "../polaris-vue/src/components/PStack/PStack";
 import PStackItem from "../polaris-vue/src/components/PStack/components/PStackItem/PStackItem";
@@ -153,10 +151,12 @@ import PlanTable from "../PolarisNew/PlanTable.vue";
 import BundlePlanCard from "../PolarisNew/BundlePlanCard.vue";
 import CustomizationModal from "@/components/PolarisNew/CustomizationModal.vue";
 import { calculatePlanPriceWithDiscounts } from "@/helpers";
+import PlanBanners from "@/components/Plans/PlanBanners.vue";
 
 export default {
   name: "AppManagerSliderPlan",
   components: {
+    PlanBanners,
     CustomizationModal,
     PPage,
     PStack,
