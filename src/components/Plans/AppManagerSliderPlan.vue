@@ -423,6 +423,7 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.css');
 
 .app-manager .app-manager-plan-page-slider ul {
   list-style: none;
