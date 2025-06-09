@@ -41,7 +41,8 @@ const baseConfig = {
       url({
         include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif'],
         limit: 0, // Always emit separate files
-        fileName: '[name][extname]'
+        fileName: '[name][extname]',
+        publicPath: 'dist/'
       }),
     ],
     replace: {
