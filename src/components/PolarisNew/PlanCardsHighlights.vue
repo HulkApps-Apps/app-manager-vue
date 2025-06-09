@@ -1,7 +1,6 @@
 <script>
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
-import "../polaris-vue/src/scss/swiper.css";
 import {calculatePlanPriceWithDiscounts, formatFeature} from "@/helpers";
 
 export default {
