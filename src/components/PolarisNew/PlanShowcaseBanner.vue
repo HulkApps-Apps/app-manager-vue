@@ -42,6 +42,11 @@ export default {
       required: false,
       default: false,
     },
+    fullWidth: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     bundleApps: {
       type: Number,
       required: false,
@@ -68,7 +73,12 @@ export default {
 
 <template>
   <div class="bundle-plan-showcase-banner banner-card">
-    <div class="banner__inner">
+    <div
+      :class="[
+        'banner__inner',
+        this.fullWidth ? 'full-width' : '',
+      ]"
+    >
       <div v-if="showDescription" class="plan-left">
         <p class="bundle-offer-label">
           {{ translateMe("Bundle Offer") }}
@@ -139,6 +149,11 @@ export default {
   margin-left: auto;
   margin-right: auto;
   padding: 0px 32px;
+}
+
+.banner__inner.full-width {
+  max-width: calc(100% - 200px);
+  padding: 0 16px;
 }
 
 .plan-name {

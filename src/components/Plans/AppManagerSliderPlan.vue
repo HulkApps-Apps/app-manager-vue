@@ -5,9 +5,14 @@
     v-if="!this.planLoading && this.plans.length === 0"
   >
   </PEmptyState>
-  <div v-else-if="!this.planLoading && this.plans.length > 0">
+  <div class="app-manager-wrapper" v-else-if="!this.planLoading && this.plans.length > 0">
     <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" class="app-manager-plan-banner"/>
-    <div class="bill-cycle-select-group">
+    <div
+      :class="[
+        'bill-cycle-select-group',
+        this.full_width ? 'full-width' : '',
+      ]"
+    >
       <a class="bill-cycle-back" @click="selectPlan('monthly')">
         <svg
           width="16"
@@ -56,6 +61,7 @@
     <PlanShowcaseBanner
       v-if="bundle_plan"
       :useCardStyle="true"
+      :fullWidth="this.full_width"
       :showcaseData="bundle_plan"
       :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)"
       :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"
@@ -63,6 +69,7 @@
     />
     <PPage
       class="app-manager-plan-page-slider custom-title"
+      :full-width="this.full_width"
     >
       <!-- -------------------- Bundle Plan Banner -------------------- -->
       <!-- <div class="promotional-banner">
@@ -115,7 +122,6 @@
             :plan="bundle_plan"
             :plan_details="bundle_details"
             @plan-clicked="selectPlan"
-            style="flex-basis: 62%; flex-grow: 1;"
           />
         </div>
         <CustomizationModal
@@ -191,7 +197,7 @@ export default {
     PlanTable,
     BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable'],
+  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'full_width'],
   data() {
     return {
       planLoading: false,
@@ -438,10 +444,18 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.css');
 
+.app-manager .app-manager-wrapper {
+  padding-top: 16px;
+}
+
 .app-manager .app-manager-plan-page-slider ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.app-manager .Polaris-Page--fullWidth {
+  max-width: calc(100% - 200px) !important;
 }
 
 .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li,
@@ -544,6 +558,10 @@ export default {
   margin-left: auto;
   margin-right: auto;
   padding: 0px 32px;
+}
+
+.bill-cycle-select-group.full-width {
+  max-width: calc(100% - 200px);
 }
 
 .bill-cycle-select-group__inner-left {

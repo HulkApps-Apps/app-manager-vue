@@ -60,7 +60,7 @@ export default {
             width="24"
             height="24"
           />
-          <h5>{{ app.app_name }}</h5>
+          <h5>{{ translateMe(app.app_name) }}</h5>
         </template>
         <template v-else-if="index === 11">
           <h5 class="more-apps-label">+ {{ allApps.length - 11 }} {{ translateMe('More Apps') }}</h5>
