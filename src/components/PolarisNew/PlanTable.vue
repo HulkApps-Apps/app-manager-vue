@@ -408,7 +408,9 @@ export default {
   <div class="container">
     <div class="swiper-plan-navigation nav-monthly-table">
       <button class="swiper-plan-monthly-prev">
-        <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">+{{ this.remainingPlansMonthly.before }} Plans</span>
+        <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">
+          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+        </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
           <path d="M5 12.0001L19 12.0001" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -423,7 +425,9 @@ export default {
         </svg>
       </button>
       <button class="swiper-plan-monthly-next">
-        <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">+{{ this.remainingPlansMonthly.after }} Plans</span>
+        <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">
+          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+        </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
           <path d="M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -440,7 +444,9 @@ export default {
     </div>
     <div class="swiper-plan-navigation nav-annually-table">
       <button class="swiper-plan-annually-prev">
-        <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">+{{ this.remainingPlansAnnually.before }} Plans</span>
+        <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">
+          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+        </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
           <path d="M5 12.0001L19 12.0001" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -455,7 +461,9 @@ export default {
         </svg>
       </button>
       <button class="swiper-plan-annually-next">
-        <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">+{{ this.remainingPlansAnnually.after }} Plans</span>
+        <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">
+          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+        </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
           <path d="M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -480,14 +488,14 @@ export default {
         </div>
         <template v-for="group in monthlyPlansFeatures">
           <div v-if="group.name" class="feature-group-header plan-feature-name plan-feature-name-monthly">
-            {{ group.name }}
+            {{ translateMe(group.name) }}
           </div>
           <div
             class="plan-feature-name plan-feature-name-monthly"
             v-for="feature in group.features"
             :key="feature.uuid"
           >
-            {{ feature.name }}
+            {{ translateMe(feature.name) }}
           </div>
         </template>
       </div>
@@ -513,7 +521,7 @@ export default {
                   </h5>
                 </template>
                 <div class="main-price">
-                  <h4 class="plan-name">{{ plan.name }}</h4>
+                  <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
                     <span class="plan-price">${{ plan.price }}</span>
                     <span class="plan-interval">{{ translateMe("/mo") }}</span>
@@ -542,7 +550,7 @@ export default {
             </div>
             <template v-for="group in monthlyPlansFeatures">
               <div v-if="group.name" class="feature-group-header plan-feature plan-feature-monthly">
-                {{ group.name }}
+                {{ translateMe(group.name) }}
               </div>
               <div
                 class="plan-feature plan-feature-monthly"
@@ -597,14 +605,14 @@ export default {
         </div>
         <template v-for="group in annualPlansFeatures">
           <div v-if="group.name" class="feature-group-header plan-feature-name plan-feature-name-annually">
-            {{ group.name }}
+            {{ translateMe(group.name) }}
           </div>
           <div
             class="plan-feature-name plan-feature-name-annually"
             v-for="feature in group.features"
             :key="feature.uuid"
           >
-            {{ feature.name }}
+            {{ translateMe(feature.name) }}
           </div>
         </template>
       </div>
@@ -630,7 +638,7 @@ export default {
                   </h5>
                 </template>
                 <div class="main-price">
-                  <h4 class="plan-name">{{ plan.name }}</h4>
+                  <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
                     <span class="plan-price">${{ plan.price }}</span>
                     <span class="plan-interval">{{ translateMe("/yr") }}</span>
@@ -659,7 +667,7 @@ export default {
             </div>
             <template v-for="group in annualPlansFeatures">
               <div v-if="group.name" class="feature-group-header plan-feature plan-feature-annually">
-                {{ group.name }}
+                {{ translateMe(group.name) }}
               </div>
               <div
                 class="plan-feature plan-feature-annually"

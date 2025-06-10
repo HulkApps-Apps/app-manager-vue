@@ -4,6 +4,7 @@
     :host="host"
     :discount_code="discount_code"
     :is_customizable="is_customizable"
+    :full_width="full_width"
     @handlePlanSelect="handlePlanSelect"
     @handlePlanBannerClose="handlePlanBannerClose"
     @handleCustomizePlan="handleCustomizePlan"
@@ -11,14 +12,13 @@
 </template>
 
 <script>
-import AppManagerGroupPlan from "./AppManagerGroupPlan";
 import AppManagerSliderPlan from "./AppManagerSliderPlan";
 import Vue from "vue";
 import install from "@/entry.esm";
 
 export default {
   name: "AppManagerPlan",
-  components: {AppManagerSliderPlan, AppManagerGroupPlan},
+  components: {AppManagerSliderPlan},
   props: {
     shop_domain: {
       type: String
@@ -40,6 +40,10 @@ export default {
       default: null
     },
     is_customizable: {
+      type: Boolean,
+      default: false
+    },
+    full_width: {
       type: Boolean,
       default: false
     },
