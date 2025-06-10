@@ -9,7 +9,20 @@
     <PlanBanners position="header" @handlePlanBannerClose="handlePlanBannerClose" class="app-manager-plan-banner"/>
     <div class="bill-cycle-select-group">
       <a class="bill-cycle-back" @click="selectPlan('monthly')">
-        <img src="../../assets/ArrowLeft.svg" alt="Left Arrow"/>
+        <svg
+          width="16"
+          height="14"
+          viewBox="0 0 16 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M1 7H15H1Z" fill="#006FBB"/>
+          <path d="M1 7H15" stroke="#006FBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 7L7 13L1 7Z" fill="#006FBB"/>
+          <path d="M1 7L7 13" stroke="#006FBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 7L7 1L1 7Z" fill="#006FBB"/>
+          <path d="M1 7L7 1" stroke="#006FBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         {{ translateMe('Back to App pricing') }}
       </a>
       <div class="bill-cycle-select-group__inner-left">
@@ -561,7 +574,7 @@ export default {
   align-items: center;
   justify-content: end;
   padding-right: 36px;
-  background-image: url('../../assets/25for70lessBanner.png');
+  //background-image: url('../../assets/25for70lessBanner.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

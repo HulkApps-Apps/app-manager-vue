@@ -1,6 +1,6 @@
 {
   "name": "@hulkapps/app-manager-vue",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Vue SDK to render app manager contents",
   "main": "dist/app-manager-vue.ssr.js",
   "browser": "dist/app-manager-vue.esm.js",
@@ -8,8 +8,7 @@
   "unpkg": "dist/app-manager-vue.min.js",
   "files": [
     "dist/*",
-    "src/**/*.vue",
-    "src/assets/**/*"
+    "src/**/*.vue"
   ],
   "sideEffects": false,
   "scripts": {
@@ -34,7 +33,6 @@
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-replace": "^2.4.2",
-    "@rollup/plugin-url": "^8.0.2",
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
     "clean-css-cli": "^5.6.0",
