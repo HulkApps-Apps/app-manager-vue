@@ -409,21 +409,65 @@ export default {
     <div class="swiper-plan-navigation nav-monthly-table">
       <button class="swiper-plan-monthly-prev">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">+{{ this.remainingPlansMonthly.before }} Plans</span>
-        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_859_9388)">
+          <path d="M5 12.0001L19 12.0001" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5 12.0001L11 18.0001" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5 12.0001L11 6.00012" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_859_9388">
+          <rect width="24" height="24" fill="white"/>
+          </clipPath>
+          </defs>
+        </svg>
       </button>
       <button class="swiper-plan-monthly-next">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">+{{ this.remainingPlansMonthly.after }} Plans</span>
-        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_859_9381)">
+          <path d="M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 12L13 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 12L13 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_859_9381">
+          <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 -1 24 24)"/>
+          </clipPath>
+          </defs>
+        </svg>
       </button>
     </div>
     <div class="swiper-plan-navigation nav-annually-table">
       <button class="swiper-plan-annually-prev">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">+{{ this.remainingPlansAnnually.before }} Plans</span>
-        <img src="../../assets/NavigationLeft.svg" alt="Nav Left" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_859_9388)">
+          <path d="M5 12.0001L19 12.0001" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5 12.0001L11 18.0001" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5 12.0001L11 6.00012" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_859_9388">
+          <rect width="24" height="24" fill="white"/>
+          </clipPath>
+          </defs>
+        </svg>
       </button>
       <button class="swiper-plan-annually-next">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">+{{ this.remainingPlansAnnually.after }} Plans</span>
-        <img src="../../assets/NavigationRight.svg" alt="Nav Right" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_859_9381)">
+          <path d="M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 12L13 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 12L13 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_859_9381">
+          <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 -1 24 24)"/>
+          </clipPath>
+          </defs>
+        </svg>
       </button>
     </div>
 
@@ -507,23 +551,38 @@ export default {
               >
                 <div v-if="hasFeature(plan, feature)">
                   <div v-if="feature.value_type === 'boolean'">
-                    <img
-                      src="../../assets/CheckTrue.svg"
-                      alt="Feature is included"
-                      class="plan-table-checkmark"
-                      v-if="hasFeature(plan, feature)"
-                    />
+                    <span class="plan-table-checkmark">
+                      <svg width="21" height="20" viewBox="0 0 21 20" fill="white" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_859_9134)">
+                        <path d="M3.25 10C3.25 10.9849 3.44399 11.9602 3.8209 12.8701C4.19781 13.7801 4.75026 14.6069 5.4467 15.3033C6.14314 15.9997 6.96993 16.5522 7.87987 16.9291C8.78982 17.306 9.76509 17.5 10.75 17.5C11.7349 17.5 12.7102 17.306 13.6201 16.9291C14.5301 16.5522 15.3569 15.9997 16.0533 15.3033C16.7497 14.6069 17.3022 13.7801 17.6791 12.8701C18.056 11.9602 18.25 10.9849 18.25 10C18.25 9.01509 18.056 8.03982 17.6791 7.12987C17.3022 6.21993 16.7497 5.39314 16.0533 4.6967C15.3569 4.00026 14.5301 3.44781 13.6201 3.0709C12.7102 2.69399 11.7349 2.5 10.75 2.5C9.76509 2.5 8.78982 2.69399 7.87987 3.0709C6.96993 3.44781 6.14314 4.00026 5.4467 4.6967C4.75026 5.39314 4.19781 6.21993 3.8209 7.12987C3.44399 8.03982 3.25 9.01509 3.25 10Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.25 9.99998L9.91667 11.6666L13.25 8.33331" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_859_9134">
+                        <rect width="20" height="20" fill="white" transform="translate(0.75)"/>
+                        </clipPath>
+                        </defs>
+                      </svg>
+                    </span>
                   </div>
                   <div v-else>
                     <span>{{ translateMe(formatFeature(plan.features[feature.uuid])) }}</span>
                   </div>
                 </div>
                 <div v-else>
-                  <img
-                    src="../../assets/CheckFalse.svg"
-                    alt="Feature is not included"
-                    class="plan-table-checkmark"
-                  />
+                  <span class="plan-table-checkmark">
+                    <svg width="21" height="20" viewBox="0 0 21 20" fill="white" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_859_9139)">
+                      <path d="M15.75 5L5.75 15" stroke="#5C5C5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M5.75 5L15.75 15" stroke="#5C5C5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_859_9139">
+                      <rect width="20" height="20" fill="white" transform="translate(0.75)"/>
+                      </clipPath>
+                      </defs>
+                    </svg>
+                  </span>
                 </div>
               </div>
             </template>
@@ -609,23 +668,38 @@ export default {
               >
                 <div v-if="hasFeature(plan, feature)">
                   <div v-if="feature.value_type === 'boolean'">
-                    <img
-                      src="../../assets/CheckTrue.svg"
-                      alt="Feature is included"
-                      class="plan-table-checkmark"
-                      v-if="hasFeature(plan, feature)"
-                    />
+                    <span class="plan-table-checkmark">
+                      <svg width="21" height="20" viewBox="0 0 21 20" fill="white" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_859_9134)">
+                        <path d="M3.25 10C3.25 10.9849 3.44399 11.9602 3.8209 12.8701C4.19781 13.7801 4.75026 14.6069 5.4467 15.3033C6.14314 15.9997 6.96993 16.5522 7.87987 16.9291C8.78982 17.306 9.76509 17.5 10.75 17.5C11.7349 17.5 12.7102 17.306 13.6201 16.9291C14.5301 16.5522 15.3569 15.9997 16.0533 15.3033C16.7497 14.6069 17.3022 13.7801 17.6791 12.8701C18.056 11.9602 18.25 10.9849 18.25 10C18.25 9.01509 18.056 8.03982 17.6791 7.12987C17.3022 6.21993 16.7497 5.39314 16.0533 4.6967C15.3569 4.00026 14.5301 3.44781 13.6201 3.0709C12.7102 2.69399 11.7349 2.5 10.75 2.5C9.76509 2.5 8.78982 2.69399 7.87987 3.0709C6.96993 3.44781 6.14314 4.00026 5.4467 4.6967C4.75026 5.39314 4.19781 6.21993 3.8209 7.12987C3.44399 8.03982 3.25 9.01509 3.25 10Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.25 9.99998L9.91667 11.6666L13.25 8.33331" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_859_9134">
+                        <rect width="20" height="20" fill="white" transform="translate(0.75)"/>
+                        </clipPath>
+                        </defs>
+                      </svg>
+                    </span>
                   </div>
                   <div v-else>
                     <span>{{ translateMe(formatFeature(plan.features[feature.uuid])) }}</span>
                   </div>
                 </div>
                 <div v-else>
-                  <img
-                    src="../../assets/CheckFalse.svg"
-                    alt="Feature is not included"
-                    class="plan-table-checkmark"
-                  />
+                  <span class="plan-table-checkmark">
+                    <svg width="21" height="20" viewBox="0 0 21 20" fill="white" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_859_9139)">
+                      <path d="M15.75 5L5.75 15" stroke="#5C5C5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M5.75 5L15.75 15" stroke="#5C5C5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_859_9139">
+                      <rect width="20" height="20" fill="white" transform="translate(0.75)"/>
+                      </clipPath>
+                      </defs>
+                    </svg>
+                  </span>
                 </div>
               </div>
             </template>
@@ -722,6 +796,8 @@ export default {
 .plan-table-checkmark {
   width: 20px;
   height: 20px;
+  visibility: visible;
+  display: inline-block;
 }
 .plan-header-wrapper {
   display: flex;
@@ -812,7 +888,7 @@ export default {
 .swiper-plan-monthly-next:disabled,
 .swiper-plan-annually-next:disabled,
 .swiper-plan-annually-prev:disabled {
-  visibility: hidden;
+  opacity: 0;
 }
 
 .choose-button {
