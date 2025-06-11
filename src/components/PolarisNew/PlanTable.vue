@@ -345,7 +345,7 @@ export default {
       },
       breakpoints: {
         0: {
-          slidesPerView: 1,
+          slidesPerView: 1.2,
         },
         768: {
           slidesPerView: 2,
@@ -376,7 +376,7 @@ export default {
       },
       breakpoints: {
         0: {
-          slidesPerView: 1,
+          slidesPerView: 1.2,
         },
         768: {
           slidesPerView: 2,
@@ -760,6 +760,11 @@ export default {
   height: 100%;
 }
 
+.pricing-table.annually-table .swiper-wrapper,
+.pricing-table.monthly-table .swiper-wrapper {
+  height: auto !important;
+}
+
 .table-header {
   display: flex;
   align-items: center;
@@ -806,6 +811,7 @@ export default {
   height: 20px;
   visibility: visible;
   display: inline-block;
+  margin-top: 4px;
 }
 .plan-header-wrapper {
   display: flex;

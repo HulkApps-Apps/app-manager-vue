@@ -630,26 +630,37 @@ export default {
   width: 100%;
 }
 
+@media (max-width: 1023px) {
+  .customization-bundle-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .bill-cycle-select-group.full-width,
+  .app-manager .Polaris-Page--fullWidth {
+    max-width: calc(100% - 64px) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .bill-cycle-select-group.full-width,
+  .app-manager .Polaris-Page--fullWidth {
+    max-width: 100% !important;
+  }
+  .bill-cycle-select-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 @media (max-width: 700px) {
   .Polaris-ButtonGroup__Item {
     width: auto !important;
   }
   .app-manager .Polaris-Button {
     padding: 7px 8px !important;
-  }
-}
-
-@media (max-width: 767px) {
-  .bill-cycle-select-group {
-    flex-direction: column-reverse;
-    gap: 10px;
-  }
-}
-
-@media (max-width: 1023px) {
-  .customization-bundle-section {
-    flex-direction: column;
-    gap: 20px;
   }
 }
 </style>

@@ -145,9 +145,14 @@ export default {
     font-weight: 700;
     color: black;
 }
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .apps-list .app {
     flex-basis: calc(50% - 8px);
+  }
+}
+@media (max-width: 540px) {
+  .apps-list .app {
+    flex-basis: 100%;
   }
 }
 </style>
