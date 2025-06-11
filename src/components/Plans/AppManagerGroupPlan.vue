@@ -934,7 +934,7 @@
 
     @media (min-width: 0px) and (max-width: 576px) {
       .app-manager .app-manager, .app-manager .app-manager-body {
-        overflow-x: scroll;
+        //overflow-x: scroll;
       }
     }
 

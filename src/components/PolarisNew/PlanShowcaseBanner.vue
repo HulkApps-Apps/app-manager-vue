@@ -92,12 +92,14 @@ export default {
         </p>
       </div>
       <div class="plan-right">
-        <h3 class="plan-name">{{ translateMe("Monthly Bundle:") }}</h3>
-        <div class="prices">
-          <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
-          <span class="original-amount" v-if="realPrice < oldPrice"
+        <div class="plan-content">
+          <h3 class="plan-name">{{ translateMe("Monthly Bundle:") }}</h3>
+          <div class="prices">
+            <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
+            <span class="original-amount" v-if="realPrice < oldPrice"
             >${{ translateMe(oldPrice) }}</span
-          >
+            >
+          </div>
         </div>
         <VariantButton
           id="choose-bundle"
@@ -169,7 +171,7 @@ export default {
 .plan-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .prices {
@@ -203,6 +205,13 @@ export default {
   font-weight: 650;
 }
 
+.plan-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
 .choose-button {
   padding: 6px 12px;
   background-color: rgb(48, 48, 48);
@@ -222,7 +231,29 @@ export default {
   font-weight: 650;
 }
 
+@media (max-width: 992px) {
+
+  .banner__inner.full-width {
+    max-width: calc(100% - 64px);
+  }
+
+  .banner__inner {
+    flex-direction: column;
+    gap: 32px;
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  .plan-right {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
 @media (max-width: 767px) {
+  .banner__inner.full-width {
+    max-width: 100%;
+  }
   .bundle-plan-showcase-banner {
     flex-direction: column;
     gap: 12px;
@@ -236,10 +267,14 @@ export default {
   }
 }
 @media (max-width: 480px) {
+  .plan-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .plan-right {
     flex-direction: column;
-    gap: 8px;
-    align-items: unset;
+    gap: 16px;
+    align-items: flex-start;
   }
   .bundle-plan-showcase-banner {
     flex-direction: column;

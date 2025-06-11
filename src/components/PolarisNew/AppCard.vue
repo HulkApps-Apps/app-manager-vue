@@ -201,7 +201,7 @@ export default {
   background-color: #e0f0ff;
   width: fit-content;
   margin-right: 12px;
-  padding: 3px 4px;
+  padding: 3px 6px 3px 3px;
   border-radius: 8px;
   font-size: 12px;
   color: #00527c;
@@ -261,14 +261,13 @@ export default {
   text-decoration: none;
 }
 
-
-
 @media (max-width: 767px) {
   .featured-options {
     text-wrap: wrap;
   }
   .details {
     gap: 8px;
+    width: 100%;
   }
   .app-tags {
     display: flex;
@@ -276,6 +275,11 @@ export default {
     gap: 8px;
     margin-bottom: 8px;
   }
+
+  .app-tag {
+    padding: 1px 6px 5px 3px;
+  }
+
   .upper-details,
   .lower-details {
     flex-direction: column;
