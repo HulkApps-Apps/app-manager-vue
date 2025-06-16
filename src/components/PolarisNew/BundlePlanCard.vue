@@ -68,7 +68,7 @@ export default {
       </div>
     </div>
     <VariantButton @click="handlePlanClick('bundle')" variant="primary" class="button">{{
-      translateMe("Start Saving Now")
+      translateMe("Start saving now")
     }}</VariantButton>
   </div>
 </template>
@@ -98,6 +98,7 @@ export default {
   gap: 8px;
   border-bottom: 1px solid #e3e3e3;
   padding-bottom: 12px;
+  align-items: center;
 }
 .bundle-header h3 {
   font-size: 18px;

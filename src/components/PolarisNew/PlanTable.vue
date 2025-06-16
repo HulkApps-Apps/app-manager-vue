@@ -805,6 +805,9 @@ export default {
   padding: 12px;
   border-bottom: 1px solid #e3e3e3;
   border-left: 1px solid #e3e3e3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 .plan-table-checkmark {
   width: 20px;
@@ -984,6 +987,12 @@ export default {
 
   .pricing-table {
     width: calc(100% + -2px);
+  }
+}
+
+@media (max-width: 540px) {
+  .plan-header-wrapper .price-wrapper .main-price {
+    flex-direction: column;
   }
 }
 </style>

@@ -209,7 +209,7 @@ export default {
       },
       breakpoints: {
         375: {
-          slidesPerView: 1.5,
+          slidesPerView: 1,
         },
         640: {
           slidesPerView: 2,
@@ -245,7 +245,7 @@ export default {
       },
       breakpoints: {
         375: {
-          slidesPerView: 1.5,
+          slidesPerView: 1,
         },
         640: {
           slidesPerView: 2,
@@ -367,7 +367,7 @@ export default {
           >
             <div class="most-popular" v-if="plan.choose_later_plan">
               <div class="most-popular-label">
-                {{ translateMe("Most Popular") }}
+                {{ translateMe("Most popular") }}
               </div>
             </div>
             <h3 class="title">
@@ -406,11 +406,11 @@ export default {
                 @click="handlePlanClick(plan)"
             >{{
                 currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Selected Plan")
+                    ? translateMe("Selected plan")
                     : (
                       currentPlan && plan.price > currentPlan.price
                       ? translateMe("Upgrade")
-                      : translateMe("Choose Plan")
+                      : translateMe("Choose plan")
                     )
               }}
             </VariantButton
@@ -466,7 +466,7 @@ export default {
           >
             <div class="most-popular" v-if="plan.choose_later_plan">
               <div class="most-popular-label">
-                {{ translateMe("Most Popular") }}
+                {{ translateMe("Most popular") }}
               </div>
             </div>
             <h3 class="title">
@@ -505,11 +505,11 @@ export default {
                 @click="handlePlanClick(plan)"
             >{{
                 currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Selected Plan")
+                    ? translateMe("Selected plan")
                     : (
                       currentPlan && plan.price > currentPlan.price
                       ? translateMe("Upgrade")
-                      : translateMe("Choose Plan")
+                      : translateMe("Choose plan")
                     )
               }}
             </VariantButton
@@ -695,7 +695,7 @@ export default {
 .most-popular .most-popular-label {
   background-color: #91d0ff;
   color: #00527c;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   width: 100%;
   text-align: center;

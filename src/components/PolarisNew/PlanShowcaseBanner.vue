@@ -81,7 +81,7 @@ export default {
     >
       <div v-if="showDescription" class="plan-left">
         <p class="bundle-offer-label">
-          {{ translateMe("Bundle Offer") }}
+          {{ translateMe("Bundle offer") }}
         </p>
         <p class="bundle-desc-label">
           {{ translateMe("Get") }}
@@ -93,7 +93,7 @@ export default {
       </div>
       <div class="plan-right">
         <div class="plan-content">
-          <h3 class="plan-name">{{ translateMe("Monthly Bundle:") }}</h3>
+          <h3 class="plan-name">{{ translateMe("Monthly bundle:") }}</h3>
           <div class="prices">
             <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
             <span class="original-amount" v-if="realPrice < oldPrice"
@@ -177,6 +177,7 @@ export default {
 .prices {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
 .bundle-offer-label {
