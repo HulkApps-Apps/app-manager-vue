@@ -154,7 +154,7 @@ export default {
 }
 
 .banner__inner.full-width {
-  max-width: calc(100% - 200px);
+  max-width: calc(100% - 64px);
   padding: 0 16px;
 }
 

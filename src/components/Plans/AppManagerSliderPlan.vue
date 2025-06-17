@@ -458,7 +458,7 @@ export default {
 }
 
 .app-manager .Polaris-Page--fullWidth {
-  max-width: calc(100% - 200px) !important;
+  max-width: calc(100% - 64px) !important;
 }
 
 .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li,
@@ -557,14 +557,14 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  max-width: 998px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0px 32px;
+  padding: 0 96px;
 }
 
 .bill-cycle-select-group.full-width {
-  max-width: calc(100% - 200px);
+  max-width: calc(100% - 64px);
 }
 
 .bill-cycle-select-group__inner-left {

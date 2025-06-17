@@ -206,7 +206,7 @@ export default {
       slidesPerView: 1,
       speed: 500,
       pagination: {
-        el: ".swiper-pagination",
+        el: ".swiper-pagination-h-monthly",
         clickable: true,
       },
       navigation: {
@@ -220,10 +220,10 @@ export default {
         640: {
           slidesPerView: 2,
         },
-        768: {
+        840: {
           slidesPerView: Math.min(this.monthlyPlans.length, 3),
         },
-        1024: {
+        1152: {
           slidesPerView: Math.min(this.monthlyPlans.length, 4),
         },
       },
@@ -242,7 +242,7 @@ export default {
       slidesPerView: 1,
       speed: 500,
       pagination: {
-        el: ".swiper-pagination",
+        el: ".swiper-pagination-h-annually",
         clickable: true,
       },
       navigation: {
@@ -256,10 +256,10 @@ export default {
         640: {
           slidesPerView: 2,
         },
-        768: {
+        840: {
           slidesPerView: Math.min(this.annualPlans.length, 3),
         },
-        1024: {
+        1152: {
           slidesPerView: Math.min(this.annualPlans.length, 4),
         },
       },
@@ -446,7 +446,16 @@ export default {
         </div>
       </div>
     </div>
-    <div ref="swiperAnnually" class="swiper cards annually">
+    <div
+      class="swiper-pagination swiper-pagination-h-monthly"
+      :style="{
+        display:
+          selectedInterval === 'annually'
+            ? 'none'
+            : 'block',
+      }"
+    ></div>
+    <div ref="swiperAnnually" class="swiper cards annually plans-h-cards">
       <div class="swiper-wrapper">
         <div
           v-for="(plan, index) in annualPlans"
@@ -538,11 +547,10 @@ export default {
       </div>
     </div>
     <div
-      class="swiper-pagination"
+      class="swiper-pagination-h-annually swiper-pagination"
       :style="{
         display:
-          (interval === 'ANNUAL' && annualPlans.length <= 4) ||
-          (interval === 'EVERY_30_DAYS' && monthlyPlans.length <= 4)
+          selectedInterval === 'monthly'
             ? 'none'
             : 'block',
       }"

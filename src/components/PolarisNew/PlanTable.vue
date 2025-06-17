@@ -353,7 +353,7 @@ export default {
         0: {
           slidesPerView: 1.2,
         },
-        768: {
+        640: {
           slidesPerView: 2,
         },
         1024: {
@@ -384,7 +384,7 @@ export default {
         0: {
           slidesPerView: 1.2,
         },
-        768: {
+        640: {
           slidesPerView: 2,
         },
         1024: {
