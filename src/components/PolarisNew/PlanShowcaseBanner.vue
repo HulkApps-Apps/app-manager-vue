@@ -127,7 +127,7 @@ export default {
 <style scoped>
 .banner-card {
   display: flex;
-  padding: 16px;
+  padding: 16px 0;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   gap: 16px;
@@ -146,16 +146,15 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 998px;
+  max-width: 1200px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding: 0px 32px;
+  padding: 0 96px;
 }
 
 .banner__inner.full-width {
   max-width: calc(100% - 64px);
-  padding: 0 16px;
 }
 
 .plan-name {
@@ -242,7 +241,6 @@ export default {
     flex-direction: column;
     gap: 32px;
     align-items: flex-start;
-    padding: 0;
   }
 
   .plan-right {
@@ -252,6 +250,9 @@ export default {
 }
 
 @media (max-width: 767px) {
+  .banner__inner {
+    padding: 16px;
+  }
   .banner__inner.full-width {
     max-width: 100%;
   }
