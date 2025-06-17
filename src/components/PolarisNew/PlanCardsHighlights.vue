@@ -400,10 +400,16 @@ export default {
               </span>
               </h2>
             </div>
-            <h6 class="description">
-              {{
-                plan.description ? translateMe(plan.description) : translateMe(placeholder.description)
-              }}
+            <h6
+              class="description"
+              :style="{
+                visibility:
+                  plan.description
+                    ? 'visible'
+                    : 'hidden',
+              }"
+            >
+              {{ plan.description ? translateMe(plan.description) : translateMe(placeholder.description) }}
             </h6>
             <VariantButton
                 :variant="'secondary'"
@@ -500,10 +506,16 @@ export default {
               </span>
               </h2>
             </div>
-            <h6 class="description">
-              {{
-                plan.description ? translateMe(plan.description) : translateMe(placeholder.description)
-              }}
+            <h6
+              class="description"
+              :style="{
+                visibility:
+                  plan.description
+                    ? 'visible'
+                    : 'hidden',
+              }"
+            >
+              {{ plan.description ? translateMe(plan.description) : translateMe(placeholder.description) }}
             </h6>
             <VariantButton
                 :variant="'secondary'"
