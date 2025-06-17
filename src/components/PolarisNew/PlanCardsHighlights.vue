@@ -1,7 +1,7 @@
 <script>
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
-import {calculatePlanPriceWithDiscounts, formatFeature} from "@/helpers";
+import {calculatePlanPriceWithDiscounts, isPlanButtonDisabled, formatFeature, getPlanButtonText} from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -15,6 +15,10 @@ export default {
     },
     currentPlan: {
       type: Object,
+      required: false,
+    },
+    shopifyPlan: {
+      type: String,
       required: false,
     },
     promotionalDiscount: {
@@ -102,6 +106,8 @@ export default {
     }
   },
   methods: {
+    getPlanButtonText,
+    isPlanButtonDisabled,
     formatFeature,
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
@@ -401,18 +407,10 @@ export default {
             </h6>
             <VariantButton
                 :variant="'secondary'"
-                :disabled="currentPlan && currentPlan.id === plan.id"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
-            >{{
-                currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Selected plan")
-                    : (
-                      currentPlan && plan.price > currentPlan.price
-                      ? translateMe("Upgrade")
-                      : translateMe("Choose plan")
-                    )
-              }}
+            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
             </VariantButton
             >
             <div class="features">
@@ -500,18 +498,10 @@ export default {
             </h6>
             <VariantButton
                 :variant="'secondary'"
-                :disabled="currentPlan && currentPlan.id === plan.id"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
-            >{{
-                currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Selected plan")
-                    : (
-                      currentPlan && plan.price > currentPlan.price
-                      ? translateMe("Upgrade")
-                      : translateMe("Choose plan")
-                    )
-              }}
+            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
             </VariantButton
             >
             <div class="features">

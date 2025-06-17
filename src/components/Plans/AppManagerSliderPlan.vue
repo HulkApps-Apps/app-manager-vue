@@ -83,6 +83,7 @@
           :plans="plans"
           :features="features"
           :currentPlan="plan"
+          :shopifyPlan="shopify_plan"
           :promotionalDiscount="promotional_discount"
           :selectedInterval="selectedPlan"
           @plan-clicked="handlePlanClicked"
@@ -94,6 +95,7 @@
           <PlanTable
             :plans="plans"
             :currentPlan="plan"
+            :shopifyPlan="shopify_plan"
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
             :features="features"
