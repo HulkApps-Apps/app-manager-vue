@@ -1,7 +1,7 @@
 <script>
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
-import {calculatePlanPriceWithDiscounts, formatFeature} from "@/helpers";
+import {calculatePlanPriceWithDiscounts, isPlanButtonDisabled, formatFeature, getPlanButtonText} from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -15,6 +15,10 @@ export default {
     },
     currentPlan: {
       type: Object,
+      required: false,
+    },
+    shopifyPlan: {
+      type: String,
       required: false,
     },
     promotionalDiscount: {
@@ -102,6 +106,8 @@ export default {
     }
   },
   methods: {
+    getPlanButtonText,
+    isPlanButtonDisabled,
     formatFeature,
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
@@ -200,7 +206,7 @@ export default {
       slidesPerView: 1,
       speed: 500,
       pagination: {
-        el: ".swiper-pagination",
+        el: ".swiper-pagination-h-monthly",
         clickable: true,
       },
       navigation: {
@@ -209,15 +215,15 @@ export default {
       },
       breakpoints: {
         375: {
-          slidesPerView: 1.5,
+          slidesPerView: 1,
         },
         640: {
           slidesPerView: 2,
         },
-        768: {
+        840: {
           slidesPerView: Math.min(this.monthlyPlans.length, 3),
         },
-        1024: {
+        1152: {
           slidesPerView: Math.min(this.monthlyPlans.length, 4),
         },
       },
@@ -236,7 +242,7 @@ export default {
       slidesPerView: 1,
       speed: 500,
       pagination: {
-        el: ".swiper-pagination",
+        el: ".swiper-pagination-h-annually",
         clickable: true,
       },
       navigation: {
@@ -245,15 +251,15 @@ export default {
       },
       breakpoints: {
         375: {
-          slidesPerView: 1.5,
+          slidesPerView: 1,
         },
         640: {
           slidesPerView: 2,
         },
-        768: {
+        840: {
           slidesPerView: Math.min(this.annualPlans.length, 3),
         },
-        1024: {
+        1152: {
           slidesPerView: Math.min(this.annualPlans.length, 4),
         },
       },
@@ -367,7 +373,7 @@ export default {
           >
             <div class="most-popular" v-if="plan.choose_later_plan">
               <div class="most-popular-label">
-                {{ translateMe("Most Popular") }}
+                {{ translateMe("Most popular") }}
               </div>
             </div>
             <h3 class="title">
@@ -401,117 +407,10 @@ export default {
             </h6>
             <VariantButton
                 :variant="'secondary'"
-                :disabled="currentPlan && currentPlan.id === plan.id"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
-            >{{
-                currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Selected Plan")
-                    : (
-                      currentPlan && plan.price > currentPlan.price
-                      ? translateMe("Upgrade")
-                      : translateMe("Choose Plan")
-                    )
-              }}
-            </VariantButton
-            >
-            <div class="features">
-              <ul>
-                <li
-                  class="feature"
-                  v-for="feature in sortedPlanFeatures(plan)"
-                  :key="feature.uuid"
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z"
-                      fill="#303030"
-                    />
-                  </svg>
-
-                  <span>
-                    {{ feature.value_type !== 'boolean' ? translateMe(formatFeature(feature)) : '' }}
-                    {{ translateMe(feature.name) }}
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div ref="swiperAnnually" class="swiper cards annually">
-      <div class="swiper-wrapper">
-        <div
-          v-for="(plan, index) in annualPlans"
-          v-if="plan.interval === 'ANNUAL'"
-          :key="plan.id"
-          class="swiper-slide"
-          style="height: auto !important;"
-        >
-          <div
-            :class="[
-              'card',
-              'card-border',
-              index === (annualPlans.length - 1) ? 'last-card' : '',
-            ]"
-          >
-            <div class="most-popular" v-if="plan.choose_later_plan">
-              <div class="most-popular-label">
-                {{ translateMe("Most Popular") }}
-              </div>
-            </div>
-            <h3 class="title">
-              {{ translateMe(plan.name) }}
-            </h3>
-            <div
-              :class="[
-                'price-wrapper',
-                anyAnnuallyPlanHasDiscount ? 'has-discount' : ''
-              ]"
-            >
-              <template v-if="plan.strike_price">
-                <h5 class="strike-price">
-                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
-                  <span style="color: #999;" v-if="plan.strike_price !== 0">
-                {{ translateMe("/mo") }}
-              </span>
-                </h5>
-              </template>
-              <h2 class="price">
-                {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
-                <span v-if="plan.price !== 0">
-                {{ translateMe("/mo") }}
-              </span>
-              </h2>
-            </div>
-            <h6 class="description">
-              {{
-                plan.description ? translateMe(plan.description) : translateMe(placeholder.description)
-              }}
-            </h6>
-            <VariantButton
-                :variant="'secondary'"
-                :disabled="currentPlan && currentPlan.id === plan.id"
-                :loading="loadingPlanId === plan.id"
-                @click="handlePlanClick(plan)"
-            >{{
-                currentPlan && currentPlan.id === plan.id
-                    ? translateMe("Selected Plan")
-                    : (
-                      currentPlan && plan.price > currentPlan.price
-                      ? translateMe("Upgrade")
-                      : translateMe("Choose Plan")
-                    )
-              }}
+            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
             </VariantButton
             >
             <div class="features">
@@ -548,11 +447,110 @@ export default {
       </div>
     </div>
     <div
-      class="swiper-pagination"
+      class="swiper-pagination swiper-pagination-h-monthly"
       :style="{
         display:
-          (interval === 'ANNUAL' && annualPlans.length <= 4) ||
-          (interval === 'EVERY_30_DAYS' && monthlyPlans.length <= 4)
+          selectedInterval === 'annually'
+            ? 'none'
+            : 'block',
+      }"
+    ></div>
+    <div ref="swiperAnnually" class="swiper cards annually plans-h-cards">
+      <div class="swiper-wrapper">
+        <div
+          v-for="(plan, index) in annualPlans"
+          v-if="plan.interval === 'ANNUAL'"
+          :key="plan.id"
+          class="swiper-slide"
+          style="height: auto !important;"
+        >
+          <div
+            :class="[
+              'card',
+              'card-border',
+              index === (annualPlans.length - 1) ? 'last-card' : '',
+            ]"
+          >
+            <div class="most-popular" v-if="plan.choose_later_plan">
+              <div class="most-popular-label">
+                {{ translateMe("Most popular") }}
+              </div>
+            </div>
+            <h3 class="title">
+              {{ translateMe(plan.name) }}
+            </h3>
+            <div
+              :class="[
+                'price-wrapper',
+                anyAnnuallyPlanHasDiscount ? 'has-discount' : ''
+              ]"
+            >
+              <template v-if="plan.strike_price">
+                <h5 class="strike-price">
+                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
+                  <span style="color: #999;" v-if="plan.strike_price !== 0">
+                {{ translateMe("/mo") }}
+              </span>
+                </h5>
+              </template>
+              <h2 class="price">
+                {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
+                <span v-if="plan.price !== 0">
+                {{ translateMe("/mo") }}
+              </span>
+              </h2>
+            </div>
+            <h6 class="description">
+              {{
+                plan.description ? translateMe(plan.description) : translateMe(placeholder.description)
+              }}
+            </h6>
+            <VariantButton
+                :variant="'secondary'"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
+                :loading="loadingPlanId === plan.id"
+                @click="handlePlanClick(plan)"
+            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
+            </VariantButton
+            >
+            <div class="features">
+              <ul>
+                <li
+                  class="feature"
+                  v-for="feature in sortedPlanFeatures(plan)"
+                  :key="feature.uuid"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z"
+                      fill="#303030"
+                    />
+                  </svg>
+
+                  <span>
+                    {{ feature.value_type !== 'boolean' ? translateMe(formatFeature(feature)) : '' }}
+                    {{ translateMe(feature.name) }}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="swiper-pagination-h-annually swiper-pagination"
+      :style="{
+        display:
+          selectedInterval === 'monthly'
             ? 'none'
             : 'block',
       }"
@@ -695,7 +693,7 @@ export default {
 .most-popular .most-popular-label {
   background-color: #91d0ff;
   color: #00527c;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   width: 100%;
   text-align: center;

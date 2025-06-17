@@ -28,7 +28,7 @@
           <path d="M1 7L7 1L1 7Z" fill="#006FBB"/>
           <path d="M1 7L7 1" stroke="#006FBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        {{ translateMe('Back to App pricing') }}
+        {{ translateMe('Back to app pricing') }}
       </a>
       <div class="bill-cycle-select-group__inner-left">
         <SelectButton
@@ -36,7 +36,7 @@
           :variant="selectedPlan === 'monthly' ? 'primary' : 'secondary'"
           @click="selectPlan('monthly')"
         >
-          {{ translateMe('Billed Monthly') }}
+          {{ translateMe('Billed monthly') }}
         </SelectButton>
         <SelectButton
           id="pricing-tab"
@@ -44,7 +44,7 @@
           :variant="selectedPlan === 'annually' ? 'primary' : 'secondary'"
           @click="selectPlan('annually')"
         >
-          {{ translateMe('Billed Yearly') }}
+          {{ translateMe('Billed yearly') }}
           <strong style="white-space: pre;">{{ translateMe(' 17% Off') }}</strong>
         </SelectButton>
       </div>
@@ -83,6 +83,7 @@
           :plans="plans"
           :features="features"
           :currentPlan="plan"
+          :shopifyPlan="shopify_plan"
           :promotionalDiscount="promotional_discount"
           :selectedInterval="selectedPlan"
           @plan-clicked="handlePlanClicked"
@@ -94,6 +95,7 @@
           <PlanTable
             :plans="plans"
             :currentPlan="plan"
+            :shopifyPlan="shopify_plan"
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
             :features="features"
@@ -119,6 +121,7 @@
             style="flex-basis: 30%; flex-grow: 1;"
           /> -->
           <BundlePlanCard
+            v-if="bundle_plan"
             :plan="bundle_plan"
             :plan_details="bundle_details"
             @plan-clicked="selectPlan"
@@ -220,7 +223,7 @@ export default {
       showPlansFeatures: false,
       showCustomizationModal: false,
       additionalBenefitsHeading:{
-        category_name: "Unlock Additional Benefits"
+        category_name: "Unlock additional benefits"
       },
     }
   },
@@ -455,7 +458,7 @@ export default {
 }
 
 .app-manager .Polaris-Page--fullWidth {
-  max-width: calc(100% - 200px) !important;
+  max-width: calc(100% - 64px) !important;
 }
 
 .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li,
@@ -554,14 +557,14 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  max-width: 998px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0px 32px;
+  padding: 0 96px;
 }
 
 .bill-cycle-select-group.full-width {
-  max-width: calc(100% - 200px);
+  max-width: calc(100% - 64px);
 }
 
 .bill-cycle-select-group__inner-left {
@@ -661,6 +664,9 @@ export default {
   }
   .app-manager .Polaris-Button {
     padding: 7px 8px !important;
+  }
+  .bill-cycle-select-group {
+    padding: 0 8px;
   }
 }
 </style>

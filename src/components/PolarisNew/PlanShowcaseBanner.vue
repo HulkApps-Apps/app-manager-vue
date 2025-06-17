@@ -81,7 +81,7 @@ export default {
     >
       <div v-if="showDescription" class="plan-left">
         <p class="bundle-offer-label">
-          {{ translateMe("Bundle Offer") }}
+          {{ translateMe("Bundle offer") }}
         </p>
         <p class="bundle-desc-label">
           {{ translateMe("Get") }}
@@ -93,7 +93,7 @@ export default {
       </div>
       <div class="plan-right">
         <div class="plan-content">
-          <h3 class="plan-name">{{ translateMe("Monthly Bundle:") }}</h3>
+          <h3 class="plan-name">{{ translateMe("Monthly bundle:") }}</h3>
           <div class="prices">
             <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
             <span class="original-amount" v-if="realPrice < oldPrice"
@@ -127,7 +127,7 @@ export default {
 <style scoped>
 .banner-card {
   display: flex;
-  padding: 16px;
+  padding: 16px 0;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   gap: 16px;
@@ -146,16 +146,15 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 998px;
+  max-width: 1200px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding: 0px 32px;
+  padding: 0 96px;
 }
 
 .banner__inner.full-width {
-  max-width: calc(100% - 200px);
-  padding: 0 16px;
+  max-width: calc(100% - 64px);
 }
 
 .plan-name {
@@ -177,6 +176,7 @@ export default {
 .prices {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
 .bundle-offer-label {
@@ -241,7 +241,6 @@ export default {
     flex-direction: column;
     gap: 32px;
     align-items: flex-start;
-    padding: 0;
   }
 
   .plan-right {
@@ -251,6 +250,9 @@ export default {
 }
 
 @media (max-width: 767px) {
+  .banner__inner {
+    padding: 16px;
+  }
   .banner__inner.full-width {
     max-width: 100%;
   }

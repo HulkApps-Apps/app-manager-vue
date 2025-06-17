@@ -1,7 +1,7 @@
 <script>
 import Swiper, { Navigation, Pagination } from "swiper";
 import VariantButton from "./VariantButton";
-import {calculatePlanPriceWithDiscounts, formatFeature} from "@/helpers";
+import {calculatePlanPriceWithDiscounts, formatFeature, getPlanButtonText, isPlanButtonDisabled} from "@/helpers";
 
 export default {
   data() {
@@ -33,6 +33,10 @@ export default {
       type: Object,
       required: false,
     },
+    shopifyPlan: {
+      type: String,
+      required: false,
+    },
     selectedInterval: {
       type: String,
       required: false,
@@ -48,6 +52,8 @@ export default {
     }
   },
   methods: {
+    isPlanButtonDisabled,
+    getPlanButtonText,
     formatFeature,
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
@@ -347,7 +353,7 @@ export default {
         0: {
           slidesPerView: 1.2,
         },
-        768: {
+        640: {
           slidesPerView: 2,
         },
         1024: {
@@ -378,7 +384,7 @@ export default {
         0: {
           slidesPerView: 1.2,
         },
-        768: {
+        640: {
           slidesPerView: 2,
         },
         1024: {
@@ -530,23 +536,11 @@ export default {
               </div>
               <VariantButton
                 :variant="'secondary'"
-                :disabled="currentPlan && currentPlan.id === plan.id"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
                 class="button"
-              >{{
-                currentPlan && currentPlan.id === plan.id
-                  ? translateMe("Selected Plan")
-                  : (
-                    !currentPlan
-                    ? translateMe("Choose Plan")
-                    : (
-                      plan.price > currentPlan.price 
-                      ? translateMe("Upgrade") 
-                      : translateMe("Switch to this plan")
-                    )
-                  )
-              }}</VariantButton>
+              >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, true) }}</VariantButton>
             </div>
             <template v-for="group in monthlyPlansFeatures">
               <div v-if="group.name" class="feature-group-header plan-feature plan-feature-monthly">
@@ -647,23 +641,11 @@ export default {
               </div>
               <VariantButton
                 :variant="'secondary'"
-                :disabled="currentPlan && currentPlan.id === plan.id"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
                 class="button"
-              >{{
-                currentPlan && currentPlan.id === plan.id
-                  ? translateMe("Selected Plan")
-                  : (
-                    !currentPlan
-                    ? translateMe("Choose Plan")
-                    : (
-                      plan.price > currentPlan.price 
-                      ? translateMe("Upgrade") 
-                      : translateMe("Switch to this plan")
-                    )
-                  )
-              }}</VariantButton>
+              >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, true) }}</VariantButton>
             </div>
             <template v-for="group in annualPlansFeatures">
               <div v-if="group.name" class="feature-group-header plan-feature plan-feature-annually">
@@ -805,6 +787,9 @@ export default {
   padding: 12px;
   border-bottom: 1px solid #e3e3e3;
   border-left: 1px solid #e3e3e3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 .plan-table-checkmark {
   width: 20px;
@@ -984,6 +969,12 @@ export default {
 
   .pricing-table {
     width: calc(100% + -2px);
+  }
+}
+
+@media (max-width: 540px) {
+  .plan-header-wrapper .price-wrapper .main-price {
+    flex-direction: column;
   }
 }
 </style>

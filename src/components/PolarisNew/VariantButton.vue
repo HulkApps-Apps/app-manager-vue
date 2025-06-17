@@ -131,6 +131,7 @@ export default {
 
 .button-primary:hover {
   background-color: #1a1a1a !important;
+  color: #ffffff !important;
 }
 
 .button-primary:active,

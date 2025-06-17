@@ -46,10 +46,14 @@ export default {
   <div class="block">
     <div class="bundle-header">
       <h3>{{ translateMe("Bundle") }}</h3>
-      <h2>${{ plan.price - plan.discount }}</h2>
-      <span class="mo-label">{{ translateMe("/mo") }}</span>
-      <h4>${{ plan.price }}</h4>
-      <span class="apps-count">{{ allApps.length }} {{ translateMe("Apps") }}</span>
+      <div class="bundle-price-wrapper">
+        <div style="display: flex; align-items: center; gap: 4px">
+          <h2>${{ plan.price - plan.discount }}</h2>
+          <span class="mo-label">{{ translateMe("/mo") }}</span>
+          <h4>${{ plan.price }}</h4>
+        </div>
+        <span class="apps-count">{{ allApps.length }} {{ translateMe("Apps") }}</span>
+      </div>
     </div>
     <div class="apps-list">
       <div v-for="(app, index) in allApps" :key="app.id + '_' + index" class="app">
@@ -68,7 +72,7 @@ export default {
       </div>
     </div>
     <VariantButton @click="handlePlanClick('bundle')" variant="primary" class="button">{{
-      translateMe("Start Saving Now")
+      translateMe("Start saving now")
     }}</VariantButton>
   </div>
 </template>
@@ -98,6 +102,13 @@ export default {
   gap: 8px;
   border-bottom: 1px solid #e3e3e3;
   padding-bottom: 12px;
+  align-items: center;
+}
+.bundle-price-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
 }
 .bundle-header h3 {
   font-size: 18px;
@@ -153,6 +164,12 @@ export default {
 @media (max-width: 540px) {
   .apps-list .app {
     flex-basis: 100%;
+  }
+
+  .bundle-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
 }
 </style>

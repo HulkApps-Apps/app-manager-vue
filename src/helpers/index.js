@@ -66,3 +66,31 @@ export const formatFeature = function(feature) {
 
   return feature.value;
 };
+
+export const isPlanButtonDisabled = function (shopifyPlan, plan, currentPlan) {
+  if (currentPlan && currentPlan.id === plan.id) {
+    return true;
+  }
+
+  return !!(plan.store_base_plan && !plan.shopify_plans.includes(shopifyPlan));
+}
+
+export const getPlanButtonText = function (shopifyPlan, plan, translateMe, currentPlan, isPlanTable = false) {
+  if (currentPlan && currentPlan.id === plan.id) {
+    return translateMe("Selected plan");
+  }
+
+  if (plan.store_base_plan && !plan.shopify_plans.includes(shopifyPlan)) {
+    return translateMe("Not Applicable");
+  }
+
+  if (currentPlan) {
+    return plan.price > currentPlan.price
+      ? translateMe("Upgrade")
+      : isPlanTable
+        ? translateMe("Switch to this plan")
+        : translateMe("Choose plan");
+  }
+
+  return translateMe("Choose plan");
+}
