@@ -399,7 +399,7 @@ export default {
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
                   <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
-                  <span style="color: #999;" v-if="plan.strike_price !== 0">
+                  <span v-if="plan.strike_price !== 0">
                 {{ translateMe("/mo") }}
               </span>
                 </h5>
@@ -506,7 +506,7 @@ export default {
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
                   <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
-                  <span style="color: #999;" v-if="plan.strike_price !== 0">
+                  <span v-if="plan.strike_price !== 0">
                 {{ translateMe("/yr") }}
               </span>
                 </h5>
@@ -633,7 +633,7 @@ export default {
 .card .title {
   font-size: 16px;
   font-weight: 700;
-  color: black;
+  color: rgba(48, 48, 48, 1);
 }
 
 .card .price-wrapper {
@@ -651,13 +651,13 @@ export default {
 .card .price {
   font-size: 30px;
   font-weight: 700;
-  color: black;
+  color: rgba(48, 48, 48, 1);
 }
 
 .card .price span {
   font-size: 13px;
   font-weight: 400;
-  color: #00000080;
+  color: rgba(97, 97, 97, 1);
   margin-left: -6px;
   line-height: 0;
 }
@@ -665,7 +665,7 @@ export default {
 .card .description {
   font-size: 13px;
   font-weight: 400;
-  color: #00000080;
+  color: rgba(97, 97, 97, 1);
 }
 
 .button {
@@ -700,7 +700,11 @@ export default {
 .feature span {
   font-size: 13px;
   font-weight: 400;
-  color: #00000080;
+  color: rgba(97, 97, 97, 1);
+}
+
+.card .strike-price span {
+  color: rgba(97, 97, 97, 1);
 }
 
 .most-popular {
@@ -745,7 +749,7 @@ export default {
   justify-content: center;
   width: 36px;
   height: 36px;
-  background-color: #1a1a1a;
+  background-color: rgba(26, 26, 26, 1);
   border-radius: 8px;
   cursor: pointer;
 }

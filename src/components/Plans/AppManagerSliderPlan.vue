@@ -581,7 +581,7 @@ export default {
 .bill-cycle-back {
   display: none;
   align-items: center;
-  color: #006FBB;
+  color: rgba(48, 48, 48, 1);
   cursor: pointer;
   gap: 4px;
   font-weight: 450;
@@ -615,7 +615,7 @@ export default {
 .toggle-plans-features {
   font-size: 13px;
   font-weight: 500;
-  color: #303030;
+  color: rgba(48, 48, 48, 1);
   text-decoration: none;
 }
 

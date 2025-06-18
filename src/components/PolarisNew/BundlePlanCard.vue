@@ -123,7 +123,7 @@ export default {
 .bundle-header .mo-label {
   font-size: 13px;
   font-weight: 400;
-  color: #00000080;
+  color: rgba(97, 97, 97, 1);
 }
 .bundle-header h4 {
   font-size: 13.5px;

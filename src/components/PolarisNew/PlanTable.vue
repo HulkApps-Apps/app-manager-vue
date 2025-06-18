@@ -842,7 +842,7 @@ export default {
 }
 
 .plan-header-wrapper .price-wrapper .plan-interval {
-  color: #999999;
+  color: rgba(97, 97, 97, 1);
   font-weight: normal;
 }
 
