@@ -557,7 +557,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  max-width: 1200px;
+  max-width: 998px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 96px;
@@ -633,6 +633,11 @@ export default {
   width: 100%;
 }
 
+.app-manager .app-manager-plan-page-slider {
+  padding-left: 96px !important;
+  padding-right: 96px !important;
+}
+
 @media (max-width: 1023px) {
   .customization-bundle-section {
     flex-direction: column;
@@ -667,6 +672,13 @@ export default {
   }
   .bill-cycle-select-group {
     padding: 0 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-manager .app-manager-plan-page-slider {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 </style>

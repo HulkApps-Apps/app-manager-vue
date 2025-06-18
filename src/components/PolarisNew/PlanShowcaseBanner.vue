@@ -146,7 +146,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 998px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;

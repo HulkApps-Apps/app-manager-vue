@@ -194,6 +194,36 @@ export default {
         this.remainingPlansMonthly = { after, before };
       }
     },
+    updateTableVisibility() {
+      const monthlyPlanTable = document.querySelector(".monthly-table");
+      const annuallyPlanTable = document.querySelector(".annually-table");
+      const monthlyPlanTableNavigation = document.querySelector(".nav-monthly-table");
+      const annuallyPlanTableNavigation = document.querySelector(".nav-annually-table");
+
+      if (this.isMonthlyVisible) {
+        monthlyPlanTable.style.visibility = "visible";
+        monthlyPlanTable.style.height = "auto";
+        monthlyPlanTable.style.padding = "16px";
+        annuallyPlanTable.style.visibility = "hidden";
+        annuallyPlanTable.style.height = "0px";
+        annuallyPlanTable.style.padding = "0px";
+        monthlyPlanTableNavigation.style.display = "flex";
+        annuallyPlanTableNavigation.style.display = "none";
+        this.interval = "EVERY_30_DAYS";
+        this.syncAllHeights();
+      } else if (this.isAnnuallyVisible) {
+        monthlyPlanTable.style.visibility = "hidden";
+        monthlyPlanTable.style.height = "0px";
+        monthlyPlanTable.style.padding = "0px";
+        annuallyPlanTable.style.visibility = "visible";
+        annuallyPlanTable.style.height = "auto";
+        annuallyPlanTable.style.padding = "16px";
+        monthlyPlanTableNavigation.style.display = "none";
+        annuallyPlanTableNavigation.style.display = "flex";
+        this.interval = "ANNUAL";
+        this.syncAllHeights();
+      }
+    },
   },
 
   computed: {
@@ -218,6 +248,12 @@ export default {
           }
           return planDetails;
         });
+    },
+    isMonthlyVisible() {
+      return this.selectedInterval === "monthly";
+    },
+    isAnnuallyVisible() {
+      return this.selectedInterval === "annually";
     },
     monthlyPlansFeatures() {
       if (!this.features.length) return [];
@@ -304,42 +340,12 @@ export default {
 
   watch: {
     selectedInterval() {
-      let monthlyPlanTable = document.querySelector(".monthly-table");
-      let annuallyPlanTable = document.querySelector(".annually-table");
-      let monthlyPlanTableNavigation =
-        document.querySelector(".nav-monthly-table");
-      let annuallyPlanTableNavigation = document.querySelector(
-        ".nav-annually-table"
-      );
-      if (this.selectedInterval === "monthly") {
-        monthlyPlanTable.style.visibility = "visible";
-        monthlyPlanTable.style.height = "auto";
-        monthlyPlanTable.style.padding = "16px";
-        monthlyPlanTable.style.padding = "16px";
-        annuallyPlanTable.style.visibility = "hidden";
-        annuallyPlanTable.style.height = "0px";
-        annuallyPlanTable.style.padding = "0px";
-        monthlyPlanTableNavigation.style.display = "flex";
-        annuallyPlanTableNavigation.style.display = "none";
-        this.interval = "EVERY_30_DAYS";
-        this.syncAllHeights();
-      } else if (this.selectedInterval === "annually") {
-        monthlyPlanTable.style.visibility = "hidden";
-        monthlyPlanTable.style.height = "0px";
-        monthlyPlanTable.style.padding = "0px";
-        monthlyPlanTable.style.padding = "0px";
-        annuallyPlanTable.style.visibility = "visible";
-        annuallyPlanTable.style.height = "auto";
-        annuallyPlanTable.style.padding = "16px";
-        monthlyPlanTableNavigation.style.display = "none";
-        annuallyPlanTableNavigation.style.display = "flex";
-        this.interval = "ANNUAL";
-        this.syncAllHeights();
-      }
+      this.updateTableVisibility();
     },
   },
 
   mounted() {
+    this.updateTableVisibility();
     new Swiper(this.$refs.swiperMonthlyTable, {
       modules: [Navigation, Pagination],
       loop: false,
