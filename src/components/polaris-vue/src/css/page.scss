@@ -369,37 +369,31 @@
 .Polaris-Page {
   margin: 0 auto;
   padding: 0;
-  max-width: 1200px;
+  max-width: 998px;
 }
 
 @media (max-width: 48.0625em) and (min-width: 30.625em), (min-width: 45.625em) {
   [data-has-navigation] .Polaris-Page {
-    padding: 0 96px;
+    padding: 0 20px;
   }
 }
 
 @media (min-width: 30.625em) {
   .Polaris-Page {
-    padding: 0 96px;
-  }
-}
-
-@media (max-width: 40em) {
-  [data-has-navigation] .Polaris-Page,
-  .Polaris-Page {
     padding: 0 20px;
   }
 }
 
+
 @media (max-width: 48.0625em) and (min-width: 46.5em), (min-width: 61.5em) {
   [data-has-navigation] .Polaris-Page {
-    padding: 0 96px;
+    padding: 0 32px;
   }
 }
 
 @media (min-width: 46.5em) {
   .Polaris-Page {
-    padding: 0 96px;
+    padding: 0 32px;
   }
 }
 

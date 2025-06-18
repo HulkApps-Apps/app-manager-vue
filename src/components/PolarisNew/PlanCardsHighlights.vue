@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      interval: "EVERY_30_DAYS",
+      interval: this.selectedInterval === "annually" ? "ANNUAL" : "EVERY_30_DAYS",
       placeholder: {
         description: "Perfect for everything",
       },
@@ -103,6 +103,12 @@ export default {
             value: plan.features[feature.uuid].value || plan.features[feature.uuid]
           }));
       };
+    },
+    isMonthlyVisible() {
+      return this.selectedInterval === "monthly";
+    },
+    isAnnuallyVisible() {
+      return this.selectedInterval === "annually";
     }
   },
   methods: {
@@ -169,14 +175,13 @@ export default {
         this.remainingPlansMonthly = {after, before};
       }
     },
-  },
-  watch: {
-    selectedInterval() {
-      let monthlyPlanCards = document.querySelector(".monthly");
-      let annuallyPlanCards = document.querySelector(".annually");
-      let monthlyPlanNavigation = document.querySelector(".nav-monthly");
-      let annuallyPlanNavigation = document.querySelector(".nav-annually");
-      if (this.selectedInterval === "monthly") {
+    updateSliderVisibility() {
+      const monthlyPlanCards = document.querySelector(".monthly");
+      const annuallyPlanCards = document.querySelector(".annually");
+      const monthlyPlanNavigation = document.querySelector(".nav-monthly");
+      const annuallyPlanNavigation = document.querySelector(".nav-annually");
+
+      if (this.isMonthlyVisible) {
         monthlyPlanCards.style.visibility = "visible";
         monthlyPlanCards.style.height = "auto";
         monthlyPlanCards.style.border = "1px solid #e5e5e5";
@@ -186,7 +191,7 @@ export default {
         monthlyPlanNavigation.style.display = "flex";
         annuallyPlanNavigation.style.display = "none";
         this.interval = "EVERY_30_DAYS";
-      } else if (this.selectedInterval === "annually") {
+      } else if (this.isAnnuallyVisible) {
         monthlyPlanCards.style.visibility = "hidden";
         monthlyPlanCards.style.height = "0px";
         monthlyPlanCards.style.border = "0px";
@@ -197,9 +202,15 @@ export default {
         annuallyPlanNavigation.style.display = "flex";
         this.interval = "ANNUAL";
       }
-    },
+    }
+  },
+  watch: {
+    selectedInterval() {
+      this.updateSliderVisibility();
+    }
   },
   mounted() {
+    this.updateSliderVisibility();
     new Swiper(this.$refs.swiperMonthly, {
       modules: [Navigation, Pagination],
       loop: false,
@@ -388,7 +399,7 @@ export default {
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
                   <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
-                  <span style="color: #999;" v-if="plan.strike_price !== 0">
+                  <span v-if="plan.strike_price !== 0">
                 {{ translateMe("/mo") }}
               </span>
                 </h5>
@@ -405,6 +416,7 @@ export default {
               :style="{
                 visibility:
                   plan.description
+                  && selectedInterval === 'monthly'
                     ? 'visible'
                     : 'hidden',
               }"
@@ -494,15 +506,15 @@ export default {
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
                   <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
-                  <span style="color: #999;" v-if="plan.strike_price !== 0">
-                {{ translateMe("/mo") }}
+                  <span v-if="plan.strike_price !== 0">
+                {{ translateMe("/yr") }}
               </span>
                 </h5>
               </template>
               <h2 class="price">
                 {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
                 <span v-if="plan.price !== 0">
-                {{ translateMe("/mo") }}
+                {{ translateMe("/yr") }}
               </span>
               </h2>
             </div>
@@ -511,6 +523,7 @@ export default {
               :style="{
                 visibility:
                   plan.description
+                  && selectedInterval === 'annually'
                     ? 'visible'
                     : 'hidden',
               }"
@@ -620,7 +633,7 @@ export default {
 .card .title {
   font-size: 16px;
   font-weight: 700;
-  color: black;
+  color: rgba(48, 48, 48, 1);
 }
 
 .card .price-wrapper {
@@ -638,13 +651,13 @@ export default {
 .card .price {
   font-size: 30px;
   font-weight: 700;
-  color: black;
+  color: rgba(48, 48, 48, 1);
 }
 
 .card .price span {
   font-size: 13px;
   font-weight: 400;
-  color: #00000080;
+  color: rgba(97, 97, 97, 1);
   margin-left: -6px;
   line-height: 0;
 }
@@ -652,7 +665,7 @@ export default {
 .card .description {
   font-size: 13px;
   font-weight: 400;
-  color: #00000080;
+  color: rgba(97, 97, 97, 1);
 }
 
 .button {
@@ -687,7 +700,11 @@ export default {
 .feature span {
   font-size: 13px;
   font-weight: 400;
-  color: #00000080;
+  color: rgba(97, 97, 97, 1);
+}
+
+.card .strike-price span {
+  color: rgba(97, 97, 97, 1);
 }
 
 .most-popular {
@@ -732,7 +749,7 @@ export default {
   justify-content: center;
   width: 36px;
   height: 36px;
-  background-color: #1a1a1a;
+  background-color: rgba(26, 26, 26, 1);
   border-radius: 8px;
   cursor: pointer;
 }
