@@ -47,6 +47,11 @@ export default {
       required: false,
       default: false,
     },
+    narrowWidth: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     bundleApps: {
       type: Number,
       required: false,
@@ -77,6 +82,7 @@ export default {
       :class="[
         'banner__inner',
         this.fullWidth ? 'full-width' : '',
+        this.narrowWidth ? 'narrow-width' : '',
       ]"
     >
       <div v-if="showDescription" class="plan-left">
@@ -146,7 +152,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 998px;
+  max-width: 1200px !important;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -154,7 +160,11 @@ export default {
 }
 
 .banner__inner.full-width {
-  max-width: calc(100% - 64px);
+  max-width: none !important;
+}
+
+.banner__inner.narrow-width {
+  max-width: 840px !important;
 }
 
 .plan-name {
@@ -234,7 +244,7 @@ export default {
 @media (max-width: 992px) {
 
   .banner__inner.full-width {
-    max-width: calc(100% - 64px);
+    max-width: none !important;
   }
 
   .banner__inner {

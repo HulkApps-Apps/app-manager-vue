@@ -11,6 +11,7 @@
       :class="[
         'bill-cycle-select-group',
         this.full_width ? 'full-width' : '',
+        this.narrow_width ? 'narrow-width' : '',
       ]"
     >
       <a class="bill-cycle-back" @click="selectPlan('monthly')">
@@ -62,6 +63,7 @@
       v-if="bundle_plan"
       :useCardStyle="true"
       :fullWidth="this.full_width"
+      :narrowWidth="this.narrow_width"
       :showcaseData="bundle_plan"
       :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)"
       :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"
@@ -70,6 +72,7 @@
     <PPage
       class="app-manager-plan-page-slider custom-title"
       :full-width="this.full_width"
+      :narrow-width="this.narrow_width"
     >
       <!-- -------------------- Bundle Plan Banner -------------------- -->
       <!-- <div class="promotional-banner">
@@ -99,6 +102,7 @@
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
             :features="features"
+            :narrowWidth="this.narrow_width"
             @plan-clicked="handlePlanClicked"
             :class="{ 'hide-all-features': !showPlansFeatures }"
           />
@@ -200,7 +204,7 @@ export default {
     PlanTable,
     BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'full_width'],
+  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'full_width', 'narrow_width'],
   data() {
     return {
       planLoading: false,
@@ -1106,10 +1110,6 @@ button.swiper-pagination-bullet {
   padding: 0;
 }
 
-.app-manager .Polaris-Page--fullWidth {
-  max-width: calc(100% - 64px) !important;
-}
-
 .app-manager .app-manager-plan-page-slider .Polaris-ResourceList__ResourceListWrapper.features li,
 .app-manager .app-manager-plan-page-slider .plan__price {
   padding: 16px 16px 16px 20px;
@@ -1206,14 +1206,18 @@ button.swiper-pagination-bullet {
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  max-width: 998px;
+  max-width: 1200px !important;
   margin-left: auto;
   margin-right: auto;
   padding: 0 96px;
 }
 
 .bill-cycle-select-group.full-width {
-  max-width: calc(100% - 64px);
+  max-width: none !important;
+}
+
+.bill-cycle-select-group.narrow-width {
+  max-width: 840px !important;
 }
 
 .bill-cycle-select-group__inner-left {
@@ -1285,6 +1289,15 @@ button.swiper-pagination-bullet {
 .app-manager .app-manager-plan-page-slider {
   padding-left: 96px !important;
   padding-right: 96px !important;
+  max-width: 1200px !important;
+}
+
+.app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
+  max-width: none !important;
+}
+
+.app-manager .app-manager-plan-page-slider.Polaris-Page--narrowWidth {
+  max-width: 840px !important;
 }
 
 @media (max-width: 1023px) {
@@ -1296,14 +1309,14 @@ button.swiper-pagination-bullet {
 
 @media (max-width: 992px) {
   .bill-cycle-select-group.full-width,
-  .app-manager .Polaris-Page--fullWidth {
-    max-width: calc(100% - 64px) !important;
+  .app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
+    max-width: none !important;
   }
 }
 
 @media (max-width: 767px) {
   .bill-cycle-select-group.full-width,
-  .app-manager .Polaris-Page--fullWidth {
+  .app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
     max-width: 100% !important;
   }
   .bill-cycle-select-group {
