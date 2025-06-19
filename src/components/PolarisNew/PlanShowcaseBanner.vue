@@ -99,7 +99,7 @@ export default {
       </div>
       <div class="plan-right">
         <div class="plan-content">
-          <h3 class="plan-name">{{ translateMe("Monthly bundle:") }}</h3>
+          <h3 class="plan-name">{{ translateMe("Monthly bundle") }}:</h3>
           <div class="prices">
             <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
             <span class="original-amount" v-if="realPrice < oldPrice"

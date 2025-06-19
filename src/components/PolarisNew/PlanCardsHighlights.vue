@@ -400,14 +400,14 @@ export default {
                 <h5 class="strike-price">
                   <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
                   <span v-if="plan.strike_price !== 0">
-                {{ translateMe("/mo") }}
+                /{{ translateMe("mo") }}
               </span>
                 </h5>
               </template>
               <h2 class="price">
                 {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
                 <span v-if="plan.price !== 0">
-                {{ translateMe("/mo") }}
+                /{{ translateMe("mo") }}
               </span>
               </h2>
             </div>
@@ -507,14 +507,14 @@ export default {
                 <h5 class="strike-price">
                   <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
                   <span v-if="plan.strike_price !== 0">
-                {{ translateMe("/yr") }}
+                /{{ translateMe("yr") }}
               </span>
                 </h5>
               </template>
               <h2 class="price">
                 {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
                 <span v-if="plan.price !== 0">
-                {{ translateMe("/yr") }}
+                /{{ translateMe("yr") }}
               </span>
               </h2>
             </div>
