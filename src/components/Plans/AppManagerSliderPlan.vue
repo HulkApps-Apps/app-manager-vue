@@ -46,9 +46,9 @@
           @click="selectPlan('annually')"
         >
           {{ translateMe('Billed yearly') }}
-          <strong style="white-space: pre;">
-            {{ translateMe('17%') }}
-            {{ translateMe('Off') }}
+          <strong style="white-space: pre; display: inline-flex; gap: 3px; margin-left: 4px;">
+            <span>{{ translateMe('17%') }}</span>
+            <span>{{ translateMe('Off') }}</span>
           </strong>
         </SelectButton>
       </div>
@@ -60,9 +60,9 @@
       >
         {{ translateMe('App Bundle Plan') }}
         -
-        <strong style="white-space: pre; font-weight: 900;">
-          {{ translateMe('70%') }}
-          {{ translateMe('Off') }}
+        <strong style="white-space: pre; font-weight: 900; display: inline-flex; gap: 3px; margin-left: 4px;">
+          <span>{{ translateMe('70%') }}</span>
+          <span>{{ translateMe('Off') }}</span>
         </strong>
       </ToggleButton>
     </div>
