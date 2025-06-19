@@ -96,6 +96,16 @@ handleBannerClose(payload) {
 }
 ```
 
+## Extracting Translation Keys
+
+You can extract all translation keys used in this package by running:
+
+```bash
+npm run extract-translation-keys
+```
+
+This command will scan all `.js` and `.vue` files within the `src` directory of this package for usages of `translateMe('...')` and output a JSON array of unique translation keys to the console. It will not scan the entire project or any consuming app—only the package's own source code.
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.

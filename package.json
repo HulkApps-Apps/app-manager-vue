@@ -1,6 +1,6 @@
 {
   "name": "@hulkapps/app-manager-vue",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Vue SDK to render app manager contents",
   "main": "dist/app-manager-vue.ssr.js",
   "browser": "dist/app-manager-vue.esm.js",
@@ -18,7 +18,8 @@
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js && npm run build:scss",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
-    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "extract-translation-keys": "node extract-translation-keys.js"
   },
   "dependencies": {
     "axios": "^0.26.1",

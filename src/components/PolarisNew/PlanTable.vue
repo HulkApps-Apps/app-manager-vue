@@ -534,14 +534,14 @@ export default {
                 <template v-if="plan.strike_price">
                   <h5>
                     <span class="strike-price">${{ plan.strike_price }}</span>
-                    <span class="plan-interval" v-if="plan.strike_price !== 0">{{ translateMe("/mo") }}</span>
+                    <span class="plan-interval" v-if="plan.strike_price !== 0">/{{ translateMe("mo") }}</span>
                   </h5>
                 </template>
                 <div class="main-price">
                   <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
                     <span class="plan-price">${{ plan.price }}</span>
-                    <span class="plan-interval">{{ translateMe("/mo") }}</span>
+                    <span class="plan-interval">/{{ translateMe("mo") }}</span>
                   </h4>
                 </div>
               </div>
@@ -639,14 +639,14 @@ export default {
                 <template v-if="plan.strike_price">
                   <h5>
                     <span class="strike-price">${{ plan.strike_price }}</span>
-                    <span class="plan-interval" v-if="plan.strike_price !== 0">{{ translateMe("/yr") }}</span>
+                    <span class="plan-interval" v-if="plan.strike_price !== 0">/{{ translateMe("yr") }}</span>
                   </h5>
                 </template>
                 <div class="main-price">
                   <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
                     <span class="plan-price">${{ plan.price }}</span>
-                    <span class="plan-interval">{{ translateMe("/yr") }}</span>
+                    <span class="plan-interval">/{{ translateMe("yr") }}</span>
                   </h4>
                 </div>
               </div>
