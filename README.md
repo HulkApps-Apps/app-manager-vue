@@ -101,10 +101,22 @@ handleBannerClose(payload) {
 You can extract all translation keys used in this package by running:
 
 ```bash
-npm run extract-translation-keys
+cd node_modules/@hulkapps/app-manager-vue
+```
+```bash
+node extract-translation-keys.js
 ```
 
-This command will scan all `.js` and `.vue` files within the `src` directory of this package for usages of `translateMe('...')` and output a JSON array of unique translation keys to the console. It will not scan the entire project or any consuming app—only the package's own source code.
+If your package is located elsewhere, replace the path with the actual location, for example:
+
+```bash
+cd path-to-package
+```
+```bash
+node extract-translation-keys.js
+```
+
+This will scan all `.js` and `.vue` files within the `src` directory of this package for usages of `translateMe('...')` and output a JSON array of unique translation keys to the console.
 
 ## License
 
