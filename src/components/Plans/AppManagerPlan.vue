@@ -5,6 +5,7 @@
     :discount_code="discount_code"
     :is_customizable="is_customizable"
     :full_width="full_width"
+    :narrow_width="narrow_width"
     @handlePlanSelect="handlePlanSelect"
     @handlePlanBannerClose="handlePlanBannerClose"
     @handleCustomizePlan="handleCustomizePlan"
@@ -23,10 +24,6 @@ export default {
     shop_domain: {
       type: String
     },
-    group_plan: {
-      type: Boolean,
-      default: false
-    },
     base_url: {
       type: String,
       default: null
@@ -44,6 +41,10 @@ export default {
       default: false
     },
     full_width: {
+      type: Boolean,
+      default: false
+    },
+    narrow_width: {
       type: Boolean,
       default: false
     },

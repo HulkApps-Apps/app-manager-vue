@@ -49,7 +49,12 @@ export default {
       type: Array,
       required: false,
       default: () => []
-    }
+    },
+    narrowWidth: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
     isPlanButtonDisabled,
@@ -363,7 +368,7 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: Math.min(this.monthlyPlans.length, 3),
+          slidesPerView: Math.min(this.monthlyPlans.length, this.narrowWidth ? 2: 3),
         },
       },
       on: {
@@ -394,7 +399,7 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: Math.min(this.annualPlans.length, 3),
+          slidesPerView: Math.min(this.annualPlans.length, this.narrowWidth ? 2 : 3),
         },
       },
       on: {

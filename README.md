@@ -28,7 +28,23 @@ Vue.use(AppManager);
 <AppManagerPlan @handlePlanSelect="handlePlanSelectListener" @handlePlanBannerClose="handleBannerClose" :shop_domain="shop_domain" :translations="translations"/>
 <AppManagerSliderPlan @handlePlanSelect="handlePlanSelectListener" @handlePlanBannerClose="handleBannerClose" :shop_domain="shop_domain" :translations="translations"/>
 ```
-The AppManagerPlan component requires a Shop Domain
+
+## AppManagerPlan Props
+
+Here is a basic explanation of all the props for the `<AppManagerPlan>` component:
+
+| Prop Name      | Type    | Default   | Description                                                                 |
+|--------------- |---------|-----------|-----------------------------------------------------------------------------|
+| shop_domain    | String  | —         | The domain of the Shopify store. Required to fetch and display plans.       |
+| base_url       | String  | null      | The base URL for API requests. Used to configure backend communication.     |
+| host           | String  | null      | Shopify host parameter, used for embedded app context.                      |
+| discount_code  | String  | null      | Discount code to apply to plans, if available.                              |
+| is_customizable| Boolean | false     | Allows the user to customize their plan if set to true.                     |
+| full_width     | Boolean | false     | If true, stretches the component to the full width of its container.        |
+| narrow_width   | Boolean | false     | If true, uses a narrower, more compact width.                               |
+| translations   | Object  | { hulkapps: 'hulkapps' } | Object for customizing translation strings.           |
+
+You can use these props to control the appearance, context, and behavior of the `<AppManagerPlan>` component to fit your app's needs.
 
 #### Non-Vue App usage
 
