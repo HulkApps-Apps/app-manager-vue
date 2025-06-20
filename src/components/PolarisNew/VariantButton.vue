@@ -163,7 +163,7 @@ export default {
 
 .additional-info-primary {
   background-color: rgba(0, 0, 0, 0.06) !important;
-  color: #616161 !important;
+  color: #4A4A4A !important;
   padding: 0px 6px !important;
   border-radius: 8px !important;
   font-size: 13px !important;
@@ -172,7 +172,7 @@ export default {
 
 .additional-info-secondary {
   background-color: rgba(0, 0, 0, 0.06) !important;
-  color: #616161 !important;
+  color: #4A4A4A !important;
   padding: 0px 6px !important;
   border-radius: 8px !important;
   font-weight: 550 !important;

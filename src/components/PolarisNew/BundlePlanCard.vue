@@ -113,22 +113,22 @@ export default {
 .bundle-header h3 {
   font-size: 18px;
   font-weight: 700;
-  color: black;
+  color: #1A1A1A;
 }
 .bundle-header h2 {
   font-size: 30px;
   font-weight: 700;
-  color: black;
+  color: #1A1A1A;
 }
 .bundle-header .mo-label {
   font-size: 13px;
   font-weight: 400;
-  color: rgba(97, 97, 97, 1);
+  color: #4A4A4A;
 }
 .bundle-header h4 {
   font-size: 13.5px;
   font-weight: 700;
-  color: #616161;
+  color: #4A4A4A;
   text-decoration: line-through;
 }
 .bundle-header .apps-count {
@@ -154,7 +154,7 @@ export default {
 .more-apps-label {
     font-size: 13px;
     font-weight: 700;
-    color: black;
+    color: #1A1A1A;
 }
 @media (max-width: 767px) {
   .apps-list .app {

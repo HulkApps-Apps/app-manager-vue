@@ -144,7 +144,7 @@ export default {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <rect width="4" height="4" rx="2" fill="black" />
+              <rect width="4" height="4" rx="2" fill="#1A1A1A" />
             </svg>
             {{ translateMe(option) }}</span
           >
@@ -248,7 +248,7 @@ export default {
   font-size: 13px !important;
   font-weight: 450 !important;
   background-color: rgba(0, 0, 0, 0.08) !important;
-  color: #303030 !important;
+  color: #1A1A1A !important;
   border-radius: 8px !important;
   border: none;
   font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;

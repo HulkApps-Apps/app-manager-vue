@@ -1198,7 +1198,7 @@ button.swiper-pagination-bullet {
 }
 
 .app-manager .Polaris-Icon--colorSuccess svg {
-  fill: black !important;
+  fill: #1A1A1A !important;
 }
 
 .button-group-new {
@@ -1235,13 +1235,13 @@ button.swiper-pagination-bullet {
   justify-content: center;
   border-radius: 40px;
   padding: 4px;
-  border: 1px solid black;
+  border: 1px solid #1A1A1A;
 }
 
 .bill-cycle-back {
   display: none;
   align-items: center;
-  color: rgba(48, 48, 48, 1);
+  color: #006FBB;
   cursor: pointer;
   gap: 4px;
   font-weight: 450;
@@ -1275,7 +1275,7 @@ button.swiper-pagination-bullet {
 .toggle-plans-features {
   font-size: 13px;
   font-weight: 500;
-  color: rgba(48, 48, 48, 1);
+  color: #4A4A4A;
   text-decoration: none;
 }
 

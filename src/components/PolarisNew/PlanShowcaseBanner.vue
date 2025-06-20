@@ -170,7 +170,7 @@ export default {
 .plan-name {
   font-size: 14px;
   font-weight: 450;
-  color: #303030;
+  color: #1A1A1A;
 }
 
 .plan-left {
@@ -199,18 +199,18 @@ export default {
 .bundle-desc-label {
   font-size: 14px;
   font-weight: 450;
-  color: #303030;
+  color: #1A1A1A;
 }
 
 .discounted-amount {
   font-size: 30px;
   font-weight: bold;
-  color: #303030;
+  color: #1A1A1A;
 }
 
 .original-amount {
   text-decoration: line-through;
-  color: #616161;
+  color: #4A4A4A;
   font-size: 14px;
   font-weight: 650;
 }
