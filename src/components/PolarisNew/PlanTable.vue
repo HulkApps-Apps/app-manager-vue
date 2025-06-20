@@ -2,6 +2,7 @@
 import Swiper, { Navigation, Pagination } from "swiper";
 import VariantButton from "./VariantButton";
 import {calculatePlanPriceWithDiscounts, formatFeature, getPlanButtonText, isPlanButtonDisabled} from "@/helpers";
+import CustomTooltip from "./CustomTooltip.vue";
 
 export default {
   data() {
@@ -23,6 +24,7 @@ export default {
   name: "PlanTable",
   components: {
     VariantButton,
+    CustomTooltip,
   },
   props: {
     plans: {
@@ -51,6 +53,11 @@ export default {
       default: () => []
     },
     narrowWidth: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    enableFeatureTooltip: {
       type: Boolean,
       required: false,
       default: false,
@@ -416,7 +423,11 @@ export default {
 
     this.syncAllHeights(); // Run syncHeights once after mount
     this.syncNavigationWidth(); // Sync navigation width after mount
+    window.addEventListener('resize', this.syncNavigationWidth);
     this.setupScrollListeners();
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.syncNavigationWidth);
   },
 };
 </script>
@@ -512,7 +523,14 @@ export default {
             v-for="feature in group.features"
             :key="feature.uuid"
           >
-            {{ translateMe(feature.name) }}
+            <template v-if="enableFeatureTooltip && feature.description">
+              <CustomTooltip :text="translateMe(feature.description)">
+                <span>{{ translateMe(feature.name) }}</span>
+              </CustomTooltip>
+            </template>
+            <template v-else>
+              <span>{{ translateMe(feature.name) }}</span>
+            </template>
           </div>
         </template>
       </div>
@@ -617,7 +635,14 @@ export default {
             v-for="feature in group.features"
             :key="feature.uuid"
           >
-            {{ translateMe(feature.name) }}
+            <template v-if="enableFeatureTooltip && feature.description">
+              <CustomTooltip :text="translateMe(feature.description)">
+                <span>{{ translateMe(feature.name) }}</span>
+              </CustomTooltip>
+            </template>
+            <template v-else>
+              <span>{{ translateMe(feature.name) }}</span>
+            </template>
           </div>
         </template>
       </div>
@@ -766,6 +791,7 @@ export default {
   border-bottom: 1px solid #e3e3e3;
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 
 .table-header h3 {

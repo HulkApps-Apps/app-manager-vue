@@ -152,7 +152,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px !important;
+  max-width: 1190px !important;
   width: 100%;
   margin-left: auto;
   margin-right: auto;

@@ -284,11 +284,14 @@ export default {
       },
     });
     this.syncNavigationWidth(); // Sync navigation width after mount
-
+    window.addEventListener('resize', this.syncNavigationWidth);
     // console.log('Plans:', this.plans);
     // console.log('Monthly Plans:', this.monthlyPlans);
     // console.log('Annually Plans:', this.annualPlans);
     // console.log('Features:', this.features);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.syncNavigationWidth);
   },
 };
 </script>

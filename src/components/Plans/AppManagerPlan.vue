@@ -6,6 +6,7 @@
     :is_customizable="is_customizable"
     :full_width="full_width"
     :narrow_width="narrow_width"
+    :enable_feature_tooltip="enable_feature_tooltip"
     @handlePlanSelect="handlePlanSelect"
     @handlePlanBannerClose="handlePlanBannerClose"
     @handleCustomizePlan="handleCustomizePlan"
@@ -45,6 +46,10 @@ export default {
       default: false
     },
     narrow_width: {
+      type: Boolean,
+      default: false
+    },
+    enable_feature_tooltip: {
       type: Boolean,
       default: false
     },

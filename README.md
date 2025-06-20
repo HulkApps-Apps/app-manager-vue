@@ -43,6 +43,7 @@ Here is a basic explanation of all the props for the `<AppManagerPlan>` componen
 | full_width     | Boolean | false     | If true, stretches the component to the full width of its container.        |
 | narrow_width   | Boolean | false     | If true, uses a narrower, more compact width.                               |
 | translations   | Object  | { hulkapps: 'hulkapps' } | Object for customizing translation strings.           |
+| enable_feature_tooltip | Boolean | false | If true, shows the feature description as a tooltip for plan features (tap to show/hide on mobile). Tooltip is only shown if the feature has a description. |
 
 You can use these props to control the appearance, context, and behavior of the `<AppManagerPlan>` component to fit your app's needs.
 

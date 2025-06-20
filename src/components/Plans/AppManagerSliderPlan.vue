@@ -110,6 +110,7 @@
             :selectedInterval="selectedPlan"
             :features="features"
             :narrowWidth="this.narrow_width"
+            :enableFeatureTooltip="this.enable_feature_tooltip"
             @plan-clicked="handlePlanClicked"
             :class="{ 'hide-all-features': !showPlansFeatures }"
           />
@@ -211,7 +212,7 @@ export default {
     PlanTable,
     BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'full_width', 'narrow_width'],
+  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'full_width', 'narrow_width', 'enable_feature_tooltip'],
   data() {
     return {
       planLoading: false,
@@ -538,7 +539,7 @@ export default {
 /* 3D Effects */
 .swiper-3d,
 .swiper-3d.swiper-css-mode .swiper-wrapper {
-  perspective: 1200px;
+  perspective: 1190px;
 }
 .swiper-3d .swiper-wrapper,
 .swiper-3d .swiper-slide,
@@ -1213,7 +1214,7 @@ button.swiper-pagination-bullet {
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  max-width: 1200px !important;
+  max-width: 1190px !important;
   margin-left: auto;
   margin-right: auto;
   padding: 0 96px;
@@ -1296,7 +1297,7 @@ button.swiper-pagination-bullet {
 .app-manager .app-manager-plan-page-slider {
   padding-left: 96px !important;
   padding-right: 96px !important;
-  max-width: 1200px !important;
+  max-width: 1190px !important;
 }
 
 .app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
