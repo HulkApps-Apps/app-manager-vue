@@ -123,7 +123,7 @@ export default {
           @click="handlePlanClick"
           variant="primary"
         >
-          {{ translateMe("Current Plan") }}
+          {{ translateMe("Current plan") }}
         </VariantButton>
       </div>
     </div>

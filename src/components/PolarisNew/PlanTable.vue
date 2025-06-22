@@ -437,7 +437,7 @@ export default {
     <div class="swiper-plan-navigation nav-monthly-table">
       <button class="swiper-plan-monthly-prev">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">
-          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -454,7 +454,7 @@ export default {
       </button>
       <button class="swiper-plan-monthly-next">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">
-          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
@@ -473,7 +473,7 @@ export default {
     <div class="swiper-plan-navigation nav-annually-table">
       <button class="swiper-plan-annually-prev">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">
-          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -490,7 +490,7 @@ export default {
       </button>
       <button class="swiper-plan-annually-next">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">
-          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
@@ -511,7 +511,7 @@ export default {
       <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-monthly">
           <h3>
-            {{ monthlyPlans.length }} {{ translateMe("Plans available") }}
+            {{ monthlyPlans.length }} {{ translateMe("plans available") }}
           </h3>
         </div>
         <template v-for="group in monthlyPlansFeatures">
@@ -624,7 +624,7 @@ export default {
     <div class="pricing-table annually-table">
       <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-annually">
-          <h3>{{ annualPlans.length }} {{ translateMe("Plans available") }}</h3>
+          <h3>{{ annualPlans.length }} {{ translateMe("plans available") }}</h3>
         </div>
         <template v-for="group in annualPlansFeatures">
           <div v-if="group.name" class="feature-group-header plan-feature-name plan-feature-name-annually">
@@ -826,7 +826,8 @@ export default {
   border-left: 1px solid #e3e3e3;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  white-space: normal;
+  word-break: normal;
+  hyphens: none;
 }
 .plan-table-checkmark {
   width: 20px;

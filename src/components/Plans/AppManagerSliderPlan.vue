@@ -1,6 +1,6 @@
 <template>
   <PEmptyState
-    :heading="translateMe('No Plans')"
+    :heading="translateMe('No plans')"
     image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
     v-if="!this.planLoading && this.plans.length === 0"
   >
@@ -58,7 +58,7 @@
         :toggled="selectedPlan === 'bundle'"
         @click="selectPlan('bundle')"
       >
-        {{ translateMe('App Bundle Plan') }}
+        {{ translateMe('App bundle plan') }}
         -
         <strong style="white-space: pre; font-weight: 900; display: inline-flex; gap: 3px; margin-left: 4px;">
           <span>{{ translateMe('70%') }}</span>
@@ -84,7 +84,7 @@
       <!-- -------------------- Bundle Plan Banner -------------------- -->
       <!-- <div class="promotional-banner">
         <VariantButton id="pricing-tab" :variant="'primary'" @click="selectPlan('bundle')">
-          {{ translateMe('Start Saving Now') }}
+          {{ translateMe('Start saving Now') }}
         </VariantButton>
       </div> -->
 

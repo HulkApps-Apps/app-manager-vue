@@ -301,7 +301,7 @@ export default {
     <div class="swiper-plan-h-navigation nav-monthly">
       <button class="swiper-plan-h-prev-monthly">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">
-          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -318,7 +318,7 @@ export default {
       </button>
       <button class="swiper-plan-h-next-monthly">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">
-          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}</span>
+          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("plan") : translateMe("plans")) }}</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
           <path d="M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -336,7 +336,7 @@ export default {
     <div class="swiper-plan-h-navigation nav-annually">
       <button class="swiper-plan-h-prev-annually">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">
-          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -353,7 +353,7 @@ export default {
       </button>
       <button class="swiper-plan-h-next-annually">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">
-          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">

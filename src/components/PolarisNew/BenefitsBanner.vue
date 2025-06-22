@@ -71,7 +71,7 @@ export default {
           <strong>
             {{ translateMe("Unlimited") }}
           </strong>
-          {{ translateMe("Access to Enterprise Features") }}
+          {{ translateMe("Access to enterprise features") }}
         </p>
       </div>
 
@@ -97,8 +97,8 @@ export default {
         </svg>
         <p class="benefit-description">
           <strong>{{ translateMe("24/7") }}</strong
-          >{{ translateMe("Live Chat & Email Support") }}
-          <strong>+ {{ translateMe("Priority Status") }}</strong>
+          >{{ translateMe("Live chat and email support") }}
+          <strong>+ {{ translateMe("Priority status") }}</strong>
         </p>
       </div>
 
@@ -154,7 +154,7 @@ export default {
         <p class="benefit-description">
           {{ translateMe("Full") }}
           <strong>{{ translateMe("Onboarding") }}</strong
-          >,{{ translateMe("Setup and Migration Assistance") }}
+          >,{{ translateMe("Setup and migration assistance") }}
         </p>
       </div>
 
@@ -175,7 +175,7 @@ export default {
         <p class="benefit-description">
           {{ translateMe("Access to") }}
           <strong>{{ translateMe("200+") }}</strong>
-          {{ translateMe("Tech and Marketing Professionals") }}
+          {{ translateMe("Tech and marketing professionals") }}
         </p>
       </div>
 
@@ -202,7 +202,7 @@ export default {
 
         <p class="benefit-description">
           <strong>{{ translateMe("Dedicated") }}</strong>
-          {{ translateMe("Account Manager") }}
+          {{ translateMe("Account manager") }}
         </p>
       </div>
     </div>
