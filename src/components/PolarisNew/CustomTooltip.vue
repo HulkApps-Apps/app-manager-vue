@@ -107,4 +107,10 @@ export default {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+@media (max-width: 840px) {
+  .polaris-tooltip-content {
+    opacity: 0 !important;
+  }
+}
 </style> 
