@@ -94,7 +94,7 @@ export default {
   display: flex;
   width: fit-content !important;
   justify-content: center;
-  height: 28px !important;
+  min-height: 28px !important;
   align-items: center !important;
   gap: 8px !important;
   padding: 4px 12px !important;
@@ -103,6 +103,7 @@ export default {
   font-weight: 450 !important;
   color: rgb(74, 74, 74);
   position: relative;
+  text-align: center;
 }
 
 .button:hover {
@@ -163,7 +164,7 @@ export default {
 
 .additional-info-primary {
   background-color: rgba(0, 0, 0, 0.06) !important;
-  color: #616161 !important;
+  color: #4A4A4A !important;
   padding: 0px 6px !important;
   border-radius: 8px !important;
   font-size: 13px !important;
@@ -172,7 +173,7 @@ export default {
 
 .additional-info-secondary {
   background-color: rgba(0, 0, 0, 0.06) !important;
-  color: #616161 !important;
+  color: #4A4A4A !important;
   padding: 0px 6px !important;
   border-radius: 8px !important;
   font-weight: 550 !important;

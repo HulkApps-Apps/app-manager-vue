@@ -42,15 +42,11 @@ export default {
       required: false,
       default: false,
     },
-    fullWidth: {
-      type: Boolean,
+    width: {
+      type: String,
       required: false,
-      default: false,
-    },
-    narrowWidth: {
-      type: Boolean,
-      required: false,
-      default: false,
+      default: 'base',
+      validator: value => ['tight', 'base', 'loose'].includes(value)
     },
     bundleApps: {
       type: Number,
@@ -81,8 +77,9 @@ export default {
     <div
       :class="[
         'banner__inner',
-        this.fullWidth ? 'full-width' : '',
-        this.narrowWidth ? 'narrow-width' : '',
+        width === 'loose' ? 'loose-width' : '',
+        width === 'tight' ? 'tight-width' : '',
+        width === 'base' ? 'base-width' : '',
       ]"
     >
       <div v-if="showDescription" class="plan-left">
@@ -93,7 +90,7 @@ export default {
           {{ translateMe("Get") }}
           {{bundleApps}}
           {{ translateMe("Shopify apps and save more than") }}
-          <strong>{{ translateMe("$1000") }}</strong>
+          <strong>{{ translateMe("$800") }}</strong>
           {{ translateMe("per month!") }}
         </p>
       </div>
@@ -123,7 +120,7 @@ export default {
           @click="handlePlanClick"
           variant="primary"
         >
-          {{ translateMe("Current Plan") }}
+          {{ translateMe("Current plan") }}
         </VariantButton>
       </div>
     </div>
@@ -152,25 +149,25 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px !important;
+  max-width: 1190px !important;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding: 0 96px;
 }
 
-.banner__inner.full-width {
-  max-width: none !important;
+.banner__inner.loose-width {
+  max-width: 1600px !important;
 }
 
-.banner__inner.narrow-width {
+.banner__inner.tight-width {
   max-width: 840px !important;
 }
 
 .plan-name {
   font-size: 14px;
   font-weight: 450;
-  color: #303030;
+  color: #1A1A1A;
 }
 
 .plan-left {
@@ -199,18 +196,18 @@ export default {
 .bundle-desc-label {
   font-size: 14px;
   font-weight: 450;
-  color: #303030;
+  color: #1A1A1A;
 }
 
 .discounted-amount {
   font-size: 30px;
   font-weight: bold;
-  color: #303030;
+  color: #1A1A1A;
 }
 
 .original-amount {
   text-decoration: line-through;
-  color: #616161;
+  color: #4A4A4A;
   font-size: 14px;
   font-weight: 650;
 }
@@ -243,7 +240,7 @@ export default {
 
 @media (max-width: 992px) {
 
-  .banner__inner.full-width {
+  .banner__inner.loose-width {
     max-width: none !important;
   }
 
@@ -263,7 +260,7 @@ export default {
   .banner__inner {
     padding: 16px;
   }
-  .banner__inner.full-width {
+  .banner__inner.loose-width {
     max-width: 100%;
   }
   .bundle-plan-showcase-banner {

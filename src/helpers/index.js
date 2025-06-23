@@ -81,7 +81,7 @@ export const getPlanButtonText = function (shopifyPlan, plan, translateMe, curre
   }
 
   if (plan.store_base_plan && !plan.shopify_plans.includes(shopifyPlan)) {
-    return translateMe("Not Applicable");
+    return translateMe("Not applicable");
   }
 
   if (currentPlan) {

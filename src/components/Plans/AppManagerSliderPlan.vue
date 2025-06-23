@@ -1,6 +1,6 @@
 <template>
   <PEmptyState
-    :heading="translateMe('No Plans')"
+    :heading="translateMe('No plans')"
     image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
     v-if="!this.planLoading && this.plans.length === 0"
   >
@@ -10,8 +10,9 @@
     <div
       :class="[
         'bill-cycle-select-group',
-        this.full_width ? 'full-width' : '',
-        this.narrow_width ? 'narrow-width' : '',
+        this.width === 'loose' ? 'loose-width' : '',
+        this.width === 'tight' ? 'tight-width' : '',
+        this.width === 'base' ? 'base-width' : '',
       ]"
     >
       <a class="bill-cycle-back" @click="selectPlan('monthly')">
@@ -58,7 +59,7 @@
         :toggled="selectedPlan === 'bundle'"
         @click="selectPlan('bundle')"
       >
-        {{ translateMe('App Bundle Plan') }}
+        {{ translateMe('App bundle plan') }}
         -
         <strong style="white-space: pre; font-weight: 900; display: inline-flex; gap: 3px; margin-left: 4px;">
           <span>{{ translateMe('70%') }}</span>
@@ -69,22 +70,25 @@
     <PlanShowcaseBanner
       v-if="bundle_plan"
       :useCardStyle="true"
-      :fullWidth="this.full_width"
-      :narrowWidth="this.narrow_width"
+      :width="this.width"
       :showcaseData="bundle_plan"
       :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)"
       :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"
       :isCurrentPlan="isCurrentPlanId(bundle_plan)"
     />
     <PPage
-      class="app-manager-plan-page-slider custom-title"
-      :full-width="this.full_width"
-      :narrow-width="this.narrow_width"
+      :class="[
+        'app-manager-plan-page-slider',
+        'custom-title',
+        this.width === 'loose' ? 'loose-width' : '',
+        this.width === 'tight' ? 'tight-width' : '',
+        this.width === 'base' ? 'base-width' : '',
+      ]"
     >
       <!-- -------------------- Bundle Plan Banner -------------------- -->
       <!-- <div class="promotional-banner">
         <VariantButton id="pricing-tab" :variant="'primary'" @click="selectPlan('bundle')">
-          {{ translateMe('Start Saving Now') }}
+          {{ translateMe('Start saving Now') }}
         </VariantButton>
       </div> -->
 
@@ -109,7 +113,8 @@
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
             :features="features"
-            :narrowWidth="this.narrow_width"
+            :width="this.width"
+            :enableFeatureTooltip="this.enable_feature_tooltip"
             @plan-clicked="handlePlanClicked"
             :class="{ 'hide-all-features': !showPlansFeatures }"
           />
@@ -211,7 +216,7 @@ export default {
     PlanTable,
     BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'full_width', 'narrow_width'],
+  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'width', 'enable_feature_tooltip'],
   data() {
     return {
       planLoading: false,
@@ -538,7 +543,7 @@ export default {
 /* 3D Effects */
 .swiper-3d,
 .swiper-3d.swiper-css-mode .swiper-wrapper {
-  perspective: 1200px;
+  perspective: 1190px;
 }
 .swiper-3d .swiper-wrapper,
 .swiper-3d .swiper-slide,
@@ -1198,7 +1203,7 @@ button.swiper-pagination-bullet {
 }
 
 .app-manager .Polaris-Icon--colorSuccess svg {
-  fill: black !important;
+  fill: #1A1A1A !important;
 }
 
 .button-group-new {
@@ -1213,17 +1218,17 @@ button.swiper-pagination-bullet {
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  max-width: 1200px !important;
+  max-width: 1190px !important;
   margin-left: auto;
   margin-right: auto;
   padding: 0 96px;
 }
 
-.bill-cycle-select-group.full-width {
-  max-width: none !important;
+.bill-cycle-select-group.loose-width {
+  max-width: 1600px !important;
 }
 
-.bill-cycle-select-group.narrow-width {
+.bill-cycle-select-group.tight-width {
   max-width: 840px !important;
 }
 
@@ -1235,13 +1240,13 @@ button.swiper-pagination-bullet {
   justify-content: center;
   border-radius: 40px;
   padding: 4px;
-  border: 1px solid black;
+  border: 1px solid #1A1A1A;
 }
 
 .bill-cycle-back {
   display: none;
   align-items: center;
-  color: rgba(48, 48, 48, 1);
+  color: #006FBB;
   cursor: pointer;
   gap: 4px;
   font-weight: 450;
@@ -1275,7 +1280,7 @@ button.swiper-pagination-bullet {
 .toggle-plans-features {
   font-size: 13px;
   font-weight: 500;
-  color: rgba(48, 48, 48, 1);
+  color: #4A4A4A;
   text-decoration: none;
 }
 
@@ -1296,14 +1301,14 @@ button.swiper-pagination-bullet {
 .app-manager .app-manager-plan-page-slider {
   padding-left: 96px !important;
   padding-right: 96px !important;
-  max-width: 1200px !important;
+  max-width: 1190px !important;
 }
 
-.app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
-  max-width: none !important;
+.app-manager .app-manager-plan-page-slider.loose-width {
+  max-width: 1600px !important;
 }
 
-.app-manager .app-manager-plan-page-slider.Polaris-Page--narrowWidth {
+.app-manager .app-manager-plan-page-slider.tight-width {
   max-width: 840px !important;
 }
 
@@ -1315,15 +1320,15 @@ button.swiper-pagination-bullet {
 }
 
 @media (max-width: 992px) {
-  .bill-cycle-select-group.full-width,
-  .app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
+  .bill-cycle-select-group.loose-width,
+  .app-manager .app-manager-plan-page-slider.loose-width {
     max-width: none !important;
   }
 }
 
 @media (max-width: 767px) {
-  .bill-cycle-select-group.full-width,
-  .app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
+  .bill-cycle-select-group.loose-width,
+  .app-manager .app-manager-plan-page-slider.loose-width {
     max-width: 100% !important;
   }
   .bill-cycle-select-group {

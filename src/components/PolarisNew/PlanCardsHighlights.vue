@@ -284,11 +284,14 @@ export default {
       },
     });
     this.syncNavigationWidth(); // Sync navigation width after mount
-
+    window.addEventListener('resize', this.syncNavigationWidth);
     // console.log('Plans:', this.plans);
     // console.log('Monthly Plans:', this.monthlyPlans);
     // console.log('Annually Plans:', this.annualPlans);
     // console.log('Features:', this.features);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.syncNavigationWidth);
   },
 };
 </script>
@@ -298,7 +301,7 @@ export default {
     <div class="swiper-plan-h-navigation nav-monthly">
       <button class="swiper-plan-h-prev-monthly">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">
-          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -315,7 +318,7 @@ export default {
       </button>
       <button class="swiper-plan-h-next-monthly">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">
-          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}</span>
+          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("plan") : translateMe("plans")) }}</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
           <path d="M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -333,7 +336,7 @@ export default {
     <div class="swiper-plan-h-navigation nav-annually">
       <button class="swiper-plan-h-prev-annually">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">
-          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -350,7 +353,7 @@ export default {
       </button>
       <button class="swiper-plan-h-next-annually">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">
-          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
@@ -398,14 +401,14 @@ export default {
             >
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
-                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
+                  <span style="text-decoration: line-through;">${{ Number(plan.strike_price).toFixed(2) }}</span>
                   <span v-if="plan.strike_price !== 0">
                 /{{ translateMe("mo") }}
               </span>
                 </h5>
               </template>
               <h2 class="price">
-                {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
+                {{ plan.price !== 0 ? "$" + Number(plan.price).toFixed(2) : translateMe("Free") }}
                 <span v-if="plan.price !== 0">
                 /{{ translateMe("mo") }}
               </span>
@@ -449,7 +452,7 @@ export default {
                       fill-rule="evenodd"
                       clip-rule="evenodd"
                       d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z"
-                      fill="#303030"
+                      fill="#1A1A1A"
                     />
                   </svg>
 
@@ -505,14 +508,14 @@ export default {
             >
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
-                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
+                  <span style="text-decoration: line-through;">${{ Number(plan.strike_price).toFixed(2) }}</span>
                   <span v-if="plan.strike_price !== 0">
                 /{{ translateMe("yr") }}
               </span>
                 </h5>
               </template>
               <h2 class="price">
-                {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
+                {{ plan.price !== 0 ? "$" + Number(plan.price).toFixed(2) : translateMe("Free") }}
                 <span v-if="plan.price !== 0">
                 /{{ translateMe("yr") }}
               </span>
@@ -556,7 +559,7 @@ export default {
                       fill-rule="evenodd"
                       clip-rule="evenodd"
                       d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z"
-                      fill="#303030"
+                      fill="#1A1A1A"
                     />
                   </svg>
 
@@ -633,7 +636,7 @@ export default {
 .card .title {
   font-size: 16px;
   font-weight: 700;
-  color: rgba(48, 48, 48, 1);
+  color: #1A1A1A;
 }
 
 .card .price-wrapper {
@@ -651,13 +654,13 @@ export default {
 .card .price {
   font-size: 30px;
   font-weight: 700;
-  color: rgba(48, 48, 48, 1);
+  color: #4A4A4A;
 }
 
 .card .price span {
   font-size: 13px;
   font-weight: 400;
-  color: rgba(97, 97, 97, 1);
+  color: #4A4A4A;
   margin-left: -6px;
   line-height: 0;
 }
@@ -665,7 +668,7 @@ export default {
 .card .description {
   font-size: 13px;
   font-weight: 400;
-  color: rgba(97, 97, 97, 1);
+  color: #4A4A4A;
 }
 
 .button {
@@ -700,11 +703,11 @@ export default {
 .feature span {
   font-size: 13px;
   font-weight: 400;
-  color: rgba(97, 97, 97, 1);
+  color: #4A4A4A;
 }
 
 .card .strike-price span {
-  color: rgba(97, 97, 97, 1);
+  color: #4A4A4A;
 }
 
 .most-popular {

@@ -2,6 +2,7 @@
 import Swiper, { Navigation, Pagination } from "swiper";
 import VariantButton from "./VariantButton";
 import {calculatePlanPriceWithDiscounts, formatFeature, getPlanButtonText, isPlanButtonDisabled} from "@/helpers";
+import CustomTooltip from "./CustomTooltip.vue";
 
 export default {
   data() {
@@ -23,6 +24,7 @@ export default {
   name: "PlanTable",
   components: {
     VariantButton,
+    CustomTooltip,
   },
   props: {
     plans: {
@@ -50,7 +52,13 @@ export default {
       required: false,
       default: () => []
     },
-    narrowWidth: {
+    width: {
+      type: String,
+      required: false,
+      default: 'base',
+      validator: value => ['tight', 'base', 'loose'].includes(value)
+    },
+    enableFeatureTooltip: {
       type: Boolean,
       required: false,
       default: false,
@@ -368,7 +376,7 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: Math.min(this.monthlyPlans.length, this.narrowWidth ? 2: 3),
+          slidesPerView: Math.min(this.monthlyPlans.length, this.width === 'tight' ? 2 : 3),
         },
       },
       on: {
@@ -399,7 +407,7 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: Math.min(this.annualPlans.length, this.narrowWidth ? 2 : 3),
+          slidesPerView: Math.min(this.annualPlans.length, this.width === 'tight' ? 2 : 3),
         },
       },
       on: {
@@ -416,7 +424,13 @@ export default {
 
     this.syncAllHeights(); // Run syncHeights once after mount
     this.syncNavigationWidth(); // Sync navigation width after mount
+    window.addEventListener('resize', this.syncNavigationWidth);
+    window.addEventListener('resize', this.syncAllHeights);
     this.setupScrollListeners();
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.syncNavigationWidth);
+    window.removeEventListener('resize', this.syncAllHeights);
   },
 };
 </script>
@@ -426,7 +440,7 @@ export default {
     <div class="swiper-plan-navigation nav-monthly-table">
       <button class="swiper-plan-monthly-prev">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.before > 0">
-          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansMonthly.before + " " + (this.remainingPlansMonthly.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -443,7 +457,7 @@ export default {
       </button>
       <button class="swiper-plan-monthly-next">
         <span class="plans-remaining" v-if="this.remainingPlansMonthly.after > 0">
-          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansMonthly.after + " " + (this.remainingPlansMonthly.after === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
@@ -462,7 +476,7 @@ export default {
     <div class="swiper-plan-navigation nav-annually-table">
       <button class="swiper-plan-annually-prev">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.before > 0">
-          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.before + " " + (this.remainingPlansAnnually.before === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9388)">
@@ -479,7 +493,7 @@ export default {
       </button>
       <button class="swiper-plan-annually-next">
         <span class="plans-remaining" v-if="this.remainingPlansAnnually.after > 0">
-          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("Plan") : translateMe("Plans")) }}
+          +{{ this.remainingPlansAnnually.after + " " + (this.remainingPlansAnnually.after === 1 ? translateMe("plan") : translateMe("plans")) }}
         </span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_859_9381)">
@@ -500,7 +514,7 @@ export default {
       <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-monthly">
           <h3>
-            {{ monthlyPlans.length }} {{ translateMe("Plans available") }}
+            {{ monthlyPlans.length }} {{ translateMe("plans available") }}
           </h3>
         </div>
         <template v-for="group in monthlyPlansFeatures">
@@ -512,7 +526,14 @@ export default {
             v-for="feature in group.features"
             :key="feature.uuid"
           >
-            {{ translateMe(feature.name) }}
+            <template v-if="enableFeatureTooltip && feature.description">
+              <CustomTooltip :text="translateMe(feature.description)">
+                <span>{{ translateMe(feature.name) }}</span>
+              </CustomTooltip>
+            </template>
+            <template v-else>
+              <span>{{ translateMe(feature.name) }}</span>
+            </template>
           </div>
         </template>
       </div>
@@ -531,16 +552,17 @@ export default {
                   anyMonthlyPlanHasDiscount ? 'has-discount' : ''
                 ]"
               >
+                <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                 <template v-if="plan.strike_price">
                   <h5>
-                    <span class="strike-price">${{ plan.strike_price }}</span>
+                    <span class="strike-price">${{ Number(plan.strike_price).toFixed(2) }}</span>
                     <span class="plan-interval" v-if="plan.strike_price !== 0">/{{ translateMe("mo") }}</span>
                   </h5>
                 </template>
                 <div class="main-price">
-                  <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
+                  <h4 class="plan-name desktop-plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
-                    <span class="plan-price">${{ plan.price }}</span>
+                    <span class="plan-price">${{ Number(plan.price).toFixed(2) }}</span>
                     <span class="plan-interval">/{{ translateMe("mo") }}</span>
                   </h4>
                 </div>
@@ -567,8 +589,8 @@ export default {
                     <span class="plan-table-checkmark">
                       <svg width="21" height="20" viewBox="0 0 21 20" fill="white" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_859_9134)">
-                        <path d="M3.25 10C3.25 10.9849 3.44399 11.9602 3.8209 12.8701C4.19781 13.7801 4.75026 14.6069 5.4467 15.3033C6.14314 15.9997 6.96993 16.5522 7.87987 16.9291C8.78982 17.306 9.76509 17.5 10.75 17.5C11.7349 17.5 12.7102 17.306 13.6201 16.9291C14.5301 16.5522 15.3569 15.9997 16.0533 15.3033C16.7497 14.6069 17.3022 13.7801 17.6791 12.8701C18.056 11.9602 18.25 10.9849 18.25 10C18.25 9.01509 18.056 8.03982 17.6791 7.12987C17.3022 6.21993 16.7497 5.39314 16.0533 4.6967C15.3569 4.00026 14.5301 3.44781 13.6201 3.0709C12.7102 2.69399 11.7349 2.5 10.75 2.5C9.76509 2.5 8.78982 2.69399 7.87987 3.0709C6.96993 3.44781 6.14314 4.00026 5.4467 4.6967C4.75026 5.39314 4.19781 6.21993 3.8209 7.12987C3.44399 8.03982 3.25 9.01509 3.25 10Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8.25 9.99998L9.91667 11.6666L13.25 8.33331" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3.25 10C3.25 10.9849 3.44399 11.9602 3.8209 12.8701C4.19781 13.7801 4.75026 14.6069 5.4467 15.3033C6.14314 15.9997 6.96993 16.5522 7.87987 16.9291C8.78982 17.306 9.76509 17.5 10.75 17.5C11.7349 17.5 12.7102 17.306 13.6201 16.9291C14.5301 16.5522 15.3569 15.9997 16.0533 15.3033C16.7497 14.6069 17.3022 13.7801 17.6791 12.8701C18.056 11.9602 18.25 10.9849 18.25 10C18.25 9.01509 18.056 8.03982 17.6791 7.12987C17.3022 6.21993 16.7497 5.39314 16.0533 4.6967C15.3569 4.00026 14.5301 3.44781 13.6201 3.0709C12.7102 2.69399 11.7349 2.5 10.75 2.5C9.76509 2.5 8.78982 2.69399 7.87987 3.0709C6.96993 3.44781 6.14314 4.00026 5.4467 4.6967C4.75026 5.39314 4.19781 6.21993 3.8209 7.12987C3.44399 8.03982 3.25 9.01509 3.25 10Z" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.25 9.99998L9.91667 11.6666L13.25 8.33331" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </g>
                         <defs>
                         <clipPath id="clip0_859_9134">
@@ -606,7 +628,7 @@ export default {
     <div class="pricing-table annually-table">
       <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-annually">
-          <h3>{{ annualPlans.length }} {{ translateMe("Plans available") }}</h3>
+          <h3>{{ annualPlans.length }} {{ translateMe("plans available") }}</h3>
         </div>
         <template v-for="group in annualPlansFeatures">
           <div v-if="group.name" class="feature-group-header plan-feature-name plan-feature-name-annually">
@@ -617,7 +639,14 @@ export default {
             v-for="feature in group.features"
             :key="feature.uuid"
           >
-            {{ translateMe(feature.name) }}
+            <template v-if="enableFeatureTooltip && feature.description">
+              <CustomTooltip :text="translateMe(feature.description)">
+                <span>{{ translateMe(feature.name) }}</span>
+              </CustomTooltip>
+            </template>
+            <template v-else>
+              <span>{{ translateMe(feature.name) }}</span>
+            </template>
           </div>
         </template>
       </div>
@@ -637,15 +666,16 @@ export default {
                 ]"
               >
                 <template v-if="plan.strike_price">
+                  <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                   <h5>
-                    <span class="strike-price">${{ plan.strike_price }}</span>
+                    <span class="strike-price">${{ Number(plan.strike_price).toFixed(2) }}</span>
                     <span class="plan-interval" v-if="plan.strike_price !== 0">/{{ translateMe("yr") }}</span>
                   </h5>
                 </template>
                 <div class="main-price">
-                  <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
+                  <h4 class="plan-name desktop-plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
-                    <span class="plan-price">${{ plan.price }}</span>
+                    <span class="plan-price">${{ Number(plan.price).toFixed(2) }}</span>
                     <span class="plan-interval">/{{ translateMe("yr") }}</span>
                   </h4>
                 </div>
@@ -672,8 +702,8 @@ export default {
                     <span class="plan-table-checkmark">
                       <svg width="21" height="20" viewBox="0 0 21 20" fill="white" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_859_9134)">
-                        <path d="M3.25 10C3.25 10.9849 3.44399 11.9602 3.8209 12.8701C4.19781 13.7801 4.75026 14.6069 5.4467 15.3033C6.14314 15.9997 6.96993 16.5522 7.87987 16.9291C8.78982 17.306 9.76509 17.5 10.75 17.5C11.7349 17.5 12.7102 17.306 13.6201 16.9291C14.5301 16.5522 15.3569 15.9997 16.0533 15.3033C16.7497 14.6069 17.3022 13.7801 17.6791 12.8701C18.056 11.9602 18.25 10.9849 18.25 10C18.25 9.01509 18.056 8.03982 17.6791 7.12987C17.3022 6.21993 16.7497 5.39314 16.0533 4.6967C15.3569 4.00026 14.5301 3.44781 13.6201 3.0709C12.7102 2.69399 11.7349 2.5 10.75 2.5C9.76509 2.5 8.78982 2.69399 7.87987 3.0709C6.96993 3.44781 6.14314 4.00026 5.4467 4.6967C4.75026 5.39314 4.19781 6.21993 3.8209 7.12987C3.44399 8.03982 3.25 9.01509 3.25 10Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8.25 9.99998L9.91667 11.6666L13.25 8.33331" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3.25 10C3.25 10.9849 3.44399 11.9602 3.8209 12.8701C4.19781 13.7801 4.75026 14.6069 5.4467 15.3033C6.14314 15.9997 6.96993 16.5522 7.87987 16.9291C8.78982 17.306 9.76509 17.5 10.75 17.5C11.7349 17.5 12.7102 17.306 13.6201 16.9291C14.5301 16.5522 15.3569 15.9997 16.0533 15.3033C16.7497 14.6069 17.3022 13.7801 17.6791 12.8701C18.056 11.9602 18.25 10.9849 18.25 10C18.25 9.01509 18.056 8.03982 17.6791 7.12987C17.3022 6.21993 16.7497 5.39314 16.0533 4.6967C15.3569 4.00026 14.5301 3.44781 13.6201 3.0709C12.7102 2.69399 11.7349 2.5 10.75 2.5C9.76509 2.5 8.78982 2.69399 7.87987 3.0709C6.96993 3.44781 6.14314 4.00026 5.4467 4.6967C4.75026 5.39314 4.19781 6.21993 3.8209 7.12987C3.44399 8.03982 3.25 9.01509 3.25 10Z" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.25 9.99998L9.91667 11.6666L13.25 8.33331" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </g>
                         <defs>
                         <clipPath id="clip0_859_9134">
@@ -766,13 +796,14 @@ export default {
   border-bottom: 1px solid #e3e3e3;
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 
 .table-header h3 {
   font-size: 13px;
   font-weight: 700;
   line-height: 20px;
-  color: #303030;
+  color: #1A1A1A;
 }
 
 .plan-header-wrapper {
@@ -800,7 +831,8 @@ export default {
   border-left: 1px solid #e3e3e3;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  white-space: normal;
+  word-break: normal;
+  hyphens: none;
 }
 .plan-table-checkmark {
   width: 20px;
@@ -847,16 +879,25 @@ export default {
 }
 
 .plan-header-wrapper .price-wrapper .plan-interval {
-  color: rgba(97, 97, 97, 1);
+  color: #4A4A4A;
   font-weight: normal;
 }
 
 .plan-header-wrapper .price-wrapper h4 {
-  display: inline;
+  display: inline-flex;
+  text-align: center;
   font-size: 16px;
   font-weight: 700;
-  color: #303030;
+  color: #1A1A1A;
   width: max-content;
+}
+
+.plan-header-wrapper .price-wrapper h4.plan-name {
+  width: 100%;
+}
+
+.plan-header-wrapper .price-wrapper .mobile-plan-name {
+  display: none;
 }
 
 .plan-header-wrapper .price-wrapper h4 h6 {
@@ -957,7 +998,7 @@ export default {
   font-size: 14px;
   font-weight: 600;
   background-color: #f5f5f5;
-  color: #303030;
+  color: #1A1A1A;
   max-height: 30px;
   padding: 5px !important;
   border-bottom: 1px solid #e3e3e3;
@@ -973,6 +1014,20 @@ export default {
   border-right: 1px solid #e3e3e3;
 }
 
+@media (max-width: 1024px) {
+  .plan-header-wrapper .price-wrapper .mobile-plan-name {
+    display: inline-block;
+  }
+
+  .plan-header-wrapper .price-wrapper .desktop-plan-name {
+    display: none;
+  }
+
+  .plan-header-wrapper .price-wrapper .main-price {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 640px) {
   .swiper-plan-navigation {
     display: none !important;
@@ -980,12 +1035,6 @@ export default {
 
   .pricing-table {
     width: calc(100% + -2px);
-  }
-}
-
-@media (max-width: 540px) {
-  .plan-header-wrapper .price-wrapper .main-price {
-    flex-direction: column;
   }
 }
 </style>

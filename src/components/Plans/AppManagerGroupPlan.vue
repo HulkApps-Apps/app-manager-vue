@@ -41,7 +41,7 @@
 <!--        </PLayout>-->
 <!--    </PSkeletonPage>-->
     <PEmptyState
-            :heading="translateMe('No Plans')"
+            :heading="translateMe('No plans')"
             image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
             v-if="!this.planLoading && this.plans.length === 0"
      />
@@ -221,14 +221,14 @@
                                         <PButton v-if="isCurrentPlan(plan)" :disabled="isCurrentPlan(plan)"
                                                  full-width
                                                  :pressed="isCurrentPlan(plan)">
-                                            {{ translateMe('Current Plan') }}
+                                            {{ translateMe('Current plan') }}
                                         </PButton>
                                         <PButton v-else-if="(!plan.store_base_plan || plan.shopify_plans.includes(shop.shopify_plan))"
                                                  full-width
                                                  :disabled="isActivePlanGlobal() && !isActiveGlobalCharge()"
                                                  @click="plan ? getPlanUrl(plan) : 'javascript:void'"
                                                  class="custom-choose-button">
-                                          {{ isActivePlanGlobal() ? (!isActiveGlobalCharge() ? translateMe('Not Applicable') : translateMe('Choose Plan')) : translateMe('Choose Plan') }}
+                                          {{ isActivePlanGlobal() ? (!isActiveGlobalCharge() ? translateMe('Not applicable') : translateMe('Choose plan')) : translateMe('Choose plan') }}
                                         </PButton>
                                         <PButton v-else :disabled="true"
                                                  full-width
@@ -384,7 +384,7 @@
                 };
             },
             headings() {
-                let headings = [this.translateMe('Plans & Features')];
+                let headings = [this.translateMe('Plans & features')];
                 this.plans.forEach(plan => {
 
                     let heading = (plan.name);

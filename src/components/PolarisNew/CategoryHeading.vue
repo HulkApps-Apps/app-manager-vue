@@ -50,12 +50,12 @@ export default {
   font-size: 13px;
   font-weight: 750;
   line-height: 20px;
-  color: black;
+  color: #1A1A1A;
 }
 .category-description {
   font-size: 12px;
   font-weight: 450;
   font-variation-settings: "slnt" 0;
-  color: #303030;
+  color: #1A1A1A;
 }
 </style>
