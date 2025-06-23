@@ -401,14 +401,14 @@ export default {
             >
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
-                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
+                  <span style="text-decoration: line-through;">${{ Number(plan.strike_price).toFixed(2) }}</span>
                   <span v-if="plan.strike_price !== 0">
                 /{{ translateMe("mo") }}
               </span>
                 </h5>
               </template>
               <h2 class="price">
-                {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
+                {{ plan.price !== 0 ? "$" + Number(plan.price).toFixed(2) : translateMe("Free") }}
                 <span v-if="plan.price !== 0">
                 /{{ translateMe("mo") }}
               </span>
@@ -508,14 +508,14 @@ export default {
             >
               <template v-if="plan.strike_price">
                 <h5 class="strike-price">
-                  <span style="text-decoration: line-through;">${{ plan.strike_price }}</span>
+                  <span style="text-decoration: line-through;">${{ Number(plan.strike_price).toFixed(2) }}</span>
                   <span v-if="plan.strike_price !== 0">
                 /{{ translateMe("yr") }}
               </span>
                 </h5>
               </template>
               <h2 class="price">
-                {{ plan.price !== 0 ? "$" + plan.price : translateMe("Free") }}
+                {{ plan.price !== 0 ? "$" + Number(plan.price).toFixed(2) : translateMe("Free") }}
                 <span v-if="plan.price !== 0">
                 /{{ translateMe("yr") }}
               </span>

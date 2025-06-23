@@ -94,7 +94,7 @@ export default {
   display: flex;
   width: fit-content !important;
   justify-content: center;
-  height: 28px !important;
+  min-height: 28px !important;
   align-items: center !important;
   gap: 8px !important;
   padding: 4px 12px !important;
@@ -103,6 +103,7 @@ export default {
   font-weight: 450 !important;
   color: rgb(74, 74, 74);
   position: relative;
+  text-align: center;
 }
 
 .button:hover {

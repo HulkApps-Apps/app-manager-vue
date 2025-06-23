@@ -93,7 +93,7 @@ export default {
           {{ translateMe("Get") }}
           {{bundleApps}}
           {{ translateMe("Shopify apps and save more than") }}
-          <strong>{{ translateMe("$1000") }}</strong>
+          <strong>{{ translateMe("$800") }}</strong>
           {{ translateMe("per month!") }}
         </p>
       </div>

@@ -424,10 +424,12 @@ export default {
     this.syncAllHeights(); // Run syncHeights once after mount
     this.syncNavigationWidth(); // Sync navigation width after mount
     window.addEventListener('resize', this.syncNavigationWidth);
+    window.addEventListener('resize', this.syncAllHeights);
     this.setupScrollListeners();
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.syncNavigationWidth);
+    window.removeEventListener('resize', this.syncAllHeights);
   },
 };
 </script>
@@ -549,16 +551,17 @@ export default {
                   anyMonthlyPlanHasDiscount ? 'has-discount' : ''
                 ]"
               >
+                <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                 <template v-if="plan.strike_price">
                   <h5>
-                    <span class="strike-price">${{ plan.strike_price }}</span>
+                    <span class="strike-price">${{ Number(plan.strike_price).toFixed(2) }}</span>
                     <span class="plan-interval" v-if="plan.strike_price !== 0">/{{ translateMe("mo") }}</span>
                   </h5>
                 </template>
                 <div class="main-price">
-                  <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
+                  <h4 class="plan-name desktop-plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
-                    <span class="plan-price">${{ plan.price }}</span>
+                    <span class="plan-price">${{ Number(plan.price).toFixed(2) }}</span>
                     <span class="plan-interval">/{{ translateMe("mo") }}</span>
                   </h4>
                 </div>
@@ -662,15 +665,16 @@ export default {
                 ]"
               >
                 <template v-if="plan.strike_price">
+                  <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                   <h5>
-                    <span class="strike-price">${{ plan.strike_price }}</span>
+                    <span class="strike-price">${{ Number(plan.strike_price).toFixed(2) }}</span>
                     <span class="plan-interval" v-if="plan.strike_price !== 0">/{{ translateMe("yr") }}</span>
                   </h5>
                 </template>
                 <div class="main-price">
-                  <h4 class="plan-name">{{ translateMe(plan.name) }}</h4>
+                  <h4 class="plan-name desktop-plan-name">{{ translateMe(plan.name) }}</h4>
                   <h4 v-if="plan.name !== 'free' && plan.name !== 'FREE'">
-                    <span class="plan-price">${{ plan.price }}</span>
+                    <span class="plan-price">${{ Number(plan.price).toFixed(2) }}</span>
                     <span class="plan-interval">/{{ translateMe("yr") }}</span>
                   </h4>
                 </div>
@@ -880,10 +884,19 @@ export default {
 
 .plan-header-wrapper .price-wrapper h4 {
   display: inline-flex;
+  text-align: center;
   font-size: 16px;
   font-weight: 700;
   color: #1A1A1A;
   width: max-content;
+}
+
+.plan-header-wrapper .price-wrapper h4.plan-name {
+  width: 100%;
+}
+
+.plan-header-wrapper .price-wrapper .mobile-plan-name {
+  display: none;
 }
 
 .plan-header-wrapper .price-wrapper h4 h6 {
@@ -1000,6 +1013,20 @@ export default {
   border-right: 1px solid #e3e3e3;
 }
 
+@media (max-width: 1024px) {
+  .plan-header-wrapper .price-wrapper .mobile-plan-name {
+    display: inline-block;
+  }
+
+  .plan-header-wrapper .price-wrapper .desktop-plan-name {
+    display: none;
+  }
+
+  .plan-header-wrapper .price-wrapper .main-price {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 640px) {
   .swiper-plan-navigation {
     display: none !important;
@@ -1007,12 +1034,6 @@ export default {
 
   .pricing-table {
     width: calc(100% + -2px);
-  }
-}
-
-@media (max-width: 540px) {
-  .plan-header-wrapper .price-wrapper .main-price {
-    flex-direction: column;
   }
 }
 </style>
