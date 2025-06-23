@@ -4,8 +4,7 @@
     :host="host"
     :discount_code="discount_code"
     :is_customizable="is_customizable"
-    :full_width="full_width"
-    :narrow_width="narrow_width"
+    :width="this.width"
     :enable_feature_tooltip="enable_feature_tooltip"
     @handlePlanSelect="handlePlanSelect"
     @handlePlanBannerClose="handlePlanBannerClose"
@@ -41,13 +40,10 @@ export default {
       type: Boolean,
       default: false
     },
-    full_width: {
-      type: Boolean,
-      default: false
-    },
-    narrow_width: {
-      type: Boolean,
-      default: false
+    width: {
+      type: String,
+      default: 'base',
+      validator: value => ['tight', 'base', 'loose'].includes(value)
     },
     enable_feature_tooltip: {
       type: Boolean,

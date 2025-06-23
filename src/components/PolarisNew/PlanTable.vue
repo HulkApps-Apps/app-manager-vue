@@ -52,10 +52,11 @@ export default {
       required: false,
       default: () => []
     },
-    narrowWidth: {
-      type: Boolean,
+    width: {
+      type: String,
       required: false,
-      default: false,
+      default: 'base',
+      validator: value => ['tight', 'base', 'loose'].includes(value)
     },
     enableFeatureTooltip: {
       type: Boolean,
@@ -375,7 +376,7 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: Math.min(this.monthlyPlans.length, this.narrowWidth ? 2: 3),
+          slidesPerView: Math.min(this.monthlyPlans.length, this.width === 'tight' ? 2 : 3),
         },
       },
       on: {
@@ -406,7 +407,7 @@ export default {
           slidesPerView: 2,
         },
         1024: {
-          slidesPerView: Math.min(this.annualPlans.length, this.narrowWidth ? 2 : 3),
+          slidesPerView: Math.min(this.annualPlans.length, this.width === 'tight' ? 2 : 3),
         },
       },
       on: {

@@ -10,8 +10,9 @@
     <div
       :class="[
         'bill-cycle-select-group',
-        this.full_width ? 'full-width' : '',
-        this.narrow_width ? 'narrow-width' : '',
+        this.width === 'loose' ? 'loose-width' : '',
+        this.width === 'tight' ? 'tight-width' : '',
+        this.width === 'base' ? 'base-width' : '',
       ]"
     >
       <a class="bill-cycle-back" @click="selectPlan('monthly')">
@@ -69,17 +70,20 @@
     <PlanShowcaseBanner
       v-if="bundle_plan"
       :useCardStyle="true"
-      :fullWidth="this.full_width"
-      :narrowWidth="this.narrow_width"
+      :width="this.width"
       :showcaseData="bundle_plan"
       :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)"
       :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"
       :isCurrentPlan="isCurrentPlanId(bundle_plan)"
     />
     <PPage
-      class="app-manager-plan-page-slider custom-title"
-      :full-width="this.full_width"
-      :narrow-width="this.narrow_width"
+      :class="[
+        'app-manager-plan-page-slider',
+        'custom-title',
+        this.width === 'loose' ? 'loose-width' : '',
+        this.width === 'tight' ? 'tight-width' : '',
+        this.width === 'base' ? 'base-width' : '',
+      ]"
     >
       <!-- -------------------- Bundle Plan Banner -------------------- -->
       <!-- <div class="promotional-banner">
@@ -109,7 +113,7 @@
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
             :features="features"
-            :narrowWidth="this.narrow_width"
+            :width="this.width"
             :enableFeatureTooltip="this.enable_feature_tooltip"
             @plan-clicked="handlePlanClicked"
             :class="{ 'hide-all-features': !showPlansFeatures }"
@@ -212,7 +216,7 @@ export default {
     PlanTable,
     BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'full_width', 'narrow_width', 'enable_feature_tooltip'],
+  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'width', 'enable_feature_tooltip'],
   data() {
     return {
       planLoading: false,
@@ -1220,11 +1224,11 @@ button.swiper-pagination-bullet {
   padding: 0 96px;
 }
 
-.bill-cycle-select-group.full-width {
-  max-width: none !important;
+.bill-cycle-select-group.loose-width {
+  max-width: 1600px !important;
 }
 
-.bill-cycle-select-group.narrow-width {
+.bill-cycle-select-group.tight-width {
   max-width: 840px !important;
 }
 
@@ -1300,11 +1304,11 @@ button.swiper-pagination-bullet {
   max-width: 1190px !important;
 }
 
-.app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
-  max-width: none !important;
+.app-manager .app-manager-plan-page-slider.loose-width {
+  max-width: 1600px !important;
 }
 
-.app-manager .app-manager-plan-page-slider.Polaris-Page--narrowWidth {
+.app-manager .app-manager-plan-page-slider.tight-width {
   max-width: 840px !important;
 }
 
@@ -1316,15 +1320,15 @@ button.swiper-pagination-bullet {
 }
 
 @media (max-width: 992px) {
-  .bill-cycle-select-group.full-width,
-  .app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
+  .bill-cycle-select-group.loose-width,
+  .app-manager .app-manager-plan-page-slider.loose-width {
     max-width: none !important;
   }
 }
 
 @media (max-width: 767px) {
-  .bill-cycle-select-group.full-width,
-  .app-manager .app-manager-plan-page-slider.Polaris-Page--fullWidth {
+  .bill-cycle-select-group.loose-width,
+  .app-manager .app-manager-plan-page-slider.loose-width {
     max-width: 100% !important;
   }
   .bill-cycle-select-group {

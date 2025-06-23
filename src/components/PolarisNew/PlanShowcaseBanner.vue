@@ -42,15 +42,11 @@ export default {
       required: false,
       default: false,
     },
-    fullWidth: {
-      type: Boolean,
+    width: {
+      type: String,
       required: false,
-      default: false,
-    },
-    narrowWidth: {
-      type: Boolean,
-      required: false,
-      default: false,
+      default: 'base',
+      validator: value => ['tight', 'base', 'loose'].includes(value)
     },
     bundleApps: {
       type: Number,
@@ -81,8 +77,9 @@ export default {
     <div
       :class="[
         'banner__inner',
-        this.fullWidth ? 'full-width' : '',
-        this.narrowWidth ? 'narrow-width' : '',
+        width === 'loose' ? 'loose-width' : '',
+        width === 'tight' ? 'tight-width' : '',
+        width === 'base' ? 'base-width' : '',
       ]"
     >
       <div v-if="showDescription" class="plan-left">
@@ -159,11 +156,11 @@ export default {
   padding: 0 96px;
 }
 
-.banner__inner.full-width {
-  max-width: none !important;
+.banner__inner.loose-width {
+  max-width: 1600px !important;
 }
 
-.banner__inner.narrow-width {
+.banner__inner.tight-width {
   max-width: 840px !important;
 }
 
@@ -243,7 +240,7 @@ export default {
 
 @media (max-width: 992px) {
 
-  .banner__inner.full-width {
+  .banner__inner.loose-width {
     max-width: none !important;
   }
 
@@ -263,7 +260,7 @@ export default {
   .banner__inner {
     padding: 16px;
   }
-  .banner__inner.full-width {
+  .banner__inner.loose-width {
     max-width: 100%;
   }
   .bundle-plan-showcase-banner {

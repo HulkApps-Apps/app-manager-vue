@@ -40,8 +40,7 @@ Here is a basic explanation of all the props for the `<AppManagerPlan>` componen
 | host           | String  | null      | Shopify host parameter, used for embedded app context.                      |
 | discount_code  | String  | null      | Discount code to apply to plans, if available.                              |
 | is_customizable| Boolean | false     | Allows the user to customize their plan if set to true.                     |
-| full_width     | Boolean | false     | If true, stretches the component to the full width of its container.        |
-| narrow_width   | Boolean | false     | If true, uses a narrower, more compact width.                               |
+| width          | String  | 'base'    | Controls the layout width of the component. Accepted values: 'tight' (max-width: 840px), 'base' (max-width: 1190px, default), 'loose' (max-width: 1600px). |
 | translations   | Object  | { hulkapps: 'hulkapps' } | Object for customizing translation strings.           |
 | enable_feature_tooltip | Boolean | false | If true, shows the feature description as a tooltip for plan features (tap to show/hide on mobile). Tooltip is only shown if the feature has a description. |
 
