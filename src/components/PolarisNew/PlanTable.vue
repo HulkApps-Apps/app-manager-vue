@@ -370,10 +370,10 @@ export default {
       },
       breakpoints: {
         0: {
-          slidesPerView: 1.2,
+          slidesPerView: Math.min(this.monthlyPlans.length, 1.2),
         },
         640: {
-          slidesPerView: 2,
+          slidesPerView: Math.min(this.monthlyPlans.length, 2),
         },
         1024: {
           slidesPerView: Math.min(this.monthlyPlans.length, this.width === 'tight' ? 2 : 3),
@@ -401,10 +401,10 @@ export default {
       },
       breakpoints: {
         0: {
-          slidesPerView: 1.2,
+          slidesPerView: Math.min(this.annualPlans.length, 1.2),
         },
         640: {
-          slidesPerView: 2,
+          slidesPerView: Math.min(this.annualPlans.length, 2),
         },
         1024: {
           slidesPerView: Math.min(this.annualPlans.length, this.width === 'tight' ? 2 : 3),
