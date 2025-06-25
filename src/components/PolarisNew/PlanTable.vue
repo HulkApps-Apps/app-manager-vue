@@ -111,6 +111,11 @@ export default {
             const planNames = document.querySelectorAll(
               `.plan-header-wrapper${planType}`
             );
+            if (planNames) {
+              planNames.forEach((el) => {
+                el.style.minHeight = `unset`;
+              });
+            }
             const plansAvailableName = document.querySelector(
               `.plans-available${planType}`
             );
@@ -514,7 +519,7 @@ export default {
       <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-monthly">
           <h3>
-            {{ monthlyPlans.length }} {{ translateMe("plans available") }}
+            {{ monthlyPlans.length }} {{ monthlyPlans.length > 1 ? translateMe("plans available") : translateMe("plan available") }}
           </h3>
         </div>
         <template v-for="group in monthlyPlansFeatures">
@@ -628,7 +633,7 @@ export default {
     <div class="pricing-table annually-table">
       <div class="pricing-table-inner__left" id="table-left">
         <div class="table-header plans-available plans-available-annually">
-          <h3>{{ annualPlans.length }} {{ translateMe("plans available") }}</h3>
+          <h3>{{ annualPlans.length }} {{ annualPlans.length > 1 ? translateMe("plans available") : translateMe("plan available") }}</h3>
         </div>
         <template v-for="group in annualPlansFeatures">
           <div v-if="group.name" class="feature-group-header plan-feature-name plan-feature-name-annually">
@@ -844,7 +849,7 @@ export default {
 .plan-header-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
   background-color: #f1f1f1;
@@ -875,6 +880,7 @@ export default {
 }
 
 .plan-header-wrapper .price-wrapper .strike-price {
+  color: #4A4A4A;
   text-decoration: line-through;
 }
 
