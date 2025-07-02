@@ -43,7 +43,7 @@ export default {
 .category-heading {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: flex-start;
   gap: 4px;
 }
 .category-name {
@@ -57,5 +57,10 @@ export default {
   font-weight: 450;
   font-variation-settings: "slnt" 0;
   color: #1A1A1A;
+}
+@media (max-width: 640px) {
+  .category-heading {
+    padding-left: 16px;
+  }
 }
 </style>
