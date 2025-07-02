@@ -997,6 +997,11 @@ export default {
 }
 
 .feature-group-header.plan-feature-name {
+  font-size: 14px !important;
+  padding-left: 12px !important;
+}
+
+.feature-group-header.plan-feature {
   font-size: 0 !important;
 }
 
