@@ -48,9 +48,9 @@ export default {
       <h3>{{ translateMe("Bundle") }}</h3>
       <div class="bundle-price-wrapper">
         <div style="display: flex; align-items: center; gap: 4px">
-          <h2>${{ plan.price - plan.discount }}</h2>
+          <h2>${{ Number(plan.price - plan.discount).toFixed(2) }}</h2>
           <span class="mo-label">/{{ translateMe("mo") }}</span>
-          <h4>${{ plan.price }}</h4>
+          <h4>${{ Number(plan.price).toFixed(2) }}</h4>
         </div>
         <span class="apps-count">{{ allApps.length }} {{ translateMe("Apps") }}</span>
       </div>

@@ -98,10 +98,10 @@ export default {
         <div class="plan-content">
           <h3 class="plan-name">{{ translateMe("Monthly bundle") }}:</h3>
           <div class="prices">
-            <span class="discounted-amount">${{ translateMe(realPrice) }}</span>
-            <span class="original-amount" v-if="realPrice < oldPrice"
-            >${{ translateMe(oldPrice) }}</span
-            >
+            <span class="discounted-amount">${{ translateMe(Number(realPrice).toFixed(2)) }}</span>
+            <span class="original-amount" v-if="realPrice < oldPrice">
+              ${{ translateMe(Number(oldPrice).toFixed(2)) }}
+            </span>
           </div>
         </div>
         <VariantButton
