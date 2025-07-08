@@ -670,8 +670,8 @@ export default {
                   anyAnnuallyPlanHasDiscount ? 'has-discount' : ''
                 ]"
               >
+                <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                 <template v-if="plan.strike_price">
-                  <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                   <h5>
                     <span class="strike-price">${{ Number(plan.strike_price).toFixed(2) }}</span>
                     <span class="plan-interval" v-if="plan.strike_price !== 0">/{{ translateMe("yr") }}</span>
@@ -1010,7 +1010,6 @@ export default {
   font-weight: 600;
   background-color: #f5f5f5;
   color: #1A1A1A;
-  max-height: 30px;
   padding: 5px !important;
   border-bottom: 1px solid #e3e3e3;
   border-left: 1px solid #e3e3e3;

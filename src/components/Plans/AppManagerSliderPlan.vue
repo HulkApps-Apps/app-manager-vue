@@ -62,7 +62,7 @@
         {{ translateMe('App bundle plan') }}
         -
         <strong style="white-space: pre; font-weight: 900; display: inline-flex; gap: 3px; margin-left: 4px;">
-          <span>{{ translateMe('70%') }}</span>
+          <span>{{ translateMe(Math.floor((Number(bundle_plan.discount * 100) / bundle_plan.price) / 10) * 10) }}%</span>
           <span>{{ translateMe('Off') }}</span>
         </strong>
       </ToggleButton>
