@@ -432,8 +432,19 @@ export default {
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
             >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
-            </VariantButton
+            </VariantButton>
+            <h6
+              class="trial_days"
+              :style="{
+                visibility:
+                  plan.trial_days > 0
+                  && selectedInterval === 'monthly'
+                    ? 'visible'
+                    : 'hidden',
+              }"
             >
+              {{plan.trial_days + translateMe("-") + translateMe("day free trial") }}
+            </h6>
             <div class="features">
               <ul>
                 <li
@@ -539,8 +550,19 @@ export default {
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
             >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
-            </VariantButton
+            </VariantButton>
+            <h6
+              class="trial_days"
+              :style="{
+                visibility:
+                  plan.trial_days > 0
+                  && selectedInterval === 'annually'
+                    ? 'visible'
+                    : 'hidden',
+              }"
             >
+              {{plan.trial_days + translateMe("-") + translateMe("day free trial") }}
+            </h6>
             <div class="features">
               <ul>
                 <li
@@ -665,6 +687,7 @@ export default {
   line-height: 0;
 }
 
+.card .trial_days,
 .card .description {
   font-size: 13px;
   font-weight: 400;

@@ -53,7 +53,8 @@
           </strong>
         </SelectButton>
       </div>
-      <ToggleButton
+      <!-- -------------------- Bundle Plan Toggle -------------------- -->
+      <!-- <ToggleButton
         id="pricing-tab"
         v-if="bundle_plan !== null"
         :toggled="selectedPlan === 'bundle'"
@@ -65,7 +66,7 @@
           <span>{{ translateMe(Math.floor((Number(bundle_plan.discount * 100) / bundle_plan.price) / 10) * 10) }}%</span>
           <span>{{ translateMe('Off') }}</span>
         </strong>
-      </ToggleButton>
+      </ToggleButton> -->
     </div>
     <PlanShowcaseBanner
       v-if="bundle_plan"
@@ -136,12 +137,13 @@
             :buttonText="translateMe('Get customization now')"
             style="flex-basis: 30%; flex-grow: 1;"
           /> -->
-          <BundlePlanCard
+          <!-- -------------------- Bundle Block -------------------- -->
+          <!-- <BundlePlanCard
             v-if="bundle_plan"
             :plan="bundle_plan"
             :plan_details="bundle_details"
             @plan-clicked="selectPlan"
-          />
+          /> -->
         </div>
         <CustomizationModal
           :visible="this.showCustomizationModal"
