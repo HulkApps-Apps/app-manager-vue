@@ -408,6 +408,12 @@ export default {
         this.plans = data.plans;
         this.plans = this.plans?.sort((planA, planB) => parseFloat(planA.price) - parseFloat(planB.price));
 
+        if (this.plans?.length > 0 && data.most_popular_plan_ids?.length > 0) {
+          this.plans.forEach(plan => {
+            plan.most_popular = data.most_popular_plan_ids.includes(plan.id);
+          });
+        }
+
         if (this.plans[0].store_base_plan) {
           this.subtitleContent = this.translateMe('App plans are based on your existing shopify plan');
         }
