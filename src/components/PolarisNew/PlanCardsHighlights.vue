@@ -406,7 +406,7 @@ export default {
               index === (monthlyPlans.length - 1) ? 'last-card' : '',
             ]"
           >
-            <div class="most-popular" v-if="plan.choose_later_plan">
+            <div class="most-popular" v-if="plan.most_popular">
               <div class="most-popular-label">
                 {{ translateMe("Most popular") }}
               </div>
@@ -537,7 +537,7 @@ export default {
               index === (annualPlans.length - 1) ? 'last-card' : '',
             ]"
           >
-            <div class="most-popular" v-if="plan.choose_later_plan">
+            <div class="most-popular" v-if="plan.most_popular">
               <div class="most-popular-label">
                 {{ translateMe("Most popular") }}
               </div>
