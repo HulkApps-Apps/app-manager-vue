@@ -1,7 +1,7 @@
 <script>
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
-import {calculatePlanPriceWithDiscounts, isPlanButtonDisabled, formatFeature, getPlanButtonText} from "@/helpers";
+import {calculatePlanPriceWithDiscounts, isPlanButtonDisabled, formatFeature, getPlanButtonText, isPlanNote} from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -15,6 +15,10 @@ export default {
     },
     currentPlan: {
       type: Object,
+      required: false,
+    },
+    hasActiveCharge: {
+      type: Boolean,
       required: false,
     },
     shopifyPlan: {
@@ -51,6 +55,8 @@ export default {
       },
       anyMonthlyPlanHasDiscount: false,
       anyAnnuallyPlanHasDiscount: false,
+      anyMonthlyPlanHasNote: false,
+      anyAnnuallyPlanHasNote: false,
       loadingPlanId: null
     };
   },
@@ -63,6 +69,13 @@ export default {
           if (planDetails.has_discount && !this.anyMonthlyPlanHasDiscount) {
             this.anyMonthlyPlanHasDiscount = true;
           }
+          if (
+            plan.store_base_plan
+            && this.anyMonthlyPlanHasNote === false
+            && isPlanNote(this.shopifyPlan, plan, this.currentPlan, this.hasActiveCharge)
+          ) {
+            this.anyMonthlyPlanHasNote = true;
+          }
           return planDetails;
         });
     },
@@ -73,6 +86,13 @@ export default {
           const planDetails = calculatePlanPriceWithDiscounts(plan, this.promotionalDiscount);
           if (planDetails.has_discount && !this.anyAnnuallyPlanHasDiscount) {
             this.anyAnnuallyPlanHasDiscount = true;
+          }
+          if (
+            plan.store_base_plan
+            && this.anyAnnuallyPlanHasNote === false
+            && isPlanNote(this.shopifyPlan, plan, this.currentPlan, this.hasActiveCharge)
+          ) {
+            this.anyAnnuallyPlanHasNote = true;
           }
           return planDetails;
         });
@@ -113,6 +133,7 @@ export default {
   },
   methods: {
     getPlanButtonText,
+    isPlanNote,
     isPlanButtonDisabled,
     formatFeature,
     async handlePlanClick(plan) {
@@ -428,10 +449,10 @@ export default {
             </h6>
             <VariantButton
                 :variant="'secondary'"
-                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan, hasActiveCharge)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
-            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
+            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, false, hasActiveCharge) }}
             </VariantButton>
             <h6
               class="trial_days"
@@ -474,6 +495,19 @@ export default {
                 </li>
               </ul>
             </div>
+            <p
+              class="plan-note"
+              v-if="anyMonthlyPlanHasNote"
+              :style="{
+                visibility:
+                  selectedInterval === 'monthly'
+                  && isPlanNote(shopifyPlan, plan, currentPlan, hasActiveCharge)
+                    ? 'visible'
+                    : 'hidden',
+              }"
+            >
+              {{ translateMe('Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan') }}
+            </p>
           </div>
         </div>
       </div>
@@ -546,10 +580,10 @@ export default {
             </h6>
             <VariantButton
                 :variant="'secondary'"
-                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan, hasActiveCharge)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
-            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan) }}
+            >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, false, hasActiveCharge) }}
             </VariantButton>
             <h6
               class="trial_days"
@@ -592,6 +626,19 @@ export default {
                 </li>
               </ul>
             </div>
+            <p
+              class="plan-note"
+              v-if="anyAnnuallyPlanHasNote"
+              :style="{
+                visibility:
+                  selectedInterval === 'annually'
+                  && isPlanNote(shopifyPlan, plan, currentPlan, hasActiveCharge)
+                    ? 'visible'
+                    : 'hidden',
+              }"
+            >
+              {{ translateMe('Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan') }}
+            </p>
           </div>
         </div>
       </div>
@@ -688,10 +735,16 @@ export default {
 }
 
 .card .trial_days,
-.card .description {
+.card .description,
+.card .plan-note {
   font-size: 13px;
   font-weight: 400;
   color: #4A4A4A;
+}
+
+.card .plan-note {
+  margin-top: 8px;
+  text-align: center;
 }
 
 .button {

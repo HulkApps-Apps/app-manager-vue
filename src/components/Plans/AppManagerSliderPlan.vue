@@ -98,6 +98,7 @@
           :plans="plans"
           :features="features"
           :currentPlan="plan"
+          :hasActiveCharge="has_active_charge"
           :shopifyPlan="shopify_plan"
           :promotionalDiscount="promotional_discount"
           :selectedInterval="selectedPlan"
@@ -110,6 +111,7 @@
           <PlanTable
             :plans="plans"
             :currentPlan="plan"
+            :hasActiveCharge="has_active_charge"
             :shopifyPlan="shopify_plan"
             :promotionalDiscount="promotional_discount"
             :selectedInterval="selectedPlan"
@@ -190,7 +192,7 @@ import GetCustomBlock from "../PolarisNew/GetCustomBlock.vue";
 import PlanTable from "../PolarisNew/PlanTable.vue";
 import BundlePlanCard from "../PolarisNew/BundlePlanCard.vue";
 import CustomizationModal from "@/components/PolarisNew/CustomizationModal.vue";
-import { calculatePlanPriceWithDiscounts } from "@/helpers";
+import {calculatePlanPriceWithDiscounts} from "@/helpers";
 import PlanBanners from "@/components/Plans/PlanBanners.vue";
 
 export default {

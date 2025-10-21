@@ -35,6 +35,10 @@ export default {
       type: Object,
       required: false,
     },
+    hasActiveCharge: {
+      type: Boolean,
+      required: false,
+    },
     shopifyPlan: {
       type: String,
       required: false,
@@ -574,11 +578,11 @@ export default {
               </div>
               <VariantButton
                 :variant="'secondary'"
-                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan, hasActiveCharge)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
                 class="button"
-              >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, true) }}</VariantButton>
+              >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, true, hasActiveCharge) }}</VariantButton>
             </div>
             <template v-for="group in monthlyPlansFeatures">
               <div v-if="group.name" class="feature-group-header plan-feature plan-feature-monthly">
@@ -687,11 +691,11 @@ export default {
               </div>
               <VariantButton
                 :variant="'secondary'"
-                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan)"
+                :disabled="isPlanButtonDisabled(shopifyPlan, plan, currentPlan, hasActiveCharge)"
                 :loading="loadingPlanId === plan.id"
                 @click="handlePlanClick(plan)"
                 class="button"
-              >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, true) }}</VariantButton>
+              >{{ getPlanButtonText(shopifyPlan, plan, translateMe, currentPlan, true, hasActiveCharge) }}</VariantButton>
             </div>
             <template v-for="group in annualPlansFeatures">
               <div v-if="group.name" class="feature-group-header plan-feature plan-feature-annually">
