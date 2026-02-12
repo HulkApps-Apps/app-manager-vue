@@ -105,7 +105,17 @@ export default {
               featureNames.forEach((featureName, index) => {
                 const feature = features[index];
                 if (featureName && feature) {
-                  feature.style.height = `${featureName.offsetHeight}px`;
+                  featureName.style.height = 'auto';
+                  feature.style.height = 'auto';
+
+                  let measured = featureName.getBoundingClientRect().height;
+                  if (!measured || measured <= 0) {
+                    measured = featureName.offsetHeight;
+                  }
+
+                  const intHeight = Math.ceil(measured);
+                  featureName.style.height = `${intHeight}px`;
+                  feature.style.height = `${intHeight}px`;
                 }
               });
             });
@@ -128,10 +138,12 @@ export default {
             slides.forEach((slide, index) => {
               const planName = planNames[index];
               if (planName) {
-                planNameHeight = Math.max(
-                  planName.offsetHeight,
-                  planNameHeight
-                );
+                let measured = planName.getBoundingClientRect().height;
+                if (!measured || measured <= 0) {
+                  measured = planName.offsetHeight;
+                }
+                const intMeasured = Math.ceil(measured);
+                planNameHeight = Math.max(planNameHeight, intMeasured);
               }
             });
             // Set the minHeight for the plans available name
@@ -838,8 +850,8 @@ export default {
   padding: 12px;
   border-bottom: 1px solid #e3e3e3;
   border-left: 1px solid #e3e3e3;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+/*  word-wrap: break-word;
+  overflow-wrap: break-word;*/
   word-break: normal;
   hyphens: none;
 }
@@ -1049,6 +1061,12 @@ export default {
 
   .pricing-table {
     width: calc(100% + -2px);
+  }
+}
+
+@media (max-width: 400px) {
+  .plan-feature-name {
+    padding: 12px 4px;
   }
 }
 </style>
