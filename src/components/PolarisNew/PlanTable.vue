@@ -115,7 +115,9 @@ export default {
 
                   const intHeight = Math.ceil(measured);
                   featureName.style.height = `${intHeight}px`;
+                  featureName.style.minHeight = `${intHeight}px`;
                   feature.style.height = `${intHeight}px`;
+                  feature.style.minHeight = `${intHeight}px`;
                 }
               });
             });
