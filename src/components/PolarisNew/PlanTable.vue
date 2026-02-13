@@ -123,9 +123,8 @@ export default {
                     measured = featureName.offsetHeight;
                   }
 
-                  const intHeight = Math.ceil(measured);
-                  featureName.style.height = `${intHeight}px`;
-                  feature.style.height = `${intHeight}px`;
+                  featureName.style.height = `${measured}px`;
+                  feature.style.height = `${measured}px`;
                 }
               });
             });
@@ -153,8 +152,7 @@ export default {
                 if (!measured || measured <= 0) {
                   measured = planName.offsetHeight;
                 }
-                const intMeasured = Math.ceil(measured);
-                planNameHeight = Math.max(planNameHeight, intMeasured);
+                planNameHeight = Math.max(planNameHeight, measured);
               }
             });
             // Set the minHeight for the plans available name
@@ -849,6 +847,7 @@ export default {
   justify-content: center;
   border-bottom: 1px solid #e3e3e3;
   border-left: 1px solid #e3e3e3;
+  line-height: 20px;
 }
 
 .last-slide .plan-feature {
@@ -857,6 +856,7 @@ export default {
 
 .plan-feature-name {
   font-size: 13px;
+  line-height: 20px;
   font-weight: 450;
   padding: 12px;
   border-bottom: 1px solid #e3e3e3;
