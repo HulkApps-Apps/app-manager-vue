@@ -98,15 +98,25 @@ export default {
             const featureNames = document.querySelectorAll(
               `.plan-feature-name${featureType}`
             );
+
+            // Reset any previously-set inline heights/minHeights so measurements reflect natural content
+            featureNames.forEach((fn) => {
+              fn.style.height = "";
+              fn.style.minHeight = "";
+            });
             slides.forEach((slide) => {
               const features = slide.querySelectorAll(
                 `.plan-feature${featureType}`
               );
+              // Reset feature cells in this slide before measuring
+              features.forEach((f) => {
+                f.style.height = "";
+                f.style.minHeight = "";
+              });
+
               featureNames.forEach((featureName, index) => {
                 const feature = features[index];
                 if (featureName && feature) {
-                  featureName.style.height = 'auto';
-                  feature.style.height = 'auto';
 
                   let measured = featureName.getBoundingClientRect().height;
                   if (!measured || measured <= 0) {
@@ -115,9 +125,7 @@ export default {
 
                   const intHeight = Math.ceil(measured);
                   featureName.style.height = `${intHeight}px`;
-                  featureName.style.minHeight = `${intHeight}px`;
                   feature.style.height = `${intHeight}px`;
-                  feature.style.minHeight = `${intHeight}px`;
                 }
               });
             });
@@ -129,7 +137,8 @@ export default {
             );
             if (planNames) {
               planNames.forEach((el) => {
-                el.style.minHeight = `unset`;
+                el.style.minHeight = "";
+                el.style.height = "";
               });
             }
             const plansAvailableName = document.querySelector(

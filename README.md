@@ -2,6 +2,12 @@
 
 [//]: # (This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.)
 
+> Note about translations
+>
+> This package does not manage, store, or ship translations itself — it only uses the translation data you provide when rendering components (for example via the `translations` prop). Always pass the correct translations for the language/context you need. The package will not automatically translate or fetch missing keys for you.
+>
+> Here is the list of all translation keys used in this package — when upgrading the package, make sure any new or missing keys are added to your translations and passed into the components via the `translations` prop.
+
 ## Installation
 
 You can install the package via npm:
@@ -96,28 +102,11 @@ handleBannerClose(payload) {
 }
 ```
 
-## Extracting Translation Keys
+## Translation Keys
 
-You can extract all translation keys used in this package by running:
+This package does not manage, store, or generate translations. It strictly renders the translation data supplied to it. Components expect a complete translation object to be provided via the `translations` prop. The package does not perform automatic localization or resolve missing translation keys.
 
-```bash
-cd node_modules/@hulkapps/app-manager-vue
-```
-```bash
-node extract-translation-keys.js
-```
-
-If your package is located elsewhere, replace the path with the actual location, for example:
-
-```bash
-cd path-to-package
-```
-```bash
-node extract-translation-keys.js
-```
-
-This will scan all `.js` and `.vue` files within the `src` directory of this package for usages of `translateMe('...')` and output a JSON array of unique translation keys to the console.
-
+The [complete list of predefined translation keys](https://docs.google.com/spreadsheets/d/1oO6UE07fPexHEauxMN0VE9ZiYU-GOctlSJf0-B5z2GY) referenced by this package is available here. The list includes only the static keys used internally by the components and does not cover dynamic or app-specific content such as plan names, feature labels, trial durations, pricing text, or plan descriptions. Those values should also be provided through the same `translations` prop, alongside the predefined keys, to ensure correct rendering.
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
