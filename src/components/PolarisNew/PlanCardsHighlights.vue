@@ -742,6 +742,10 @@ export default {
   color: #4A4A4A;
 }
 
+.card .description {
+  text-align: center;
+}
+
 .card .plan-note {
   margin-top: 8px;
   text-align: center;
