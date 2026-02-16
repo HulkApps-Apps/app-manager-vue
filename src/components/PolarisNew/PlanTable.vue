@@ -920,6 +920,7 @@ export default {
   display: inline-flex;
   text-align: center;
   font-size: 16px;
+  line-height: 20px;
   font-weight: 700;
   color: #1A1A1A;
   width: max-content;
@@ -940,6 +941,10 @@ export default {
   color: #00000080;
   margin-left: -4px;
   line-height: 0;
+}
+
+.plan-header-wrapper .price-wrapper h5 {
+  line-height: 20px;
 }
 
 .swiper-plan-navigation {
