@@ -1077,7 +1077,7 @@ export default {
 
   .pricing-table {
     width: calc(100% + -2px);
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .pricing-table-inner__left {
@@ -1085,7 +1085,7 @@ export default {
   }
 
   .plans {
-    grid-column: span 3;
+    grid-column: span 2;
   }
 }
 
