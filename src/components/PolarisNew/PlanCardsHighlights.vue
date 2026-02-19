@@ -742,6 +742,7 @@ export default {
   color: #4A4A4A;
 }
 
+.card .trial_days,
 .card .description {
   text-align: center;
 }
