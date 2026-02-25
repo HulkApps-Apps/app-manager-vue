@@ -441,6 +441,7 @@ export default {
                 visibility:
                   plan.description
                   && selectedInterval === 'monthly'
+                  && plan.is_custom === false
                     ? 'visible'
                     : 'hidden',
               }"
@@ -572,6 +573,7 @@ export default {
                 visibility:
                   plan.description
                   && selectedInterval === 'annually'
+                  && plan.is_custom === false
                     ? 'visible'
                     : 'hidden',
               }"
@@ -742,8 +744,10 @@ export default {
   color: #4A4A4A;
 }
 
+.card .trial_days,
 .card .description {
   text-align: center;
+  text-transform: unset;
 }
 
 .card .plan-note {
