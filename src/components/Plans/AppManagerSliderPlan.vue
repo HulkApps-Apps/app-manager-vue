@@ -1122,6 +1122,13 @@ button.swiper-pagination-bullet {
   overflow: hidden;
 }
 
+.app-manager-wrapper,
+.app-manager-wrapper *,
+.app-manager-wrapper *::before,
+.app-manager-wrapper *::after {
+  box-sizing: border-box !important;
+}
+
 .app-manager .app-manager-wrapper {
   padding-top: 16px;
 }
