@@ -1056,6 +1056,12 @@ export default {
   border-right: 1px solid #e3e3e3;
 }
 
+#table-left,
+#plans-table {
+  overflow: auto !important;
+  overscroll-behavior: none !important;
+}
+
 @media (max-width: 1024px) {
   .plan-header-wrapper .price-wrapper .mobile-plan-name {
     display: inline-block;
