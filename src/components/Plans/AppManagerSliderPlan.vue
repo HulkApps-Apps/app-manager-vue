@@ -396,6 +396,9 @@ export default {
       if (this.discount_code !== null) {
         params['discount_code'] = this.discount_code;
       }
+      if (window && window.APP_MANAGER_FRONTEND_SDK_VERSION !== undefined) {
+        params['frontend_sdk_version'] = window.APP_MANAGER_FRONTEND_SDK_VERSION
+      }
       let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, {params: params}).catch(error => {
         console.error(error)
       });

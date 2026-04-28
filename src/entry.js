@@ -10,4 +10,9 @@ Object.entries(components).forEach(([componentName, component]) => {
   }
 });
 
+export const SDK_VERSION = "3.1.18";
+if (typeof window !== 'undefined') {
+  window.APP_MANAGER_SDK_VERSION = SDK_VERSION;
+}
+
 export default plugin;
