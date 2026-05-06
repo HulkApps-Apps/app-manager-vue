@@ -97,33 +97,6 @@ export default {
           return planDetails;
         });
     },
-    sortedPlanFeatures() {
-      return (plan) => {
-        const assignedFeatures = Object.keys(plan.features);
-        
-        return this.features
-          .filter(feature =>
-            assignedFeatures.includes(feature.uuid) && !feature.hidden_feature
-          )
-          .sort((a, b) => {
-            // First check popularity field
-            const popularityA = parseInt(a.popularity) || 999;
-            const popularityB = parseInt(b.popularity) || 999;
-            
-            if (popularityA !== popularityB) {
-              return popularityA - popularityB; // Lower popularity number first (1 is highest)
-            }
-            
-            // If popularity is same or not present, use display_order
-            return (parseInt(a.display_order) || 999) - (parseInt(b.display_order) || 999);
-          })
-          .slice(0, 4)
-          .map(feature => ({
-            ...feature,
-            value: plan.features[feature.uuid].value || plan.features[feature.uuid]
-          }));
-      };
-    },
     isMonthlyVisible() {
       return this.selectedInterval === "monthly";
     },
@@ -136,6 +109,49 @@ export default {
     isPlanNote,
     isPlanButtonDisabled,
     formatFeature,
+    normalizeSortOrder(value, fallback = 999) {
+      const normalized = Number(value);
+      return Number.isNaN(normalized) ? fallback : normalized;
+    },
+    getSortedPlanHighlights(plan) {
+      return Object.values(plan.highlights || {})
+        .sort((a, b) => this.normalizeSortOrder(a.sort_order) - this.normalizeSortOrder(b.sort_order))
+        .map((highlight) => ({
+          plan_id: highlight.plan_id,
+          feature_id: `highlight_${highlight.id}`,
+          uuid: `highlight_${highlight.id}`,
+          value: "1",
+          value_type: "boolean",
+          name: highlight.text,
+          format: null,
+          slug: `highlight_${highlight.id}`,
+        }));
+    },
+    getSortedPlanFeatures(plan) {
+      const assignedFeatureUuids = new Set(Object.keys(plan.features || {}));
+
+      return this.features
+        .filter((feature) => assignedFeatureUuids.has(feature.uuid) && !feature.hidden_feature)
+        .sort((a, b) => {
+          const popularityA = this.normalizeSortOrder(a.popularity);
+          const popularityB = this.normalizeSortOrder(b.popularity);
+
+          if (popularityA !== popularityB) {
+            return popularityA - popularityB;
+          }
+
+          return this.normalizeSortOrder(a.display_order) - this.normalizeSortOrder(b.display_order);
+        })
+        .map((feature) => ({
+          ...feature,
+          value: plan.features[feature.uuid]?.value ?? plan.features[feature.uuid],
+        }));
+    },
+    preparePlanFeatures(plan) {
+      const highlights = this.getSortedPlanHighlights(plan);
+      const features = this.getSortedPlanFeatures(plan);
+      return [...highlights, ...features].slice(0, 4);
+    },
     async handlePlanClick(plan) {
       this.loadingPlanId = plan.id;
       try {
@@ -471,7 +487,7 @@ export default {
               <ul>
                 <li
                   class="feature"
-                  v-for="feature in sortedPlanFeatures(plan)"
+                  v-for="feature in preparePlanFeatures(plan)"
                   :key="feature.uuid"
                 >
                   <svg
@@ -603,7 +619,7 @@ export default {
               <ul>
                 <li
                   class="feature"
-                  v-for="feature in sortedPlanFeatures(plan)"
+                  v-for="feature in preparePlanFeatures(plan)"
                   :key="feature.uuid"
                 >
                   <svg
