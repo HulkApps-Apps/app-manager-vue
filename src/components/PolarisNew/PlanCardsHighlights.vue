@@ -1,7 +1,7 @@
 <script>
 import VariantButton from "./VariantButton";
 import Swiper, {Navigation, Pagination} from "swiper";
-import {calculatePlanPriceWithDiscounts, isPlanButtonDisabled, formatFeature, getPlanButtonText, isPlanNote} from "@/helpers";
+import {calculatePlanPriceWithDiscounts, isPlanButtonDisabled, formatFeature, getPlanButtonText, isPlanNote, isPublicPlan} from "@/helpers";
 
 export default {
   name: "PlanCardsHighlights",
@@ -105,6 +105,7 @@ export default {
     }
   },
   methods: {
+    isPublicPlan,
     getPlanButtonText,
     isPlanNote,
     isPlanButtonDisabled,
@@ -462,7 +463,7 @@ export default {
                 visibility:
                   plan.description
                   && selectedInterval === 'monthly'
-                  && plan.is_custom === false
+                  && isPublicPlan(plan)
                     ? 'visible'
                     : 'hidden',
               }"
@@ -594,7 +595,7 @@ export default {
                 visibility:
                   plan.description
                   && selectedInterval === 'annually'
-                  && plan.is_custom === false
+                  && isPublicPlan(plan)
                     ? 'visible'
                     : 'hidden',
               }"
