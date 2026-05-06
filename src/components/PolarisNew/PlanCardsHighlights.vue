@@ -142,10 +142,15 @@ export default {
 
           return this.normalizeSortOrder(a.display_order) - this.normalizeSortOrder(b.display_order);
         })
-        .map((feature) => ({
-          ...feature,
-          value: plan.features[feature.uuid]?.value ?? plan.features[feature.uuid],
-        }));
+        .map((feature) => {
+          const assignedFeature = plan.features[feature.uuid];
+          return {
+            ...feature,
+            value: assignedFeature && assignedFeature.value !== undefined
+              ? assignedFeature.value
+              : assignedFeature,
+          };
+        });
     },
     preparePlanFeatures(plan) {
       const highlights = this.getSortedPlanHighlights(plan);
