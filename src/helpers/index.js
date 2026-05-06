@@ -5,13 +5,15 @@
  * @returns {Object} - Plan object with calculated price details
  */
 export const calculatePlanPriceWithDiscounts = (plan, promotionalDiscount = null) => {
-  const originalPrice = plan.price;
+  const normalizedOriginalPrice = Number(plan && plan.price);
+  const originalPrice = Number.isFinite(normalizedOriginalPrice) ? normalizedOriginalPrice : 0;
   let finalPrice = originalPrice;
   let hasDiscount = false;
 
   // Apply promotional discount if available
   if (
       promotionalDiscount?.value > 0
+      && Array.isArray(promotionalDiscount.plan_relation)
       && promotionalDiscount.plan_relation.includes(plan.id)
   ) {
     hasDiscount = true;
@@ -20,7 +22,7 @@ export const calculatePlanPriceWithDiscounts = (plan, promotionalDiscount = null
       : Math.max(0, originalPrice - promotionalDiscount.value);
 
   // Otherwise, apply plan's own discount
-  } else if (plan.discount > 0) {
+  } else if ((Number(plan.discount) || 0) > 0) {
     hasDiscount = true;
     finalPrice = plan.discount_type === 'percentage'
       ? originalPrice - (originalPrice * plan.discount) / 100
@@ -136,4 +138,8 @@ export const isPlanNote = function(shopifyPlan, plan, currentPlan, hasActiveChar
     && plan.shopify_plans.includes(shopifyPlan)
     && !isCurrentPlan(plan, currentPlan, hasActiveCharge)
     && !isSamePlanInOtherInterval(shopifyPlan, plan, currentPlan));
+}
+
+export const isPublicPlan = function(plan) {
+  return plan.public === true || plan.public === 'true' || plan.public === 1 || plan.public === '1';
 }

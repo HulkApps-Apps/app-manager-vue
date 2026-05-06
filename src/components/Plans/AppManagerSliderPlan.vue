@@ -68,7 +68,8 @@
         </strong>
       </ToggleButton> -->
     </div>
-    <PlanShowcaseBanner
+    <!-- -------------------- Bundle Plan Banner -------------------- -->
+    <!-- <PlanShowcaseBanner
       v-if="bundle_plan"
       :useCardStyle="true"
       :width="this.width"
@@ -76,7 +77,7 @@
       :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)"
       :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"
       :isCurrentPlan="isCurrentPlanId(bundle_plan)"
-    />
+    /> -->
     <PPage
       :class="[
         'app-manager-plan-page-slider',
@@ -396,7 +397,7 @@ export default {
       if (this.discount_code !== null) {
         params['discount_code'] = this.discount_code;
       }
-      params['frontend_sdk_version'] = "3.1.21"
+      params['frontend_sdk_version'] = "3.1.22"
       let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plans`, {params: params}).catch(error => {
         console.error(error)
       });
