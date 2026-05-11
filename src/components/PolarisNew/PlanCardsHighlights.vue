@@ -57,11 +57,17 @@ export default {
       anyAnnuallyPlanHasDiscount: false,
       anyMonthlyPlanHasNote: false,
       anyAnnuallyPlanHasNote: false,
+      anyMonthlyPlanHasDetail: false,
+      anyAnnuallyPlanHasDetail: false,
       loadingPlanId: null
     };
   },
   computed: {
     monthlyPlans() {
+      this.anyMonthlyPlanHasDiscount = false;
+      this.anyMonthlyPlanHasNote = false;
+      this.anyMonthlyPlanHasDetail = false;
+
       return this.plans
         .filter(plan => plan.interval === "EVERY_30_DAYS")
         .map(plan => {
@@ -76,10 +82,17 @@ export default {
           ) {
             this.anyMonthlyPlanHasNote = true;
           }
+          if (this.getSortedPlanDetails(plan).length > 0 && this.anyMonthlyPlanHasDetail === false) {
+            this.anyMonthlyPlanHasDetail = true;
+          }
           return planDetails;
         });
     },
     annualPlans() {
+      this.anyAnnuallyPlanHasDiscount = false;
+      this.anyAnnuallyPlanHasNote = false;
+      this.anyAnnuallyPlanHasDetail = false;
+
       return this.plans
         .filter(plan => plan.interval === "ANNUAL")
         .map(plan => {
@@ -93,6 +106,9 @@ export default {
             && isPlanNote(this.shopifyPlan, plan, this.currentPlan, this.hasActiveCharge)
           ) {
             this.anyAnnuallyPlanHasNote = true;
+          }
+          if (this.getSortedPlanDetails(plan).length > 0 && this.anyAnnuallyPlanHasDetail === false) {
+            this.anyAnnuallyPlanHasDetail = true;
           }
           return planDetails;
         });
@@ -115,7 +131,8 @@ export default {
       return Number.isNaN(normalized) ? fallback : normalized;
     },
     getSortedPlanHighlights(plan) {
-      return Object.values(plan.highlights || {})
+      return Object.values(plan.details || {})
+        .filter((highlight) => highlight.type === "highlight")
         .sort((a, b) => this.normalizeSortOrder(a.sort_order) - this.normalizeSortOrder(b.sort_order))
         .map((highlight) => ({
           plan_id: highlight.plan_id,
@@ -127,6 +144,33 @@ export default {
           format: null,
           slug: `highlight_${highlight.id}`,
         }));
+    },
+    getSortedPlanDetails(plan) {
+      return Object.values(plan.details || {})
+        .filter((detail) => detail.type === "detail")
+        .sort((a, b) => this.normalizeSortOrder(a.sort_order) - this.normalizeSortOrder(b.sort_order))
+        .map((detail) => ({
+          plan_id: detail.plan_id,
+          feature_id: `detail_${detail.id}`,
+          uuid: `detail_${detail.id}`,
+          value: "1",
+          value_type: "boolean",
+          name: detail.text,
+          format: null,
+          slug: `detail_${detail.id}`,
+        }));
+    },
+    getPrimaryPlanDetail(plan) {
+      const details = this.getSortedPlanDetails(plan);
+      return details.length ? details[0] : null;
+    },
+    getAdditionalPlanDetails(plan) {
+      const details = this.getSortedPlanDetails(plan);
+      if (details.length <= 1) {
+        return [];
+      }
+
+      return details.slice(1);
     },
     getSortedPlanFeatures(plan) {
       const assignedFeatureUuids = new Set(Object.keys(plan.features || {}));
@@ -531,6 +575,37 @@ export default {
             >
               {{ translateMe('Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan') }}
             </p>
+            <h6
+              class="plan-detail"
+              v-if="anyMonthlyPlanHasDetail"
+              :style="{
+                visibility:
+                  selectedInterval === 'monthly' && getPrimaryPlanDetail(plan)
+                    ? 'visible'
+                    : 'hidden',
+              }"
+            >
+              <span>
+                {{ getPrimaryPlanDetail(plan) ? translateMe(getPrimaryPlanDetail(plan).name) : '' }}
+                <span
+                  v-if="getAdditionalPlanDetails(plan).length"
+                  class="plan-detail-tooltip-wrapper"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Show more plan details"
+                >
+                  <span class="plan-detail-info">i</span>
+                  <span class="plan-detail-tooltip">
+                    <span
+                      v-for="(detail, detailIndex) in getAdditionalPlanDetails(plan)"
+                      :key="`monthly_detail_${plan.id}_${detailIndex}`"
+                    >
+                      {{ translateMe(detail.name) }}
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </h6>
           </div>
         </div>
       </div>
@@ -663,6 +738,37 @@ export default {
             >
               {{ translateMe('Note: On account of your recent Shopify plan upgrade, you should consider upgrading your current app plan') }}
             </p>
+            <h6
+              class="plan-detail"
+              v-if="anyAnnuallyPlanHasDetail"
+              :style="{
+              visibility:
+                selectedInterval === 'annually' && getPrimaryPlanDetail(plan)
+                  ? 'visible'
+                  : 'hidden',
+              }"
+            >
+              <span>
+                {{ getPrimaryPlanDetail(plan) ? translateMe(getPrimaryPlanDetail(plan).name) : '' }}
+                <span
+                  v-if="getAdditionalPlanDetails(plan).length"
+                  class="plan-detail-tooltip-wrapper"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Show more plan details"
+                >
+                  <span class="plan-detail-info">i</span>
+                  <span class="plan-detail-tooltip">
+                    <span
+                      v-for="(detail, detailIndex) in getAdditionalPlanDetails(plan)"
+                      :key="`annually_detail_${plan.id}_${detailIndex}`"
+                    >
+                      {{ translateMe(detail.name) }}
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </h6>
           </div>
         </div>
       </div>
@@ -713,12 +819,24 @@ export default {
 }
 
 .card {
+  position: relative;
+  z-index: 1;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   padding: 16px;
+}
+
+.swiper-wrapper .swiper-slide {
+  position: relative;
+  z-index: 1;
+}
+
+.swiper-wrapper .swiper-slide:hover,
+.swiper-wrapper .swiper-slide:focus-within {
+  z-index: 4;
 }
 
 .swiper-wrapper .swiper-slide .card-border.last-card,
@@ -760,6 +878,7 @@ export default {
 
 .card .trial_days,
 .card .description,
+.card .plan-detail,
 .card .plan-note {
   font-size: 13px;
   font-weight: 400;
@@ -767,9 +886,90 @@ export default {
 }
 
 .card .trial_days,
-.card .description {
+.card .description,
+.card .plan-detail {
   text-align: center;
   text-transform: unset;
+}
+
+.card .plan-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 20px;
+  width: 100%;
+  justify-content: center;
+  border-top: 1px solid #cccccc;
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+.plan-detail-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #757575;
+  color: #4A4A4A;
+  font-size: 11px;
+  line-height: 1;
+  cursor: help;
+  user-select: none;
+}
+
+.plan-detail-tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.plan-detail-tooltip {
+  position: absolute;
+  right: -8px;
+  bottom: calc(100% + 8px);
+  background-color: white;
+  color: #333;
+  font-weight: 500;
+  max-width: 250px;
+  min-width: 150px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  box-shadow: 0 4px 8px #00000026;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 20;
+}
+
+.plan-detail-tooltip span {
+  display: block;
+  text-align: left;
+}
+
+.plan-detail-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 12px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+}
+
+.plan-detail-tooltip-wrapper:hover .plan-detail-tooltip,
+.plan-detail-tooltip-wrapper:focus .plan-detail-tooltip,
+.plan-detail-tooltip-wrapper:focus-within .plan-detail-tooltip {
+  opacity: 1;
+  visibility: visible;
 }
 
 .card .plan-note {
