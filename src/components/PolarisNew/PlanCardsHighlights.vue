@@ -913,7 +913,7 @@ export default {
   border-radius: 50%;
   border: 1px solid #757575;
   color: #4A4A4A;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1;
   cursor: help;
   user-select: none;
