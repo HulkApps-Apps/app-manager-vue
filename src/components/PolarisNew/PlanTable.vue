@@ -582,7 +582,6 @@ export default {
                   anyMonthlyPlanHasDiscount ? 'has-discount' : ''
                 ]"
               >
-                <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                 <template v-if="plan.strike_price">
                   <h5>
                     <span class="strike-price">${{ Number(plan.strike_price).toFixed(2) }}</span>
@@ -695,7 +694,6 @@ export default {
                   anyAnnuallyPlanHasDiscount ? 'has-discount' : ''
                 ]"
               >
-                <h4 class="plan-name mobile-plan-name">{{ translateMe(plan.name) }}</h4>
                 <template v-if="plan.strike_price">
                   <h5>
                     <span class="strike-price">${{ Number(plan.strike_price).toFixed(2) }}</span>
@@ -900,7 +898,7 @@ export default {
 
 .plan-header-wrapper .price-wrapper .main-price {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 8px;
   justify-content: center;
   align-items: center;
@@ -923,15 +921,6 @@ export default {
   line-height: 20px;
   font-weight: 700;
   color: #1A1A1A;
-  width: max-content;
-}
-
-.plan-header-wrapper .price-wrapper h4.plan-name {
-  width: 100%;
-}
-
-.plan-header-wrapper .price-wrapper .mobile-plan-name {
-  display: none;
 }
 
 .plan-header-wrapper .price-wrapper h4 h6 {
@@ -1060,20 +1049,6 @@ export default {
 #plans-table {
   overflow: auto !important;
   overscroll-behavior: none !important;
-}
-
-@media (max-width: 1024px) {
-  .plan-header-wrapper .price-wrapper .mobile-plan-name {
-    display: inline-block;
-  }
-
-  .plan-header-wrapper .price-wrapper .desktop-plan-name {
-    display: none;
-  }
-
-  .plan-header-wrapper .price-wrapper .main-price {
-    flex-direction: column;
-  }
 }
 
 @media (max-width: 640px) {
