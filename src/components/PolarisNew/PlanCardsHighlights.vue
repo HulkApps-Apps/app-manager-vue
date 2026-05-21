@@ -53,65 +53,37 @@ export default {
         before: 0,
         after: 0
       },
-      anyMonthlyPlanHasDiscount: false,
-      anyAnnuallyPlanHasDiscount: false,
-      anyMonthlyPlanHasNote: false,
-      anyAnnuallyPlanHasNote: false,
-      anyMonthlyPlanHasDetail: false,
-      anyAnnuallyPlanHasDetail: false,
       loadingPlanId: null
     };
   },
   computed: {
     monthlyPlans() {
-      this.anyMonthlyPlanHasDiscount = false;
-      this.anyMonthlyPlanHasNote = false;
-      this.anyMonthlyPlanHasDetail = false;
-
       return this.plans
         .filter(plan => plan.interval === "EVERY_30_DAYS")
-        .map(plan => {
-          const planDetails = calculatePlanPriceWithDiscounts(plan, this.promotionalDiscount);
-          if (planDetails.has_discount && !this.anyMonthlyPlanHasDiscount) {
-            this.anyMonthlyPlanHasDiscount = true;
-          }
-          if (
-            plan.store_base_plan
-            && this.anyMonthlyPlanHasNote === false
-            && isPlanNote(this.shopifyPlan, plan, this.currentPlan, this.hasActiveCharge)
-          ) {
-            this.anyMonthlyPlanHasNote = true;
-          }
-          if (this.getSortedPlanDetails(plan).length > 0 && this.anyMonthlyPlanHasDetail === false) {
-            this.anyMonthlyPlanHasDetail = true;
-          }
-          return planDetails;
-        });
+        .map(plan => calculatePlanPriceWithDiscounts(plan, this.promotionalDiscount));
     },
     annualPlans() {
-      this.anyAnnuallyPlanHasDiscount = false;
-      this.anyAnnuallyPlanHasNote = false;
-      this.anyAnnuallyPlanHasDetail = false;
-
       return this.plans
         .filter(plan => plan.interval === "ANNUAL")
-        .map(plan => {
-          const planDetails = calculatePlanPriceWithDiscounts(plan, this.promotionalDiscount);
-          if (planDetails.has_discount && !this.anyAnnuallyPlanHasDiscount) {
-            this.anyAnnuallyPlanHasDiscount = true;
-          }
-          if (
-            plan.store_base_plan
-            && this.anyAnnuallyPlanHasNote === false
-            && isPlanNote(this.shopifyPlan, plan, this.currentPlan, this.hasActiveCharge)
-          ) {
-            this.anyAnnuallyPlanHasNote = true;
-          }
-          if (this.getSortedPlanDetails(plan).length > 0 && this.anyAnnuallyPlanHasDetail === false) {
-            this.anyAnnuallyPlanHasDetail = true;
-          }
-          return planDetails;
-        });
+        .map(plan => calculatePlanPriceWithDiscounts(plan, this.promotionalDiscount));
+    },
+    anyMonthlyPlanHasDiscount() {
+      return this.monthlyPlans.some((plan) => plan.has_discount);
+    },
+    anyAnnuallyPlanHasDiscount() {
+      return this.annualPlans.some((plan) => plan.has_discount);
+    },
+    anyMonthlyPlanHasNote() {
+      return this.monthlyPlans.some((plan) => this.hasPlanNote(plan));
+    },
+    anyAnnuallyPlanHasNote() {
+      return this.annualPlans.some((plan) => this.hasPlanNote(plan));
+    },
+    anyMonthlyPlanHasDetail() {
+      return this.monthlyPlans.some((plan) => this.hasPlanDetail(plan));
+    },
+    anyAnnuallyPlanHasDetail() {
+      return this.annualPlans.some((plan) => this.hasPlanDetail(plan));
     },
     isMonthlyVisible() {
       return this.selectedInterval === "monthly";
@@ -130,9 +102,57 @@ export default {
       const normalized = Number(value);
       return Number.isNaN(normalized) ? fallback : normalized;
     },
+    normalizePlanDetailType(type) {
+      const normalized = String(type ?? "").trim().toLowerCase();
+
+      if (normalized === "details") {
+        return "detail";
+      }
+
+      if (normalized === "highlights") {
+        return "highlight";
+      }
+
+      return normalized;
+    },
+    hasPlanNote(plan) {
+      return isPlanNote(this.shopifyPlan, plan, this.currentPlan, this.hasActiveCharge);
+    },
+    hasPlanDetail(plan) {
+      return this.getSortedPlanDetails(plan).length > 0;
+    },
+    debugAnyPlanHasDetail(interval) {
+      const isMonthlyInterval = interval === "monthly";
+      const value = isMonthlyInterval ? this.anyMonthlyPlanHasDetail : this.anyAnnuallyPlanHasDetail;
+
+      console.info("[PlanCardsHighlights][render] detail-row gate", {
+        interval,
+        selectedInterval: this.selectedInterval,
+        anyMonthlyPlanHasDetail: this.anyMonthlyPlanHasDetail,
+        anyAnnuallyPlanHasDetail: this.anyAnnuallyPlanHasDetail,
+        value,
+      });
+
+      return value;
+    },
+    debugPlanDetailVisibility(plan, interval) {
+      const primaryDetail = this.getPrimaryPlanDetail(plan);
+      const isVisible = this.selectedInterval === interval && Boolean(primaryDetail);
+
+      console.info("[PlanCardsHighlights][render] detail-row visibility", {
+        interval,
+        selectedInterval: this.selectedInterval,
+        planId: plan?.id,
+        hasPrimaryDetail: Boolean(primaryDetail),
+        primaryDetail: primaryDetail?.name || null,
+        isVisible,
+      });
+
+      return isVisible;
+    },
     getSortedPlanHighlights(plan) {
       return Object.values(plan.details || {})
-        .filter((highlight) => highlight.type === "highlight")
+        .filter((highlight) => this.normalizePlanDetailType(highlight.type) === "highlight")
         .sort((a, b) => this.normalizeSortOrder(a.sort_order) - this.normalizeSortOrder(b.sort_order))
         .map((highlight) => ({
           plan_id: highlight.plan_id,
@@ -147,7 +167,7 @@ export default {
     },
     getSortedPlanDetails(plan) {
       return Object.values(plan.details || {})
-        .filter((detail) => detail.type === "detail")
+        .filter((detail) => this.normalizePlanDetailType(detail.type) === "detail")
         .sort((a, b) => this.normalizeSortOrder(a.sort_order) - this.normalizeSortOrder(b.sort_order))
         .map((detail) => ({
           plan_id: detail.plan_id,
@@ -577,10 +597,10 @@ export default {
             </p>
             <h6
               class="plan-detail"
-              v-if="anyMonthlyPlanHasDetail"
+              v-if="debugAnyPlanHasDetail('monthly')"
               :style="{
                 visibility:
-                  selectedInterval === 'monthly' && getPrimaryPlanDetail(plan)
+                  debugPlanDetailVisibility(plan, 'monthly')
                     ? 'visible'
                     : 'hidden',
               }"
@@ -740,10 +760,10 @@ export default {
             </p>
             <h6
               class="plan-detail"
-              v-if="anyAnnuallyPlanHasDetail"
+              v-if="debugAnyPlanHasDetail('annually')"
               :style="{
               visibility:
-                selectedInterval === 'annually' && getPrimaryPlanDetail(plan)
+                debugPlanDetailVisibility(plan, 'annually')
                   ? 'visible'
                   : 'hidden',
               }"
@@ -848,6 +868,7 @@ export default {
   font-size: 16px;
   font-weight: 700;
   color: #1A1A1A;
+  text-align: center;
 }
 
 .card .price-wrapper {
@@ -900,7 +921,7 @@ export default {
   width: 100%;
   justify-content: center;
   border-top: 1px solid #cccccc;
-  margin-top: 16px;
+  margin-top: auto;
   padding-top: 12px;
 }
 
@@ -986,6 +1007,7 @@ export default {
 
 .features {
   margin-top: 19px;
+  margin-bottom: 19px;
 }
 
 .features ul {
