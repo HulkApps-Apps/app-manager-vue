@@ -123,32 +123,11 @@ export default {
     },
     debugAnyPlanHasDetail(interval) {
       const isMonthlyInterval = interval === "monthly";
-      const value = isMonthlyInterval ? this.anyMonthlyPlanHasDetail : this.anyAnnuallyPlanHasDetail;
-
-      console.info("[PlanCardsHighlights][render] detail-row gate", {
-        interval,
-        selectedInterval: this.selectedInterval,
-        anyMonthlyPlanHasDetail: this.anyMonthlyPlanHasDetail,
-        anyAnnuallyPlanHasDetail: this.anyAnnuallyPlanHasDetail,
-        value,
-      });
-
-      return value;
+      return isMonthlyInterval ? this.anyMonthlyPlanHasDetail : this.anyAnnuallyPlanHasDetail;
     },
     debugPlanDetailVisibility(plan, interval) {
       const primaryDetail = this.getPrimaryPlanDetail(plan);
-      const isVisible = this.selectedInterval === interval && Boolean(primaryDetail);
-
-      console.info("[PlanCardsHighlights][render] detail-row visibility", {
-        interval,
-        selectedInterval: this.selectedInterval,
-        planId: plan?.id,
-        hasPrimaryDetail: Boolean(primaryDetail),
-        primaryDetail: primaryDetail?.name || null,
-        isVisible,
-      });
-
-      return isVisible;
+      return this.selectedInterval === interval && Boolean(primaryDetail);
     },
     getSortedPlanHighlights(plan) {
       return Object.values(plan.details || {})
