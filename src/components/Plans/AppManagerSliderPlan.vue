@@ -196,7 +196,7 @@ import CustomizationModal from "@/components/PolarisNew/CustomizationModal.vue";
 import {calculatePlanPriceWithDiscounts} from "@/helpers";
 import PlanBanners from "@/components/Plans/PlanBanners.vue";
 
-const APP_MANAGER_VUE_VERSION = "3.1.24";
+const APP_MANAGER_VUE_VERSION = "3.2.0";
 
 export default {
   name: "AppManagerSliderPlan",
@@ -447,10 +447,6 @@ export default {
         if (data.bundle_details) {
           this.bundle_details = data.bundle_details;
         }
-
-        console.info("[AppManagerSliderPlan] plans loaded", {
-          sdkVersion: APP_MANAGER_VUE_VERSION,
-        });
       }
     },
     handlePlanBannerClose(payload) {
@@ -470,9 +466,6 @@ export default {
   },
   async mounted() {
     this.planLoading = true;
-    console.info("[AppManagerSliderPlan] mounting plan view", {
-      sdkVersion: APP_MANAGER_VUE_VERSION,
-    });
     await this.fetchFeatures();
     await this.fetchPlans();
     this.planLoading = false;

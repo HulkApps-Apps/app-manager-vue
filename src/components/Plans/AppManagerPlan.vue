@@ -17,8 +17,6 @@ import AppManagerSliderPlan from "./AppManagerSliderPlan";
 import Vue from "vue";
 import install from "@/entry.esm";
 
-const APP_MANAGER_VUE_VERSION = "3.1.24";
-
 export default {
   name: "AppManagerPlan",
   components: {AppManagerSliderPlan},
@@ -79,10 +77,6 @@ export default {
       }
       install(Vue, config)
     }
-
-    console.info("[AppManagerPlan] mounted wrapper context", {
-      sdkVersion: APP_MANAGER_VUE_VERSION,
-    });
   }
 }
 </script>
