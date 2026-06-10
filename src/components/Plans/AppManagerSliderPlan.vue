@@ -15,23 +15,6 @@
         this.width === 'base' ? 'base-width' : '',
       ]"
     >
-      <a class="bill-cycle-back" @click="selectPlan('monthly')">
-        <svg
-          width="16"
-          height="14"
-          viewBox="0 0 16 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M1 7H15H1Z" fill="#006FBB"/>
-          <path d="M1 7H15" stroke="#006FBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M1 7L7 13L1 7Z" fill="#006FBB"/>
-          <path d="M1 7L7 13" stroke="#006FBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M1 7L7 1L1 7Z" fill="#006FBB"/>
-          <path d="M1 7L7 1" stroke="#006FBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        {{ translateMe('Back to app pricing') }}
-      </a>
       <div class="bill-cycle-select-group__inner-left">
         <SelectButton
           id="pricing-tab"
@@ -53,31 +36,7 @@
           </strong>
         </SelectButton>
       </div>
-      <!-- -------------------- Bundle Plan Toggle -------------------- -->
-      <!-- <ToggleButton
-        id="pricing-tab"
-        v-if="bundle_plan !== null"
-        :toggled="selectedPlan === 'bundle'"
-        @click="selectPlan('bundle')"
-      >
-        {{ translateMe('App bundle plan') }}
-        -
-        <strong style="white-space: pre; font-weight: 900; display: inline-flex; gap: 3px; margin-left: 4px;">
-          <span>{{ translateMe(Math.floor((Number(bundle_plan.discount * 100) / bundle_plan.price) / 10) * 10) }}%</span>
-          <span>{{ translateMe('Off') }}</span>
-        </strong>
-      </ToggleButton> -->
     </div>
-    <!-- -------------------- Bundle Plan Banner -------------------- -->
-    <!-- <PlanShowcaseBanner
-      v-if="bundle_plan"
-      :useCardStyle="true"
-      :width="this.width"
-      :showcaseData="bundle_plan"
-      :realPrice="parseFloat(calculateDiscountedPrice(bundle_plan)).toFixed(0)"
-      :oldPrice="bundle_plan.price" @plan-clicked="handlePlanClicked(bundle_plan)"
-      :isCurrentPlan="isCurrentPlanId(bundle_plan)"
-    /> -->
     <PPage
       :class="[
         'app-manager-plan-page-slider',
@@ -87,13 +46,6 @@
         this.width === 'base' ? 'base-width' : '',
       ]"
     >
-      <!-- -------------------- Bundle Plan Banner -------------------- -->
-      <!-- <div class="promotional-banner">
-        <VariantButton id="pricing-tab" :variant="'primary'" @click="selectPlan('bundle')">
-          {{ translateMe('Start saving Now') }}
-        </VariantButton>
-      </div> -->
-
       <PLayout class="custom-plan">
         <PlanCardsHighlights
           :plans="plans"
@@ -130,41 +82,7 @@
           </PStackItem>
         </PStack>
 
-        <div class="customization-bundle-section">
-          <!-- -------------------- Customization Block -------------------- -->
-          <!-- <GetCustomBlock
-            v-if="is_customizable"
-            @click="handleCustomizePlan"
-            :title="translateMe('Customization')"
-            :description="translateMe('Check out all customization services that we offer')"
-            :buttonText="translateMe('Get customization now')"
-            style="flex-basis: 30%; flex-grow: 1;"
-          /> -->
-          <!-- -------------------- Bundle Block -------------------- -->
-          <!-- <BundlePlanCard
-            v-if="bundle_plan"
-            :plan="bundle_plan"
-            :plan_details="bundle_details"
-            @plan-clicked="selectPlan"
-          /> -->
-        </div>
-        <CustomizationModal
-          :visible="this.showCustomizationModal"
-          @cancel="handleCustomizePlanClose"
-          @submit=""
-        />
       </PLayout>
-      <div v-if="bundle_plan !== null" class="bundle-plan">
-        <div class="light-divider"></div>
-        <div class="bundle-category" v-for="category in bundle_details">
-          <CategoryHeading :headingData="category"/>
-          <div class="bundle-category-apps">
-            <AppCard v-for="app in category.apps_relation" :appData="app"/>
-          </div>
-        </div>
-        <CategoryHeading :headingData="additionalBenefitsHeading"/>
-        <BenefitsBanner/>
-      </div>
       <PlanBanners position="footer" @handlePlanBannerClose="handlePlanBannerClose"/>
     </PPage>
   </div>
@@ -181,18 +99,10 @@ import {PButtonGroup} from "../polaris-vue/src/components/PButtonGroup";
 import {PHeading} from "../polaris-vue/src/components/PHeading";
 import {PLayout} from "../polaris-vue/src/components/PLayout";
 import {PEmptyState} from "../polaris-vue/src/components/PEmptyState"
-import AppCard from "../PolarisNew/AppCard";
-import PlanShowcaseBanner from "../PolarisNew/PlanShowcaseBanner";
-import CategoryHeading from "../PolarisNew/CategoryHeading";
-import BenefitsBanner from "../PolarisNew/BenefitsBanner";
 import VariantButton from "../PolarisNew/VariantButton";
 import SelectButton from "../PolarisNew/SelectButton.vue";
-import ToggleButton from "../PolarisNew/ToggleButton.vue";
 import PlanCardsHighlights from "../PolarisNew/PlanCardsHighlights.vue";
-import GetCustomBlock from "../PolarisNew/GetCustomBlock.vue";
 import PlanTable from "../PolarisNew/PlanTable.vue";
-import BundlePlanCard from "../PolarisNew/BundlePlanCard.vue";
-import CustomizationModal from "@/components/PolarisNew/CustomizationModal.vue";
 import {calculatePlanPriceWithDiscounts} from "@/helpers";
 import PlanBanners from "@/components/Plans/PlanBanners.vue";
 
@@ -202,7 +112,6 @@ export default {
   name: "AppManagerSliderPlan",
   components: {
     PlanBanners,
-    CustomizationModal,
     PPage,
     PStack,
     PStackItem,
@@ -211,19 +120,12 @@ export default {
     PHeading,
     PLayout,
     PEmptyState,
-    AppCard,
-    PlanShowcaseBanner,
-    CategoryHeading,
-    BenefitsBanner,
     VariantButton,
     SelectButton,
-    ToggleButton,
     PlanCardsHighlights,
-    GetCustomBlock,
     PlanTable,
-    BundlePlanCard
   },
-  props: ['shop_domain', 'host', 'discount_code', 'is_customizable', 'width', 'enable_feature_tooltip'],
+  props: ['shop_domain', 'host', 'discount_code', 'width', 'enable_feature_tooltip'],
   data() {
     return {
       planLoading: false,
@@ -238,16 +140,9 @@ export default {
       onboard: true,
       choose_later: false,
       has_active_charge: false,
-      global_plan_charge: false,
       subtitleContent: '',
       selectedPlan: 'monthly',
-      bundle_details: null,
-      bundle_plan: null,
       showPlansFeatures: false,
-      showCustomizationModal: false,
-      additionalBenefitsHeading:{
-        category_name: "Unlock additional benefits"
-      },
     }
   },
   computed: {
@@ -273,12 +168,6 @@ export default {
     },
     isCurrentPlanId(plan) {
       return this.shop.plan && plan.id === this.shop.plan.id;
-    },
-    isActivePlanGlobal() {
-      return Boolean(this.shop.plan?.is_global);
-    },
-    isActiveGlobalCharge() {
-      return Boolean(this.global_plan_charge);
     },
     isSamePlanInOtherInterval(plan) {
       return this.shop.plan && (plan.shopify_plans === this.shop.plan.shopify_plans)
@@ -348,33 +237,6 @@ export default {
     },
     async selectPlan(value) {
       this.selectedPlan = value;
-      if (this.bundle_plan !== null) {
-        let planElement = document.querySelector('.custom-plan');
-        let bundleElement = document.querySelector('.bundle-plan');
-        let billCycleBack = document.querySelector('.bill-cycle-back');
-        let billCycleSelect = document.querySelector('.bill-cycle-select-group__inner-left');
-        let promotionalBanner = document.querySelector('.promotional-banner');
-        let bundlePlanShowcaseBanner = document.querySelector('.bundle-plan-showcase-banner');
-        if (this.selectedPlan == 'bundle') {
-          planElement.style.display = 'none';
-          bundleElement.style.display = 'flex';
-          billCycleBack.style.display = 'flex';
-          billCycleSelect.style.display = 'none';
-          if (promotionalBanner) {
-            promotionalBanner.style.display = 'none';
-          }
-          bundlePlanShowcaseBanner.style.display = 'flex';
-        } else {
-          bundleElement.style.display = 'none';
-          planElement.style.display = 'flex';
-          billCycleBack.style.display = 'none';
-          billCycleSelect.style.display = 'flex';
-          if (promotionalBanner) {
-            promotionalBanner.style.display = 'flex';
-          }
-          bundlePlanShowcaseBanner.style.display = 'none';
-        }
-      }
     },
     async fetchFeatures() {
       let {data} = await axios.get(`${this.app_manager_config.baseUrl}/api/app-manager/plan-features`).catch(error => {
@@ -426,27 +288,17 @@ export default {
         if (this.plan?.interval === 'ANNUAL') {
           this.selectedPlan = 'annually'
         }
-        if (this.plan?.is_global) {
-          this.selectedPlan = 'bundle'
-        }
         this.shopify_plan = data.shopify_plan;
         this.default_plan_id = data.default_plan_id;
         this.choose_later = data.choose_later;
         this.onboard = this.default_plan_id && this.choose_later;
         this.has_active_charge = data.has_active_charge;
-        this.global_plan_charge = data.global_plan_charge;
         this.promotional_discount =
           data.promotional_discount
           && typeof data.promotional_discount === 'object'
           && Object.keys(data.promotional_discount).length > 0
             ? data.promotional_discount
             : {};
-        if (data.bundle_plan) {
-          this.bundle_plan = data.bundle_plan;
-        }
-        if (data.bundle_details) {
-          this.bundle_details = data.bundle_details;
-        }
       }
     },
     handlePlanBannerClose(payload) {
@@ -456,13 +308,6 @@ export default {
     togglePlansFeatures() {
       this.showPlansFeatures = !this.showPlansFeatures;
     },
-    handleCustomizePlan() {
-      this.showCustomizationModal = true
-      this.$emit('handleCustomizePlan')
-    },
-    handleCustomizePlanClose() {
-      this.showCustomizationModal = false
-    }
   },
   async mounted() {
     this.planLoading = true;
@@ -1198,31 +1043,6 @@ button.swiper-pagination-bullet {
   margin-left: 30px;
 }
 
-.bundle-plan {
-  display: none;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.bundle-category {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 10px;
-}
-
-.bundle-category-apps {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.light-divider {
-  border-top: 1px solid #E3E3E3;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 .app-manager .Polaris-Icon--colorSuccess svg {
   fill: #1A1A1A !important;
 }
@@ -1264,31 +1084,6 @@ button.swiper-pagination-bullet {
   border: 1px solid #1A1A1A;
 }
 
-.bill-cycle-back {
-  display: none;
-  align-items: center;
-  color: #006FBB;
-  cursor: pointer;
-  gap: 4px;
-  font-weight: 450;
-  font-size: 14px;
-}
-
-.promotional-banner {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  padding-right: 36px;
-  //background-image: url('../../assets/25for70lessBanner.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 8px;
-  margin-bottom: 22px;
-}
-
 .custom-plan {
   display: flex;
   flex-direction: column;
@@ -1312,13 +1107,6 @@ button.swiper-pagination-bullet {
   margin-top: 0px !important;
 }
 
-.customization-bundle-section {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  width: 100%;
-}
-
 .app-manager .app-manager-plan-page-slider {
   padding-left: 96px !important;
   padding-right: 96px !important;
@@ -1331,13 +1119,6 @@ button.swiper-pagination-bullet {
 
 .app-manager .app-manager-plan-page-slider.tight-width {
   max-width: 840px !important;
-}
-
-@media (max-width: 1023px) {
-  .customization-bundle-section {
-    flex-direction: column;
-    gap: 20px;
-  }
 }
 
 @media (max-width: 992px) {
