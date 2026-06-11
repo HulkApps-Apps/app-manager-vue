@@ -3,12 +3,10 @@
     :shop_domain="shop_domain"
     :host="host"
     :discount_code="discount_code"
-    :is_customizable="is_customizable"
     :width="this.width"
     :enable_feature_tooltip="enable_feature_tooltip"
     @handlePlanSelect="handlePlanSelect"
     @handlePlanBannerClose="handlePlanBannerClose"
-    @handleCustomizePlan="handleCustomizePlan"
   ></AppManagerSliderPlan>
 </template>
 
@@ -36,10 +34,6 @@ export default {
       type: String,
       default: null
     },
-    is_customizable: {
-      type: Boolean,
-      default: false
-    },
     width: {
       type: String,
       default: 'base',
@@ -65,9 +59,6 @@ export default {
       this.$emit('handlePlanBannerClose', payload)
       this.$emit('handle-plan-banner-close', payload)
     },
-    handleCustomizePlan(){
-      this.$emit('handleCustomizePlan')
-    }
   },
   created() {
     Vue.prototype.$translations = (Object.keys(this.translations).length > 0)?this.translations:{};
