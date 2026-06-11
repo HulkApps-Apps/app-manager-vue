@@ -106,7 +106,7 @@ import PlanTable from "../PolarisNew/PlanTable.vue";
 import {calculatePlanPriceWithDiscounts} from "@/helpers";
 import PlanBanners from "@/components/Plans/PlanBanners.vue";
 
-const APP_MANAGER_VUE_VERSION = "3.2.0";
+const APP_MANAGER_VUE_VERSION = "3.3.1";
 
 export default {
   name: "AppManagerSliderPlan",
